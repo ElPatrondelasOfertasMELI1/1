@@ -1,0 +1,861 @@
+/* ==============================
+   EL PATRÓN DE LAS OFERTAS
+   STYLE PRO - PARTE 1
+============================== */
+
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:
+    radial-gradient(circle at top,#2b2100,#050505 45%);
+
+    color:white;
+
+    min-height:100vh;
+
+}
+
+
+
+
+/* HEADER */
+
+header{
+
+    width:100%;
+
+    padding:18px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    background:
+    rgba(0,0,0,.85);
+
+    backdrop-filter:blur(15px);
+
+    border-bottom:
+    1px solid rgba(255,215,0,.2);
+
+}
+
+
+
+
+.logo{
+
+    font-size:24px;
+
+    font-weight:900;
+
+    line-height:20px;
+
+    color:#FFD600;
+
+    letter-spacing:-1px;
+
+}
+
+
+
+.logo span{
+
+    display:block;
+
+    color:white;
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+}
+
+
+
+
+
+.menu{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:14px;
+
+    border:none;
+
+    background:#FFD600;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    font-weight:900;
+
+}
+
+
+
+
+
+
+/* HERO */
+
+
+.hero{
+
+    padding:30px 20px 15px;
+
+    text-align:center;
+
+}
+
+
+
+.hero h1{
+
+    font-size:32px;
+
+    font-weight:900;
+
+    background:
+    linear-gradient(90deg,#FFD600,#fff);
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+
+
+.hero p{
+
+    margin-top:10px;
+
+    color:#bbb;
+
+    font-size:15px;
+
+}
+
+
+
+
+
+
+/* CATEGORIAS */
+
+
+.categorias{
+
+    display:flex;
+
+    gap:10px;
+
+    padding:20px;
+
+    overflow-x:auto;
+
+    scrollbar-width:none;
+
+}
+
+
+
+.categorias::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+
+
+.categorias button{
+
+    flex-shrink:0;
+
+    padding:12px 18px;
+
+    border-radius:30px;
+
+    border:none;
+
+    background:#111;
+
+    color:white;
+
+    font-weight:800;
+
+    border:1px solid #333;
+
+}
+
+
+
+.categorias button:first-child{
+
+    background:#FFD600;
+
+    color:black;
+
+}
+
+
+
+
+/* TITULOS */
+
+
+h2{
+
+    padding:10px 20px;
+
+    font-size:22px;
+
+    font-weight:900;
+
+}
+
+/* ==============================
+   CARRUSEL DE OFERTAS PRO
+   STYLE - PARTE 2
+============================== */
+
+
+.carrusel{
+
+    display:flex;
+
+    gap:18px;
+
+    padding:20px;
+
+    overflow-x:auto;
+
+    scroll-snap-type:x mandatory;
+
+    scrollbar-width:none;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+
+.carrusel::-webkit-scrollbar{
+
+    display:none;
+
+}
+
+
+
+
+/* TARJETA OFERTA */
+
+
+.oferta{
+
+    min-width:300px;
+
+    max-width:300px;
+
+    background:
+    linear-gradient(160deg,#161616,#080808);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    scroll-snap-align:center;
+
+    border:1px solid rgba(255,215,0,.25);
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.5);
+
+    transition:.3s;
+
+}
+
+
+
+.oferta:hover{
+
+    transform:translateY(-5px);
+
+}
+
+
+
+
+
+/* IMAGEN */
+
+
+.oferta img{
+
+    width:100%;
+
+    height:230px;
+
+    object-fit:cover;
+
+    display:block;
+
+}
+
+
+
+
+
+
+/* CONTENIDO */
+
+
+.info{
+
+    padding:18px;
+
+}
+
+
+
+
+.info h3{
+
+    font-size:18px;
+
+    font-weight:900;
+
+    line-height:22px;
+
+    min-height:45px;
+
+}
+
+
+
+
+.descuento{
+
+    display:inline-block;
+
+    margin:12px 0;
+
+    padding:7px 12px;
+
+    background:#FFD600;
+
+    color:#000;
+
+    border-radius:20px;
+
+    font-weight:900;
+
+    font-size:13px;
+
+}
+
+
+
+
+
+.precioAntes{
+
+    color:#888;
+
+    text-decoration:line-through;
+
+    font-size:14px;
+
+}
+
+
+
+
+
+.precioFinal{
+
+    font-size:32px;
+
+    font-weight:900;
+
+    color:#FFD600;
+
+    margin:5px 0;
+
+}
+
+
+
+
+
+/* BOTON COMPRA */
+
+
+.btnComprar{
+
+
+    display:block;
+
+    width:100%;
+
+    text-align:center;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    background:#FFD600;
+
+    color:#000;
+
+    font-weight:900;
+
+    text-decoration:none;
+
+    font-size:16px;
+
+
+}
+
+
+
+.btnComprar:active{
+
+    transform:scale(.96);
+
+}
+
+
+
+
+
+
+/* ETIQUETAS */
+
+
+.badge{
+
+    position:absolute;
+
+    margin:15px;
+
+    background:#ff3131;
+
+    color:white;
+
+    padding:8px 12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:900;
+
+}
+
+
+
+
+
+/* CARGANDO */
+
+
+.loader{
+
+    width:100%;
+
+    padding:40px;
+
+    text-align:center;
+
+    color:#FFD600;
+
+    font-weight:800;
+
+}
+
+
+
+
+
+
+/* BOTON WHATSAPP FLOTANTE */
+
+
+.whatsapp{
+
+    position:fixed;
+
+    right:20px;
+
+    bottom:20px;
+
+    z-index:200;
+
+    background:#25D366;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:16px 22px;
+
+    border-radius:50px;
+
+    font-weight:900;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.5);
+
+}
+
+/* ==============================
+   MENÚ LATERAL PRO
+   STYLE - PARTE 3
+============================== */
+
+
+/* MENU PANEL */
+
+.menuPanel{
+
+    position:fixed;
+
+    top:0;
+
+    left:-320px;
+
+    width:290px;
+
+    height:100vh;
+
+    background:
+    linear-gradient(180deg,#111,#050505);
+
+    z-index:300;
+
+    padding:25px;
+
+    transition:.35s;
+
+    box-shadow:
+    10px 0 40px rgba(0,0,0,.6);
+
+    border-right:
+    1px solid rgba(255,215,0,.2);
+
+}
+
+
+
+.menuPanel.active{
+
+    left:0;
+
+}
+
+
+
+
+
+.menuPanel h2{
+
+    padding:0;
+
+    margin-bottom:25px;
+
+    color:#FFD600;
+
+}
+
+
+
+
+
+.menuPanel a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px;
+
+    margin-bottom:10px;
+
+    border-radius:15px;
+
+    background:#161616;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-weight:800;
+
+}
+
+
+
+.menuPanel a:hover{
+
+    background:#FFD600;
+
+    color:black;
+
+}
+
+
+
+
+
+
+
+/* FONDO OSCURO AL ABRIR MENU */
+
+
+.overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.65);
+
+    z-index:250;
+
+    display:none;
+
+}
+
+
+
+.overlay.active{
+
+    display:block;
+
+}
+
+
+
+
+
+
+
+/* ANIMACIONES */
+
+
+.oferta{
+
+    animation:
+
+    aparecer .5s ease;
+
+}
+
+
+
+@keyframes aparecer{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+
+
+
+
+/* EFECTO PRECIO */
+
+
+.precioFinal{
+
+    animation:
+
+    brillo 2s infinite;
+
+}
+
+
+
+@keyframes brillo{
+
+
+    0%,100%{
+
+        filter:brightness(1);
+
+    }
+
+
+    50%{
+
+        filter:brightness(1.4);
+
+    }
+
+}
+
+
+
+
+
+
+
+/* BADGES ESPECIALES */
+
+
+.relampago{
+
+    background:
+
+    linear-gradient(45deg,#FFD600,#ff8c00);
+
+    color:black;
+
+}
+
+
+
+.bancario{
+
+    background:#1565ff;
+
+    color:white;
+
+}
+
+
+
+.meliplus{
+
+    background:#8e2de2;
+
+    color:white;
+
+}
+
+
+
+
+
+
+
+
+/* RESPONSIVE MOVIL */
+
+
+@media(max-width:600px){
+
+
+.logo{
+
+    font-size:21px;
+
+}
+
+
+
+.hero h1{
+
+    font-size:27px;
+
+}
+
+
+
+.oferta{
+
+    min-width:88vw;
+
+}
+
+
+
+.oferta img{
+
+    height:240px;
+
+}
+
+
+
+.precioFinal{
+
+    font-size:30px;
+
+}
+
+
+}
+
+
+
+
+
+/* TABLET / PC */
+
+
+@media(min-width:900px){
+
+
+.carrusel{
+
+    justify-content:center;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.oferta{
+
+    min-width:320px;
+
+}
+
+
+
+}
+
