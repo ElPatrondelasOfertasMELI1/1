@@ -47,6 +47,23 @@ from
 
 import {
 
+getStorage,
+
+ref,
+
+uploadBytes,
+
+getDownloadURL
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+
+import {
+
 getAuth,
 
 signOut
@@ -96,7 +113,53 @@ initializeApp(firebaseConfig);
 const db =
 getFirestore(app);
 
+const storage =
+getStorage(app);
 
+async function subirImagen(){
+
+
+const archivo =
+document.getElementById("archivoImagen").files[0];
+
+
+if(!archivo){
+
+return "";
+
+}
+
+
+
+const nombre =
+Date.now()+"_"+archivo.name;
+
+
+
+const referencia =
+ref(
+storage,
+"ofertas/"+nombre
+);
+
+
+
+await uploadBytes(
+referencia,
+archivo
+);
+
+
+
+const url =
+await getDownloadURL(referencia);
+
+
+
+return url;
+
+
+}
 
 const auth =
 getAuth(app);
@@ -262,9 +325,8 @@ document
 .getElementById("publicar")
 .onclick = async()=>{
 
-
-
-
+const imagenSubida =
+await subirImagen();
 
 const datos = {
 
@@ -274,7 +336,7 @@ titulo.value,
 
 
 imagen:
-imagen.value,
+imagenSubida,
 
 
 precioAntes:
