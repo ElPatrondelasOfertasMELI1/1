@@ -4,262 +4,240 @@
 <head>
 
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin PRO | El Patrón de las Ofertas</title>
 
-<title>
-Dashboard Admin PRO
-</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="admin.css">
 
-<link rel="stylesheet" href="style.css">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
-
 <body>
 
+<div class="app">
 
+<!-- SIDEBAR -->
 
-<header class="adminHeader">
+<aside class="sidebar">
 
+<div class="brand">
 
 <div class="logo">
+⚡
+</div>
 
-⚡ ADMIN
+<h2>
+El Patrón
+</h2>
 
 <span>
-EL PATRÓN
+ADMIN PRO
 </span>
 
 </div>
 
+<nav>
 
+<button class="menuItem activo" data-panel="dashboard">
+
+🏠
+<span>Dashboard</span>
+
+</button>
+
+<button class="menuItem" data-panel="ofertas">
+
+🛒
+<span>Ofertas</span>
+
+</button>
+
+<button class="menuItem" data-panel="cupones">
+
+🎟️
+<span>Cupones</span>
+
+</button>
+
+<button class="menuItem" data-panel="categorias">
+
+📂
+<span>Categorías</span>
+
+</button>
+
+<button class="menuItem" data-panel="usuarios">
+
+👤
+<span>Usuarios</span>
+
+</button>
+
+<button class="menuItem" data-panel="estadisticas">
+
+📊
+<span>Estadísticas</span>
+
+</button>
+
+<button class="menuItem" data-panel="configuracion">
+
+⚙️
+<span>Configuración</span>
+
+</button>
+
+</nav>
+
+<div class="bottomMenu">
 
 <button id="salir">
 
-Salir
+🚪
+Cerrar sesión
 
 </button>
 
+</div>
+
+</aside>
+
+<!-- CONTENIDO -->
+
+<main class="contenido">
+
+<header class="topbar">
+
+<div>
+
+<h1>
+Dashboard
+</h1>
+
+<p>
+Bienvenido al centro de control.
+</p>
+
+</div>
+
+<div class="accionesTop">
+
+<button id="nuevaOferta">
+
+➕ Nueva oferta
+
+</button>
+
+</div>
 
 </header>
 
+<section class="cards">
 
+<div class="card">
 
+<span>
+🛒
+</span>
 
+<h3 id="totalOfertas">
 
+0
 
-<section class="dashboard">
-
-
-
-<h1>
-🚀 Panel PRO
-</h1>
-
-<div class="stats">
-
-
-<div class="cardStat">
-
-<h3>
-🛒 Ofertas
 </h3>
 
-<strong id="totalOfertas">
-0
-</strong>
+<p>
+Ofertas publicadas
+</p>
 
 </div>
 
+<div class="card">
 
+<span>
+👁️
+</span>
 
-<div class="cardStat">
+<h3 id="totalClicks">
 
-<h3>
-👁️ Clics Totales
+0
+
 </h3>
 
-<strong id="totalClicks">
-0
-</strong>
+<p>
+Clics totales
+</p>
 
 </div>
 
+<div class="card">
 
+<span>
+👥
+</span>
 
-<div class="cardStat">
+<h3 id="usuariosOnline">
 
-<h3>
-🏆 Top Oferta
+0
+
 </h3>
 
-<strong id="topOferta">
+<p>
+Usuarios conectados
+</p>
+
+</div>
+
+<div class="card">
+
+<span>
+🏆
+</span>
+
+<h3 id="topOferta">
+
 -
-</strong>
 
-</div>
-
-
-
-<div class="cardStat">
-
-<h3>
-🟢 Estado
 </h3>
 
-<strong>
-Activo
-</strong>
+<p>
+Oferta más vista
+</p>
 
 </div>
 
+</section>
 
-</div>
-
-
-
-
-
-<div class="panel">
+<section class="panel">
 
 <h2>
-📊 Estadísticas
+📈 Rendimiento
 </h2>
-
 
 <canvas id="graficaClicks"></canvas>
 
+</section>
+
+<section id="contenedorPaneles">
+
+<!-- Aquí se cargarán dinámicamente
+Ofertas
+Cupones
+Usuarios
+Configuración
+etc -->
+
+</section>
+
+</main>
 
 </div>
-
-<div class="panel">
-
-
-
-<h2>
-➕ Nueva Oferta
-</h2>
-
-
-
-<input id="titulo"
-placeholder="Título">
-
-
-
-<input 
-type="file"
-id="archivoImagen"
-accept="image/*"
->
-
-
-<img 
-id="vistaImagen"
-style="width:120px;border-radius:15px;margin:10px;"
->
-
-
-<input 
-id="imagen"
-type="hidden"
->
-
-
-<input id="precioAntes"
-placeholder="Precio antes">
-
-
-
-<input id="precioFinal"
-placeholder="Precio final">
-
-
-
-<input id="descuento"
-placeholder="Descuento">
-
-
-
-<input id="link"
-placeholder="Link Mercado Libre">
-
-
-
-
-
-<button id="publicar">
-
-🔥 PUBLICAR
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<h2>
-📦 Ofertas publicadas
-</h2>
-
-
-
-<div id="listaOfertas">
-
-Cargando...
-
-</div>
-
-
-<div id="editor" class="panel" style="display:none;">
-
-
-<h2>
-✏️ Editar Oferta
-</h2>
-
-
-<input id="editTitulo" placeholder="Título">
-
-
-<input id="editImagen" placeholder="Imagen">
-
-
-<input id="editPrecioAntes" placeholder="Precio antes">
-
-
-<input id="editPrecioFinal" placeholder="Precio final">
-
-
-<input id="editDescuento" placeholder="Descuento">
-
-
-<input id="editLink" placeholder="Link">
-
-
-
-<button id="guardarCambios">
-
-💾 GUARDAR CAMBIOS
-
-</button>
-
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script type="module" src="admin.js"></script>
-
 
 </body>
 
