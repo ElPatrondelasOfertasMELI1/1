@@ -1,33 +1,35 @@
-// =====================================
+// =======================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS - PARTE 4
-// FIREBASE + OFERTAS
-// =====================================
+// APP.JS LIMPIO
+// FIREBASE + OFERTAS PUBLICAS
+// =======================================
 
 
-// IMPORTAR FIREBASE
-
-import { initializeApp } from 
+import { initializeApp } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
-import { 
+import {
+
 getFirestore,
 collection,
-getDocs,
+query,
 orderBy,
-query
-} from 
+onSnapshot
+
+}
+
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-// CONFIGURACIÓN FIREBASE
-// CAMBIA ESTOS DATOS POR LOS TUYOS
+// CONFIG FIREBASE
 
 
 const firebaseConfig = {
+
 
 apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -41,24 +43,20 @@ messagingSenderId: "292338334268",
 
 appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
+
 };
 
-// INICIAR FIREBASE
-
-
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
 
 
 
 
+const app =
+initializeApp(firebaseConfig);
 
 
-// CONTENEDOR
 
-const carrusel = document.getElementById("carrusel");
+const db =
+getFirestore(app);
 
 
 
@@ -66,27 +64,50 @@ const carrusel = document.getElementById("carrusel");
 
 
 
-// CARGAR OFERTAS
+const carrusel =
+document.getElementById("carrusel");
 
 
-async function cargarOfertas(){
 
 
-try{
 
 
-const ofertasRef = collection(db,"ofertas");
 
 
-const q = query(
-ofertasRef,
-orderBy("fecha","desc")
+// CARGAR OFERTAS EN TIEMPO REAL
+
+
+function cargarOfertas(){
+
+
+
+const referencia =
+collection(db,"ofertas");
+
+
+
+const consulta =
+query(
+
+referencia,
+
+orderBy(
+"fecha",
+"desc"
+
+)
+
 );
 
 
 
-const snapshot = await getDocs(q);
 
+
+onSnapshot(
+
+consulta,
+
+(snapshot)=>{
 
 
 carrusel.innerHTML="";
@@ -96,17 +117,24 @@ carrusel.innerHTML="";
 if(snapshot.empty){
 
 
-carrusel.innerHTML=
+carrusel.innerHTML=`
 
-`
 <div class="loader">
+
 No hay ofertas disponibles
+
 </div>
+
 `;
+
 
 return;
 
+
 }
+
+
+
 
 
 
@@ -114,7 +142,8 @@ return;
 snapshot.forEach((doc)=>{
 
 
-const oferta = doc.data();
+const oferta =
+doc.data();
 
 
 
@@ -126,30 +155,37 @@ crearTarjeta(oferta);
 
 
 
-}
+},
 
-catch(error){
-
-
-console.error(
-"Error cargando ofertas:",
-error
-);
+(error)=>{
 
 
-carrusel.innerHTML=
+console.error(error);
 
-`
+
+
+carrusel.innerHTML=`
+
 <div class="loader">
-Error de conexión Firebase
+
+Error conectando Firebase
+
 </div>
+
 `;
 
 
 }
 
 
+
+);
+
+
+
 }
+
+
 
 
 
@@ -164,23 +200,29 @@ function crearTarjeta(oferta){
 
 
 
-const card=document.createElement("div");
-
-
-card.className="oferta";
+const tarjeta =
+document.createElement("div");
 
 
 
-card.innerHTML=
+tarjeta.className="oferta";
 
 
-`
 
-<img src="${oferta.imagen || 'logo.png'}">
+tarjeta.innerHTML=`
+
+
+<img
+
+src="${oferta.imagen || 'logo.png'}"
+
+>
+
 
 
 
 <div class="info">
+
 
 
 <span class="descuento">
@@ -188,6 +230,8 @@ card.innerHTML=
 ${oferta.descuento || "OFERTA"}
 
 </span>
+
+
 
 
 
@@ -199,11 +243,15 @@ ${oferta.titulo}
 
 
 
+
+
 <p class="precioAntes">
 
 $${oferta.precioAntes || ""}
 
 </p>
+
+
 
 
 
@@ -215,15 +263,15 @@ $${oferta.precioFinal}
 
 
 
-<a 
+
+
+<a
 
 class="btnComprar"
 
 href="${oferta.link}"
 
 target="_blank"
-
-onclick="registrarClick()"
 
 >
 
@@ -233,13 +281,19 @@ onclick="registrarClick()"
 
 
 
+
+
 </div>
+
 
 `;
 
 
 
-carrusel.appendChild(card);
+
+
+carrusel.appendChild(tarjeta);
+
 
 
 }
@@ -252,36 +306,7 @@ carrusel.appendChild(card);
 
 
 
-// CONTADOR DE CLICS
-
-
-window.registrarClick=function(){
-
-
-let clicks =
-localStorage.getItem("clicks")
-||0;
-
-
-clicks++;
-
-
-localStorage.setItem(
-"clicks",
-clicks
-);
-
-
-};
-
-
-
-
-
-
-
 // INICIAR
 
 
 cargarOfertas();
-
