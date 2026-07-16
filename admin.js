@@ -32,7 +32,17 @@ from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+import {
 
+updateDoc,
+
+getDoc
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 import {
@@ -91,11 +101,31 @@ getFirestore(app);
 const auth =
 getAuth(app);
 
+import {
+
+onAuthStateChanged
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
+onAuthStateChanged(auth,(user)=>{
 
 
+if(!user){
+
+
+window.location.href="login.html";
+
+
+}
+
+
+});
 
 
 // REFERENCIAS
@@ -186,11 +216,14 @@ ${oferta.descuento || ""}
 
 
 
-<button 
+<button onclick="editarOferta('${item.id}')">
 
-onclick="eliminarOferta('${item.id}')"
+✏️ EDITAR
 
->
+</button>
+
+
+<button onclick="eliminarOferta('${item.id}')">
 
 🗑️ ELIMINAR
 
@@ -406,3 +439,140 @@ window.location.href=
 
 
 }
+
+let ofertaEditando = null;
+
+
+
+window.editarOferta = async(id)=>{
+
+
+ofertaEditando=id;
+
+
+const referencia =
+doc(db,"ofertas",id);
+
+
+
+const datos =
+await getDoc(referencia);
+
+
+
+const oferta =
+datos.data();
+
+
+
+
+editor.style.display="block";
+
+
+
+editTitulo.value =
+oferta.titulo;
+
+
+editImagen.value =
+oferta.imagen;
+
+
+editPrecioAntes.value =
+oferta.precioAntes;
+
+
+editPrecioFinal.value =
+oferta.precioFinal;
+
+
+editDescuento.value =
+oferta.descuento;
+
+
+editLink.value =
+oferta.link;
+
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+
+};
+
+
+
+
+
+
+
+guardarCambios.onclick =
+async()=>{
+
+
+if(!ofertaEditando)
+return;
+
+
+
+
+await updateDoc(
+
+doc(
+db,
+"ofertas",
+ofertaEditando
+),
+
+{
+
+
+titulo:
+editTitulo.value,
+
+
+imagen:
+editImagen.value,
+
+
+precioAntes:
+editPrecioAntes.value,
+
+
+precioFinal:
+editPrecioFinal.value,
+
+
+descuento:
+editDescuento.value,
+
+
+link:
+editLink.value
+
+
+}
+
+
+);
+
+
+
+alert(
+"✅ Oferta actualizada"
+);
+
+
+
+editor.style.display="none";
+
+ofertaEditando=null;
+
+
+};
