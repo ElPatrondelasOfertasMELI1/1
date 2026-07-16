@@ -1,11 +1,11 @@
 // =====================================
 // EL PATRÓN DE LAS OFERTAS
-// ADMIN.JS - PARTE 6
-// PUBLICAR EN FIRESTORE
+// ADMIN.JS PRO - PARTE 9
+// DASHBOARD + FIRESTORE
 // =====================================
 
 
-import { initializeApp } from 
+import { initializeApp } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -16,6 +16,12 @@ getFirestore,
 collection,
 
 addDoc,
+
+deleteDoc,
+
+doc,
+
+onSnapshot,
 
 serverTimestamp
 
@@ -29,8 +35,25 @@ from
 
 
 
+import {
+
+getAuth,
+
+signOut
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+
+
+
+
+
 // CONFIGURACIÓN FIREBASE
-// CAMBIA POR LOS DATOS DE TU PROYECTO
 
 
 const firebaseConfig = {
@@ -48,15 +71,11 @@ messagingSenderId:"TU_SENDER_ID",
 
 appId:"TU_APP_ID"
 
-
 };
 
 
 
 
-
-
-// INICIAR FIREBASE
 
 
 const app =
@@ -69,67 +88,200 @@ getFirestore(app);
 
 
 
-
-
-
-
-
-// BOTÓN PUBLICAR
-
-
-const boton =
-document.getElementById("publicar");
-
-
-
-
-
-boton.addEventListener(
-"click",
-async()=>{
-
-
-const titulo =
-document.getElementById("titulo").value;
-
-
-const imagen =
-document.getElementById("imagen").value;
-
-
-const precioAntes =
-document.getElementById("precioAntes").value;
-
-
-const precioFinal =
-document.getElementById("precioFinal").value;
-
-
-const descuento =
-document.getElementById("descuento").value;
-
-
-const link =
-document.getElementById("link").value;
+const auth =
+getAuth(app);
 
 
 
 
 
 
-// VALIDACIÓN
+
+
+// REFERENCIAS
+
+
+const lista =
+document.getElementById("listaOfertas");
+
+
+const contador =
+document.getElementById("totalOfertas");
+
+
+
+
+
+
+
+
+// MOSTRAR OFERTAS EN VIVO
+
+
+const ofertasRef =
+collection(db,"ofertas");
+
+
+
+
+onSnapshot(
+
+ofertasRef,
+
+(snapshot)=>{
+
+
+lista.innerHTML="";
+
+
+contador.innerHTML =
+snapshot.size;
+
+
+
+
+
+snapshot.forEach((item)=>{
+
+
+
+const oferta =
+item.data();
+
+
+
+
+
+lista.innerHTML +=
+
+
+
+`
+
+<div class="ofertaAdmin">
+
+
+<h3>
+
+${oferta.titulo}
+
+</h3>
+
+
+
+<p>
+
+💰 $${oferta.precioFinal}
+
+</p>
+
+
+
+<p>
+
+${oferta.descuento || ""}
+
+</p>
+
+
+
+
+<button 
+
+onclick="eliminarOferta('${item.id}')"
+
+>
+
+🗑️ ELIMINAR
+
+</button>
+
+
+
+</div>
+
+`;
+
+
+
+
+
+});
+
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// PUBLICAR OFERTA
+
+
+document
+.getElementById("publicar")
+.onclick = async()=>{
+
+
+
+
+
+const datos = {
+
+
+titulo:
+titulo.value,
+
+
+imagen:
+imagen.value,
+
+
+precioAntes:
+precioAntes.value,
+
+
+precioFinal:
+precioFinal.value,
+
+
+descuento:
+descuento.value,
+
+
+link:
+link.value,
+
+
+fecha:
+serverTimestamp(),
+
+
+activo:true
+
+
+};
+
+
+
 
 
 if(
-!titulo ||
-!imagen ||
-!precioFinal ||
-!link
+!datos.titulo ||
+!datos.precioFinal ||
+!datos.link
 ){
 
 
 alert(
-"Completa los campos obligatorios"
+"Completa los datos necesarios"
 );
 
 
@@ -142,48 +294,11 @@ return;
 
 
 
-
-
-try{
-
-
-
-boton.innerHTML=
-"PUBLICANDO...";
-
-
-
-
-
 await addDoc(
 
 collection(db,"ofertas"),
 
-{
-
-
-titulo,
-
-imagen,
-
-precioAntes,
-
-precioFinal,
-
-descuento,
-
-link,
-
-
-fecha:
-serverTimestamp(),
-
-
-activo:true
-
-
-}
-
+datos
 
 );
 
@@ -192,7 +307,7 @@ activo:true
 
 
 alert(
-"🔥 Oferta publicada correctamente"
+"🔥 Oferta publicada"
 );
 
 
@@ -200,49 +315,94 @@ alert(
 
 
 
-// LIMPIAR FORMULARIO
+document
+.querySelectorAll("input")
+.forEach(
+
+i=>i.value=""
+
+);
 
 
-document.querySelectorAll(
-"input"
+
+};
+
+
+
+
+
+
+
+
+
+// ELIMINAR OFERTA
+
+
+window.eliminarOferta =
+async(id)=>{
+
+
+
+const confirmar =
+confirm(
+"¿Eliminar esta oferta?"
+);
+
+
+
+if(!confirmar)
+return;
+
+
+
+
+
+await deleteDoc(
+
+doc(
+db,
+"ofertas",
+id
 )
 
-.forEach(
-(input)=>input.value=""
 );
 
 
 
-boton.innerHTML=
-"🔥 PUBLICAR OFERTA";
+
+};
 
 
 
+
+
+
+
+
+// CERRAR SESIÓN
+
+
+const salir =
+document.getElementById("salir");
+
+
+
+if(salir){
+
+
+salir.onclick =
+()=>{
+
+
+signOut(auth);
+
+
+
+window.location.href=
+"login.html";
+
+
+};
 
 
 }
-
-catch(error){
-
-
-
-console.error(error);
-
-
-
-alert(
-"Error al publicar oferta"
-);
-
-
-
-boton.innerHTML=
-"🔥 PUBLICAR OFERTA";
-
-
-}
-
-
-
-
-});
