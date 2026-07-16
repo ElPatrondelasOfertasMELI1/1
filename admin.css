@@ -1,51 +1,52 @@
-/* =======================================================
-   ADMIN PRO V2
+/* ===================================
    EL PATRÓN DE LAS OFERTAS
-   PARTE 2
-======================================================= */
+   ADMIN CSS PRO LIMPIO
+=================================== */
+
 
 *{
+box-sizing:border-box;
 margin:0;
 padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
 }
+
+
 
 body{
 
-background:#f4f6fb;
+font-family:'Inter',sans-serif;
 
-color:#222;
+background:
+radial-gradient(circle at top,#2b2100,#050505 50%);
 
-overflow-x:hidden;
-
-}
-
-.app{
-
-display:flex;
+color:white;
 
 min-height:100vh;
 
 }
 
-/* =========================
-SIDEBAR
-========================= */
 
-.sidebar{
 
-width:270px;
 
-background:#111827;
 
-color:#fff;
+.app{
 
 display:flex;
 
-flex-direction:column;
+}
 
-justify-content:space-between;
+
+
+
+
+/* SIDEBAR */
+
+
+.sidebar{
+
+width:260px;
+
+height:100vh;
 
 position:fixed;
 
@@ -53,397 +54,237 @@ left:0;
 
 top:0;
 
-bottom:0;
+background:#090909;
 
-box-shadow:4px 0 20px rgba(0,0,0,.15);
+border-right:1px solid #333;
 
-z-index:100;
+padding:25px;
 
 }
+
+
 
 .brand{
 
-padding:30px 20px;
-
 text-align:center;
 
-border-bottom:1px solid rgba(255,255,255,.08);
+margin-bottom:40px;
 
 }
+
+
 
 .logo{
 
-width:75px;
-
-height:75px;
-
-margin:auto;
-
-border-radius:50%;
-
-background:#ffd600;
-
-color:#111;
-
-font-size:36px;
-
-font-weight:900;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-margin-bottom:15px;
+font-size:45px;
 
 }
+
+
 
 .brand h2{
 
-font-size:24px;
+color:#FFD600;
 
 font-weight:900;
 
 }
 
+
+
 .brand span{
 
-display:block;
-
-margin-top:6px;
+color:#aaa;
 
 font-size:13px;
 
-opacity:.7;
-
-letter-spacing:2px;
-
 }
 
-/* =========================
-MENU
-========================= */
 
-.sidebar nav{
-
-padding:20px 12px;
-
-display:flex;
-
-flex-direction:column;
-
-gap:10px;
-
-}
 
 .menuItem{
 
 width:100%;
 
-border:none;
+padding:15px;
 
-background:none;
+margin-bottom:10px;
 
-color:#fff;
+border:0;
 
-padding:16px;
+border-radius:15px;
 
-border-radius:14px;
+background:#151515;
 
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-font-size:16px;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-.menuItem:hover{
-
-background:#1f2937;
-
-}
-
-.menuItem.activo{
-
-background:#ffd600;
-
-color:#111;
+color:white;
 
 font-weight:800;
 
-}
-
-/* =========================
-BOTTOM
-========================= */
-
-.bottomMenu{
-
-padding:20px;
-
-border-top:1px solid rgba(255,255,255,.08);
+cursor:pointer;
 
 }
+
+
+
+.menuItem:hover{
+
+background:#FFD600;
+
+color:black;
+
+}
+
+
+
+
 
 #salir{
 
-width:100%;
+position:absolute;
+
+bottom:25px;
+
+left:25px;
+
+right:25px;
 
 padding:15px;
 
-border:none;
+border:0;
 
-border-radius:12px;
+border-radius:20px;
 
-background:#ff4b4b;
+background:#ff3131;
 
-color:#fff;
-
-font-size:15px;
-
-font-weight:700;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-#salir:hover{
-
-transform:translateY(-2px);
-
-}
-
-/* =========================
-CONTENIDO
-========================= */
-
-.contenido{
-
-margin-left:270px;
-
-width:calc(100% - 270px);
-
-padding:30px;
-
-}
-
-/* =========================
-TOPBAR
-========================= */
-
-.topbar{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:30px;
-
-}
-
-.topbar h1{
-
-font-size:34px;
+color:white;
 
 font-weight:900;
 
 }
 
+
+
+
+
+
+
+/* CONTENIDO */
+
+
+.contenido{
+
+margin-left:260px;
+
+padding:30px;
+
+width:100%;
+
+}
+
+
+
+
+
+.topbar h1{
+
+font-size:32px;
+
+color:#FFD600;
+
+}
+
+
+
 .topbar p{
 
-margin-top:8px;
-
-color:#666;
+color:#aaa;
 
 }
 
-#nuevaOferta{
 
-background:#ffd600;
 
-border:none;
 
-padding:15px 24px;
 
-border-radius:12px;
 
-font-size:15px;
 
-font-weight:800;
+/* CARDS */
 
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-#nuevaOferta:hover{
-
-transform:translateY(-2px);
-
-box-shadow:0 12px 30px rgba(255,214,0,.35);
-
-}
-
-/* =========================
-CARDS
-========================= */
 
 .cards{
 
 display:grid;
 
-grid-template-columns:repeat(4,1fr);
+grid-template-columns:repeat(3,1fr);
 
 gap:20px;
 
-margin-bottom:30px;
+margin:30px 0;
 
 }
+
+
 
 .card{
 
-background:#fff;
+background:#111;
 
-border-radius:20px;
+border:1px solid #333;
 
 padding:25px;
 
-box-shadow:0 10px 30px rgba(0,0,0,.06);
+border-radius:25px;
 
-transition:.25s;
-
-}
-
-.card:hover{
-
-transform:translateY(-5px);
+text-align:center;
 
 }
 
-.card span{
 
-font-size:32px;
-
-display:block;
-
-margin-bottom:15px;
-
-}
 
 .card h3{
 
-font-size:32px;
+font-size:35px;
 
-font-weight:900;
-
-margin-bottom:8px;
+color:#FFD600;
 
 }
 
-.card p{
 
-color:#666;
 
-font-size:15px;
 
-}
 
-/* =========================
-PANEL
-========================= */
+/* PANELES */
+
 
 .panel{
 
-background:#fff;
+background:#111;
 
-border-radius:22px;
+border:1px solid #333;
 
 padding:25px;
 
-box-shadow:0 10px 30px rgba(0,0,0,.06);
+border-radius:25px;
 
-margin-bottom:30px;
+margin-bottom:25px;
 
 }
+
+
+
+
 
 .panel h2{
 
-font-size:22px;
-
 margin-bottom:20px;
 
-font-weight:900;
-
 }
 
-#graficaClicks{
 
-width:100%;
 
-max-height:350px;
 
-}
 
-/* =========================
-RESPONSIVE
-========================= */
+/* FORMULARIO */
 
-@media(max-width:900px){
-
-.sidebar{
-
-width:80px;
-
-}
-
-.brand h2,
-.brand span,
-.menuItem span{
-
-display:none;
-
-}
-
-.contenido{
-
-margin-left:80px;
-
-width:calc(100% - 80px);
-
-padding:20px;
-
-}
-
-.cards{
-
-grid-template-columns:1fr;
-
-}
-
-.topbar{
-
-flex-direction:column;
-
-align-items:flex-start;
-
-gap:20px;
-
-}
-
-}
 
 .formGrid{
 
@@ -451,199 +292,154 @@ display:grid;
 
 grid-template-columns:repeat(2,1fr);
 
-gap:20px;
-
-margin-top:20px;
+gap:15px;
 
 }
 
-.campo{
 
-display:flex;
 
-flex-direction:column;
+input,
+select{
 
-gap:8px;
+width:100%;
 
-}
+padding:15px;
 
-.campo label{
+background:#222;
 
-font-weight:700;
+border:0;
 
-font-size:14px;
+border-radius:15px;
 
-}
-
-.campo input,
-.campo select{
-
-padding:14px;
-
-border:1px solid #ddd;
-
-border-radius:12px;
+color:white;
 
 font-size:15px;
 
-outline:none;
-
 }
 
-.campo input:focus,
-.campo select:focus{
 
-border-color:#ffd600;
 
-}
+
 
 .preview{
 
-width:180px;
+width:150px;
 
-height:180px;
-
-border-radius:18px;
+height:150px;
 
 object-fit:cover;
 
-background:#f2f2f2;
+border-radius:20px;
 
-border:2px dashed #ddd;
-
-}
-
-.accionesFormulario{
-
-display:flex;
-
-gap:15px;
-
-margin-top:25px;
-
-flex-wrap:wrap;
+border:2px solid #FFD600;
 
 }
 
-.btnPrincipal,
-.btnSecundario,
-.btnCancelar{
 
-border:none;
 
-padding:15px 24px;
 
-border-radius:12px;
 
-font-weight:800;
+#publicar{
 
-cursor:pointer;
-
-font-size:15px;
-
-}
-
-.btnPrincipal{
-
-background:#ffd600;
-
-}
-
-.btnSecundario{
-
-background:#0ea5e9;
-
-color:#fff;
-
-}
-
-.btnCancelar{
-
-background:#ef4444;
-
-color:#fff;
-
-}
-
-@media(max-width:900px){
-
-.formGrid{
-
-grid-template-columns:1fr;
-
-}
-
-.preview{
+margin-top:20px;
 
 width:100%;
 
-height:220px;
+padding:18px;
+
+background:#FFD600;
+
+color:black;
+
+border:0;
+
+border-radius:20px;
+
+font-size:18px;
+
+font-weight:900;
 
 }
 
-}
 
-.barraCarga{
 
-width:100%;
 
-height:8px;
 
-background:#ececec;
+
+
+/* BARRA CARGA */
+
+
+#barraCarga{
+
+height:12px;
+
+background:#222;
 
 border-radius:20px;
 
 overflow:hidden;
 
-margin-top:12px;
-
-display:none;
+margin-top:20px;
 
 }
 
-#progresoCarga{
 
-width:0%;
+
+#progresoCarga{
 
 height:100%;
 
-background:#ffd600;
+width:0%;
+
+background:#FFD600;
 
 transition:.3s;
 
 }
 
+
+
 #estadoSubida{
 
 margin-top:10px;
 
-font-weight:700;
-
-color:#666;
+color:#FFD600;
 
 }
+
+
+
+
+
+/* LISTA OFERTAS */
+
+
+#listaOfertas{
+
+display:grid;
+
+gap:15px;
+
+}
+
+
 
 .ofertaAdmin{
 
-display:flex;
+background:#171717;
 
-align-items:center;
+padding:20px;
 
-gap:20px;
+border-radius:20px;
 
-background:#fff;
-
-padding:18px;
-
-border-radius:18px;
-
-margin-bottom:18px;
-
-box-shadow:0 8px 20px rgba(0,0,0,.08);
+border:1px solid #333;
 
 }
 
-.miniatura{
+
+
+.ofertaAdmin img{
 
 width:100px;
 
@@ -651,87 +447,88 @@ height:100px;
 
 object-fit:cover;
 
-border-radius:14px;
+border-radius:15px;
 
 }
 
-.datosOferta{
 
-flex:1;
 
-}
 
-.datosOferta h3{
 
-margin-bottom:8px;
+.ofertaAdmin button{
 
-font-size:18px;
+margin-top:15px;
 
-font-weight:800;
+padding:12px;
 
-}
+border:0;
 
-.categoria,
-.precio,
-.descuento,
-.estado{
+border-radius:15px;
 
-margin:5px 0;
+background:#ff3131;
+
+color:white;
+
+font-weight:900;
 
 }
 
-.accionesOferta{
 
-display:flex;
 
-flex-direction:column;
 
-gap:10px;
 
-}
 
-.accionesOferta button{
 
-padding:10px 16px;
+#graficaClicks{
 
-border:none;
+width:100%!important;
 
-border-radius:10px;
-
-cursor:pointer;
-
-font-weight:700;
+max-height:350px;
 
 }
 
-.barraBusqueda{
 
-margin:20px 0;
 
-}
 
-#buscarOferta{
 
-width:100%;
+/* MOVIL */
 
-padding:15px 20px;
 
-border-radius:14px;
+@media(max-width:800px){
 
-border:1px solid #ddd;
 
-font-size:16px;
+.sidebar{
 
-outline:none;
-
-transition:.25s;
+display:none;
 
 }
 
-#buscarOferta:focus{
 
-border-color:#ffd600;
 
-box-shadow:0 0 0 4px rgba(255,214,0,.2);
+.contenido{
+
+margin:0;
+
+padding:15px;
+
+}
+
+
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.formGrid{
+
+grid-template-columns:1fr;
+
+}
+
+
 
 }
