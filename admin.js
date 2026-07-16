@@ -131,15 +131,26 @@ window.location.href="login.html";
 const lista =
 document.getElementById("listaOfertas");
 
+const buscarOferta =
+document.getElementById("buscarOferta");
+
+let textoBusqueda = "";
+
+if(buscarOferta){
+
+buscarOferta.oninput=(e)=>{
+
+textoBusqueda =
+e.target.value.toLowerCase();
+
+mostrarOfertas();
+
+};
+
+}
 
 const contador =
 document.getElementById("totalOfertas");
-
-
-
-
-
-
 
 
 // MOSTRAR OFERTAS EN VIVO
