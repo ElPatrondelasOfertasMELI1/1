@@ -1,0 +1,446 @@
+/* =======================================================
+   ADMIN PRO V2
+   EL PATRÓN DE LAS OFERTAS
+   PARTE 2
+======================================================= */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+
+background:#f4f6fb;
+
+color:#222;
+
+overflow-x:hidden;
+
+}
+
+.app{
+
+display:flex;
+
+min-height:100vh;
+
+}
+
+/* =========================
+SIDEBAR
+========================= */
+
+.sidebar{
+
+width:270px;
+
+background:#111827;
+
+color:#fff;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:space-between;
+
+position:fixed;
+
+left:0;
+
+top:0;
+
+bottom:0;
+
+box-shadow:4px 0 20px rgba(0,0,0,.15);
+
+z-index:100;
+
+}
+
+.brand{
+
+padding:30px 20px;
+
+text-align:center;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.logo{
+
+width:75px;
+
+height:75px;
+
+margin:auto;
+
+border-radius:50%;
+
+background:#ffd600;
+
+color:#111;
+
+font-size:36px;
+
+font-weight:900;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin-bottom:15px;
+
+}
+
+.brand h2{
+
+font-size:24px;
+
+font-weight:900;
+
+}
+
+.brand span{
+
+display:block;
+
+margin-top:6px;
+
+font-size:13px;
+
+opacity:.7;
+
+letter-spacing:2px;
+
+}
+
+/* =========================
+MENU
+========================= */
+
+.sidebar nav{
+
+padding:20px 12px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+}
+
+.menuItem{
+
+width:100%;
+
+border:none;
+
+background:none;
+
+color:#fff;
+
+padding:16px;
+
+border-radius:14px;
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.menuItem:hover{
+
+background:#1f2937;
+
+}
+
+.menuItem.activo{
+
+background:#ffd600;
+
+color:#111;
+
+font-weight:800;
+
+}
+
+/* =========================
+BOTTOM
+========================= */
+
+.bottomMenu{
+
+padding:20px;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+#salir{
+
+width:100%;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:#ff4b4b;
+
+color:#fff;
+
+font-size:15px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+#salir:hover{
+
+transform:translateY(-2px);
+
+}
+
+/* =========================
+CONTENIDO
+========================= */
+
+.contenido{
+
+margin-left:270px;
+
+width:calc(100% - 270px);
+
+padding:30px;
+
+}
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:30px;
+
+}
+
+.topbar h1{
+
+font-size:34px;
+
+font-weight:900;
+
+}
+
+.topbar p{
+
+margin-top:8px;
+
+color:#666;
+
+}
+
+#nuevaOferta{
+
+background:#ffd600;
+
+border:none;
+
+padding:15px 24px;
+
+border-radius:12px;
+
+font-size:15px;
+
+font-weight:800;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+#nuevaOferta:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 12px 30px rgba(255,214,0,.35);
+
+}
+
+/* =========================
+CARDS
+========================= */
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:20px;
+
+margin-bottom:30px;
+
+}
+
+.card{
+
+background:#fff;
+
+border-radius:20px;
+
+padding:25px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+transition:.25s;
+
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.card span{
+
+font-size:32px;
+
+display:block;
+
+margin-bottom:15px;
+
+}
+
+.card h3{
+
+font-size:32px;
+
+font-weight:900;
+
+margin-bottom:8px;
+
+}
+
+.card p{
+
+color:#666;
+
+font-size:15px;
+
+}
+
+/* =========================
+PANEL
+========================= */
+
+.panel{
+
+background:#fff;
+
+border-radius:22px;
+
+padding:25px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.06);
+
+margin-bottom:30px;
+
+}
+
+.panel h2{
+
+font-size:22px;
+
+margin-bottom:20px;
+
+font-weight:900;
+
+}
+
+#graficaClicks{
+
+width:100%;
+
+max-height:350px;
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+.sidebar{
+
+width:80px;
+
+}
+
+.brand h2,
+.brand span,
+.menuItem span{
+
+display:none;
+
+}
+
+.contenido{
+
+margin-left:80px;
+
+width:calc(100% - 80px);
+
+padding:20px;
+
+}
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.topbar{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+}
