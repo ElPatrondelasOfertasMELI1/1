@@ -224,12 +224,243 @@ Oferta más vista
 
 <section id="contenedorPaneles">
 
-<!-- Aquí se cargarán dinámicamente
-Ofertas
-Cupones
-Usuarios
-Configuración
-etc -->
+<section id="panelOfertas" class="panel">
+
+<h2>
+
+🛒 Gestión de Ofertas
+
+</h2>
+
+<div class="formGrid">
+
+<div class="campo">
+
+<label>
+
+Título
+
+</label>
+
+<input
+id="titulo"
+type="text"
+placeholder="Ej. Nintendo Switch OLED">
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Categoría
+
+</label>
+
+<select id="categoria">
+
+<option>Tecnología</option>
+
+<option>Gaming</option>
+
+<option>Celulares</option>
+
+<option>Hogar</option>
+
+<option>Moda</option>
+
+<option>Juguetes</option>
+
+<option>Belleza</option>
+
+<option>Supermercado</option>
+
+</select>
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Precio antes
+
+</label>
+
+<input
+id="precioAntes"
+type="text"
+placeholder="$5,999">
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Precio final
+
+</label>
+
+<input
+id="precioFinal"
+type="text"
+placeholder="$4,799">
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Descuento
+
+</label>
+
+<input
+id="descuento"
+type="text"
+placeholder="20% OFF">
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Link Mercado Libre
+
+</label>
+
+<input
+id="link"
+type="url"
+placeholder="https://...">
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Imagen
+
+</label>
+
+<input
+type="file"
+id="archivoImagen"
+accept="image/*">
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Vista previa
+
+</label>
+
+<img
+id="vistaImagen"
+class="preview">
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Estado
+
+</label>
+
+<select id="estado">
+
+<option value="true">
+
+🟢 Activa
+
+</option>
+
+<option value="false">
+
+🔴 Agotada
+
+</option>
+
+</select>
+
+</div>
+
+<div class="campo">
+
+<label>
+
+Destacada
+
+</label>
+
+<select id="destacada">
+
+<option value="false">
+
+No
+
+</option>
+
+<option value="true">
+
+Sí
+
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="accionesFormulario">
+
+<button id="publicar" class="btnPrincipal">
+
+🚀 Publicar oferta
+
+</button>
+
+<button id="guardarCambios" class="btnSecundario">
+
+💾 Guardar cambios
+
+</button>
+
+<button id="cancelarEdicion" class="btnCancelar">
+
+❌ Cancelar
+
+</button>
+
+</div>
+
+</section>
+
+<section class="panel">
+
+<h2>
+
+📦 Ofertas publicadas
+
+</h2>
+
+<div id="listaOfertas">
+
+Cargando ofertas...
+
+</div>
+
+</section>
 
 </section>
 
