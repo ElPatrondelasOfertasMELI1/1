@@ -289,9 +289,9 @@ return await getDownloadURL(imagenRef);
 
 // PUBLICAR OFERTA
 
-
 botonPublicar.onclick=async()=>{
 
+alert("BOTÓN FUNCIONA");
 
 try{
 
