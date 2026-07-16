@@ -380,60 +380,52 @@ item.data();
 
 
 
-lista.innerHTML +=
-
-
-
-`
+lista.innerHTML += `
 
 <div class="ofertaAdmin">
 
+<img
+class="miniatura"
+src="${oferta.imagen || 'logo.png'}"
+alt="${oferta.titulo}">
 
-<h3>
+<div class="datosOferta">
 
-${oferta.titulo}
+<h3>${oferta.titulo}</h3>
 
-</h3>
+<p class="categoria">
+📂 ${oferta.categoria || "Sin categoría"}
+</p>
 
-
-
-<p>
-
+<p class="precio">
 💰 $${oferta.precioFinal}
-
 </p>
 
-
-
-<p>
-
+<p class="descuento">
 ${oferta.descuento || ""}
-
 </p>
 
+<p class="estado">
+${oferta.activo ? "🟢 Activa" : "🔴 Agotada"}
+</p>
 
+</div>
 
+<div class="accionesOferta">
 
 <button onclick="editarOferta('${item.id}')">
-
-✏️ EDITAR
-
+✏️ Editar
 </button>
-
 
 <button onclick="eliminarOferta('${item.id}')">
-
-🗑️ ELIMINAR
-
+🗑️ Eliminar
 </button>
 
-
+</div>
 
 </div>
 
 `;
-
-
 
 
 
@@ -444,13 +436,6 @@ ${oferta.descuento || ""}
 }
 
 );
-
-
-
-
-
-
-
 
 
 // =====================================
