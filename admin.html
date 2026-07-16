@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Admin PRO | El Patrón de las Ofertas</title>
 
@@ -16,13 +16,17 @@
 
 </head>
 
+
 <body>
 
+
 <div class="app">
+
 
 <!-- SIDEBAR -->
 
 <aside class="sidebar">
+
 
 <div class="brand">
 
@@ -40,77 +44,66 @@ ADMIN PRO
 
 </div>
 
+
+
 <nav>
 
-<button class="menuItem activo" data-panel="dashboard">
 
-🏠
-<span>Dashboard</span>
+<button class="menuItem activo">
 
-</button>
-
-<button class="menuItem" data-panel="ofertas">
-
-🛒
-<span>Ofertas</span>
+🏠 Dashboard
 
 </button>
 
-<button class="menuItem" data-panel="cupones">
 
-🎟️
-<span>Cupones</span>
+<button class="menuItem">
 
-</button>
-
-<button class="menuItem" data-panel="categorias">
-
-📂
-<span>Categorías</span>
+🛒 Ofertas
 
 </button>
 
-<button class="menuItem" data-panel="usuarios">
 
-👤
-<span>Usuarios</span>
+<button class="menuItem">
 
-</button>
-
-<button class="menuItem" data-panel="estadisticas">
-
-📊
-<span>Estadísticas</span>
+🎟️ Cupones
 
 </button>
 
-<button class="menuItem" data-panel="configuracion">
 
-⚙️
-<span>Configuración</span>
+<button class="menuItem">
+
+📊 Estadísticas
 
 </button>
+
 
 </nav>
 
-<div class="bottomMenu">
+
 
 <button id="salir">
 
-🚪
-Cerrar sesión
+🚪 Cerrar sesión
 
 </button>
 
-</div>
+
 
 </aside>
 
+
+
+
+
 <!-- CONTENIDO -->
+
 
 <main class="contenido">
 
+
+
 <header class="topbar">
+
 
 <div>
 
@@ -118,36 +111,32 @@ Cerrar sesión
 Dashboard
 </h1>
 
+
 <p>
-Bienvenido al centro de control.
+Centro de control de ofertas
 </p>
 
-</div>
-
-<div class="accionesTop">
-
-<button id="nuevaOferta">
-
-➕ Nueva oferta
-
-</button>
 
 </div>
+
+
 
 </header>
 
+
+
+
+
+<!-- TARJETAS -->
+
+
 <section class="cards">
+
 
 <div class="card">
 
-<span>
-🛒
-</span>
-
 <h3 id="totalOfertas">
-
 0
-
 </h3>
 
 <p>
@@ -156,16 +145,13 @@ Ofertas publicadas
 
 </div>
 
+
+
+
 <div class="card">
 
-<span>
-👁️
-</span>
-
 <h3 id="totalClicks">
-
 0
-
 </h3>
 
 <p>
@@ -174,306 +160,73 @@ Clics totales
 
 </div>
 
-<div class="card">
 
-<span>
-👥
-</span>
 
-<h3 id="usuariosOnline">
-
-0
-
-</h3>
-
-<p>
-Usuarios conectados
-</p>
-
-</div>
 
 <div class="card">
-
-<span>
-🏆
-</span>
 
 <h3 id="topOferta">
-
 -
-
 </h3>
 
 <p>
-Oferta más vista
+Más vista
 </p>
 
 </div>
+
+
 
 </section>
 
+
+
+
+
+
 <section class="panel">
+
 
 <h2>
 📈 Rendimiento
 </h2>
 
+
 <canvas id="graficaClicks"></canvas>
 
+
 </section>
 
-<section id="contenedorPaneles">
 
-<section id="panelOfertas" class="panel">
 
-<h2>
 
-🛒 Gestión de Ofertas
 
-</h2>
 
-<div class="formGrid">
 
-<div class="campo">
 
-<label>
+<!-- FORMULARIO -->
 
-Título
-
-</label>
-
-<input
-id="titulo"
-type="text"
-placeholder="Ej. Nintendo Switch OLED">
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Categoría
-
-</label>
-
-<select id="categoria">
-
-<option>Tecnología</option>
-
-<option>Gaming</option>
-
-<option>Celulares</option>
-
-<option>Hogar</option>
-
-<option>Moda</option>
-
-<option>Juguetes</option>
-
-<option>Belleza</option>
-
-<option>Supermercado</option>
-
-</select>
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Precio antes
-
-</label>
-
-<input
-id="precioAntes"
-type="text"
-placeholder="$5,999">
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Precio final
-
-</label>
-
-<input
-id="precioFinal"
-type="text"
-placeholder="$4,799">
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Descuento
-
-</label>
-
-<input
-id="descuento"
-type="text"
-placeholder="20% OFF">
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Link Mercado Libre
-
-</label>
-
-<input
-id="link"
-type="url"
-placeholder="https://...">
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Imagen
-
-</label>
-
-<input
-type="file"
-id="archivoImagen"
-accept="image/*">
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Vista previa
-
-</label>
-
-<img
-id="vistaImagen"
-class="preview">
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Estado
-
-</label>
-
-<select id="estado">
-
-<option value="true">
-
-🟢 Activa
-
-</option>
-
-<option value="false">
-
-🔴 Agotada
-
-</option>
-
-</select>
-
-</div>
-
-<div class="campo">
-
-<label>
-
-Destacada
-
-</label>
-
-<select id="destacada">
-
-<option value="false">
-
-No
-
-</option>
-
-<option value="true">
-
-Sí
-
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-<div class="accionesFormulario">
-
-<button id="publicar" class="btnPrincipal">
-
-🚀 Publicar oferta
-
-</button>
-
-<div id="barraCarga">
-<div id="progresoCarga"></div>
-</div>
-
-<p id="estadoSubida"></p>
-
-<button id="guardarCambios" class="btnSecundario">
-
-💾 Guardar cambios
-
-</button>
-
-<button id="cancelarEdicion" class="btnCancelar">
-
-❌ Cancelar
-
-</button>
-
-</div>
-
-</section>
 
 <section class="panel">
 
 
 <h2>
-
-📦 Ofertas publicadas
-
+🚀 Publicar oferta
 </h2>
 
-<div class="filtrosAdmin">
+
+
+<div class="formGrid">
+
+
 
 <input
-id="buscarOferta"
-placeholder="🔍 Buscar oferta..."
->
+id="titulo"
+placeholder="Título oferta">
 
 
-<select id="filtroCategoria">
 
-<option value="todas">
-Todas las categorías
-</option>
+<select id="categoria">
 
 <option value="Tecnología">
 Tecnología
@@ -495,44 +248,285 @@ Hogar
 Moda
 </option>
 
+<option value="Juguetes">
+Juguetes
+</option>
+
+
 </select>
+
+
+
+
+
+<input
+id="precioAntes"
+placeholder="Precio antes">
+
+
+
+
+
+<input
+id="precioFinal"
+placeholder="Precio final">
+
+
+
+
+
+<input
+id="descuento"
+placeholder="Descuento">
+
+
+
+
+
+<input
+id="link"
+placeholder="Link Mercado Libre">
+
+
+
+
+
+
+<input
+type="file"
+id="archivoImagen"
+accept="image/*">
+
+
+
+
+
+<img
+id="vistaImagen"
+class="preview">
+
+
+
+
+
+<select id="estado">
+
+
+<option value="true">
+
+🟢 Activa
+
+</option>
+
+
+<option value="false">
+
+🔴 Agotada
+
+</option>
+
+
+</select>
+
+
+
+
+
+<select id="destacada">
+
+
+<option value="false">
+
+No destacada
+
+</option>
+
+
+<option value="true">
+
+⭐ Destacada
+
+</option>
+
+
+</select>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- BARRA CARGA -->
+
+
+<div id="barraCarga" style="display:none">
+
+
+<div id="progresoCarga"></div>
+
+
+</div>
+
+
+
+<p id="estadoSubida"></p>
+
+
+
+
+
+
+<button id="publicar">
+
+🚀 Publicar oferta
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- BUSCADOR -->
+
+
+<section class="panel">
+
+
+<h2>
+📦 Ofertas publicadas
+</h2>
+
+
+
+
+<input
+id="buscarOferta"
+placeholder="🔍 Buscar oferta">
+
+
+
+
+
+<select id="filtroCategoria">
+
+
+<option value="todas">
+
+Todas
+
+</option>
+
+
+<option value="Tecnología">
+
+Tecnología
+
+</option>
+
+
+<option value="Gaming">
+
+Gaming
+
+</option>
+
+
+<option value="Celulares">
+
+Celulares
+
+</option>
+
+
+<option value="Hogar">
+
+Hogar
+
+</option>
+
+
+</select>
+
+
+
 
 
 
 <select id="ordenarOferta">
 
+
 <option value="reciente">
+
 Más recientes
+
 </option>
+
+
 
 <option value="clics">
+
 Más vistas
+
 </option>
 
+
+
 <option value="destacadas">
+
 Destacadas
+
 </option>
+
+
 
 </select>
 
 
-</div>
+
+
+
 
 <div id="listaOfertas">
 
-Cargando ofertas...
+Cargando...
 
 </div>
 
-</section>
+
 
 </section>
+
+
+
+
+
+
 
 </main>
 
+
 </div>
 
+
+
+
+
 <script type="module" src="admin.js"></script>
+
 
 </body>
 
