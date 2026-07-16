@@ -59,17 +59,13 @@ Salir
 🚀 Panel PRO
 </h1>
 
-
-
-
 <div class="stats">
-
 
 
 <div class="cardStat">
 
 <h3>
-🔥 Ofertas
+🛒 Ofertas
 </h3>
 
 <strong id="totalOfertas">
@@ -80,12 +76,10 @@ Salir
 
 
 
-
-
 <div class="cardStat">
 
 <h3>
-👁️ Clics
+👁️ Clics Totales
 </h3>
 
 <strong id="totalClicks">
@@ -96,6 +90,17 @@ Salir
 
 
 
+<div class="cardStat">
+
+<h3>
+🏆 Top Oferta
+</h3>
+
+<strong id="topOferta">
+-
+</strong>
+
+</div>
 
 
 
@@ -112,15 +117,23 @@ Activo
 </div>
 
 
-
 </div>
 
 
 
 
 
+<div class="panel">
+
+<h2>
+📊 Estadísticas
+</h2>
 
 
+<canvas id="graficaClicks"></canvas>
+
+
+</div>
 
 <div class="panel">
 
@@ -243,9 +256,7 @@ Cargando...
 
 </div>
 
-
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script type="module" src="admin.js"></script>
 
