@@ -110,10 +110,9 @@ window.location.href="admin.html";
 
 catch(error){
 
+console.error(error);
 
-mensaje.innerHTML =
-"❌ Datos incorrectos";
-
+mensaje.innerHTML = error.code;
 
 }
 
