@@ -34,6 +34,18 @@ from
 
 import {
 
+onSnapshot,
+
+collection
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+
 updateDoc,
 
 getDoc
@@ -214,7 +226,208 @@ document.getElementById("totalOfertas");
 const ofertasRef =
 collection(db,"ofertas");
 
+// ===============================
+// DASHBOARD ESTADÍSTICAS PRO
+// ===============================
 
+
+const totalClicks =
+document.getElementById("totalClicks");
+
+
+const topOferta =
+document.getElementById("topOferta");
+
+
+
+let grafica;
+
+
+
+onSnapshot(
+
+ofertasRef,
+
+(snapshot)=>{
+
+
+let clicksTotales = 0;
+
+let nombres=[];
+
+let valores=[];
+
+
+let mayor = 0;
+
+let ganadora="-";
+
+
+
+
+snapshot.forEach((item)=>{
+
+
+const oferta=item.data();
+
+
+
+const clicks =
+oferta.clics || 0;
+
+
+
+clicksTotales += clicks;
+
+
+
+nombres.push(
+oferta.titulo
+);
+
+
+
+valores.push(
+clicks
+);
+
+
+
+
+
+if(clicks > mayor){
+
+
+mayor = clicks;
+
+ganadora =
+oferta.titulo;
+
+
+}
+
+
+
+});
+
+
+
+
+
+totalClicks.innerHTML =
+clicksTotales;
+
+
+
+topOferta.innerHTML =
+ganadora;
+
+
+
+crearGrafica(
+nombres,
+valores
+);
+
+
+
+});
+
+
+
+
+
+
+
+function crearGrafica(
+nombres,
+valores
+){
+
+
+const ctx =
+document
+.getElementById(
+"graficaClicks"
+);
+
+
+
+if(grafica){
+
+grafica.destroy();
+
+}
+
+
+
+
+grafica =
+new Chart(
+
+ctx,
+
+{
+
+
+type:"bar",
+
+
+data:{
+
+
+labels:nombres,
+
+
+datasets:[{
+
+
+label:
+"Clics",
+
+
+data:valores
+
+
+}]
+
+
+},
+
+
+
+options:{
+
+
+responsive:true,
+
+
+plugins:{
+
+
+legend:{
+
+
+display:false
+
+
+}
+
+
+}
+
+
+}
+
+
+
+}
+
+);
+
+
+
+}
 
 
 onSnapshot(
