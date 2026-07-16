@@ -105,6 +105,10 @@ getStorage(app);
 const auth =
 getAuth(app);
 
+const barraCarga=document.getElementById("barraCarga");
+const progresoCarga=document.getElementById("progresoCarga");
+const estadoSubida=document.getElementById("estadoSubida");
+const botonPublicar=document.getElementById("publicar");
 
 onAuthStateChanged(auth,(user)=>{
 
@@ -482,6 +486,8 @@ if (archivoImagen) {
 }
 
 // Subir imagen a Firebase Storage
+
+
 async function subirImagen() {
 
   const archivo = archivoImagen.files[0];
@@ -503,7 +509,21 @@ document.getElementById("publicar").onclick = async () => {
 
   try {
 
+botonPublicar.disabled=true;
+
+botonPublicar.innerHTML="⏳ Publicando...";
+
+barraCarga.style.display="block";
+
+progresoCarga.style.width="20%";
+
+estadoSubida.innerHTML="Subiendo imagen...";
+
     const imagen = await subirImagen();
+    
+    progresoCarga.style.width="70%";
+
+estadoSubida.innerHTML="Guardando oferta...";
 
     const datos = {
 
@@ -541,6 +561,24 @@ document.getElementById("publicar").onclick = async () => {
 
     await addDoc(collection(db, "ofertas"), datos);
 
+progresoCarga.style.width="100%";
+
+estadoSubida.innerHTML="✅ Oferta publicada";
+
+setTimeout(()=>{
+
+barraCarga.style.display="none";
+
+progresoCarga.style.width="0%";
+
+estadoSubida.innerHTML="";
+
+botonPublicar.disabled=false;
+
+botonPublicar.innerHTML="🚀 Publicar oferta";
+
+},1200);
+
     alert("✅ Oferta publicada correctamente.");
 
     document.querySelectorAll("input").forEach(i => {
@@ -562,8 +600,6 @@ document.getElementById("publicar").onclick = async () => {
     alert("Error al publicar la oferta.");
 
   }
-
-};
 
 };
 
