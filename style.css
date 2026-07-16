@@ -1167,3 +1167,17 @@ grid-template-columns:1fr;
 
 
 }
+
+#graficaClicks{
+
+width:100% !important;
+
+max-height:350px;
+
+background:#111;
+
+border-radius:20px;
+
+padding:15px;
+
+}
