@@ -638,49 +638,167 @@ botonPublicar.innerHTML=
 };
 
 // =======================================
-// PARTE 2
-// IMAGEN + PUBLICAR OFERTA
+// ADMIN.JS PRO V2
+// PARTE 3
+// CARGAR OFERTAS + TARJETAS ADMIN
 // =======================================
 
 
-// ===============================
-// VISTA PREVIA IMAGEN
-// ===============================
+// ESCUCHAR FIRESTORE EN TIEMPO REAL
+
+onSnapshot(
+
+ofertasRef,
+
+(snapshot)=>{
 
 
-if(archivoImagen){
+ofertas=[];
 
 
-archivoImagen.addEventListener("change",(e)=>{
+let clicksTotal = 0;
 
+let mayorClicks = 0;
 
-const archivo =
-e.target.files[0];
-
-
-if(!archivo)
-return;
-
-
-
-const lector =
-new FileReader();
+let ganadora = "-";
 
 
 
-lector.onload=(evento)=>{
+snapshot.forEach((item)=>{
 
 
-vistaImagen.src =
-evento.target.result;
+const oferta = {
 
+id:item.id,
+
+...item.data()
 
 };
 
 
 
-lector.readAsDataURL(archivo);
+ofertas.push(oferta);
 
+
+
+const clicks =
+oferta.clics || 0;
+
+
+
+clicksTotal += clicks;
+
+
+
+if(clicks > mayorClicks){
+
+
+mayorClicks = clicks;
+
+
+ganadora =
+oferta.titulo;
+
+
+}
+
+
+
+});
+
+
+
+
+// ACTUALIZAR DASHBOARD
+
+if(contador){
+
+contador.innerHTML =
+snapshot.size;
+
+}
+
+
+if(totalClicks){
+
+totalClicks.innerHTML =
+clicksTotal;
+
+}
+
+
+if(topOferta){
+
+topOferta.innerHTML =
+ganadora;
+
+}
+
+
+
+// MOSTRAR LISTA
+
+mostrarOfertas();
+
+
+
+});
+
+
+
+
+
+
+// =======================================
+// MOSTRAR OFERTAS EN ADMIN
+// =======================================
+
+
+function mostrarOfertas(){
+
+
+
+if(!lista)
+return;
+
+
+
+lista.innerHTML = "";
+
+
+
+
+// APLICAR BUSCADOR
+
+let resultado =
+[...ofertas];
+
+
+
+resultado = resultado.filter((oferta)=>{
+
+
+return oferta.titulo
+
+.toLowerCase()
+
+.includes(textoBusqueda);
+
+
+});
+
+
+
+
+// FILTRO CATEGORIA
+
+if(categoriaSeleccionada !== "todas"){
+
+
+resultado = resultado.filter((oferta)=>{
+
+
+return oferta.categoria === categoriaSeleccionada;
 
 
 });
@@ -691,62 +809,39 @@ lector.readAsDataURL(archivo);
 
 
 
-// ===============================
-// SUBIR IMAGEN STORAGE
-// ===============================
+
+// ORDENAR
+
+if(ordenSeleccionado==="clics"){
 
 
-async function subirImagen(){
+resultado.sort((a,b)=>{
 
 
-const archivo =
-archivoImagen.files[0];
+return (b.clics || 0) -
+
+(a.clics || 0);
 
 
-if(!archivo){
+});
 
-return "";
 
 }
 
 
 
-const nombre =
-
-Date.now()+"_"+archivo.name;
+if(ordenSeleccionado==="destacadas"){
 
 
-
-const referencia =
-
-ref(
-storage,
-"ofertas/"+nombre
-);
+resultado.sort((a,b)=>{
 
 
+return Number(b.destacada) -
 
-await uploadBytes(
-
-referencia,
-
-archivo
-
-);
+Number(a.destacada);
 
 
-
-const url =
-
-await getDownloadURL(
-
-referencia
-
-);
-
-
-
-return url;
+});
 
 
 }
@@ -755,118 +850,182 @@ return url;
 
 
 
+
+
+resultado.forEach((oferta)=>{
+
+
+
+lista.innerHTML +=
+
+
+`
+
+<div class="ofertaAdmin">
+
+
+<img
+
+class="miniatura"
+
+src="${oferta.imagen || 'logo.png'}"
+
+>
+
+
+
+<div class="datosOferta">
+
+
+<h3>
+
+${oferta.titulo}
+
+</h3>
+
+
+
+<p>
+
+📂 ${oferta.categoria || "Sin categoría"}
+
+</p>
+
+
+
+<p>
+
+💰 $${oferta.precioFinal}
+
+</p>
+
+
+
+<p>
+
+🏷️ ${oferta.descuento || ""}
+
+</p>
+
+
+
+<p>
+
+${oferta.activo ? "🟢 Activa":"🔴 Inactiva"}
+
+</p>
+
+
+
+<p>
+
+👁️ ${oferta.clics || 0} clics
+
+</p>
+
+
+</div>
+
+
+
+
+<div class="accionesOferta">
+
+
+<button onclick="editarOferta('${oferta.id}')">
+
+✏️ Editar
+
+</button>
+
+
+
+<button onclick="eliminarOferta('${oferta.id}')">
+
+🗑️ Eliminar
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+}
+
+// =======================================
+// ADMIN.JS PRO V2
+// PARTE 4
+// EDITAR + ELIMINAR OFERTAS
+// =======================================
+
+
+
 // ===============================
-// PUBLICAR OFERTA
+// ELIMINAR OFERTA
 // ===============================
 
 
-botonPublicar.onclick =
-async()=>{
+window.eliminarOferta = async(id)=>{
+
+
+const confirmar =
+confirm(
+"¿Seguro que quieres eliminar esta oferta?"
+);
+
+
+
+if(!confirmar)
+return;
+
 
 
 try{
 
 
-botonPublicar.disabled=true;
+await deleteDoc(
+
+doc(
+db,
+"ofertas",
+id
+
+)
+
+);
 
 
-botonPublicar.innerHTML=
-"⏳ Publicando...";
+
+alert(
+"🗑️ Oferta eliminada"
+);
 
 
-
-if(barraCarga){
-
-barraCarga.style.display=
-"block";
-
-progresoCarga.style.width=
-"20%";
-
-estadoSubida.innerHTML=
-"Subiendo imagen...";
 
 }
 
+catch(error){
 
 
-
-const imagen =
-await subirImagen();
+console.error(error);
 
 
+alert(
+"❌ Error al eliminar"
+);
 
-if(progresoCarga){
-
-progresoCarga.style.width=
-"70%";
-
-estadoSubida.innerHTML=
-"Guardando oferta...";
 
 }
-
-
-
-
-const datos = {
-
-
-titulo:
-titulo.value.trim(),
-
-
-
-categoria:
-categoria.value,
-
-
-
-precioAntes:
-precioAntes.value,
-
-
-
-precioFinal:
-precioFinal.value,
-
-
-
-descuento:
-descuento.value,
-
-
-
-link:
-link.value,
-
-
-
-imagen:
-
-
-
-imagen,
-
-
-
-activo:
-estado.value==="true",
-
-
-
-destacada:
-destacada.value==="true",
-
-
-
-clics:
-0,
-
-
-
-fecha:
-serverTimestamp()
 
 
 
@@ -876,131 +1035,240 @@ serverTimestamp()
 
 
 
-if(
 
-!datos.titulo ||
-
-!datos.precioFinal ||
-
-!datos.link
-
-){
+// ===============================
+// EDITAR OFERTA
+// ===============================
 
 
-alert(
-"Completa título, precio y link"
+window.editarOferta = async(id)=>{
+
+
+try{
+
+
+ofertaEditando = id;
+
+
+
+const referencia =
+
+doc(
+db,
+"ofertas",
+id
 );
 
 
-botonPublicar.disabled=false;
+
+const datos =
+
+await getDoc(
+referencia
+);
 
 
-botonPublicar.innerHTML=
-"🚀 Publicar oferta";
+
+const oferta =
+
+datos.data();
 
 
-return;
 
+
+
+// MOSTRAR EDITOR
+
+
+const editor =
+
+document.getElementById("editor");
+
+
+
+if(editor){
+
+editor.style.display="block";
 
 }
 
 
 
 
-await addDoc(
 
-ofertasRef,
-
-datos
-
-);
+document.getElementById("editTitulo").value =
+oferta.titulo || "";
 
 
 
-
-
-if(progresoCarga){
-
-
-progresoCarga.style.width=
-"100%";
-
-
-estadoSubida.innerHTML=
-"✅ Oferta publicada";
-
-
-}
+document.getElementById("editImagen").value =
+oferta.imagen || "";
 
 
 
+document.getElementById("editPrecioAntes").value =
+oferta.precioAntes || "";
 
-alert(
-"🔥 Oferta publicada correctamente"
-);
+
+
+document.getElementById("editPrecioFinal").value =
+oferta.precioFinal || "";
+
+
+
+document.getElementById("editDescuento").value =
+oferta.descuento || "";
+
+
+
+document.getElementById("editLink").value =
+oferta.link || "";
 
 
 
 
 
-// LIMPIAR FORMULARIO
+window.scrollTo({
 
+top:0,
 
-document
-.querySelectorAll("input")
-.forEach((i)=>{
-
-
-if(i.type!=="file"){
-
-i.value="";
-
-}
-
+behavior:"smooth"
 
 });
 
 
 
-archivoImagen.value="";
+}
 
 
-vistaImagen.src="";
+catch(error){
 
 
+console.error(error);
 
 
-
-setTimeout(()=>{
-
-
-if(barraCarga){
-
-
-barraCarga.style.display=
-"none";
-
-
-progresoCarga.style.width=
-"0%";
-
-
-estadoSubida.innerHTML="";
+alert(
+"Error cargando oferta"
+);
 
 
 }
 
 
 
-botonPublicar.disabled=false;
-
-
-botonPublicar.innerHTML=
-"🚀 Publicar oferta";
+};
 
 
 
-},1500);
+
+
+
+
+// ===============================
+// GUARDAR CAMBIOS
+// ===============================
+
+
+
+const guardarCambios =
+
+document.getElementById("guardarCambios");
+
+
+
+
+if(guardarCambios){
+
+
+
+guardarCambios.onclick = async()=>{
+
+
+
+if(!ofertaEditando){
+
+return;
+
+}
+
+
+
+
+
+try{
+
+
+await updateDoc(
+
+
+doc(
+db,
+"ofertas",
+ofertaEditando
+
+),
+
+
+{
+
+
+titulo:
+
+document.getElementById("editTitulo").value,
+
+
+
+imagen:
+
+document.getElementById("editImagen").value,
+
+
+
+precioAntes:
+
+document.getElementById("editPrecioAntes").value,
+
+
+
+precioFinal:
+
+document.getElementById("editPrecioFinal").value,
+
+
+
+descuento:
+
+document.getElementById("editDescuento").value,
+
+
+
+link:
+
+document.getElementById("editLink").value
+
+
+
+}
+
+
+);
+
+
+
+
+
+alert(
+"✅ Oferta actualizada"
+);
+
+
+
+
+document.getElementById("editor").style.display="none";
+
+
+
+ofertaEditando=null;
 
 
 
@@ -1015,17 +1283,8 @@ console.error(error);
 
 
 alert(
-"❌ Error al publicar"
+"❌ Error actualizando"
 );
-
-
-
-botonPublicar.disabled=false;
-
-
-botonPublicar.innerHTML=
-"🚀 Publicar oferta";
-
 
 
 }
@@ -1033,3 +1292,7 @@ botonPublicar.innerHTML=
 
 
 };
+
+
+
+}
