@@ -63,21 +63,10 @@ from
 
 
 import {
-
 getAuth,
-
-signOut
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-
-
-
+signOut,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 // CONFIGURACIÓN FIREBASE
@@ -112,64 +101,9 @@ getFirestore(app);
 const storage =
 getStorage(app);
 
-async function subirImagen(){
-
-
-const archivo =
-document.getElementById("archivoImagen").files[0];
-
-
-if(!archivo){
-
-return "";
-
-}
-
-
-
-const nombre =
-Date.now()+"_"+archivo.name;
-
-
-
-const referencia =
-ref(
-storage,
-"ofertas/"+nombre
-);
-
-
-
-await uploadBytes(
-referencia,
-archivo
-);
-
-
-
-const url =
-await getDownloadURL(referencia);
-
-
-
-return url;
-
-
-}
 
 const auth =
 getAuth(app);
-
-import {
-
-onAuthStateChanged
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
 
 
 onAuthStateChanged(auth,(user)=>{
@@ -515,116 +449,123 @@ ${oferta.descuento || ""}
 
 
 
+// =====================================
+// ADMIN PRO V2
+// PARTE 4
 // PUBLICAR OFERTA
+// =====================================
 
+// Vista previa de imagen
+const archivoImagen = document.getElementById("archivoImagen");
+const vistaImagen = document.getElementById("vistaImagen");
 
-document
-.getElementById("publicar")
-.onclick = async()=>{
+if (archivoImagen) {
 
-const imagenSubida =
-await subirImagen();
+  archivoImagen.addEventListener("change", (e) => {
 
-const datos = {
+    const archivo = e.target.files[0];
 
+    if (!archivo) return;
 
-titulo:
-titulo.value,
+    const lector = new FileReader();
 
+    lector.onload = (evento) => {
 
-imagen:
-imagenSubida,
+      vistaImagen.src = evento.target.result;
 
+    };
 
-precioAntes:
-precioAntes.value,
+    lector.readAsDataURL(archivo);
 
-
-precioFinal:
-precioFinal.value,
-
-
-descuento:
-descuento.value,
-
-
-link:
-link.value,
-
-
-fecha:
-serverTimestamp(),
-
-
-activo:true
-
-
-};
-
-
-
-
-
-if(
-!datos.titulo ||
-!datos.precioFinal ||
-!datos.link
-){
-
-
-alert(
-"Completa los datos necesarios"
-);
-
-
-return;
-
+  });
 
 }
 
+// Subir imagen a Firebase Storage
+async function subirImagen() {
 
+  const archivo = archivoImagen.files[0];
 
+  if (!archivo) return "";
 
+  const nombre = Date.now() + "_" + archivo.name;
 
-await addDoc(
+  const referencia = ref(storage, "ofertas/" + nombre);
 
-collection(db,"ofertas"),
+  await uploadBytes(referencia, archivo);
 
-datos
+  return await getDownloadURL(referencia);
 
-);
+}
 
+// Publicar oferta
+document.getElementById("publicar").onclick = async () => {
 
+  try {
 
+    const imagen = await subirImagen();
 
+    const datos = {
 
-alert(
-"🔥 Oferta publicada"
-);
+      titulo: titulo.value.trim(),
 
+      categoria: categoria.value,
 
+      precioAntes: precioAntes.value,
 
+      precioFinal: precioFinal.value,
 
+      descuento: descuento.value,
 
+      link: link.value,
 
-document
-.querySelectorAll("input")
-.forEach(
+      imagen: imagen,
 
-i=>i.value=""
+      activo: estado.value === "true",
 
-);
+      destacada: destacada.value === "true",
 
+      clics: 0,
 
+      fecha: serverTimestamp()
+
+    };
+
+    if (!datos.titulo || !datos.precioFinal || !datos.link) {
+
+      alert("Completa los campos obligatorios.");
+
+      return;
+
+    }
+
+    await addDoc(collection(db, "ofertas"), datos);
+
+    alert("✅ Oferta publicada correctamente.");
+
+    document.querySelectorAll("input").forEach(i => {
+
+      if (i.type !== "file") i.value = "";
+
+    });
+
+    archivoImagen.value = "";
+
+    vistaImagen.src = "";
+
+  }
+
+  catch (error) {
+
+    console.error(error);
+
+    alert("Error al publicar la oferta.");
+
+  }
 
 };
 
-
-
-
-
-
-
+};
 
 
 // ELIMINAR OFERTA
