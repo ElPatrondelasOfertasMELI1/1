@@ -703,3 +703,35 @@ cursor:pointer;
 font-weight:700;
 
 }
+
+.barraBusqueda{
+
+margin:20px 0;
+
+}
+
+#buscarOferta{
+
+width:100%;
+
+padding:15px 20px;
+
+border-radius:14px;
+
+border:1px solid #ddd;
+
+font-size:16px;
+
+outline:none;
+
+transition:.25s;
+
+}
+
+#buscarOferta:focus{
+
+border-color:#ffd600;
+
+box-shadow:0 0 0 4px rgba(255,214,0,.2);
+
+}
