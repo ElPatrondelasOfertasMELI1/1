@@ -8,11 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>
-Admin PRO | El Patrón
+Dashboard Admin PRO
 </title>
-
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&display=swap" rel="stylesheet">
 
 
 <link rel="stylesheet" href="style.css">
@@ -25,7 +22,8 @@ Admin PRO | El Patrón
 
 
 
-<header>
+<header class="adminHeader">
+
 
 <div class="logo">
 
@@ -38,6 +36,14 @@ EL PATRÓN
 </div>
 
 
+
+<button id="salir">
+
+Salir
+
+</button>
+
+
 </header>
 
 
@@ -45,12 +51,74 @@ EL PATRÓN
 
 
 
-<main class="admin">
+<section class="dashboard">
+
 
 
 <h1>
-🚀 Publicar Oferta
+🚀 Panel PRO
 </h1>
+
+
+
+
+<div class="stats">
+
+
+
+<div class="cardStat">
+
+<h3>
+🔥 Ofertas
+</h3>
+
+<strong id="totalOfertas">
+0
+</strong>
+
+</div>
+
+
+
+
+
+<div class="cardStat">
+
+<h3>
+👁️ Clics
+</h3>
+
+<strong id="totalClicks">
+0
+</strong>
+
+</div>
+
+
+
+
+
+
+<div class="cardStat">
+
+<h3>
+🟢 Estado
+</h3>
+
+<strong>
+Activo
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
 
 
 
@@ -58,40 +126,39 @@ EL PATRÓN
 
 
 
-<input 
-id="titulo"
-placeholder="Título del producto">
+<h2>
+➕ Nueva Oferta
+</h2>
 
 
 
-<input 
-id="imagen"
-placeholder="URL de imagen">
+<input id="titulo"
+placeholder="Título">
 
 
 
-<input 
-id="precioAntes"
+<input id="imagen"
+placeholder="Imagen URL">
+
+
+
+<input id="precioAntes"
 placeholder="Precio antes">
 
 
 
-<input 
-id="precioFinal"
+<input id="precioFinal"
 placeholder="Precio final">
 
 
 
-<input 
-id="descuento"
-placeholder="Descuento ejemplo: 20% OFF">
+<input id="descuento"
+placeholder="Descuento">
 
 
 
-<input 
-id="link"
+<input id="link"
 placeholder="Link Mercado Libre">
-
 
 
 
@@ -99,7 +166,7 @@ placeholder="Link Mercado Libre">
 
 <button id="publicar">
 
-🔥 PUBLICAR OFERTA
+🔥 PUBLICAR
 
 </button>
 
@@ -108,8 +175,23 @@ placeholder="Link Mercado Libre">
 </div>
 
 
-</main>
 
+
+
+
+
+<h2>
+📦 Ofertas publicadas
+</h2>
+
+
+
+<div id="listaOfertas">
+
+
+Cargando...
+
+</div>
 
 
 
