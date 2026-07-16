@@ -163,7 +163,29 @@ document.getElementById("progresoCarga");
 const estadoSubida =
 document.getElementById("estadoSubida");
 
+const titulo =
+document.getElementById("titulo");
 
+const categoria =
+document.getElementById("categoria");
+
+const precioAntes =
+document.getElementById("precioAntes");
+
+const precioFinal =
+document.getElementById("precioFinal");
+
+const descuento =
+document.getElementById("descuento");
+
+const link =
+document.getElementById("link");
+
+const estado =
+document.getElementById("estado");
+
+const destacada =
+document.getElementById("destacada");
 
 
 
