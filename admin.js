@@ -97,23 +97,19 @@ from
 
 const firebaseConfig = {
 
+apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-apiKey:"TU_API_KEY",
+authDomain: "patronofertasweb.firebaseapp.com",
 
-authDomain:"TU_PROYECTO.firebaseapp.com",
+projectId: "patronofertasweb",
 
-projectId:"TU_PROJECT_ID",
+storageBucket: "patronofertasweb.firebasestorage.app",
 
-storageBucket:"TU_STORAGE_BUCKET",
+messagingSenderId: "292338334268",
 
-messagingSenderId:"TU_SENDER_ID",
-
-appId:"TU_APP_ID"
+appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 };
-
-
-
 
 
 
