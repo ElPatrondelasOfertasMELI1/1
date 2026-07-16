@@ -29,22 +29,19 @@ query
 
 const firebaseConfig = {
 
-apiKey: "TU_API_KEY",
+apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-authDomain: "TU_PROYECTO.firebaseapp.com",
+authDomain: "patronofertasweb.firebaseapp.com",
 
-projectId: "TU_PROJECT_ID",
+projectId: "patronofertasweb",
 
-storageBucket: "TU_STORAGE_BUCKET",
+storageBucket: "patronofertasweb.firebasestorage.app",
 
-messagingSenderId: "TU_SENDER_ID",
+messagingSenderId: "292338334268",
 
-appId: "TU_APP_ID"
+appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 };
-
-
-
 
 // INICIAR FIREBASE
 
