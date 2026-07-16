@@ -1,76 +1,73 @@
-/* ==============================
+/* =====================================
    EL PATRÓN DE LAS OFERTAS
-   STYLE PRO - PARTE 1
-============================== */
+   STYLE CSS PRO LIMPIO
+===================================== */
 
 
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+
+box-sizing:border-box;
+
+margin:0;
+
+padding:0;
+
 }
+
 
 
 body{
 
-    font-family:'Inter',sans-serif;
+font-family:'Inter',sans-serif;
 
-    background:
-    radial-gradient(circle at top,#2b2100,#050505 45%);
+background:
 
-    color:white;
+radial-gradient(circle at top,#2b2100,#050505 55%);
 
-    min-height:100vh;
+color:white;
+
+min-height:100vh;
 
 }
+
 
 
 
 
 /* HEADER */
 
+
 header{
 
-    width:100%;
+display:flex;
 
-    padding:18px 20px;
+justify-content:space-between;
 
-    display:flex;
+align-items:center;
 
-    justify-content:space-between;
+padding:20px;
 
-    align-items:center;
+background:rgba(0,0,0,.85);
 
-    position:sticky;
+position:sticky;
 
-    top:0;
+top:0;
 
-    z-index:100;
-
-    background:
-    rgba(0,0,0,.85);
-
-    backdrop-filter:blur(15px);
-
-    border-bottom:
-    1px solid rgba(255,215,0,.2);
+z-index:100;
 
 }
 
 
 
 
+
 .logo{
 
-    font-size:24px;
+font-size:25px;
 
-    font-weight:900;
+font-weight:900;
 
-    line-height:20px;
-
-    color:#FFD600;
-
-    letter-spacing:-1px;
+color:#FFD600;
 
 }
 
@@ -78,13 +75,13 @@ header{
 
 .logo span{
 
-    display:block;
+display:block;
 
-    color:white;
+font-size:13px;
 
-    font-size:13px;
+color:white;
 
-    letter-spacing:2px;
+letter-spacing:2px;
 
 }
 
@@ -94,24 +91,19 @@ header{
 
 .menu{
 
-    width:45px;
+background:#FFD600;
 
-    height:45px;
+border:0;
 
-    border-radius:14px;
+border-radius:15px;
 
-    border:none;
+width:45px;
 
-    background:#FFD600;
+height:45px;
 
-    font-size:24px;
-
-    cursor:pointer;
-
-    font-weight:900;
+font-size:25px;
 
 }
-
 
 
 
@@ -122,9 +114,9 @@ header{
 
 .hero{
 
-    padding:30px 20px 15px;
+text-align:center;
 
-    text-align:center;
+padding:35px 20px;
 
 }
 
@@ -132,16 +124,15 @@ header{
 
 .hero h1{
 
-    font-size:32px;
+font-size:32px;
 
-    font-weight:900;
+font-weight:900;
 
-    background:
-    linear-gradient(90deg,#FFD600,#fff);
+background:linear-gradient(90deg,#FFD600,#fff);
 
-    -webkit-background-clip:text;
+-webkit-background-clip:text;
 
-    color:transparent;
+color:transparent;
 
 }
 
@@ -149,11 +140,9 @@ header{
 
 .hero p{
 
-    margin-top:10px;
+color:#aaa;
 
-    color:#bbb;
-
-    font-size:15px;
+margin-top:10px;
 
 }
 
@@ -167,23 +156,13 @@ header{
 
 .categorias{
 
-    display:flex;
+display:flex;
 
-    gap:10px;
+gap:10px;
 
-    padding:20px;
+overflow-x:auto;
 
-    overflow-x:auto;
-
-    scrollbar-width:none;
-
-}
-
-
-
-.categorias::-webkit-scrollbar{
-
-    display:none;
+padding:20px;
 
 }
 
@@ -191,21 +170,19 @@ header{
 
 .categorias button{
 
-    flex-shrink:0;
+white-space:nowrap;
 
-    padding:12px 18px;
+padding:12px 18px;
 
-    border-radius:30px;
+border-radius:30px;
 
-    border:none;
+border:1px solid #333;
 
-    background:#111;
+background:#111;
 
-    color:white;
+color:white;
 
-    font-weight:800;
-
-    border:1px solid #333;
+font-weight:800;
 
 }
 
@@ -213,142 +190,102 @@ header{
 
 .categorias button:first-child{
 
-    background:#FFD600;
+background:#FFD600;
 
-    color:black;
+color:black;
 
 }
 
 
 
-
-/* TITULOS */
 
 
 h2{
 
-    padding:10px 20px;
+padding:20px;
 
-    font-size:22px;
+font-size:24px;
 
-    font-weight:900;
+font-weight:900;
 
 }
 
-/* ==============================
-   CARRUSEL DE OFERTAS PRO
-   STYLE - PARTE 2
-============================== */
+
+
+
+
+/* CARRUSEL */
 
 
 .carrusel{
 
-    display:flex;
+display:flex;
 
-    gap:18px;
+gap:20px;
 
-    padding:20px;
+overflow-x:auto;
 
-    overflow-x:auto;
+padding:20px;
 
-    scroll-snap-type:x mandatory;
-
-    scrollbar-width:none;
-
-    -webkit-overflow-scrolling:touch;
+scroll-snap-type:x mandatory;
 
 }
+
 
 
 .carrusel::-webkit-scrollbar{
 
-    display:none;
+display:none;
 
 }
 
 
 
 
-/* TARJETA OFERTA */
+
+
+
+/* TARJETA */
 
 
 .oferta{
 
-    min-width:300px;
+min-width:300px;
 
-    max-width:300px;
+background:#111;
 
-    background:
-    linear-gradient(160deg,#161616,#080808);
+border-radius:25px;
 
-    border-radius:25px;
+overflow:hidden;
 
-    overflow:hidden;
+border:1px solid rgba(255,215,0,.3);
 
-    scroll-snap-align:center;
+scroll-snap-align:center;
 
-    border:1px solid rgba(255,215,0,.25);
-
-    box-shadow:
-    0 15px 35px rgba(0,0,0,.5);
-
-    transition:.3s;
+box-shadow:0 15px 35px #000;
 
 }
 
 
-
-.oferta:hover{
-
-    transform:translateY(-5px);
-
-}
-
-
-
-
-
-/* IMAGEN */
 
 
 .oferta img{
 
-    width:100%;
+width:100%;
 
-    height:230px;
+height:230px;
 
-    object-fit:cover;
-
-    display:block;
+object-fit:cover;
 
 }
 
 
 
-
-
-
-/* CONTENIDO */
 
 
 .info{
 
-    padding:18px;
-
-}
-
-
-
-
-.info h3{
-
-    font-size:18px;
-
-    font-weight:900;
-
-    line-height:22px;
-
-    min-height:45px;
+padding:20px;
 
 }
 
@@ -357,21 +294,32 @@ h2{
 
 .descuento{
 
-    display:inline-block;
+display:inline-block;
 
-    margin:12px 0;
+background:#FFD600;
 
-    padding:7px 12px;
+color:black;
 
-    background:#FFD600;
+padding:8px 14px;
 
-    color:#000;
+border-radius:20px;
 
-    border-radius:20px;
+font-size:13px;
 
-    font-weight:900;
+font-weight:900;
 
-    font-size:13px;
+}
+
+
+
+
+.info h3{
+
+font-size:18px;
+
+margin:15px 0;
+
+font-weight:900;
 
 }
 
@@ -381,70 +329,57 @@ h2{
 
 .precioAntes{
 
-    color:#888;
+color:#888;
 
-    text-decoration:line-through;
-
-    font-size:14px;
+text-decoration:line-through;
 
 }
-
-
 
 
 
 .precioFinal{
 
-    font-size:32px;
+font-size:32px;
 
-    font-weight:900;
+font-weight:900;
 
-    color:#FFD600;
+color:#FFD600;
 
-    margin:5px 0;
+margin:10px 0;
 
 }
 
 
 
-
-
-/* BOTON COMPRA */
 
 
 .btnComprar{
 
+display:block;
 
-    display:block;
+text-align:center;
 
-    width:100%;
+background:#FFD600;
 
-    text-align:center;
+color:black;
 
-    margin-top:15px;
+padding:15px;
 
-    padding:15px;
+border-radius:18px;
 
-    border-radius:16px;
+text-decoration:none;
 
-    background:#FFD600;
-
-    color:#000;
-
-    font-weight:900;
-
-    text-decoration:none;
-
-    font-size:16px;
-
+font-weight:900;
 
 }
+
+
 
 
 
 .btnComprar:active{
 
-    transform:scale(.96);
+transform:scale(.95);
 
 }
 
@@ -453,47 +388,18 @@ h2{
 
 
 
-/* ETIQUETAS */
-
-
-.badge{
-
-    position:absolute;
-
-    margin:15px;
-
-    background:#ff3131;
-
-    color:white;
-
-    padding:8px 12px;
-
-    border-radius:20px;
-
-    font-size:12px;
-
-    font-weight:900;
-
-}
-
-
-
-
-
-/* CARGANDO */
+/* LOADER */
 
 
 .loader{
 
-    width:100%;
+padding:40px;
 
-    padding:40px;
+text-align:center;
 
-    text-align:center;
+color:#FFD600;
 
-    color:#FFD600;
-
-    font-weight:800;
+font-weight:900;
 
 }
 
@@ -502,130 +408,31 @@ h2{
 
 
 
-/* BOTON WHATSAPP FLOTANTE */
+
+/* WHATSAPP */
 
 
 .whatsapp{
 
-    position:fixed;
+position:fixed;
 
-    right:20px;
+right:20px;
 
-    bottom:20px;
+bottom:20px;
 
-    z-index:200;
+background:#25D366;
 
-    background:#25D366;
+color:white;
 
-    color:white;
+padding:16px 22px;
 
-    text-decoration:none;
+border-radius:50px;
 
-    padding:16px 22px;
+font-weight:900;
 
-    border-radius:50px;
+text-decoration:none;
 
-    font-weight:900;
-
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.5);
-
-}
-
-/* ==============================
-   MENÚ LATERAL PRO
-   STYLE - PARTE 3
-============================== */
-
-
-/* MENU PANEL */
-
-.menuPanel{
-
-    position:fixed;
-
-    top:0;
-
-    left:-320px;
-
-    width:290px;
-
-    height:100vh;
-
-    background:
-    linear-gradient(180deg,#111,#050505);
-
-    z-index:300;
-
-    padding:25px;
-
-    transition:.35s;
-
-    box-shadow:
-    10px 0 40px rgba(0,0,0,.6);
-
-    border-right:
-    1px solid rgba(255,215,0,.2);
-
-}
-
-
-
-.menuPanel.active{
-
-    left:0;
-
-}
-
-
-
-
-
-.menuPanel h2{
-
-    padding:0;
-
-    margin-bottom:25px;
-
-    color:#FFD600;
-
-}
-
-
-
-
-
-.menuPanel a{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    padding:15px;
-
-    margin-bottom:10px;
-
-    border-radius:15px;
-
-    background:#161616;
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:800;
-
-}
-
-
-
-.menuPanel a:hover{
-
-    background:#FFD600;
-
-    color:black;
+z-index:200;
 
 }
 
@@ -635,233 +442,9 @@ h2{
 
 
 
-/* FONDO OSCURO AL ABRIR MENU */
 
 
-.overlay{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.65);
-
-    z-index:250;
-
-    display:none;
-
-}
-
-
-
-.overlay.active{
-
-    display:block;
-
-}
-
-
-
-
-
-
-
-/* ANIMACIONES */
-
-
-.oferta{
-
-    animation:
-
-    aparecer .5s ease;
-
-}
-
-
-
-@keyframes aparecer{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(30px);
-
-    }
-
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
-}
-
-
-
-
-
-
-/* EFECTO PRECIO */
-
-
-.precioFinal{
-
-    animation:
-
-    brillo 2s infinite;
-
-}
-
-
-
-@keyframes brillo{
-
-
-    0%,100%{
-
-        filter:brightness(1);
-
-    }
-
-
-    50%{
-
-        filter:brightness(1.4);
-
-    }
-
-}
-
-
-
-
-
-
-
-/* BADGES ESPECIALES */
-
-
-.relampago{
-
-    background:
-
-    linear-gradient(45deg,#FFD600,#ff8c00);
-
-    color:black;
-
-}
-
-
-
-.bancario{
-
-    background:#1565ff;
-
-    color:white;
-
-}
-
-
-
-.meliplus{
-
-    background:#8e2de2;
-
-    color:white;
-
-}
-
-
-
-
-
-
-
-
-/* RESPONSIVE MOVIL */
-
-
-@media(max-width:600px){
-
-
-.logo{
-
-    font-size:21px;
-
-}
-
-
-
-.hero h1{
-
-    font-size:27px;
-
-}
-
-
-
-.oferta{
-
-    min-width:88vw;
-
-}
-
-
-
-.oferta img{
-
-    height:240px;
-
-}
-
-
-
-.precioFinal{
-
-    font-size:30px;
-
-}
-
-
-}
-
-
-
-
-
-/* TABLET / PC */
-
-
-@media(min-width:900px){
-
-
-.carrusel{
-
-    justify-content:center;
-
-    flex-wrap:wrap;
-
-}
-
-
-
-.oferta{
-
-    min-width:320px;
-
-}
-
-
-
-}
-
-/* =====================
- LOGIN ADMIN PRO
-===================== */
+/* LOGIN */
 
 
 .login{
@@ -880,11 +463,8 @@ padding:20px;
 
 
 
+
 .loginBox{
-
-width:100%;
-
-max-width:380px;
 
 background:#111;
 
@@ -892,13 +472,16 @@ padding:30px;
 
 border-radius:25px;
 
+width:100%;
+
+max-width:380px;
+
 text-align:center;
 
 border:1px solid #333;
 
-box-shadow:0 20px 40px #000;
-
 }
+
 
 
 
@@ -906,24 +489,11 @@ box-shadow:0 20px 40px #000;
 
 color:#FFD600;
 
-font-size:30px;
-
-}
-
-
-
-.loginBox p{
-
-margin:15px 0;
-
-color:#aaa;
-
 }
 
 
 
 .loginBox input{
-
 
 width:100%;
 
@@ -931,22 +501,21 @@ padding:15px;
 
 margin:8px 0;
 
-border-radius:15px;
-
-border:none;
-
 background:#222;
 
-color:white;
+border:0;
 
-font-size:15px;
+border-radius:15px;
+
+color:white;
 
 }
 
 
 
-.loginBox button{
 
+
+.loginBox button{
 
 width:100%;
 
@@ -954,204 +523,18 @@ padding:16px;
 
 margin-top:15px;
 
-border:none;
-
-border-radius:15px;
-
 background:#FFD600;
 
-font-weight:900;
-
-font-size:16px;
-
-}
-
-/* ==========================
-   DASHBOARD ADMIN PRO
-========================== */
-
-
-.adminHeader{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-padding:20px;
-
-background:#080808;
-
-}
-
-
-
-
-#salir{
-
-background:#ff3131;
-
-color:white;
-
-border:none;
-
-padding:12px 18px;
-
-border-radius:20px;
-
-font-weight:900;
-
-}
-
-
-
-
-
-.dashboard{
-
-padding:20px;
-
-}
-
-
-
-
-.dashboard h1{
-
-color:#FFD600;
-
-font-size:28px;
-
-}
-
-
-
-
-.stats{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:12px;
-
-margin:20px 0;
-
-}
-
-
-
-.cardStat{
-
-background:#151515;
-
-padding:20px;
-
-border-radius:20px;
-
-border:1px solid #333;
-
-text-align:center;
-
-}
-
-
-
-.cardStat strong{
-
-display:block;
-
-font-size:28px;
-
-color:#FFD600;
-
-margin-top:10px;
-
-}
-
-
-
-
-
-.panel{
-
-background:#111;
-
-padding:20px;
-
-border-radius:25px;
-
-margin-bottom:25px;
-
-}
-
-
-
-
-.panel input{
-
-width:100%;
-
-padding:14px;
-
-margin:7px 0;
+border:0;
 
 border-radius:15px;
 
-border:none;
-
-background:#222;
-
-color:white;
-
-}
-
-
-
-
-
-.panel button{
-
-width:100%;
-
-padding:16px;
-
-border:none;
-
-border-radius:15px;
-
-background:#FFD600;
-
 font-weight:900;
 
 }
 
 
 
-
-
-#listaOfertas{
-
-display:grid;
-
-gap:15px;
-
-}
-
-
-
-.ofertaAdmin{
-
-background:#151515;
-
-padding:18px;
-
-border-radius:20px;
-
-border:1px solid #333;
-
-}
 
 
 
@@ -1159,25 +542,20 @@ border:1px solid #333;
 @media(max-width:600px){
 
 
-.stats{
+.hero h1{
 
-grid-template-columns:1fr;
+font-size:27px;
+
+}
+
+
+
+.oferta{
+
+min-width:88vw;
 
 }
 
 
-}
-
-#graficaClicks{
-
-width:100% !important;
-
-max-height:350px;
-
-background:#111;
-
-border-radius:20px;
-
-padding:15px;
 
 }
