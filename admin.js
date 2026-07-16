@@ -216,41 +216,27 @@ let ordenSeleccionado="reciente";
 // PREVIEW IMAGEN
 
 
-archivoImagen.addEventListener("change",(e)=>{
+if(archivoImagen){
 
+archivoImagen.addEventListener("change",(e)=>{
 
 const archivo=e.target.files[0];
 
-
 if(!archivo)return;
-
-
 
 const lector=new FileReader();
 
-
-
 lector.onload=()=>{
-
 
 vistaImagen.src=lector.result;
 
-
 };
-
-
 
 lector.readAsDataURL(archivo);
 
-
-
 });
 
-
-
-
-
-
+}
 
 
 
@@ -303,8 +289,6 @@ return await getDownloadURL(imagenRef);
 
 // PUBLICAR OFERTA
 
-const botonPublicar =
-document.getElementById("publicar");
 
 botonPublicar.onclick=async()=>{
 
@@ -436,12 +420,9 @@ limpiar();
 
 catch(error){
 
+console.error("ERROR FIREBASE:",error);
 
-console.error(error);
-
-
-alert("Error publicando");
-
+alert(error.message);
 
 }
 
