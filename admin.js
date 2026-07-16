@@ -281,6 +281,8 @@ return await getDownloadURL(imagenRef);
 
 // PUBLICAR OFERTA
 
+const botonPublicar =
+document.getElementById("publicar");
 
 botonPublicar.onclick=async()=>{
 
