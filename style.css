@@ -859,3 +859,110 @@ h2{
 
 }
 
+/* =====================
+ LOGIN ADMIN PRO
+===================== */
+
+
+.login{
+
+height:100vh;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+padding:20px;
+
+}
+
+
+
+.loginBox{
+
+width:100%;
+
+max-width:380px;
+
+background:#111;
+
+padding:30px;
+
+border-radius:25px;
+
+text-align:center;
+
+border:1px solid #333;
+
+box-shadow:0 20px 40px #000;
+
+}
+
+
+
+.loginBox h1{
+
+color:#FFD600;
+
+font-size:30px;
+
+}
+
+
+
+.loginBox p{
+
+margin:15px 0;
+
+color:#aaa;
+
+}
+
+
+
+.loginBox input{
+
+
+width:100%;
+
+padding:15px;
+
+margin:8px 0;
+
+border-radius:15px;
+
+border:none;
+
+background:#222;
+
+color:white;
+
+font-size:15px;
+
+}
+
+
+
+.loginBox button{
+
+
+width:100%;
+
+padding:16px;
+
+margin-top:15px;
+
+border:none;
+
+border-radius:15px;
+
+background:#FFD600;
+
+font-weight:900;
+
+font-size:16px;
+
+}
+
