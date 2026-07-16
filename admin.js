@@ -179,6 +179,67 @@ let ofertas = [];
 
 let ofertaEditando = null;
 
+const buscarOferta =
+document.getElementById("buscarOferta");
+
+
+const filtroCategoria =
+document.getElementById("filtroCategoria");
+
+
+const ordenarOferta =
+document.getElementById("ordenarOferta");
+
+
+let textoBusqueda="";
+
+let categoriaSeleccionada="todas";
+
+let ordenSeleccionado="reciente";
+
+if(buscarOferta){
+
+buscarOferta.oninput=(e)=>{
+
+textoBusqueda =
+e.target.value.toLowerCase();
+
+mostrarOfertas();
+
+};
+
+}
+
+
+
+if(filtroCategoria){
+
+filtroCategoria.onchange=(e)=>{
+
+categoriaSeleccionada =
+e.target.value;
+
+mostrarOfertas();
+
+};
+
+}
+
+
+
+if(ordenarOferta){
+
+ordenarOferta.onchange=(e)=>{
+
+ordenSeleccionado =
+e.target.value;
+
+mostrarOfertas();
+
+};
+
+}
+
 // =======================================
 // PARTE 2
 // IMAGEN + PUBLICAR OFERTA
