@@ -1,60 +1,39 @@
 /* =====================================================
-   EL PATRÓN DE LAS OFERTAS
-   STYLE.CSS
-   PARTE 1 DE 4
+EL PATRÓN DE LAS OFERTAS
+STYLE.CSS COMPLETO
 ===================================================== */
 
 
-/* RESET */
-
 *{
-
-margin:0;
-
-padding:0;
-
 box-sizing:border-box;
-
-font-family:'Inter',sans-serif;
-
 }
-
-
-
-html{
-
-scroll-behavior:smooth;
-
-}
-
 
 
 body{
 
+margin:0;
+
+font-family:'Inter',sans-serif;
+
 background:
-radial-gradient(circle at top,#2b2100,#050505 45%);
+linear-gradient(
+180deg,
+#050505,
+#111
+);
 
-color:#fff;
-
-min-height:100vh;
-
-overflow-x:hidden;
+color:white;
 
 }
 
 
 
+/* ==============================
+HEADER
+============================== */
 
-
-/* HEADER */
 
 header{
-
-position:sticky;
-
-top:0;
-
-z-index:999;
 
 display:flex;
 
@@ -62,47 +41,38 @@ justify-content:space-between;
 
 align-items:center;
 
-padding:18px 20px;
+padding:18px;
 
-background:rgba(0,0,0,.88);
+background:#080808;
 
-backdrop-filter:blur(15px);
+position:sticky;
 
-border-bottom:1px solid rgba(255,214,0,.18);
+top:0;
+
+z-index:20;
 
 }
-
-
 
 
 
 .logo{
 
-font-size:26px;
+font-size:24px;
 
 font-weight:900;
 
-color:#FFD600;
-
-line-height:20px;
-
-letter-spacing:-1px;
+color:#ffd600;
 
 }
-
 
 
 .logo span{
 
 display:block;
 
-font-size:12px;
+color:white;
 
-letter-spacing:2px;
-
-color:#fff;
-
-margin-top:4px;
+font-size:15px;
 
 }
 
@@ -112,31 +82,15 @@ margin-top:4px;
 
 .menu{
 
-width:46px;
+background:#ffd600;
 
-height:46px;
+border:0;
 
-border:none;
+font-size:25px;
 
-border-radius:14px;
+border-radius:12px;
 
-background:#FFD600;
-
-font-size:24px;
-
-font-weight:900;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-
-
-.menu:hover{
-
-transform:scale(1.05);
+padding:8px 14px;
 
 }
 
@@ -144,13 +98,17 @@ transform:scale(1.05);
 
 
 
-/* HERO */
+
+/* ==============================
+HERO
+============================== */
+
 
 .hero{
 
-padding:35px 20px 20px;
-
 text-align:center;
+
+padding:35px 20px;
 
 }
 
@@ -158,15 +116,11 @@ text-align:center;
 
 .hero h1{
 
-font-size:34px;
+font-size:32px;
 
 font-weight:900;
 
-background:linear-gradient(90deg,#FFD600,#fff);
-
--webkit-background-clip:text;
-
-color:transparent;
+margin:0;
 
 }
 
@@ -174,13 +128,7 @@ color:transparent;
 
 .hero p{
 
-margin-top:12px;
-
-color:#bdbdbd;
-
-font-size:15px;
-
-line-height:22px;
+color:#ccc;
 
 }
 
@@ -188,21 +136,22 @@ line-height:22px;
 
 
 
-/* CATEGORÍAS */
+
+/* ==============================
+CATEGORÍAS
+============================== */
+
 
 .categorias{
+
 
 display:flex;
 
 gap:12px;
 
+padding:15px;
+
 overflow-x:auto;
-
-padding:20px;
-
-scrollbar-width:none;
-
--webkit-overflow-scrolling:touch;
 
 }
 
@@ -218,39 +167,23 @@ display:none;
 
 .categorias a{
 
-flex-shrink:0;
 
 text-decoration:none;
 
-padding:13px 20px;
+color:#111;
 
-border-radius:999px;
+background:#ffd600;
 
-background:#151515;
+padding:12px 18px;
 
-border:1px solid rgba(255,255,255,.08);
-
-color:#fff;
-
-font-size:14px;
+border-radius:25px;
 
 font-weight:800;
 
-transition:.25s;
+white-space:nowrap;
 
-}
-
-
-
-.categorias a:hover{
-
-background:#FFD600;
-
-color:#000;
-
-transform:translateY(-2px);
-
-box-shadow:0 8px 18px rgba(255,214,0,.25);
+box-shadow:
+0 5px 15px #0008;
 
 }
 
@@ -258,61 +191,36 @@ box-shadow:0 8px 18px rgba(255,214,0,.25);
 
 
 
-/* TITULOS */
 
-section{
 
-margin-top:10px;
-
-}
-
+/* ==============================
+TÍTULOS
+============================== */
 
 
 h2{
 
-padding:10px 20px;
+padding-left:18px;
 
-font-size:24px;
+font-size:25px;
 
 font-weight:900;
 
-color:#FFD600;
-
 }
 
 
 
 
 
-/* LOADER */
-
-.loader{
-
-padding:40px;
-
-text-align:center;
-
-font-size:17px;
-
-font-weight:700;
-
-color:#FFD600;
-
-}
-
-/* =====================================================
-   EL PATRÓN DE LAS OFERTAS
-   STYLE.CSS
-   PARTE 2 DE 4
-===================================================== */
 
 
+/* ==============================
+CARRUSEL OFERTAS
+============================== */
 
-/* =========================
-   CARRUSEL
-========================= */
 
 .carrusel{
+
 
 display:flex;
 
@@ -320,11 +228,9 @@ gap:18px;
 
 overflow-x:auto;
 
-padding:20px;
-
 scroll-snap-type:x mandatory;
 
-scrollbar-width:none;
+padding:20px;
 
 -webkit-overflow-scrolling:touch;
 
@@ -341,46 +247,24 @@ display:none;
 
 
 
+.oferta,
+.ofertaCard{
 
-/* =========================
-   TARJETA OFERTA
-========================= */
 
-.oferta{
+background:white;
 
-position:relative;
+color:#111;
 
-min-width:310px;
+border-radius:25px;
 
-max-width:310px;
-
-background:
-
-linear-gradient(180deg,#171717,#090909);
-
-border-radius:28px;
-
-overflow:hidden;
+min-width:90%;
 
 scroll-snap-align:center;
 
-border:1px solid rgba(255,214,0,.18);
+overflow:hidden;
 
 box-shadow:
-
-0 18px 45px rgba(0,0,0,.45);
-
-transition:.30s;
-
-animation:aparecer .35s ease;
-
-}
-
-
-
-.oferta:hover{
-
-transform:translateY(-6px);
+0 10px 30px #0008;
 
 }
 
@@ -388,83 +272,19 @@ transform:translateY(-6px);
 
 
 
-/* =========================
-   IMAGEN
-========================= */
+.oferta img,
+.ofertaCard img{
 
-.oferta img{
 
 width:100%;
 
-height:240px;
+height:250px;
 
-display:block;
+object-fit:contain;
 
-object-fit:cover;
+background:white;
 
-background:#111;
-
-}
-
-
-
-
-
-/* =========================
-   ETIQUETAS
-========================= */
-
-.badge{
-
-position:absolute;
-
-top:15px;
-
-left:15px;
-
-padding:8px 14px;
-
-border-radius:30px;
-
-font-size:12px;
-
-font-weight:900;
-
-z-index:10;
-
-box-shadow:
-
-0 6px 18px rgba(0,0,0,.35);
-
-}
-
-
-
-.badge.destacada{
-
-background:#FFD600;
-
-color:#000;
-
-}
-
-
-
-.badge.relampago{
-
-background:#ff6d00;
-
-color:#fff;
-
-}
-
-
-
-.badge.normal{
-
-background:#222;
-
-color:#fff;
+padding:10px;
 
 }
 
@@ -472,11 +292,10 @@ color:#fff;
 
 
 
-/* =========================
-   CONTENIDO
-========================= */
 
+.ofertaTexto,
 .info{
+
 
 padding:18px;
 
@@ -484,127 +303,66 @@ padding:18px;
 
 
 
+.oferta h3,
 .info h3{
+
 
 font-size:18px;
 
 font-weight:900;
 
-line-height:24px;
-
-min-height:72px;
-
-margin-bottom:12px;
-
 }
 
 
 
 
 
-/* DESCUENTO */
+.precioAntes,
+.antes{
 
-.descuento{
-
-display:inline-block;
-
-padding:7px 12px;
-
-border-radius:30px;
-
-background:#FFD600;
-
-color:#000;
-
-font-size:13px;
-
-font-weight:900;
-
-margin-bottom:15px;
-
-}
-
-
-
-
-
-/* PRECIO */
-
-.precioAntes{
-
-color:#9d9d9d;
 
 text-decoration:line-through;
 
-font-size:15px;
-
-margin-top:8px;
+color:#777;
 
 }
 
 
 
-.precioFinal{
+.precioFinal,
+.oferta h2{
 
-margin-top:5px;
 
-font-size:33px;
+font-size:30px;
 
 font-weight:900;
 
-color:#FFD600;
-
-animation:brillo 2s infinite;
+color:#111;
 
 }
 
 
 
 
-
-/* BOTÓN */
-
+.comprar,
 .btnComprar{
+
 
 display:block;
 
-width:100%;
+background:#ffd600;
 
-margin-top:18px;
-
-padding:16px;
-
-border-radius:18px;
+color:#111;
 
 text-align:center;
 
-text-decoration:none;
+padding:14px;
 
-background:#FFD600;
-
-color:#000;
-
-font-size:16px;
+border-radius:15px;
 
 font-weight:900;
 
-transition:.25s;
-
-}
-
-
-
-.btnComprar:hover{
-
-transform:translateY(-2px);
-
-}
-
-
-
-.btnComprar:active{
-
-transform:scale(.97);
+text-decoration:none;
 
 }
 
@@ -612,189 +370,117 @@ transform:scale(.97);
 
 
 
-/* =========================
-   ANIMACIONES
-========================= */
+/* ==============================
+CUPONES
+============================== */
 
-@keyframes aparecer{
-
-from{
-
-opacity:0;
-
-transform:translateY(25px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-
-
-
-@keyframes brillo{
-
-0%,100%{
-
-filter:brightness(1);
-
-}
-
-50%{
-
-filter:brightness(1.35);
-
-}
-
-}
-
-/* =====================================================
-   EL PATRÓN DE LAS OFERTAS
-   STYLE.CSS
-   PARTE 3 DE 4
-===================================================== */
-
-
-
-/* ==================================
-   CUPONES
-================================== */
 
 .cupones{
 
-display:grid;
 
-gap:18px;
+display:flex;
+
+gap:15px;
+
+overflow-x:auto;
 
 padding:20px;
 
+scroll-snap-type:x mandatory;
+
 }
 
 
 
-.cupon{
+.cupones::-webkit-scrollbar{
 
-position:relative;
+display:none;
 
-background:
+}
 
-linear-gradient(180deg,#171717,#090909);
 
-border-radius:24px;
 
-padding:22px;
 
-border:1px solid rgba(255,214,0,.18);
+
+.cupon,
+.cuponCard{
+
+
+background:#fff;
+
+color:#111;
+
+min-width:280px;
+
+padding:20px;
+
+border-radius:22px;
+
+scroll-snap-align:start;
 
 box-shadow:
-
-0 15px 35px rgba(0,0,0,.40);
-
-overflow:hidden;
-
-transition:.25s;
+0 8px 25px #0007;
 
 }
 
 
 
-.cupon:hover{
-
-transform:translateY(-4px);
-
-}
 
 
+.cupon button,
+.cuponCard button{
 
-.cupon h3{
 
-font-size:22px;
+width:100%;
+
+background:#ffd600;
+
+border:0;
+
+padding:12px;
+
+border-radius:15px;
 
 font-weight:900;
 
-color:#FFD600;
-
-margin-bottom:12px;
-
 }
 
 
-
-.cupon p{
-
-font-size:15px;
-
-color:#d5d5d5;
-
-margin:6px 0;
-
-line-height:22px;
-
-}
-
-
-
-.minimo{
-
-font-weight:900;
-
-color:#fff;
-
-}
 
 
 
 .estado{
 
-display:inline-flex;
-
-align-items:center;
-
-padding:8px 14px;
+padding:5px 12px;
 
 border-radius:20px;
 
-font-size:13px;
-
-font-weight:900;
-
-margin-top:10px;
+font-weight:800;
 
 }
 
 
 
-.estado.activo{
 
-background:#00b84f;
+.activo{
 
-color:#fff;
-
-}
-
-
-
-.estado.agotando{
-
-background:#ff9800;
-
-color:#fff;
+background:#3cff72;
 
 }
 
 
 
-.estado.agotado{
+.agotando{
 
-background:#d50000;
+background:#ffb300;
 
-color:#fff;
+}
+
+
+
+.agotado{
+
+background:#ff4444;
 
 }
 
@@ -802,95 +488,54 @@ color:#fff;
 
 
 
-/* BOTÓN COPIAR */
 
-.btnCupon{
+/* ==============================
+TOAST
+============================== */
 
-width:100%;
-
-margin-top:18px;
-
-padding:16px;
-
-border:none;
-
-border-radius:18px;
-
-background:#FFD600;
-
-color:#000;
-
-font-size:16px;
-
-font-weight:900;
-
-cursor:pointer;
-
-transition:.25s;
-
-}
-
-
-
-.btnCupon:hover{
-
-transform:translateY(-2px);
-
-}
-
-
-
-.btnCupon:active{
-
-transform:scale(.97);
-
-}
-
-
-
-
-
-/* ==================================
-   TOAST
-================================== */
 
 #toast{
 
+
 position:fixed;
+
+bottom:30px;
 
 left:50%;
 
-bottom:-90px;
+transform:translateX(-50%)
+translateY(100px);
 
-transform:translateX(-50%);
+background:#ffd600;
 
-background:#111;
+color:#111;
 
-color:#fff;
+padding:15px 25px;
 
-padding:16px 24px;
-
-border-radius:18px;
+border-radius:30px;
 
 font-weight:900;
 
-border:1px solid rgba(255,214,0,.30);
+opacity:0;
 
-box-shadow:
+transition:.3s;
 
-0 20px 40px rgba(0,0,0,.45);
+z-index:100;
 
-transition:.35s;
-
-z-index:9999;
 
 }
+
 
 
 
 #toast.show{
 
-bottom:35px;
+opacity:1;
+
+transform:
+
+translateX(-50%)
+translateY(0);
 
 }
 
@@ -898,196 +543,64 @@ bottom:35px;
 
 
 
-/* ==================================
-   WHATSAPP
-================================== */
+/* ==============================
+BOTÓN SUBIR
+============================== */
 
-.whatsapp{
+
+#btnArriba{
+
 
 position:fixed;
 
 right:20px;
 
-bottom:20px;
+bottom:25px;
 
-padding:16px 22px;
+background:#ffd600;
 
-border-radius:999px;
+color:#111;
 
-background:#25D366;
+border:0;
 
-color:#fff;
+width:50px;
+
+height:50px;
+
+border-radius:50%;
+
+font-size:25px;
 
 font-weight:900;
 
-text-decoration:none;
-
-box-shadow:
-
-0 15px 35px rgba(0,0,0,.45);
-
-z-index:900;
-
-transition:.25s;
-
-}
-
-
-
-.whatsapp:hover{
-
-transform:translateY(-3px);
-
-}
-
-
-
-
-
-/* ==================================
-   MENÚ LATERAL
-================================== */
-
-.menuPanel{
-
-position:fixed;
-
-top:0;
-
-left:-320px;
-
-width:290px;
-
-height:100vh;
-
-background:
-
-linear-gradient(180deg,#161616,#050505);
-
-padding:28px;
-
-transition:.35s;
-
-z-index:1200;
-
-border-right:1px solid rgba(255,214,0,.18);
-
-box-shadow:
-
-10px 0 40px rgba(0,0,0,.50);
-
-}
-
-
-
-.menuPanel.active{
-
-left:0;
-
-}
-
-
-
-.menuPanel h2{
-
-color:#FFD600;
-
-margin-bottom:25px;
-
-font-size:24px;
-
-}
-
-
-
-.menuPanel a{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-padding:15px;
-
-margin-bottom:12px;
-
-background:#1d1d1d;
-
-border-radius:18px;
-
-text-decoration:none;
-
-font-weight:800;
-
-color:#fff;
-
-transition:.25s;
-
-}
-
-
-
-.menuPanel a:hover{
-
-background:#FFD600;
-
-color:#000;
-
-}
-
-
-
-
-
-/* ==================================
-   OVERLAY
-================================== */
-
-.overlay{
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.65);
-
 display:none;
 
-z-index:1100;
+z-index:50;
+
 
 }
 
 
 
-.overlay.active{
-
-display:block;
-
-}
-
-/* =====================================================
-   EL PATRÓN DE LAS OFERTAS
-   STYLE.CSS
-   PARTE 4 DE 4
-===================================================== */
 
 
-/* ==========================
-   LOGIN
-========================== */
+
+
+/* ==============================
+LOGIN
+============================== */
+
 
 .login{
 
-min-height:100vh;
+
+height:100vh;
 
 display:flex;
 
-justify-content:center;
-
 align-items:center;
 
-padding:20px;
+justify-content:center;
 
 }
 
@@ -1095,122 +608,71 @@ padding:20px;
 
 .loginBox{
 
-width:100%;
 
-max-width:420px;
+background:white;
 
-background:linear-gradient(180deg,#171717,#090909);
+color:#111;
 
 padding:30px;
 
-border-radius:28px;
+border-radius:25px;
 
-border:1px solid rgba(255,214,0,.18);
+width:90%;
 
-box-shadow:0 20px 45px rgba(0,0,0,.45);
-
-}
-
-
-
-.loginBox h1{
-
-font-size:30px;
-
-color:#FFD600;
+max-width:400px;
 
 text-align:center;
 
-margin-bottom:8px;
-
 }
 
-
-
-.loginBox p{
-
-text-align:center;
-
-color:#bbb;
-
-margin-bottom:20px;
-
-}
 
 
 
 .loginBox input{
 
+
 width:100%;
 
 padding:15px;
 
-margin-bottom:14px;
+margin:8px 0;
 
-border:none;
+border-radius:12px;
 
-border-radius:16px;
-
-background:#202020;
-
-color:#fff;
-
-font-size:15px;
+border:1px solid #ddd;
 
 }
+
+
 
 
 
 .loginBox button{
 
+
 width:100%;
 
-padding:16px;
+padding:15px;
 
-border:none;
+background:#ffd600;
 
-border-radius:16px;
+border:0;
 
-background:#FFD600;
-
-color:#000;
-
-font-size:16px;
+border-radius:15px;
 
 font-weight:900;
 
-cursor:pointer;
-
 }
 
 
 
-/* ==========================
-   ADMIN
-========================== */
 
-.adminHeader{
 
-display:flex;
 
-justify-content:space-between;
 
-align-items:center;
-
-padding:20px;
-
-background:rgba(0,0,0,.88);
-
-border-bottom:1px solid rgba(255,214,0,.18);
-
-position:sticky;
-
-top:0;
-
-z-index:1000;
-
-}
-
+/* ==============================
+ADMIN
+============================== */
 
 
 .dashboard{
@@ -1221,344 +683,93 @@ padding:20px;
 
 
 
-.stats{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-
-gap:18px;
-
-margin-bottom:25px;
-
-}
+.panel,
+.cardStat,
+.ofertaAdmin{
 
 
+background:white;
 
-.cardStat{
-
-background:linear-gradient(180deg,#171717,#090909);
+color:#111;
 
 padding:20px;
 
-border-radius:22px;
+border-radius:20px;
 
-border:1px solid rgba(255,214,0,.18);
-
-text-align:center;
-
-}
-
-
-
-.cardStat h3{
-
-font-size:15px;
-
-color:#bbb;
-
-margin-bottom:8px;
-
-}
-
-
-
-.cardStat strong{
-
-font-size:28px;
-
-color:#FFD600;
-
-}
-
-
-
-.panel{
-
-background:linear-gradient(180deg,#171717,#090909);
-
-padding:22px;
-
-border-radius:22px;
-
-border:1px solid rgba(255,214,0,.18);
-
-margin-bottom:25px;
-
-}
-
-
-
-.panel h2{
-
-padding:0;
-
-margin-bottom:18px;
+margin:15px 0;
 
 }
 
 
 
 .panel input,
-
 .panel select{
+
 
 width:100%;
 
-padding:15px;
+padding:14px;
 
-margin-bottom:14px;
+margin:8px 0;
 
-border:none;
-
-border-radius:16px;
-
-background:#202020;
-
-color:#fff;
-
-font-size:15px;
+border-radius:12px;
 
 }
+
 
 
 
 .panel button{
 
+
 width:100%;
 
-padding:16px;
+padding:15px;
 
-border:none;
+background:#ffd600;
 
-border-radius:16px;
+border:0;
 
-background:#FFD600;
-
-color:#000;
-
-font-size:16px;
+border-radius:15px;
 
 font-weight:900;
 
-cursor:pointer;
-
 }
+
+
 
 
 
 .preview{
 
-display:none;
 
 width:100%;
 
-max-height:260px;
+max-height:250px;
 
 object-fit:contain;
 
-border-radius:18px;
-
-margin-bottom:15px;
-
-background:#111;
+display:none;
 
 }
 
 
 
-/* ==========================
-   LISTADOS
-========================== */
 
-#listaOfertas,
 
-#listaCupones{
+.ofertaAdmin button{
 
-display:grid;
 
-gap:18px;
+background:#ff3333;
 
-margin-top:20px;
+color:white;
 
-}
+border:0;
 
+padding:10px;
 
+border-radius:10px;
 
-.ofertaAdmin,
-
-.cuponAdmin{
-
-background:linear-gradient(180deg,#171717,#090909);
-
-padding:18px;
-
-border-radius:22px;
-
-border:1px solid rgba(255,214,0,.18);
-
-}
-
-
-
-.ofertaAdmin img{
-
-width:100%;
-
-height:170px;
-
-object-fit:cover;
-
-border-radius:16px;
-
-margin-bottom:12px;
-
-}
-
-
-
-.ofertaAdmin h3,
-
-.cuponAdmin h3{
-
-font-size:18px;
-
-color:#FFD600;
-
-margin-bottom:8px;
-
-}
-
-
-
-.ofertaAdmin p,
-
-.cuponAdmin p{
-
-color:#ddd;
-
-margin:5px 0;
-
-}
-
-
-
-.acciones{
-
-display:flex;
-
-gap:10px;
-
-margin-top:15px;
-
-}
-
-
-
-.editar,
-
-.borrar{
-
-flex:1;
-
-padding:13px;
-
-border:none;
-
-border-radius:14px;
-
-font-weight:900;
-
-cursor:pointer;
-
-}
-
-
-
-.editar{
-
-background:#FFD600;
-
-color:#000;
-
-}
-
-
-
-.borrar{
-
-background:#e53935;
-
-color:#fff;
-
-}
-
-
-
-/* ==========================
-   RESPONSIVE
-========================== */
-
-@media(max-width:900px){
-
-.oferta{
-
-min-width:88vw;
-
-max-width:88vw;
-
-}
-
-}
-
-
-
-@media(max-width:700px){
-
-.hero h1{
-
-font-size:28px;
-
-}
-
-.logo{
-
-font-size:22px;
-
-}
-
-.stats{
-
-grid-template-columns:1fr;
-
-}
-
-.panel{
-
-padding:18px;
-
-}
-
-}
-
-
-
-@media(min-width:1200px){
-
-.carrusel{
-
-justify-content:center;
-
-flex-wrap:wrap;
-
-}
-
-.oferta{
-
-min-width:320px;
-
-max-width:320px;
-
-}
+font-weight:800;
 
 }
