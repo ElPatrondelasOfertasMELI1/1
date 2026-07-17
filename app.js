@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS MEJORADO V2
+// APP.JS FINAL CORREGIDO
 // =====================================================
 
 
@@ -25,8 +25,6 @@ from
 
 
 
-
-
 const firebaseConfig={
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
@@ -45,10 +43,9 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
-
-
 const app =
 initializeApp(firebaseConfig);
+
 
 
 const db =
@@ -81,12 +78,6 @@ document.getElementById("toast");
 
 
 
-let intervaloCarrusel=null;
-
-
-
-
-
 
 
 
@@ -101,7 +92,6 @@ toast.innerHTML=texto;
 
 
 toast.classList.add("show");
-
 
 
 setTimeout(()=>{
@@ -134,18 +124,14 @@ async function cargarOfertas(){
 if(!carrusel)return;
 
 
-
 const datos =
 await getDocs(
-
 collection(db,"ofertas")
-
 );
 
 
 
 carrusel.innerHTML="";
-
 
 
 
@@ -171,13 +157,11 @@ card.innerHTML=`
 <img src="${o.imagen}">
 
 
-
 <h3>
 
 ${o.titulo}
 
 </h3>
-
 
 
 <div class="precioAntes">
@@ -194,7 +178,6 @@ $${o.precioAntes || ""}
 
 
 
-
 <div class="descuento">
 
 🔥 ${o.descuento || ""}% OFF
@@ -203,13 +186,11 @@ $${o.precioAntes || ""}
 
 
 
-
 <div class="precio">
 
 💥 $${o.precioFinal || ""}
 
 </div>
-
 
 
 
@@ -242,34 +223,19 @@ iniciarCarrusel();
 
 
 }
-
-
-
-
-
-
-
-
-
 // ==============================
-// AUTO CARRUSEL MEJORADO
+// AUTO CARRUSEL
 // ==============================
 
 
 function iniciarCarrusel(){
 
 
-if(intervaloCarrusel)
-
-clearInterval(intervaloCarrusel);
-
-
-
 let posicion=0;
 
 
 
-intervaloCarrusel=setInterval(()=>{
+setInterval(()=>{
 
 
 if(!carrusel)return;
@@ -306,6 +272,15 @@ behavior:"smooth"
 
 
 }
+
+
+
+
+
+
+
+
+
 // ==============================
 // CUPONES
 // ==============================
@@ -320,43 +295,20 @@ collection(db,"cupones")
 );
 
 
+
+// ORDENAR CUPONES
+// MENOR DESCUENTO → MAYOR DESCUENTO
+
+
 const cuponesOrdenados = datos.docs.sort((a,b)=>{
 
-return Number(a.data().descuento || 0) - Number(b.data().descuento || 0);
 
-});
+return Number(a.data().descuento || 0) -
 
-
-
-// ORDENAR MENOR COMPRA MINIMA A MAYOR
-
-let cupones=[];
-
-
-cuponesOrdenados.forEach(item=>{
-
-
-cupones.push({
-
-id:item.id,
-
-...item.data()
-
-});
+Number(b.data().descuento || 0);
 
 
 });
-
-
-
-cupones.sort((a,b)=>{
-
-
-return Number(a.minimo || 0) - Number(b.minimo || 0);
-
-
-});
-
 
 
 
@@ -378,9 +330,10 @@ x.innerHTML="";
 
 
 
+cuponesOrdenados.forEach(item=>{
 
 
-cupones.forEach(c=>{
+const c=item.data();
 
 
 
@@ -396,7 +349,6 @@ tarjeta.className="cuponCard";
 tarjeta.innerHTML=`
 
 <div class="estado">
-
 
 ${
 c.estado==="agotado"
@@ -419,32 +371,15 @@ c.estado==="agotando"
 
 }
 
-
 </div>
-
-
 
 
 
 <h3>
 
-🎟️ ${
-
-c.tipo==="relampago"
-
-?
-
-"CUPON"
-
-:
-
-c.nombre
-
-}
+🎟️ ${c.nombre}
 
 </h3>
-
-
 
 
 
@@ -452,11 +387,9 @@ c.nombre
 
 💰 Descuento:
 
-$${c.descuento || ""}
+$${c.descuento}
 
 </p>
-
-
 
 
 
@@ -464,10 +397,9 @@ $${c.descuento || ""}
 
 🛒 Compra mínima:
 
-$${c.minimo || ""}
+$${c.minimo}
 
 </p>
-
 
 
 
@@ -483,9 +415,6 @@ $${c.minimo || ""}
 
 
 
-
-
-
 tarjeta
 
 .querySelector(".copiarCupon")
@@ -495,7 +424,7 @@ tarjeta
 
 copiarCupon(
 
-c.id,
+item.id,
 
 c.codigo
 
@@ -507,24 +436,17 @@ c.codigo
 
 
 
-
-
 if(c.tipo==="relampago")
-
 
 relampago?.appendChild(tarjeta);
 
 
-
 else if(c.tipo==="bancario")
-
 
 bancarios?.appendChild(tarjeta);
 
 
-
 else
-
 
 exclusivos?.appendChild(tarjeta);
 
@@ -533,37 +455,24 @@ exclusivos?.appendChild(tarjeta);
 });
 
 
-
-agregarAvisoDeslizar();
-
-
-
 }
-
-
-
-
-
-
-
-
-
 // ==============================
-// COPIAR CUPÓN RÁPIDO
+// COPIAR CUPÓN
 // ==============================
 
 
 async function copiarCupon(id,codigo){
 
 
+await navigator.clipboard.writeText(
 
-navigator.clipboard.writeText(codigo);
+codigo
+
+);
 
 
 
-
-
-updateDoc(
+await updateDoc(
 
 doc(
 
@@ -587,16 +496,11 @@ increment(1)
 
 
 
-
-
 mostrarToast(
 
 "✅ CUPÓN COPIADO"
 
 );
-
-
-
 
 
 
@@ -608,78 +512,7 @@ window.location.href=
 "https://meli.la/1mj3itE";
 
 
-},100);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ==============================
-// AVISO DESLIZAR
-// ==============================
-
-
-function agregarAvisoDeslizar(){
-
-
-
-const cajas=document.querySelectorAll(".carruselCupon");
-
-
-
-cajas.forEach(caja=>{
-
-
-
-if(caja.dataset.aviso)
-
-return;
-
-
-
-caja.dataset.aviso="true";
-
-
-
-const aviso=document.createElement("div");
-
-
-
-aviso.className="avisoDesliza";
-
-
-aviso.innerHTML=
-
-"👉 Desliza para ver más";
-
-
-
-caja.parentElement.appendChild(aviso);
-
-
-
-
-
-setTimeout(()=>{
-
-
-aviso.classList.add("ocultar");
-
-
-},4500);
-
-
-
-});
-
+},500);
 
 
 }
@@ -693,7 +526,7 @@ aviso.classList.add("ocultar");
 
 
 // ==============================
-// BOTON SUBIR
+// SUBIR ARRIBA
 // ==============================
 
 
@@ -710,7 +543,6 @@ window.addEventListener("scroll",()=>{
 
 btnArriba.style.display=
 
-
 window.scrollY>400
 
 ?
@@ -723,8 +555,6 @@ window.scrollY>400
 
 
 });
-
-
 
 
 
@@ -752,8 +582,9 @@ behavior:"smooth"
 
 
 
-
+// ==============================
 // INICIO
+// ==============================
 
 
 cargarOfertas();
