@@ -1,272 +1,177 @@
-/* ======================================
+/* =====================================
    EL PATRÓN DE LAS OFERTAS
-   ADMIN PRO CSS
-====================================== */
+   ADMIN CSS PRO
+===================================== */
 
 
 *{
+
 box-sizing:border-box;
+
 margin:0;
+
 padding:0;
+
 font-family:'Inter',sans-serif;
+
 }
+
 
 
 body{
 
 background:
-radial-gradient(circle at top,#3b2c00,#050505 55%);
+
+radial-gradient(circle at top,#332700,#050505 60%);
 
 color:white;
-
-min-height:100vh;
-
-}
-
-
-
-
-
-/* APP */
-
-.app{
-
-display:flex;
-
-}
-
-
-
-
-
-/* SIDEBAR */
-
-.sidebar{
-
-position:fixed;
-
-left:0;
-
-top:0;
-
-width:260px;
-
-height:100vh;
-
-background:#0b0b0b;
-
-border-right:1px solid #333;
-
-padding:25px;
-
-z-index:10;
-
-}
-
-
-
-.marca{
-
-text-align:center;
-
-margin-bottom:35px;
-
-}
-
-
-
-.logo{
-
-font-size:50px;
-
-}
-
-
-
-.marca h2{
-
-font-size:28px;
-
-font-weight:900;
-
-color:#FFD600;
-
-}
-
-
-
-.marca span{
-
-font-size:13px;
-
-color:#aaa;
-
-font-weight:800;
-
-}
-
-
-
-
-
-.sidebar button{
-
-width:100%;
 
 padding:15px;
 
-margin-bottom:12px;
+}
 
-border:none;
 
-border-radius:16px;
 
-background:#171717;
 
-color:white;
+
+
+
+.admin{
+
+max-width:600px;
+
+margin:auto;
+
+}
+
+
+
+
+
+/* HEADER */
+
+
+.admin-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+background:#111;
+
+padding:20px;
+
+border-radius:25px;
+
+border:1px solid #333;
+
+margin-bottom:20px;
+
+}
+
+
+
+.admin-header h1{
+
+color:#FFD600;
+
+font-size:25px;
 
 font-weight:900;
 
-cursor:pointer;
-
-font-size:15px;
-
 }
 
 
 
-.sidebar button:hover,
-.menuActivo{
+.admin-header p{
 
-background:#FFD600!important;
+color:#aaa;
 
-color:#000!important;
+font-size:13px;
 
 }
+
 
 
 
 
 #salir{
 
-position:absolute;
-
-bottom:25px;
-
-left:25px;
-
-width:210px;
-
-background:#d50000;
+background:#ff3b30;
 
 color:white;
 
-}
+border:0;
 
+padding:12px 18px;
 
-
-
-
-
-
-/* CONTENIDO */
-
-
-.contenido{
-
-margin-left:260px;
-
-width:100%;
-
-padding:30px;
-
-}
-
-
-
-
-
-header h1{
-
-font-size:36px;
-
-color:#FFD600;
+border-radius:15px;
 
 font-weight:900;
 
 }
 
 
-header p{
-
-color:#aaa;
-
-margin-top:5px;
-
-}
 
 
 
 
 
 
+/* ESTADISTICAS */
 
-/* TARJETAS */
 
-
-.tarjetas{
+.stats{
 
 display:grid;
 
 grid-template-columns:repeat(3,1fr);
 
-gap:20px;
+gap:10px;
 
-margin:30px 0;
+margin-bottom:20px;
 
 }
 
 
 
-.tarjeta{
+.stat{
 
 background:#111;
 
 border:1px solid #333;
 
-border-radius:25px;
+border-radius:20px;
 
-padding:25px;
+padding:15px 5px;
 
 text-align:center;
 
-box-shadow:0 10px 30px rgba(0,0,0,.3);
-
 }
 
 
 
-.tarjeta h2{
-
-font-size:38px;
+.stat h3{
 
 color:#FFD600;
 
-font-weight:900;
+font-size:22px;
 
 }
 
 
 
-.tarjeta p{
+.stat p{
 
-margin-top:10px;
+font-size:12px;
 
 color:#aaa;
 
-font-weight:800;
-
 }
+
+
 
 
 
@@ -279,15 +184,19 @@ font-weight:800;
 
 .panel{
 
-background:#101010;
-
-border:1px solid #333;
+background:#111;
 
 border-radius:25px;
 
-padding:25px;
+padding:20px;
 
-margin-bottom:25px;
+margin-bottom:20px;
+
+border:1px solid #333;
+
+box-shadow:
+
+0 10px 30px rgba(0,0,0,.4);
 
 }
 
@@ -295,46 +204,37 @@ margin-bottom:25px;
 
 .panel h2{
 
-margin-bottom:20px;
+color:#FFD600;
 
-font-weight:900;
+font-size:20px;
 
-}
-
-
-
-
-
-
-
-/* FORMULARIO */
-
-
-.formulario{
-
-display:grid;
-
-grid-template-columns:repeat(2,1fr);
-
-gap:15px;
+margin-bottom:18px;
 
 }
 
 
+
+
+
+
+
+
+/* INPUTS */
 
 
 input,
 select{
 
+
 width:100%;
 
 padding:15px;
 
-border:none;
-
-outline:none;
+margin-bottom:12px;
 
 border-radius:15px;
+
+border:0;
 
 background:#222;
 
@@ -358,46 +258,46 @@ color:#888;
 
 
 
-.subir{
 
-display:flex;
 
-align-items:center;
 
-justify-content:center;
+/* FILE */
 
-padding:18px;
+
+input[type="file"]{
 
 background:#FFD600;
 
 color:#000;
 
-border-radius:15px;
-
 font-weight:900;
-
-cursor:pointer;
 
 }
 
 
 
 
+
+
+
+/* IMAGEN PREVIEW */
+
+
 .preview{
 
-width:160px;
+width:100%;
 
-height:160px;
+max-height:250px;
 
-object-fit:cover;
+object-fit:contain;
+
+background:white;
 
 border-radius:20px;
 
-border:3px solid #FFD600;
+margin:10px 0;
 
-margin-top:15px;
-
-background:#222;
+display:none;
 
 }
 
@@ -410,52 +310,43 @@ background:#222;
 /* BOTONES */
 
 
-#publicarOferta,
-#nuevoCupon{
-
-
-margin-top:20px;
-
-width:100%;
-
-padding:18px;
-
-border:none;
-
-border-radius:20px;
-
-background:#FFD600;
-
-color:#000;
-
-font-size:18px;
-
-font-weight:900;
+button{
 
 cursor:pointer;
 
 }
 
 
-#publicarOferta:hover,
-#nuevoCupon:hover{
 
-transform:scale(.98);
-
-}
+#publicar,
+#guardarCupon{
 
 
+width:100%;
 
+padding:16px;
 
+border:0;
 
-#mensajeOferta{
+border-radius:18px;
 
-margin-top:15px;
+background:#FFD600;
 
-color:#FFD600;
+color:#000;
 
 font-weight:900;
 
+font-size:16px;
+
+}
+
+
+
+#publicar:active,
+#guardarCupon:active{
+
+transform:scale(.97);
+
 }
 
 
@@ -464,31 +355,40 @@ font-weight:900;
 
 
 
-/* LISTAS */
+
+/* MENSAJES */
+
+
+#mensaje{
+
+text-align:center;
+
+margin-top:12px;
+
+font-weight:900;
+
+color:#00ff88;
+
+}
+
+
+
+
+
+
+
+
+/* LISTADOS */
 
 
 #listaOfertas,
 #listaCupones{
 
-display:grid;
+display:flex;
 
-gap:15px;
+flex-direction:column;
 
-}
-
-
-
-
-
-.itemAdmin{
-
-background:#171717;
-
-border-radius:20px;
-
-padding:20px;
-
-border:1px solid #333;
+gap:12px;
 
 }
 
@@ -496,48 +396,47 @@ border:1px solid #333;
 
 
 
-.itemAdmin img{
-
-width:100px;
-
-height:100px;
-
-object-fit:cover;
-
-border-radius:15px;
-
-}
+.item{
 
 
+background:#222;
 
+padding:15px;
 
+border-radius:18px;
 
-.itemAdmin h3{
-
-margin:10px 0;
-
-font-weight:900;
+border:1px solid #444;
 
 }
 
 
 
 
+.item h3{
 
-.itemAdmin button{
+font-size:16px;
 
-margin-top:15px;
+color:#FFD600;
 
-padding:12px 20px;
+}
 
-border:none;
 
-border-radius:15px;
 
-background:#e53935;
+.item button{
+
+
+margin-top:10px;
+
+background:#ff3b30;
 
 color:white;
 
+border:0;
+
+padding:10px;
+
+border-radius:12px;
+
 font-weight:900;
 
 }
@@ -548,61 +447,22 @@ font-weight:900;
 
 
 
-/* MOVIL */
+@media(max-width:500px){
 
 
-@media(max-width:800px){
+.stats h3{
 
-
-.sidebar{
-
-position:relative;
-
-width:100%;
-
-height:auto;
+font-size:18px;
 
 }
 
 
-
-#salir{
-
-position:relative;
-
-left:0;
-
-bottom:auto;
-
-width:100%;
-
-}
-
-
-
-.contenido{
-
-margin:0;
+.panel{
 
 padding:15px;
 
 }
 
-
-
-.tarjetas{
-
-grid-template-columns:1fr;
-
-}
-
-
-
-.formulario{
-
-grid-template-columns:1fr;
-
-}
 
 
 }
