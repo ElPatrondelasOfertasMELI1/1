@@ -9,11 +9,12 @@
 
 
 <title>
-⚡ Admin PRO | El Patrón de las Ofertas
+⚡ Admin PRO | El Patrón
 </title>
 
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 
 <link rel="stylesheet" href="admin.css">
@@ -22,42 +23,33 @@
 </head>
 
 
-
 <body>
 
 
 
-<div class="admin">
 
 
-
-<header class="admin-header">
-
-
-<div>
-
-<h1>
-
-⚡ EL PATRÓN
-
-</h1>
+<header class="adminHeader">
 
 
-<p>
+<div class="logo">
 
-Panel PRO
+⚡ ADMIN
 
-</p>
-
+<span>
+EL PATRÓN
+</span>
 
 </div>
 
 
-<button id="logout">
 
-Salir
+<button id="salir">
+
+SALIR
 
 </button>
+
 
 
 </header>
@@ -68,118 +60,79 @@ Salir
 
 
 
-<!-- LOGIN -->
 
-
-<section id="loginBox" class="panel">
-
-
-<h2>
-
-🔐 Acceso administrador
-
-</h2>
-
-
-<input id="email"
-
-placeholder="Correo">
-
-
-<input id="password"
-
-type="password"
-
-placeholder="Contraseña">
-
-
-
-<button id="login">
-
-ENTRAR
-
-</button>
-
-
-</section>
+<main class="dashboard">
 
 
 
 
 
+<h1>
+
+🚀 Panel Administrador PRO
+
+</h1>
 
 
 
-
-<!-- PANEL -->
-
-
-<div id="panelAdmin" style="display:none;">
-
-
-
-
-
-
-
-
-<!-- ESTADISTICAS -->
 
 
 <section class="stats">
 
 
-<div class="stat">
 
-<b id="statClicks">
+<div class="cardStat">
 
-0
+<h3>
+🔥 Ofertas
+</h3>
 
-</b>
-
-<p>
-
-Clics
-
-</p>
-
-</div>
-
-
-
-<div class="stat">
-
-<b id="statCopias">
+<strong id="totalOfertas">
 
 0
 
-</b>
-
-<p>
-
-Copias
-
-</p>
+</strong>
 
 </div>
 
 
 
-<div class="stat">
 
-<b id="statAhorro">
 
-$0
+<div class="cardStat">
 
-</b>
+<h3>
+👆 Clics
+</h3>
 
-<p>
+<strong id="totalClicks">
 
-Ahorro
+0
 
-</p>
+</strong>
 
 </div>
+
+
+
+
+
+
+
+<div class="cardStat">
+
+<h3>
+🟢 Estado
+</h3>
+
+<strong>
+
+Activo
+
+</strong>
+
+</div>
+
 
 
 </section>
@@ -192,43 +145,70 @@ Ahorro
 
 
 
-<!-- OFERTAS -->
-
-
 <section class="panel">
+
 
 
 <h2>
 
-🔥 Ofertas
+➕ Publicar nueva oferta
 
 </h2>
 
 
 
-<input id="ofertaId" type="hidden">
+
+
+<input
+
+id="titulo"
+
+placeholder="Nombre del producto">
 
 
 
-<input id="titulo"
-
-placeholder="Nombre producto">
 
 
+<input
 
-<input id="precioAntes"
+id="imagen"
+
+placeholder="URL imagen">
+
+
+<input
+
+id="precioAntes"
 
 placeholder="Precio anterior">
 
 
 
-<input id="precioFinal"
+
+
+<input
+
+id="precioFinal"
 
 placeholder="Precio final">
 
 
 
-<input id="link"
+
+
+<input
+
+id="descuento"
+
+placeholder="Ejemplo: 30% OFF">
+
+
+
+
+
+<input
+
+id="link"
 
 placeholder="Link Mercado Libre">
 
@@ -237,54 +217,14 @@ placeholder="Link Mercado Libre">
 
 
 
-<label>
 
-📷 Imagen
+<button id="publicar">
 
-</label>
-
-
-
-<input id="imagen"
-
-type="file"
-
-accept="image/*">
-
-
-
-
-
-<img id="preview"
-
-class="preview">
-
-
-
-
-
-<label class="check">
-
-
-<input id="destacada"
-
-type="checkbox">
-
-
-⭐ Oferta destacada
-
-
-</label>
-
-
-
-
-
-<button id="guardarOferta">
-
-🚀 PUBLICAR / GUARDAR
+🔥 PUBLICAR OFERTA
 
 </button>
+
+
 
 
 
@@ -311,6 +251,10 @@ type="checkbox">
 
 <div id="listaOfertas">
 
+
+Cargando ofertas...
+
+
 </div>
 
 
@@ -325,109 +269,34 @@ type="checkbox">
 
 
 
-<!-- CUPONES -->
-
-
 <section class="panel">
 
 
 <h2>
 
-🎟️ Crear / Editar Cupón
+🎟️ Gestión de cupones
 
 </h2>
 
 
 
-<input id="cuponId"
-
-placeholder="Código cupón">
-
-
-
-<input id="cuponDescuento"
-
-placeholder="Descuento">
-
-
-
-<input id="cuponMinimo"
-
-placeholder="Compra mínima">
-
-
-
-
-
-<select id="cuponTipo">
-
-
-<option value="relampago">
+<button class="tipo">
 
 ⚡ Relámpago
 
-</option>
+</button>
 
 
+<button class="tipo">
 
-<option value="bancario">
+💳 Bancarios
 
-💳 Bancario
-
-</option>
-
+</button>
 
 
-<option value="meli">
+<button class="tipo">
 
-💎 Meli+
-
-</option>
-
-
-</select>
-
-
-
-
-
-<select id="cuponEstado">
-
-
-<option value="activo">
-
-🟢 Activo
-
-</option>
-
-
-
-<option value="agotando">
-
-🟠 Por agotarse
-
-</option>
-
-
-
-<option value="agotado">
-
-🔴 Agotado
-
-</option>
-
-
-
-</select>
-
-
-
-
-
-
-<button id="guardarCupon">
-
-💾 GUARDAR CUPÓN
+⭐ Meli+
 
 </button>
 
@@ -443,95 +312,10 @@ placeholder="Compra mínima">
 
 
 
-<section class="panel">
-
-
-<h2>
-
-⚡ Cupones Relámpago
-
-</h2>
-
-
-<div id="listaRelampago">
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-<section class="panel">
-
-
-<h2>
-
-💳 Cupones Bancarios
-
-</h2>
-
-
-
-<div id="listaBancarios">
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-<section class="panel">
-
-
-<h2>
-
-💎 Cupones Exclusivos Meli+
-
-</h2>
-
-
-
-<div id="listaMeli">
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
 <script type="module" src="admin.js"></script>
+
 
 
 </body>
 
 </html>
-
