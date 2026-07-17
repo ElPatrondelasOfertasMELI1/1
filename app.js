@@ -316,10 +316,15 @@ async function cargarCupones(){
 
 const datos =
 await getDocs(
-
 collection(db,"cupones")
-
 );
+
+
+const cuponesOrdenados = datos.docs.sort((a,b)=>{
+
+return Number(a.data().descuento || 0) - Number(b.data().descuento || 0);
+
+});
 
 
 
@@ -328,7 +333,7 @@ collection(db,"cupones")
 let cupones=[];
 
 
-datos.forEach(item=>{
+cuponesOrdenados.forEach(item=>{
 
 
 cupones.push({
