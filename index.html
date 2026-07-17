@@ -13,6 +13,11 @@
 </title>
 
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 
@@ -25,8 +30,9 @@
 <body>
 
 
+<!-- HEADER -->
 
-<header>
+<header class="header">
 
 
 <div class="logo">
@@ -38,6 +44,7 @@ DE LAS OFERTAS
 </span>
 
 </div>
+
 
 
 <button class="menu">
@@ -53,6 +60,8 @@ DE LAS OFERTAS
 
 
 
+<!-- HERO -->
+
 
 <section class="hero">
 
@@ -66,9 +75,10 @@ DE LAS OFERTAS
 
 <p>
 
-Cupones, descuentos y promociones todos los días
+Cupones • Descuentos • Promociones en tiempo real
 
 </p>
+
 
 
 </section>
@@ -79,9 +89,11 @@ Cupones, descuentos y promociones todos los días
 
 
 
+
 <!-- CATEGORIAS -->
 
-<section>
+
+<section class="seccion">
 
 
 <h2>
@@ -95,8 +107,8 @@ Cupones, descuentos y promociones todos los días
 <div class="categorias">
 
 
-<a href="https://meli.la/1BCxfbZ"
-target="_blank">
+
+<a href="https://meli.la/1BCxfbZ" target="_blank">
 
 🎮 Gaming
 
@@ -104,8 +116,7 @@ target="_blank">
 
 
 
-<a href="https://meli.la/244DRFQ"
-target="_blank">
+<a href="https://meli.la/244DRFQ" target="_blank">
 
 📱 Celulares
 
@@ -113,9 +124,7 @@ target="_blank">
 
 
 
-
-<a href="https://meli.la/2CGAShj"
-target="_blank">
+<a href="https://meli.la/2CGAShj" target="_blank">
 
 👕 Moda
 
@@ -123,10 +132,7 @@ target="_blank">
 
 
 
-
-
-<a href="https://meli.la/2qyeBxh"
-target="_blank">
+<a href="https://meli.la/2qyeBxh" target="_blank">
 
 🏠 Hogar
 
@@ -134,10 +140,7 @@ target="_blank">
 
 
 
-
-
-<a href="https://meli.la/1r37XCf"
-target="_blank">
+<a href="https://meli.la/1r37XCf" target="_blank">
 
 📷 Cámaras y drones
 
@@ -145,10 +148,7 @@ target="_blank">
 
 
 
-
-
-<a href="https://meli.la/12DF3Ur"
-target="_blank">
+<a href="https://meli.la/12DF3Ur" target="_blank">
 
 ✨ Cuidado personal
 
@@ -171,7 +171,7 @@ target="_blank">
 <!-- OFERTAS -->
 
 
-<section>
+<section class="seccion">
 
 
 <h2>
@@ -195,9 +195,76 @@ Cargando ofertas...
 </div>
 
 
-
 </section>
 
+
+
+
+
+
+
+
+<!-- ESTADISTICAS COMUNIDAD -->
+
+
+<section class="estadisticas">
+
+
+<div>
+
+🔥
+
+<b id="totalClicks">
+
+0
+
+</b>
+
+<br>
+
+Clics comunidad
+
+</div>
+
+
+
+
+<div>
+
+💰
+
+<b id="ahorro">
+
+$0
+
+</b>
+
+<br>
+
+Ahorro generado
+
+</div>
+
+
+
+<div>
+
+👥
+
+<b id="visitas">
+
+0
+
+</b>
+
+<br>
+
+Visitantes
+
+</div>
+
+
+</section>
 
 
 
@@ -209,7 +276,7 @@ Cargando ofertas...
 <!-- CUPONES -->
 
 
-<section>
+<section class="seccion">
 
 
 <h2>
@@ -223,7 +290,12 @@ Cargando ofertas...
 <div id="cupones">
 
 
+<div class="loader">
+
 Cargando cupones...
+
+</div>
+
 
 </div>
 
@@ -238,7 +310,44 @@ Cargando cupones...
 
 
 
-<!-- MELI+ -->
+<!-- CUPONES BANCARIOS -->
+
+
+<section class="seccion">
+
+
+<h2>
+
+💳 Cupones bancarios
+
+</h2>
+
+
+
+<div id="bancarios">
+
+
+<div class="loader">
+
+Cargando...
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- MELI PLUS -->
 
 
 <section class="vip">
@@ -246,28 +355,27 @@ Cargando cupones...
 
 <h2>
 
-💎 Exclusivo Meli+
+💎 Exclusivos Meli+
 
 </h2>
 
 
 <p>
 
-🔥 Beneficios especiales para usuarios Meli+
+Beneficios especiales para usuarios Meli+
 
 </p>
 
 
 
-<button>
+<button id="verMeli">
 
-VER CUPONES
+⭐ Ver cupones
 
 </button>
 
 
 </section>
-
 
 
 
@@ -292,7 +400,7 @@ VER CUPONES
 
 <p>
 
-🎁 $100 de descuento para nuevos usuarios
+🎁 $100 de descuento para usuarios nuevos
 
 </p>
 
@@ -305,13 +413,11 @@ Compra mínima $200
 
 
 
-<a href="https://mpago.li/1VNjCFE"
-target="_blank">
+<a href="https://mpago.li/1VNjCFE" target="_blank">
 
 OBTENER BENEFICIO
 
 </a>
-
 
 
 </section>
@@ -334,12 +440,10 @@ href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
 target="_blank">
 
 
-💬 Únete al canal +200 mil seguidores
+💬 Canal +200 mil seguidores
 
 
 </a>
-
-
 
 
 
@@ -354,4 +458,3 @@ target="_blank">
 
 
 </html>
-
