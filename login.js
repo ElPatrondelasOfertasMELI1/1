@@ -1,11 +1,14 @@
-// =================================
-// LOGIN ADMIN PRO
+// =====================================
 // EL PATRÓN DE LAS OFERTAS
-// =================================
+// LOGIN ADMIN PRO
+// FIREBASE AUTH
+// =====================================
+
 
 
 import { initializeApp } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 
 import {
@@ -24,30 +27,31 @@ from
 
 
 
+
+
+
+// CONFIGURACIÓN FIREBASE
+
+
 const firebaseConfig = {
 
-apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-authDomain: "patronofertasweb.firebaseapp.com",
+apiKey:"TU_API_KEY",
 
-projectId: "patronofertasweb",
+authDomain:"TU_PROYECTO.firebaseapp.com",
 
-storageBucket: "patronofertasweb.firebasestorage.app",
+projectId:"TU_PROJECT_ID",
 
-messagingSenderId: "292338334268",
+storageBucket:"TU_STORAGE_BUCKET",
 
-appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
+messagingSenderId:"TU_SENDER_ID",
+
+appId:"TU_APP_ID"
+
 
 };
 
 
-const app =
-initializeApp(firebaseConfig);
-
-
-
-const auth =
-getAuth(app);
 
 
 
@@ -55,27 +59,93 @@ getAuth(app);
 
 
 
-document
-.getElementById("entrar")
-.onclick = async()=>{
+const app = initializeApp(firebaseConfig);
 
 
-const email =
-document.getElementById("email").value;
+
+const auth = getAuth(app);
 
 
-const password =
-document.getElementById("password").value;
+
+
+
+
+
+
+
+
+const boton =
+
+document.getElementById("entrar");
 
 
 
 const mensaje =
+
 document.getElementById("mensaje");
 
 
 
 
+
+
+
+
+
+
+
+boton.onclick = async()=>{
+
+
+
+const email =
+
+document.getElementById("email").value;
+
+
+
+const password =
+
+document.getElementById("password").value;
+
+
+
+
+
+
+if(!email || !password){
+
+
+
+mensaje.innerHTML=
+
+"Completa todos los campos";
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+
+
 try{
+
+
+
+boton.innerHTML=
+
+"ENTRANDO...";
+
+
+
+
 
 
 await signInWithEmailAndPassword(
@@ -90,31 +160,57 @@ password
 
 
 
-mensaje.innerHTML =
+
+
+
+mensaje.innerHTML=
+
 "✅ Acceso correcto";
+
+
 
 
 
 setTimeout(()=>{
 
 
-window.location.href="admin.html";
+window.location.href=
+
+"admin.html";
+
 
 
 },1000);
 
 
 
-}
 
+
+
+
+}
 
 catch(error){
 
+
+
 console.error(error);
 
-mensaje.innerHTML = error.code;
+
+
+mensaje.innerHTML=
+
+"❌ Correo o contraseña incorrectos";
+
+
+
+boton.innerHTML=
+
+"🔐 INGRESAR";
+
 
 }
+
 
 
 
