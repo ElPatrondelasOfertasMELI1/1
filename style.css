@@ -1,7 +1,6 @@
 /* =====================================================
 EL PATRÓN DE LAS OFERTAS
-STYLE.CSS NUEVO
-PARTE 1/4
+STYLE.CSS FINAL
 ===================================================== */
 
 
@@ -13,78 +12,63 @@ margin:0;
 
 padding:0;
 
+font-family:'Inter',sans-serif;
+
 }
 
 
 
 body{
 
-font-family:'Inter',sans-serif;
 
 background:
 
 radial-gradient(
 circle at top,
 #242424,
-#050505 45%
+#050505 70%
 );
+
 
 color:white;
 
+
 min-height:100vh;
+
+
+padding-bottom:80px;
+
 
 }
 
 
 
 
-
-
-/* ==============================
-HEADER
-============================== */
 
 
 header{
 
 
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
+padding:20px;
 
 
-padding:18px 20px;
+text-align:center;
 
 
-background:rgba(5,5,5,.95);
+background:#080808;
 
 
-position:sticky;
-
-
-top:0;
-
-
-z-index:100;
-
-
-border-bottom:
-
-1px solid rgba(255,214,0,.25);
+border-bottom:2px solid #ffd600;
 
 
 }
 
 
 
+header h1{
 
 
-.logo{
-
-
-font-size:26px;
+font-size:28px;
 
 
 font-weight:900;
@@ -93,311 +77,43 @@ font-weight:900;
 color:#ffd600;
 
 
-line-height:1;
-
-
-}
-
-
-
-
-.logo span{
-
-
-display:block;
-
-
-font-size:14px;
-
-
-color:white;
-
-
-letter-spacing:2px;
-
-
-margin-top:5px;
-
-
 }
 
 
 
 
 
-.menu{
 
 
-width:48px;
+
+h2{
 
 
-height:48px;
+margin:25px 18px 15px;
 
 
-border:0;
-
-
-border-radius:15px;
-
-
-background:#ffd600;
-
-
-font-size:25px;
+font-size:22px;
 
 
 font-weight:900;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-
-
-
-
-
-/* ==============================
-HERO
-============================== */
-
-
-.hero{
-
-
-text-align:center;
-
-
-padding:35px 20px 20px;
-
-
-}
-
-
-
-.hero h1{
-
-
-font-size:32px;
-
-
-font-weight:900;
-
-
-background:
-
-linear-gradient(
-90deg,
-white,
-#ffd600
-);
-
-
--webkit-background-clip:text;
-
-
-color:transparent;
-
-
-}
-
-
-
-
-.hero p{
-
-
-margin-top:12px;
-
-
-color:#bbb;
-
-
-font-weight:600;
-
-
-}
-
-
-
-
-
-
-
-/* ==============================
-TITULOS
-============================== */
-
-
-section h2{
-
-
-font-size:24px;
-
-
-font-weight:900;
-
-
-padding:
-
-15px 20px;
-
-
-}
-
-
-
-
-
-
-
-/* ==============================
-CATEGORIAS
-============================== */
-
-
-.categorias{
-
-
-display:flex;
-
-
-gap:12px;
-
-
-padding:
-
-15px 20px;
-
-
-overflow-x:auto;
-
-
--webkit-overflow-scrolling:touch;
-
-
-}
-
-
-
-.categorias::-webkit-scrollbar{
-
-
-display:none;
-
-
-}
-
-
-
-
-
-.categorias a{
-
-
-display:flex;
-
-
-align-items:center;
-
-
-gap:8px;
-
-
-background:
-
-linear-gradient(
-145deg,
-#ffd600,
-#ffb300
-);
-
-
-color:#111;
-
-
-text-decoration:none;
-
-
-padding:
-
-12px 18px;
-
-
-border-radius:30px;
-
-
-font-weight:900;
-
-
-font-size:15px;
-
-
-white-space:nowrap;
-
-
-box-shadow:
-
-0 8px 20px rgba(255,214,0,.25);
-
-
-transition:.2s;
-
-
-}
-
-
-
-.categorias a:active{
-
-
-transform:scale(.95);
-
-
-}
-
-
-
-
-
-
-
-/* ==============================
-CARGANDO
-============================== */
-
-
-.loader{
-
-
-text-align:center;
-
-
-padding:35px;
 
 
 color:#ffd600;
 
 
-font-weight:900;
-
-
 }
-/* =====================================================
-STYLE.CSS NUEVO
-PARTE 2/4
-CARRUSEL OFERTAS PREMIUM
-===================================================== */
 
 
 
-/* ==============================
+
+
+
+
+
+
+/* ===========================
 CARRUSEL
-============================== */
+=========================== */
 
 
 .carrusel{
@@ -412,12 +128,13 @@ gap:18px;
 overflow-x:auto;
 
 
-padding:
-
-15px 20px 25px;
+padding:10px 20px 25px;
 
 
 scroll-snap-type:x mandatory;
+
+
+scroll-behavior:smooth;
 
 
 -webkit-overflow-scrolling:touch;
@@ -437,173 +154,85 @@ display:none;
 
 
 
+.oferta{
 
 
-
-/* ==============================
-TARJETA OFERTA
-============================== */
-
-
-.oferta,
-.ofertaCard{
-
-
-position:relative;
-
-
-min-width:
-
-calc(100% - 40px);
-
-
-scroll-snap-align:center;
+min-width:280px;
 
 
 background:
+
 
 linear-gradient(
 145deg,
 #181818,
-#050505
+#080808
 );
 
 
-border:
-
-2px solid #ffd600;
+border:1px solid #333;
 
 
-border-radius:28px;
-
-
-overflow:hidden;
-
-
-box-shadow:
-
-
-0 0 25px rgba(255,214,0,.20),
-
-
-0 15px 40px #000;
-
-
-
-}
-
-
-
-
-
-
-
-
-/* ==============================
-IMAGEN
-============================== */
-
-
-.oferta img,
-.ofertaCard img{
-
-
-width:100%;
-
-
-height:260px;
-
-
-object-fit:contain;
-
-
-background:
-
-radial-gradient(
-circle,
-#333,
-#111
-);
+border-radius:25px;
 
 
 padding:15px;
 
 
-display:block;
+scroll-snap-align:center;
+
+
+box-shadow:
+
+0 15px 30px #000;
 
 
 }
 
 
 
+.oferta img{
 
 
+width:100%;
 
 
-
-/* ==============================
-INFO OFERTA
-============================== */
+height:220px;
 
 
-.ofertaTexto,
-.info{
+object-fit:contain;
 
 
-padding:20px;
+border-radius:18px;
+
+
+background:white;
 
 
 }
 
 
 
-
-.oferta h3,
-.info h3{
+.oferta h3{
 
 
-font-size:19px;
+font-size:17px;
+
+
+margin:15px 0;
 
 
 font-weight:900;
 
 
-line-height:1.3;
-
-
-color:white;
-
-
 }
 
 
 
+.precio{
 
 
-.precioAntes,
-.antes{
-
-
-color:#999;
-
-
-font-size:15px;
-
-
-text-decoration:line-through;
-
-
-}
-
-
-
-
-
-.precioFinal,
-.oferta h2{
-
-
-font-size:34px;
+font-size:26px;
 
 
 font-weight:900;
@@ -612,125 +241,20 @@ font-weight:900;
 color:#ffd600;
 
 
-margin:12px 0;
-
-
 }
 
 
 
-
-
-
-
-
-/* ==============================
-BOTÓN COMPRA
-============================== */
-
-
-.comprar,
-.btnComprar{
+.btnOferta{
 
 
 display:block;
 
 
-background:
-
-linear-gradient(
-90deg,
-#ffd600,
-#ffb300
-);
-
-
-color:#111;
-
-
 text-align:center;
 
 
-text-decoration:none;
-
-
-padding:15px;
-
-
-border-radius:18px;
-
-
-font-size:17px;
-
-
-font-weight:900;
-
-
-box-shadow:
-
-
-0 6px 20px rgba(255,214,0,.35);
-
-
-}
-
-
-
-
-
-.comprar:active,
-.btnComprar:active{
-
-
-transform:scale(.96);
-
-
-}
-
-
-
-
-
-
-
-/* ==============================
-ETIQUETAS
-============================== */
-
-
-.badge{
-
-
-position:absolute;
-
-
-top:15px;
-
-
-left:15px;
-
-
-padding:8px 15px;
-
-
-border-radius:20px;
-
-
-font-size:13px;
-
-
-font-weight:900;
-
-
-z-index:5;
-
-
-}
-
-
-
-
-.destacada{
+margin-top:15px;
 
 
 background:#ffd600;
@@ -739,94 +263,55 @@ background:#ffd600;
 color:#111;
 
 
-}
+padding:14px;
 
 
+border-radius:18px;
 
 
-
-.relampago{
-
-
-background:#ff6b00;
+text-decoration:none;
 
 
-color:white;
+font-weight:900;
 
 
 }
 
-/* =====================================================
-STYLE.CSS NUEVO
-PARTE 3/4
-CUPONES PREMIUM COMPACTOS
-===================================================== */
 
 
 
-/* ==============================
-CONTENEDOR CUPONES
-============================== */
+
+
+
+
+
+/* ===========================
+CUPONES
+=========================== */
 
 
 .cupones{
 
 
-display:flex;
+display:grid;
 
 
-gap:14px;
+grid-template-columns:
+
+repeat(auto-fit,minmax(240px,1fr));
 
 
-overflow-x:auto;
+gap:15px;
 
 
-padding:
-
-10px 20px 25px;
-
-
-scroll-snap-type:x mandatory;
-
-
--webkit-overflow-scrolling:touch;
+padding:0 18px;
 
 
 }
 
 
 
-.cupones::-webkit-scrollbar{
-
-
-display:none;
-
-
-}
-
-
-
-
-
-
-
-
-/* ==============================
-TARJETA CUPÓN
-============================== */
-
-
-.cupon,
 .cuponCard{
-
-
-position:relative;
-
-
-min-width:255px;
-
-
-max-width:255px;
 
 
 background:
@@ -834,96 +319,77 @@ background:
 
 linear-gradient(
 145deg,
-#171717,
-#060606
+#181818,
+#090909
 );
 
 
-border:
-
-
-1px solid #ffd600;
+border:1px solid #ffd600;
 
 
 border-radius:22px;
 
 
-padding:16px;
-
-
-scroll-snap-align:start;
+padding:18px;
 
 
 box-shadow:
 
-
-0 0 20px rgba(255,214,0,.18),
-
-
-0 10px 25px #000;
-
+0 12px 25px #000;
 
 
 }
 
 
 
+.estado{
 
 
+display:inline-block;
 
 
-/* ==============================
-TÍTULO
-============================== */
+background:#00c853;
 
 
-.cupon h3,
-.cuponCard h3{
+padding:7px 12px;
 
 
-font-size:17px;
+border-radius:20px;
+
+
+font-size:12px;
 
 
 font-weight:900;
 
 
-color:#ffd600;
+}
 
 
-margin-bottom:8px;
+
+.cuponCard h3{
+
+
+margin:15px 0;
+
+
+font-size:18px;
 
 
 }
 
 
 
+.codigo{
 
 
+background:#050505;
 
 
-
-/* ==============================
-CÓDIGO
-============================== */
+border:1px dashed #ffd600;
 
 
-.cupon strong,
-.cuponCard strong{
-
-
-display:block;
-
-
-background:#111;
-
-
-border:
-
-
-1px dashed #ffd600;
-
-
-border-radius:14px;
+border-radius:15px;
 
 
 padding:12px;
@@ -935,35 +401,23 @@ text-align:center;
 font-size:22px;
 
 
+font-weight:900;
+
+
 letter-spacing:2px;
 
 
-color:white;
-
-
-margin:
-
-12px 0;
+margin:10px 0;
 
 
 }
 
 
 
-
-
-
-
-/* ==============================
-DATOS
-============================== */
-
-
-.cupon p,
 .cuponCard p{
 
 
-font-size:14px;
+margin:8px 0;
 
 
 font-weight:700;
@@ -972,25 +426,6 @@ font-weight:700;
 color:#ddd;
 
 
-margin:
-
-6px 0;
-
-
-}
-
-
-
-
-.cupon p:first-of-type{
-
-
-color:#ffd600;
-
-
-font-size:17px;
-
-
 }
 
 
@@ -999,30 +434,28 @@ font-size:17px;
 
 
 
-
-/* ==============================
-BOTÓN COPIAR
-============================== */
+/* BOTÓN COPIAR */
 
 
-.cupon button,
-.cuponCard button{
+.copiarCupon{
 
 
 width:100%;
 
 
+margin-top:15px;
+
+
+padding:15px;
+
+
 border:0;
 
 
-padding:12px;
-
-
-border-radius:15px;
+border-radius:18px;
 
 
 background:
-
 
 linear-gradient(
 90deg,
@@ -1040,9 +473,6 @@ font-size:15px;
 font-weight:900;
 
 
-margin-top:12px;
-
-
 }
 
 
@@ -1052,369 +482,64 @@ margin-top:12px;
 
 
 
-/* ==============================
-ESTADO NUEVO
-============================== */
 
+/* TOAST */
 
-.estado{
 
+#toast{
 
-display:inline-flex;
 
+position:fixed;
 
-align-items:center;
 
+bottom:30px;
 
-padding:
 
-6px 12px;
+left:50%;
 
 
-border-radius:20px;
+transform:
 
+translate(-50%,100px);
 
-font-size:12px;
 
-
-font-weight:900;
-
-
-margin-bottom:8px;
-
-
-}
-
-
-
-
-
-.disponible{
-
-
-background:#00c853;
-
-
-color:white;
-
-
-}
-
-
-
-
-
-.ultimas{
-
-
-background:#ff9800;
-
-
-color:white;
-
-
-}
-
-
-
-
-
-.agotado{
-
-
-background:#e53935;
-
-
-color:white;
-
-
-}
-
-/* =====================================================
-STYLE.CSS NUEVO
-PARTE 3/4
-CUPONES PREMIUM COMPACTOS
-===================================================== */
-
-
-
-/* ==============================
-CONTENEDOR CUPONES
-============================== */
-
-
-.cupones{
-
-
-display:flex;
-
-
-gap:14px;
-
-
-overflow-x:auto;
-
-
-padding:
-
-10px 20px 25px;
-
-
-scroll-snap-type:x mandatory;
-
-
--webkit-overflow-scrolling:touch;
-
-
-}
-
-
-
-.cupones::-webkit-scrollbar{
-
-
-display:none;
-
-
-}
-
-
-
-
-
-
-
-
-/* ==============================
-TARJETA CUPÓN
-============================== */
-
-
-.cupon,
-.cuponCard{
-
-
-position:relative;
-
-
-min-width:255px;
-
-
-max-width:255px;
-
-
-background:
-
-
-linear-gradient(
-145deg,
-#171717,
-#060606
-);
-
-
-border:
-
-
-1px solid #ffd600;
-
-
-border-radius:22px;
-
-
-padding:16px;
-
-
-scroll-snap-align:start;
-
-
-box-shadow:
-
-
-0 0 20px rgba(255,214,0,.18),
-
-
-0 10px 25px #000;
-
-
-
-}
-
-
-
-
-
-
-
-/* ==============================
-TÍTULO
-============================== */
-
-
-.cupon h3,
-.cuponCard h3{
-
-
-font-size:17px;
-
-
-font-weight:900;
-
-
-color:#ffd600;
-
-
-margin-bottom:8px;
-
-
-}
-
-
-
-
-
-
-
-
-/* ==============================
-CÓDIGO
-============================== */
-
-
-.cupon strong,
-.cuponCard strong{
-
-
-display:block;
-
-
-background:#111;
-
-
-border:
-
-
-1px dashed #ffd600;
-
-
-border-radius:14px;
-
-
-padding:12px;
-
-
-text-align:center;
-
-
-font-size:22px;
-
-
-letter-spacing:2px;
-
-
-color:white;
-
-
-margin:
-
-12px 0;
-
-
-}
-
-
-
-
-
-
-
-/* ==============================
-DATOS
-============================== */
-
-
-.cupon p,
-.cuponCard p{
-
-
-font-size:14px;
-
-
-font-weight:700;
-
-
-color:#ddd;
-
-
-margin:
-
-6px 0;
-
-
-}
-
-
-
-
-.cupon p:first-of-type{
-
-
-color:#ffd600;
-
-
-font-size:17px;
-
-
-}
-
-
-
-
-
-
-
-
-/* ==============================
-BOTÓN COPIAR
-============================== */
-
-
-.cupon button,
-.cuponCard button{
-
-
-width:100%;
-
-
-border:0;
-
-
-padding:12px;
-
-
-border-radius:15px;
-
-
-background:
-
-
-linear-gradient(
-90deg,
-#ffd600,
-#ffb300
-);
+background:#ffd600;
 
 
 color:#111;
 
 
-font-size:15px;
+padding:15px 25px;
+
+
+border-radius:30px;
 
 
 font-weight:900;
 
 
-margin-top:12px;
+opacity:0;
+
+
+transition:.3s;
+
+
+z-index:100;
+
+
+}
+
+
+
+#toast.show{
+
+
+opacity:1;
+
+
+transform:
+
+translate(-50%,0);
 
 
 }
@@ -1426,35 +551,46 @@ margin-top:12px;
 
 
 
-/* ==============================
-ESTADO NUEVO
-============================== */
+
+/* BOTÓN ARRIBA */
 
 
-.estado{
+#btnArriba{
 
 
-display:inline-flex;
+position:fixed;
 
 
-align-items:center;
+right:20px;
 
 
-padding:
-
-6px 12px;
+bottom:25px;
 
 
-border-radius:20px;
+width:55px;
 
 
-font-size:12px;
+height:55px;
+
+
+border-radius:50%;
+
+
+border:0;
+
+
+background:#ffd600;
+
+
+font-size:25px;
 
 
 font-weight:900;
 
 
-margin-bottom:8px;
+box-shadow:
+
+0 10px 25px #000;
 
 
 }
@@ -1463,43 +599,42 @@ margin-bottom:8px;
 
 
 
-.disponible{
-
-
-background:#00c853;
-
-
-color:white;
-
-
-}
 
 
 
 
-
-.ultimas{
-
-
-background:#ff9800;
+@media(max-width:600px){
 
 
-color:white;
+
+header h1{
+
+
+font-size:22px;
 
 
 }
 
 
 
+.oferta{
 
 
-.agotado{
+min-width:260px;
 
 
-background:#e53935;
+}
 
 
-color:white;
+
+.cupones{
+
+
+grid-template-columns:1fr;
+
+
+}
+
 
 
 }
