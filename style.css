@@ -25,18 +25,14 @@ background:
 
 radial-gradient(
 circle at top,
-#242424,
+#252525,
 #050505 70%
 );
 
 
 color:white;
 
-
-min-height:100vh;
-
-
-padding-bottom:80px;
+padding-bottom:90px;
 
 
 }
@@ -46,13 +42,23 @@ padding-bottom:80px;
 
 
 
+
+/* HEADER */
+
+
 header{
 
 
-padding:20px;
+display:flex;
 
 
-text-align:center;
+justify-content:space-between;
+
+
+align-items:center;
+
+
+padding:18px 20px;
 
 
 background:#080808;
@@ -61,14 +67,23 @@ background:#080808;
 border-bottom:2px solid #ffd600;
 
 
+position:sticky;
+
+
+top:0;
+
+
+z-index:50;
+
+
 }
 
 
 
-header h1{
+.logo{
 
 
-font-size:28px;
+font-size:25px;
 
 
 font-weight:900;
@@ -81,9 +96,109 @@ color:#ffd600;
 
 
 
+.logo span{
+
+
+display:block;
+
+
+font-size:12px;
+
+
+color:white;
+
+
+letter-spacing:3px;
+
+
+}
 
 
 
+.menu{
+
+
+background:#ffd600;
+
+
+border:0;
+
+
+border-radius:15px;
+
+
+font-size:25px;
+
+
+padding:8px 14px;
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+
+
+
+
+/* HERO */
+
+
+.hero{
+
+
+text-align:center;
+
+
+padding:35px 20px;
+
+
+}
+
+
+
+.hero h1{
+
+
+font-size:32px;
+
+
+font-weight:900;
+
+
+color:#ffd600;
+
+
+}
+
+
+
+.hero p{
+
+
+margin-top:10px;
+
+
+color:#ddd;
+
+
+font-weight:600;
+
+
+}
+
+
+
+
+
+
+
+
+/* TITULOS */
 
 
 h2{
@@ -111,530 +226,13 @@ color:#ffd600;
 
 
 
-/* ===========================
-CARRUSEL
-=========================== */
+/* CATEGORIAS */
 
 
-.carrusel{
+.categorias{
 
 
 display:flex;
 
 
-gap:18px;
-
-
-overflow-x:auto;
-
-
-padding:10px 20px 25px;
-
-
-scroll-snap-type:x mandatory;
-
-
-scroll-behavior:smooth;
-
-
--webkit-overflow-scrolling:touch;
-
-
-}
-
-
-
-.carrusel::-webkit-scrollbar{
-
-
-display:none;
-
-
-}
-
-
-
-.oferta{
-
-
-min-width:280px;
-
-
-background:
-
-
-linear-gradient(
-145deg,
-#181818,
-#080808
-);
-
-
-border:1px solid #333;
-
-
-border-radius:25px;
-
-
-padding:15px;
-
-
-scroll-snap-align:center;
-
-
-box-shadow:
-
-0 15px 30px #000;
-
-
-}
-
-
-
-.oferta img{
-
-
-width:100%;
-
-
-height:220px;
-
-
-object-fit:contain;
-
-
-border-radius:18px;
-
-
-background:white;
-
-
-}
-
-
-
-.oferta h3{
-
-
-font-size:17px;
-
-
-margin:15px 0;
-
-
-font-weight:900;
-
-
-}
-
-
-
-.precio{
-
-
-font-size:26px;
-
-
-font-weight:900;
-
-
-color:#ffd600;
-
-
-}
-
-
-
-.btnOferta{
-
-
-display:block;
-
-
-text-align:center;
-
-
-margin-top:15px;
-
-
-background:#ffd600;
-
-
-color:#111;
-
-
-padding:14px;
-
-
-border-radius:18px;
-
-
-text-decoration:none;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ===========================
-CUPONES
-=========================== */
-
-
-.cupones{
-
-
-display:grid;
-
-
-grid-template-columns:
-
-repeat(auto-fit,minmax(240px,1fr));
-
-
-gap:15px;
-
-
-padding:0 18px;
-
-
-}
-
-
-
-.cuponCard{
-
-
-background:
-
-
-linear-gradient(
-145deg,
-#181818,
-#090909
-);
-
-
-border:1px solid #ffd600;
-
-
-border-radius:22px;
-
-
-padding:18px;
-
-
-box-shadow:
-
-0 12px 25px #000;
-
-
-}
-
-
-
-.estado{
-
-
-display:inline-block;
-
-
-background:#00c853;
-
-
-padding:7px 12px;
-
-
-border-radius:20px;
-
-
-font-size:12px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-.cuponCard h3{
-
-
-margin:15px 0;
-
-
-font-size:18px;
-
-
-}
-
-
-
-.codigo{
-
-
-background:#050505;
-
-
-border:1px dashed #ffd600;
-
-
-border-radius:15px;
-
-
-padding:12px;
-
-
-text-align:center;
-
-
-font-size:22px;
-
-
-font-weight:900;
-
-
-letter-spacing:2px;
-
-
-margin:10px 0;
-
-
-}
-
-
-
-.cuponCard p{
-
-
-margin:8px 0;
-
-
-font-weight:700;
-
-
-color:#ddd;
-
-
-}
-
-
-
-
-
-
-
-/* BOTÓN COPIAR */
-
-
-.copiarCupon{
-
-
-width:100%;
-
-
-margin-top:15px;
-
-
-padding:15px;
-
-
-border:0;
-
-
-border-radius:18px;
-
-
-background:
-
-linear-gradient(
-90deg,
-#ffd600,
-#ffb300
-);
-
-
-color:#111;
-
-
-font-size:15px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* TOAST */
-
-
-#toast{
-
-
-position:fixed;
-
-
-bottom:30px;
-
-
-left:50%;
-
-
-transform:
-
-translate(-50%,100px);
-
-
-background:#ffd600;
-
-
-color:#111;
-
-
-padding:15px 25px;
-
-
-border-radius:30px;
-
-
-font-weight:900;
-
-
-opacity:0;
-
-
-transition:.3s;
-
-
-z-index:100;
-
-
-}
-
-
-
-#toast.show{
-
-
-opacity:1;
-
-
-transform:
-
-translate(-50%,0);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* BOTÓN ARRIBA */
-
-
-#btnArriba{
-
-
-position:fixed;
-
-
-right:20px;
-
-
-bottom:25px;
-
-
-width:55px;
-
-
-height:55px;
-
-
-border-radius:50%;
-
-
-border:0;
-
-
-background:#ffd600;
-
-
-font-size:25px;
-
-
-font-weight:900;
-
-
-box-shadow:
-
-0 10px 25px #000;
-
-
-}
-
-
-
-
-
-
-
-
-
-@media(max-width:600px){
-
-
-
-header h1{
-
-
-font-size:22px;
-
-
-}
-
-
-
-.oferta{
-
-
-min-width:260px;
-
-
-}
-
-
-
-.cupones{
-
-
-grid-template-columns:1fr;
-
-
-}
-
-
-
-}
+gap:
