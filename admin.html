@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 
+
 <head>
+
 
 <meta charset="UTF-8">
 
@@ -9,8 +11,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
+
 <title>
+
 ⚡ Admin PRO | El Patrón
+
 </title>
 
 
@@ -22,27 +27,36 @@
 <link rel="stylesheet" href="admin.css">
 
 
-
 </head>
+
+
+
 
 
 <body>
 
 
 
-
 <header class="adminHeader">
+
 
 
 <div class="logo">
 
+
 ⚡ ADMIN
 
 <span>
+
 EL PATRÓN
+
 </span>
 
+
 </div>
+
+
+
 
 
 
@@ -51,6 +65,7 @@ EL PATRÓN
 SALIR
 
 </button>
+
 
 
 </header>
@@ -64,7 +79,6 @@ SALIR
 
 
 <main class="dashboard">
-
 
 
 
@@ -91,17 +105,21 @@ SALIR
 
 <div class="cardStat">
 
+
 <h3>
 
 🔥 Ofertas
 
 </h3>
 
+
+
 <strong id="totalOfertas">
 
 0
 
 </strong>
+
 
 
 </div>
@@ -113,11 +131,13 @@ SALIR
 
 <div class="cardStat">
 
+
 <h3>
 
 🎟️ Cupones
 
 </h3>
+
 
 
 <strong id="totalCupones">
@@ -127,6 +147,7 @@ SALIR
 </strong>
 
 
+
 </div>
 
 
@@ -136,11 +157,13 @@ SALIR
 
 <div class="cardStat">
 
+
 <h3>
 
-👆 Copias
+📋 Copias
 
 </h3>
+
 
 
 <strong id="totalCopias">
@@ -150,7 +173,9 @@ SALIR
 </strong>
 
 
+
 </div>
+
 
 
 </section>
@@ -163,10 +188,7 @@ SALIR
 
 
 
-<!-- =====================
- NUEVA OFERTA
-===================== -->
-
+<!-- PUBLICAR OFERTA -->
 
 
 <section class="panel">
@@ -175,9 +197,10 @@ SALIR
 
 <h2>
 
-🔥 Publicar Oferta
+🔥 Nueva Oferta
 
 </h2>
+
 
 
 
@@ -212,6 +235,7 @@ accept="image/*"
 
 
 
+
 <img
 
 id="preview"
@@ -219,6 +243,7 @@ id="preview"
 class="preview"
 
 >
+
 
 
 
@@ -239,6 +264,7 @@ placeholder="Precio antes"
 
 
 
+
 <input
 
 id="precioFinal"
@@ -252,13 +278,15 @@ placeholder="Precio final"
 
 
 
+
 <input
 
 id="descuento"
 
-placeholder="Ejemplo: 30% OFF"
+placeholder="Ejemplo: 20% OFF"
 
 >
+
 
 
 
@@ -280,24 +308,12 @@ placeholder="Link Mercado Libre"
 
 
 
-
-<h3>
-
-Tipo de oferta
-
-</h3>
-
-
-
-
-
 <select id="tipoOferta">
-
 
 
 <option value="normal">
 
-Normal
+Oferta normal
 
 </option>
 
@@ -318,8 +334,8 @@ Normal
 </option>
 
 
-
 </select>
+
 
 
 
@@ -350,14 +366,10 @@ Normal
 
 
 
-<!-- =====================
- OFERTAS ACTUALES
-===================== -->
-
+<!-- OFERTAS -->
 
 
 <section class="panel">
-
 
 
 <h2>
@@ -371,10 +383,10 @@ Normal
 
 <div id="listaOfertas">
 
+
 Cargando...
 
 </div>
-
 
 
 
@@ -389,10 +401,7 @@ Cargando...
 
 
 
-<!-- =====================
- CUPONES
-===================== -->
-
+<!-- CUPONES -->
 
 
 <section class="panel">
@@ -404,7 +413,6 @@ Cargando...
 🎟️ Crear Cupón
 
 </h2>
-
 
 
 
@@ -424,13 +432,15 @@ placeholder="Código del cupón"
 
 
 
+
 <input
 
 id="nombreCupon"
 
-placeholder="Nombre visible"
+placeholder="Nombre del cupón"
 
 >
+
 
 
 
@@ -484,7 +494,6 @@ placeholder="Compra mínima"
 
 
 
-
 <option value="exclusivo">
 
 ⭐ Exclusivo
@@ -501,14 +510,11 @@ placeholder="Compra mínima"
 
 
 
-
 <button id="crearCupon">
 
 🎟️ GUARDAR CUPÓN
 
 </button>
-
-
 
 
 
@@ -538,14 +544,15 @@ placeholder="Compra mínima"
 
 <div id="listaCupones">
 
+
 Cargando...
 
 </div>
 
 
 
-</section>
 
+</section>
 
 
 
@@ -568,6 +575,7 @@ Cargando...
 
 
 </body>
+
 
 
 </html>
