@@ -1,13 +1,12 @@
-// =====================================
+// =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// LOGIN ADMIN PRO
+// LOGIN.JS
 // FIREBASE AUTH
-// =====================================
+// =====================================================
 
 
 
 import { initializeApp } from
-
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -28,29 +27,25 @@ from
 
 
 
-
-
-
-// =============================
-// CONFIG FIREBASE
-// =============================
-
+// ================================
+// CONFIGURACIÓN FIREBASE
+// ================================
 
 
 const firebaseConfig = {
 
 
-apiKey:"TU_API_KEY",
+apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-authDomain:"TU_PROYECTO.firebaseapp.com",
+authDomain: "patronofertasweb.firebaseapp.com",
 
-projectId:"TU_PROJECT_ID",
+projectId: "patronofertasweb",
 
-storageBucket:"TU_STORAGE_BUCKET",
+storageBucket: "patronofertasweb.firebasestorage.app",
 
-messagingSenderId:"TU_SENDER_ID",
+messagingSenderId: "292338334268",
 
-appId:"TU_APP_ID"
+appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 };
@@ -60,7 +55,7 @@ appId:"TU_APP_ID"
 
 
 
-
+// INICIAR FIREBASE
 
 
 const app = initializeApp(firebaseConfig);
@@ -74,43 +69,49 @@ const auth = getAuth(app);
 
 
 
-
+// ================================
+// BOTÓN INGRESAR
+// ================================
 
 
 const boton =
 
-document.getElementById("entrar");
+document.getElementById(
+"entrar"
+);
 
 
 
-const mensaje =
+boton.addEventListener(
 
-document.getElementById("mensaje");
+"click",
 
-
-
-
-
-
-
-
-
-boton.onclick = async()=>{
+async()=>{
 
 
 
 const email =
 
-document.getElementById("email").value;
+document.getElementById(
+"email"
+).value;
 
 
 
 const password =
 
-document.getElementById("password").value;
+document.getElementById(
+"password"
+).value;
 
 
 
+
+const mensaje =
+
+document.getElementById(
+"mensaje"
+);
 
 
 
@@ -119,9 +120,9 @@ document.getElementById("password").value;
 if(!email || !password){
 
 
-mensaje.innerHTML=
+mensaje.innerHTML =
 
-"Completa todos los campos";
+"⚠️ Completa todos los campos";
 
 
 return;
@@ -134,16 +135,13 @@ return;
 
 
 
-
-
-
 try{
 
 
 
-boton.innerHTML=
+boton.innerHTML =
 
-"ENTRANDO...";
+"INGRESANDO...";
 
 
 
@@ -163,11 +161,9 @@ password
 
 
 
-
-mensaje.innerHTML=
+mensaje.innerHTML =
 
 "✅ Acceso correcto";
-
 
 
 
@@ -176,7 +172,7 @@ mensaje.innerHTML=
 setTimeout(()=>{
 
 
-window.location.href=
+window.location.href =
 
 "admin.html";
 
@@ -199,13 +195,13 @@ console.error(error);
 
 
 
-mensaje.innerHTML=
+mensaje.innerHTML =
 
 "❌ Correo o contraseña incorrectos";
 
 
 
-boton.innerHTML=
+boton.innerHTML =
 
 "🔐 INGRESAR";
 
@@ -215,4 +211,4 @@ boton.innerHTML=
 
 
 
-};
+});
