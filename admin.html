@@ -5,6 +5,7 @@
 
 <meta charset="UTF-8">
 
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -14,17 +15,18 @@
 
 
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
 
 
 <link rel="stylesheet" href="admin.css">
+
 
 
 </head>
 
 
 <body>
-
 
 
 
@@ -51,7 +53,6 @@ SALIR
 </button>
 
 
-
 </header>
 
 
@@ -61,7 +62,10 @@ SALIR
 
 
 
+
 <main class="dashboard">
+
+
 
 
 
@@ -77,6 +81,10 @@ SALIR
 
 
 
+
+
+
+
 <section class="stats">
 
 
@@ -84,7 +92,9 @@ SALIR
 <div class="cardStat">
 
 <h3>
+
 🔥 Ofertas
+
 </h3>
 
 <strong id="totalOfertas">
@@ -93,7 +103,9 @@ SALIR
 
 </strong>
 
+
 </div>
+
 
 
 
@@ -102,17 +114,20 @@ SALIR
 <div class="cardStat">
 
 <h3>
-👆 Clics
+
+🎟️ Cupones
+
 </h3>
 
-<strong id="totalClicks">
+
+<strong id="totalCupones">
 
 0
 
 </strong>
 
-</div>
 
+</div>
 
 
 
@@ -122,17 +137,20 @@ SALIR
 <div class="cardStat">
 
 <h3>
-🟢 Estado
+
+👆 Copias
+
 </h3>
 
-<strong>
 
-Activo
+<strong id="totalCopias">
+
+0
 
 </strong>
 
-</div>
 
+</div>
 
 
 </section>
@@ -145,15 +163,22 @@ Activo
 
 
 
+<!-- =====================
+ NUEVA OFERTA
+===================== -->
+
+
+
 <section class="panel">
 
 
 
 <h2>
 
-➕ Publicar nueva oferta
+🔥 Publicar Oferta
 
 </h2>
+
 
 
 
@@ -163,7 +188,10 @@ Activo
 
 id="titulo"
 
-placeholder="Nombre del producto">
+placeholder="Título del producto"
+
+>
+
 
 
 
@@ -173,14 +201,39 @@ placeholder="Nombre del producto">
 
 id="imagen"
 
-placeholder="URL imagen">
+type="file"
+
+accept="image/*"
+
+>
+
+
+
+
+
+
+<img
+
+id="preview"
+
+class="preview"
+
+>
+
+
+
+
+
 
 
 <input
 
 id="precioAntes"
 
-placeholder="Precio anterior">
+placeholder="Precio antes"
+
+>
+
 
 
 
@@ -190,7 +243,10 @@ placeholder="Precio anterior">
 
 id="precioFinal"
 
-placeholder="Precio final">
+placeholder="Precio final"
+
+>
+
 
 
 
@@ -200,7 +256,10 @@ placeholder="Precio final">
 
 id="descuento"
 
-placeholder="Ejemplo: 30% OFF">
+placeholder="Ejemplo: 30% OFF"
+
+>
+
 
 
 
@@ -210,7 +269,58 @@ placeholder="Ejemplo: 30% OFF">
 
 id="link"
 
-placeholder="Link Mercado Libre">
+placeholder="Link Mercado Libre"
+
+>
+
+
+
+
+
+
+
+
+
+<h3>
+
+Tipo de oferta
+
+</h3>
+
+
+
+
+
+<select id="tipoOferta">
+
+
+
+<option value="normal">
+
+Normal
+
+</option>
+
+
+
+<option value="relampago">
+
+⚡ Relámpago
+
+</option>
+
+
+
+<option value="destacada">
+
+⭐ Destacada
+
+</option>
+
+
+
+</select>
+
 
 
 
@@ -228,6 +338,182 @@ placeholder="Link Mercado Libre">
 
 
 
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+ OFERTAS ACTUALES
+===================== -->
+
+
+
+<section class="panel">
+
+
+
+<h2>
+
+📦 Ofertas publicadas
+
+</h2>
+
+
+
+
+<div id="listaOfertas">
+
+Cargando...
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- =====================
+ CUPONES
+===================== -->
+
+
+
+<section class="panel">
+
+
+
+<h2>
+
+🎟️ Crear Cupón
+
+</h2>
+
+
+
+
+
+
+
+<input
+
+id="codigoCupon"
+
+placeholder="Código del cupón"
+
+>
+
+
+
+
+
+
+<input
+
+id="nombreCupon"
+
+placeholder="Nombre visible"
+
+>
+
+
+
+
+
+
+<input
+
+id="descuentoCupon"
+
+placeholder="Descuento"
+
+>
+
+
+
+
+
+
+
+<input
+
+id="minimoCupon"
+
+placeholder="Compra mínima"
+
+>
+
+
+
+
+
+
+
+<select id="tipoCupon">
+
+
+<option value="relampago">
+
+⚡ Relámpago
+
+</option>
+
+
+
+<option value="bancario">
+
+💳 Bancario
+
+</option>
+
+
+
+
+<option value="exclusivo">
+
+⭐ Exclusivo
+
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+
+
+<button id="crearCupon">
+
+🎟️ GUARDAR CUPÓN
+
+</button>
+
+
+
+
+
+
+
 </section>
 
 
@@ -241,19 +527,18 @@ placeholder="Link Mercado Libre">
 <section class="panel">
 
 
+
 <h2>
 
-📦 Ofertas publicadas
+🎟️ Cupones actuales
 
 </h2>
 
 
 
-<div id="listaOfertas">
+<div id="listaCupones">
 
-
-Cargando ofertas...
-
+Cargando...
 
 </div>
 
@@ -268,41 +553,7 @@ Cargando ofertas...
 
 
 
-
-<section class="panel">
-
-
-<h2>
-
-🎟️ Gestión de cupones
-
-</h2>
-
-
-
-<button class="tipo">
-
-⚡ Relámpago
-
-</button>
-
-
-<button class="tipo">
-
-💳 Bancarios
-
-</button>
-
-
-<button class="tipo">
-
-⭐ Meli+
-
-</button>
-
-
-
-</section>
+</main>
 
 
 
@@ -317,5 +568,6 @@ Cargando ofertas...
 
 
 </body>
+
 
 </html>
