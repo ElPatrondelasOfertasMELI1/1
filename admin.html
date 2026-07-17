@@ -5,12 +5,15 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>⚡ Admin PRO | El Patrón de las Ofertas</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+<title>
+⚡ Admin | El Patrón de las Ofertas
+</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
 
 <link rel="stylesheet" href="admin.css">
@@ -22,83 +25,40 @@
 <body>
 
 
-<div class="app">
+
+<div class="admin">
 
 
 
-<!-- MENU LATERAL -->
-
-<aside class="sidebar">
+<header class="admin-header">
 
 
-<div class="marca">
+<div>
 
-<div class="logo">
-⚡
+<h1>
+
+⚡ EL PATRÓN
+
+</h1>
+
+
+<p>
+
+Panel de administración PRO
+
+</p>
+
+
 </div>
-
-<h2>
-El Patrón
-</h2>
-
-<span>
-ADMIN PRO
-</span>
-
-</div>
-
-
-
-<button class="menuActivo">
-🏠 Dashboard
-</button>
-
-
-<button>
-🛒 Ofertas
-</button>
-
-
-<button>
-🎟️ Cupones
-</button>
-
-
-<button>
-📊 Estadísticas
-</button>
 
 
 
 <button id="salir">
 
-🚪 Salir
+Salir
 
 </button>
 
-
-
-</aside>
-
-
-
-
-
-
-
-<main class="contenido">
-
-
-
-<header>
-
-<h1>
-Dashboard
-</h1>
-
-<p>
-Centro de control de El Patrón de las Ofertas
-</p>
 
 
 </header>
@@ -109,51 +69,65 @@ Centro de control de El Patrón de las Ofertas
 
 
 
+
 <!-- ESTADISTICAS -->
 
 
-<section class="tarjetas">
+<section class="stats">
 
 
-<div class="tarjeta">
+<div class="stat">
 
-<h2 id="totalOfertas">
+<h3 id="totalClicks">
+
 0
-</h2>
+
+</h3>
 
 <p>
-Ofertas
-</p>
 
-</div>
-
-
-
-<div class="tarjeta">
-
-<h2 id="totalClicks">
-0
-</h2>
-
-<p>
 Clics
+
 </p>
 
 </div>
 
 
 
-<div class="tarjeta">
+<div class="stat">
 
-<h2 id="ahorroTotal">
+<h3 id="ahorro">
+
 $0
-</h2>
+
+</h3>
 
 <p>
+
 Ahorro comunidad
+
 </p>
 
 </div>
+
+
+
+<div class="stat">
+
+<h3 id="usuarios">
+
+0
+
+</h3>
+
+<p>
+
+Usuarios
+
+</p>
+
+</div>
+
 
 
 </section>
@@ -165,165 +139,81 @@ Ahorro comunidad
 
 
 
-<!-- PUBLICAR OFERTA -->
+
+
+<!-- OFERTAS -->
 
 
 <section class="panel">
 
 
 <h2>
-🚀 Publicar oferta
+
+🚨 Publicar oferta
+
 </h2>
 
 
 
-<div class="formulario">
+<input id="titulo"
+
+placeholder="Nombre del producto">
 
 
 
-<input 
-id="titulo"
-placeholder="Título oferta">
+<input id="precioAntes"
+
+placeholder="Precio anterior">
 
 
 
-<select id="categoria">
+<input id="precioFinal"
 
-
-<option>
-Gaming
-</option>
-
-
-<option>
-Tecnología
-</option>
-
-
-<option>
-Celulares
-</option>
-
-
-<option>
-Hogar
-</option>
-
-
-<option>
-Moda
-</option>
-
-
-<option>
-Juguetes
-</option>
-
-
-</select>
-
-
-
-
-<input
-id="precioAntes"
-placeholder="Precio antes">
-
-
-
-<input
-id="precioFinal"
 placeholder="Precio final">
 
 
 
-<input
-id="descuento"
-placeholder="Descuento">
+<input id="link"
 
-
-
-<input
-id="link"
 placeholder="Link Mercado Libre">
 
 
 
 
 
-<label class="subir">
+<label>
 
-
-📷 Seleccionar imagen
-
-
-<input
-
-type="file"
-
-id="imagenArchivo"
-
-accept="image/*"
-
-hidden>
-
+📷 Imagen del producto
 
 </label>
 
 
 
+<input 
 
+type="file"
 
-<img 
-id="vistaImagen"
-class="preview">
+id="imagen"
 
-
-
-
-
-<select id="activo">
-
-
-<option value="true">
-🟢 Activa
-</option>
-
-
-<option value="false">
-🔴 Agotada
-</option>
-
-
-</select>
-
-
-
-
-<select id="destacada">
-
-
-<option value="false">
-Normal
-</option>
-
-
-<option value="true">
-⭐ Destacada
-</option>
-
-
-</select>
-
-
-
-</div>
+accept="image/*">
 
 
 
 
 
-<button id="publicarOferta">
+
+<img id="preview"
+
+class="preview"
+
+src="">
+
+
+
+
+
+
+<button id="publicar">
 
 🚀 PUBLICAR OFERTA
 
@@ -331,12 +221,43 @@ Normal
 
 
 
-<p id="mensajeOferta"></p>
+<p id="mensaje">
+
+</p>
 
 
 
 </section>
 
+
+
+
+
+
+
+
+
+<!-- LISTA OFERTAS -->
+
+
+<section class="panel">
+
+
+<h2>
+
+📦 Ofertas publicadas
+
+</h2>
+
+
+<div id="listaOfertas">
+
+Cargando...
+
+</div>
+
+
+</section>
 
 
 
@@ -353,17 +274,87 @@ Normal
 
 
 <h2>
-🎟️ Administrar cupones
+
+🎟️ Crear cupón
+
 </h2>
 
 
 
-<button id="nuevoCupon">
 
-➕ Nuevo cupón
+<input id="codigoCupon"
+
+placeholder="Código cupón">
+
+
+<input id="descuento"
+
+placeholder="Descuento">
+
+
+<input id="minimo"
+
+placeholder="Compra mínima">
+
+
+
+<select id="estado">
+
+
+<option value="activo">
+
+🟢 Activo
+
+</option>
+
+
+<option value="agotando">
+
+🟠 Por agotarse
+
+</option>
+
+
+
+<option value="agotado">
+
+🔴 Agotado
+
+</option>
+
+
+</select>
+
+
+
+
+
+<button id="guardarCupon">
+
+Guardar cupón
 
 </button>
 
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="panel">
+
+
+<h2>
+
+🎟️ Cupones actuales
+
+</h2>
 
 
 
@@ -383,44 +374,9 @@ Cargando...
 
 
 
-
-
-<!-- OFERTAS EXISTENTES -->
-
-
-<section class="panel">
-
-
-<h2>
-
-🛒 Ofertas publicadas
-
-</h2>
-
-
-
-<div id="listaOfertas">
-
-Cargando...
-
 </div>
 
 
-
-</section>
-
-
-
-
-
-
-
-
-
-</main>
-
-
-</div>
 
 
 
