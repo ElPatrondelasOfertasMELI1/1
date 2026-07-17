@@ -842,3 +842,20 @@ padding:12px 16px;
 
 
 }
+
+/* PERMITIR SCROLL VERTICAL EN CARRUSELES */
+
+.carrusel,
+.cupones{
+
+touch-action: pan-y;
+
+}
+
+
+.oferta,
+.cuponCard{
+
+touch-action: pan-y;
+
+}
