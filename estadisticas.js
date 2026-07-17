@@ -1,7 +1,7 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // ESTADISTICAS.JS
-// VISITAS + CLICS + COPIAS + MÉTRICAS
+// VISITAS + CLICS + COPIAS + REINICIO DIARIO
 // =====================================================
 
 
@@ -17,7 +17,8 @@ setDoc,
 getDoc,
 increment,
 collection,
-getDocs
+getDocs,
+onSnapshot
 
 }
 
@@ -27,10 +28,6 @@ from
 
 
 
-
-// ==============================
-// FIREBASE
-// ==============================
 
 
 const firebaseConfig={
@@ -50,8 +47,10 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 };
 
 
+
 const app =
 initializeApp(firebaseConfig);
+
 
 
 const db =
@@ -60,9 +59,9 @@ getFirestore(app);
 
 
 
-// ==============================
+// =====================================================
 // FECHA CDMX
-// ==============================
+// =====================================================
 
 
 function fechaCDMX(){
@@ -81,40 +80,18 @@ timeZone:"America/Mexico_City"
 
 
 
-function horaCDMX(){
 
 
-return new Intl.DateTimeFormat(
-"es-MX",
-{
-hour:"2-digit",
-hour12:false,
-timeZone:"America/Mexico_City"
-}
-
-).format(new Date());
-
-
-}
-
-
-
-
-
-// ==============================
+// =====================================================
 // REGISTRAR VISITA
-// ==============================
+// =====================================================
 
 
-async function registrarVisita(){
+export async function registrarVisita(){
 
 
-const fecha =
+const hoy =
 fechaCDMX();
-
-
-const hora =
-horaCDMX();
 
 
 
@@ -133,15 +110,224 @@ total:
 increment(1),
 
 
-[fecha]:
-increment(1),
 
-
-[`hora_${hora}`]:
+[hoy]:
 increment(1)
 
 
 },
+
+
+{
+
+merge:true
+
+}
+
+);
+
+
+}
+
+
+
+
+// EJECUTAR VISITA
+
+registrarVisita();
+// =====================================================
+// REGISTRO DIARIO + MENSUAL
+// =====================================================
+
+
+function mesCDMX(){
+
+
+const fecha = new Intl.DateTimeFormat(
+
+"en-CA",
+
+{
+
+timeZone:"America/Mexico_City",
+
+year:"numeric",
+
+month:"2-digit"
+
+}
+
+).format(new Date());
+
+
+
+return fecha.substring(0,7);
+
+
+}
+
+
+
+
+
+
+function horaCDMX(){
+
+
+return new Intl.DateTimeFormat(
+
+"es-MX",
+
+{
+
+timeZone:"America/Mexico_City",
+
+hour:"2-digit",
+
+hour12:false
+
+}
+
+).format(new Date());
+
+
+}
+
+
+
+
+
+
+
+
+// ==============================
+// REGISTRAR ACTIVIDAD
+// ==============================
+
+
+export async function registrarActividad(tipo){
+
+
+
+const hoy = fechaCDMX();
+
+
+const mes = mesCDMX();
+
+
+const hora = horaCDMX();
+
+
+
+
+
+const ref = doc(
+
+db,
+
+"estadisticas",
+
+"general"
+
+);
+
+
+
+
+
+
+let datos={};
+
+
+
+
+
+if(tipo==="visita"){
+
+
+datos={
+
+
+visitasTotal:increment(1),
+
+
+[hoy]:increment(1),
+
+
+[`mes_${mes}`]:increment(1),
+
+
+[`hora_${hora}`]:increment(1)
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+if(tipo==="clic"){
+
+
+datos={
+
+
+clicsTotal:increment(1),
+
+
+[`clic_${hoy}`]:increment(1),
+
+
+[`clicMes_${mes}`]:increment(1)
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+if(tipo==="copia"){
+
+
+datos={
+
+
+copiasTotal:increment(1),
+
+
+[`copia_${hoy}`]:increment(1),
+
+
+[`copiaMes_${mes}`]:increment(1)
+
+
+};
+
+
+}
+
+
+
+
+
+
+
+await setDoc(
+
+ref,
+
+datos,
 
 {
 
@@ -159,60 +345,60 @@ merge:true
 
 
 
-registrarVisita();
-
-
-
-
 
 
 
 
 // ==============================
-// CARGAR ESTADISTICAS ADMIN
+// CARGAR DATOS DASHBOARD
 // ==============================
 
 
-async function cargarEstadisticas(){
+export async function cargarDashboard(){
 
 
 
-const visitasRef =
-doc(
+const ref = doc(
+
 db,
+
 "estadisticas",
-"visitas"
+
+"general"
+
 );
 
 
 
-const visitas =
-await getDoc(visitasRef);
+
+
+const snap = await getDoc(ref);
 
 
 
 
-if(!visitas.exists())
+
+if(!snap.exists())
 
 return;
 
 
 
-const datos =
-visitas.data();
+
+
+const datos=snap.data();
 
 
 
 
-// TOTAL VISITAS
 
+if(document.getElementById("totalVisitas")){
 
-if(
-document.getElementById("totalVisitas")
-){
 
 totalVisitas.innerHTML =
-datos.total || 0;
+
+datos.visitasTotal || 0;
+
 
 }
 
@@ -220,184 +406,313 @@ datos.total || 0;
 
 
 
-// VISITAS HOY
+
+if(document.getElementById("totalClics")){
 
 
-const hoy =
+totalClics.innerHTML =
+
+datos.clicsTotal || 0;
+
+
+}
+
+
+
+
+
+
+
+if(document.getElementById("totalCopias")){
+
+
+totalCopias.innerHTML =
+
+datos.copiasTotal || 0;
+
+
+}
+
+
+
+
+
+}
+// =====================================================
+// ANALISIS DE DATOS
+// DIA MAS FUERTE + HORA PICO
+// =====================================================
+
+
+export async function analizarEstadisticas(){
+
+
+
+const ref = doc(
+
+db,
+
+"estadisticas",
+
+"general"
+
+);
+
+
+
+const snap = await getDoc(ref);
+
+
+
+if(!snap.exists())
+
+return;
+
+
+
+const datos = snap.data();
+
+
+
+
+
+let diaFuerte="";
+
+let visitasDia=0;
+
+
+
+Object.keys(datos)
+
+.forEach(key=>{
+
+
+if(
+
+key.match(/^\d{4}-\d{2}-\d{2}$/)
+
+){
+
+
+
+if(datos[key]>visitasDia){
+
+
+
+visitasDia=
+
+datos[key];
+
+
+
+diaFuerte=
+
+key;
+
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+
+let horaPico="";
+
+let visitasHora=0;
+
+
+
+Object.keys(datos)
+
+.forEach(key=>{
+
+
+if(
+
+key.includes("hora_")
+
+){
+
+
+
+if(datos[key]>visitasHora){
+
+
+
+visitasHora=
+
+datos[key];
+
+
+
+horaPico=
+
+key.replace(
+
+"hora_",
+
+""
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+if(document.getElementById("diaFuerte")){
+
+
+diaFuerte.innerHTML=
+
+diaFuerte || "Sin datos";
+
+
+}
+
+
+
+
+
+if(document.getElementById("horaPico")){
+
+
+horaPico.innerHTML=
+
+horaPico+" hrs";
+
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================================
+// REINICIO DIARIO 12 AM CDMX
+// =====================================================
+
+
+async function verificarReinicio(){
+
+
+
+const ahora = new Date();
+
+
+
+const hora =
+
+Number(
+
+new Intl.DateTimeFormat(
+
+"es-MX",
+
+{
+
+timeZone:"America/Mexico_City",
+
+hour:"numeric",
+
+hour12:false
+
+}
+
+).format(ahora)
+
+);
+
+
+
+
+
+if(hora===0){
+
+
+
+const hoy=
+
 fechaCDMX();
 
 
 
-if(
-document.getElementById("visitasHoy")
-){
 
-visitasHoy.innerHTML =
-datos[hoy] || 0;
+await setDoc(
 
-}
+doc(
 
-
-
-
-
-
-// HORA MÁS FUERTE
-
-
-let mayorHora=0;
-
-let horaGanadora="";
-
-
-
-Object.keys(datos)
-
-.forEach(x=>{
-
-
-if(
-x.includes("hora_")
-){
-
-if(datos[x]>mayorHora){
-
-mayorHora=
-datos[x];
-
-
-horaGanadora=
-x.replace(
-"hora_",
-""
-);
-
-
-}
-
-}
-
-
-});
-
-
-
-
-if(
-document.getElementById("horaPico")
-){
-
-horaPico.innerHTML =
-horaGanadora+
-":00";
-
-}
-
-
-
-
-
-// DÍA MÁS FUERTE
-
-
-let mayorDia=0;
-
-let diaGanador="";
-
-
-
-Object.keys(datos)
-
-.forEach(x=>{
-
-
-if(
-x.match(/^\d{4}-\d{2}-\d{2}$/)
-){
-
-
-if(datos[x]>mayorDia){
-
-
-mayorDia=
-datos[x];
-
-
-diaGanador=
-x;
-
-
-}
-
-
-}
-
-
-});
-
-
-
-
-if(
-document.getElementById("diaFuerte")
-){
-
-diaFuerte.innerHTML =
-diaGanador;
-
-}
-
-
-
-}
-
-
-
-
-
-// ==============================
-// COPIAS DE CUPONES
-// ==============================
-
-
-async function cargarCopias(){
-
-
-
-const datos =
-await getDocs(
-
-collection(
 db,
-"cupones"
-)
+
+"estadisticas",
+
+"diario"
+
+),
+
+{
+
+
+fecha:hoy,
+
+
+visitas:0,
+
+
+clics:0,
+
+
+copias:0
+
+
+},
+
+
+{
+
+merge:true
+
+}
 
 );
 
 
 
-let total=0;
-
-
-
-datos.forEach(c=>{
-
-
-total +=
-c.data().copias || 0;
-
-
-});
-
-
-
-if(
-document.getElementById("totalCopias")
-){
-
-totalCopias.innerHTML =
-total;
-
 }
 
 
@@ -408,83 +723,43 @@ total;
 
 
 
-// ==============================
-// CLICS OFERTAS
-// ==============================
-
-
-async function cargarClics(){
 
 
 
-const datos =
-await getDocs(
 
-collection(
-db,
-"ofertas"
-)
-
-);
+// =====================================================
+// INICIO ESTADISTICAS
+// =====================================================
 
 
 
-let total=0;
+registrarActividad("visita");
 
 
 
-datos.forEach(o=>{
-
-
-total +=
-o.data().clics || 0;
-
-
-});
+cargarDashboard();
 
 
 
-if(
-document.getElementById("totalClics")
-){
-
-totalClics.innerHTML =
-total;
-
-}
-
-
-}
+analizarEstadisticas();
 
 
 
 
 
-// ==============================
-// INICIO
-// ==============================
-
-
-cargarEstadisticas();
-
-cargarCopias();
-
-cargarClics();
-
-
-
-// ACTUALIZA CADA MINUTO
-
+// Revisar cada hora
 
 setInterval(()=>{
 
 
-cargarEstadisticas();
-
-cargarCopias();
-
-cargarClics();
+verificarReinicio();
 
 
+cargarDashboard();
 
-},60000);
+
+analizarEstadisticas();
+
+
+
+},3600000);
