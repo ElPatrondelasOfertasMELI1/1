@@ -1,7 +1,7 @@
-/* =====================================
-   ADMIN PRO
-   EL PATRÓN DE LAS OFERTAS
-===================================== */
+/* =====================================================
+EL PATRÓN DE LAS OFERTAS
+ADMIN.CSS FINAL
+===================================================== */
 
 
 *{
@@ -12,21 +12,26 @@ margin:0;
 
 padding:0;
 
-}
+font-family:'Inter',sans-serif;
 
+}
 
 
 
 body{
 
 
-font-family:'Inter',sans-serif;
-
 background:
 
-radial-gradient(circle at top,#3b2b00,#050505 55%);
+radial-gradient(
+circle at top,
+#252525,
+#050505 60%
+);
+
 
 color:white;
+
 
 min-height:100vh;
 
@@ -47,19 +52,29 @@ min-height:100vh;
 
 display:flex;
 
+
 justify-content:space-between;
+
 
 align-items:center;
 
-padding:20px;
 
-background:rgba(0,0,0,.85);
+padding:18px 20px;
 
-border-bottom:
 
-1px solid rgba(255,215,0,.25);
+background:#080808;
 
-backdrop-filter:blur(15px);
+
+border-bottom:1px solid #ffd600;
+
+
+position:sticky;
+
+
+top:0;
+
+
+z-index:20;
 
 
 }
@@ -71,11 +86,11 @@ backdrop-filter:blur(15px);
 
 font-size:25px;
 
+
 font-weight:900;
 
-line-height:20px;
 
-color:#FFD600;
+color:#ffd600;
 
 
 }
@@ -87,157 +102,40 @@ color:#FFD600;
 
 display:block;
 
+
 font-size:12px;
 
-letter-spacing:2px;
 
 color:white;
 
 
+letter-spacing:2px;
+
+
 }
-
-
-
 
 
 
 #salir{
 
 
-background:#ff3131;
+background:#e53935;
+
+
+border:0;
+
 
 color:white;
 
-border:none;
-
-padding:12px 20px;
-
-border-radius:20px;
 
 font-weight:900;
 
 
-}
+padding:12px 18px;
 
-
-
-
-
-
-
-
-/* LOGIN */
-
-
-.login{
-
-
-height:100vh;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-padding:20px;
-
-
-}
-
-
-
-.loginBox{
-
-
-width:100%;
-
-max-width:380px;
-
-background:#111;
-
-padding:30px;
-
-border-radius:30px;
-
-text-align:center;
-
-border:1px solid rgba(255,215,0,.25);
-
-box-shadow:
-
-0 20px 50px #000;
-
-
-}
-
-
-
-.loginBox h1{
-
-
-color:#FFD600;
-
-font-size:32px;
-
-
-}
-
-
-
-.loginBox p{
-
-
-color:#aaa;
-
-margin:15px 0;
-
-
-}
-
-
-
-.loginBox input{
-
-
-width:100%;
-
-padding:15px;
-
-margin:8px 0;
-
-background:#222;
-
-border:none;
 
 border-radius:15px;
 
-color:white;
-
-
-}
-
-
-
-.loginBox button{
-
-
-width:100%;
-
-padding:16px;
-
-margin-top:15px;
-
-border:none;
-
-border-radius:16px;
-
-background:#FFD600;
-
-font-weight:900;
-
-font-size:16px;
-
 
 }
 
@@ -247,12 +145,15 @@ font-size:16px;
 
 
 
-
-
-/* DASHBOARD */
 
 
 .dashboard{
+
+
+max-width:900px;
+
+
+margin:auto;
 
 
 padding:20px;
@@ -265,11 +166,14 @@ padding:20px;
 .dashboard h1{
 
 
+color:#ffd600;
+
+
 font-size:30px;
+
 
 font-weight:900;
 
-color:#FFD600;
 
 margin-bottom:25px;
 
@@ -291,47 +195,33 @@ margin-bottom:25px;
 
 display:grid;
 
+
 grid-template-columns:repeat(3,1fr);
 
-gap:15px;
 
-margin-bottom:25px;
+gap:12px;
 
 
 }
-
 
 
 
 .cardStat{
 
 
-background:
-
-linear-gradient(160deg,#171717,#090909);
+background:#111;
 
 
-padding:20px;
+border:1px solid #ffd600;
 
-border-radius:25px;
+
+border-radius:20px;
+
+
+padding:18px;
+
 
 text-align:center;
-
-border:
-
-1px solid rgba(255,215,0,.25);
-
-
-}
-
-
-
-.cardStat h3{
-
-
-color:#aaa;
-
-font-size:15px;
 
 
 }
@@ -343,11 +233,14 @@ font-size:15px;
 
 display:block;
 
+
+font-size:30px;
+
+
+color:#ffd600;
+
+
 margin-top:10px;
-
-font-size:32px;
-
-color:#FFD600;
 
 
 }
@@ -368,32 +261,41 @@ color:#FFD600;
 
 background:
 
-linear-gradient(160deg,#151515,#090909);
+linear-gradient(
+145deg,
+#181818,
+#080808
+);
 
 
-padding:25px;
+border:1px solid #333;
+
 
 border-radius:25px;
 
-margin-bottom:25px;
 
-border:
+padding:20px;
 
-1px solid rgba(255,215,0,.2);
+
+margin:22px 0;
 
 
 }
 
 
 
+
+
 .panel h2{
 
 
-color:#FFD600;
+color:#ffd600;
 
-margin-bottom:20px;
 
 font-size:22px;
+
+
+margin-bottom:18px;
 
 
 }
@@ -409,26 +311,32 @@ font-size:22px;
 /* INPUTS */
 
 
-.panel input,
-
-.panel select{
+input,
+select{
 
 
 width:100%;
 
-padding:15px;
+
+padding:14px;
+
 
 margin-bottom:12px;
 
-border-radius:16px;
 
-border:none;
+border-radius:15px;
 
-background:#222;
+
+background:#0c0c0c;
+
+
+border:1px solid #444;
+
 
 color:white;
 
-font-size:15px;
+
+font-weight:700;
 
 
 }
@@ -437,20 +345,6 @@ font-size:15px;
 
 
 
-.panel select{
-
-cursor:pointer;
-
-}
-
-
-
-
-
-
-
-
-/* IMAGEN PREVIEW */
 
 
 .preview{
@@ -458,19 +352,23 @@ cursor:pointer;
 
 width:100%;
 
-max-height:260px;
+
+height:220px;
+
 
 object-fit:contain;
 
+
 display:none;
+
+
+background:#111;
+
 
 border-radius:20px;
 
+
 margin-bottom:15px;
-
-border:
-
-1px solid #333;
 
 
 }
@@ -481,9 +379,7 @@ border:
 
 
 
-
-
-/* BOTONES */
+/* BOTONES PRINCIPALES */
 
 
 .panel button{
@@ -491,57 +387,38 @@ border:
 
 width:100%;
 
-padding:16px;
 
-border:none;
+padding:15px;
+
+
+border:0;
+
 
 border-radius:18px;
 
-background:#FFD600;
 
-color:#000;
+background:
+
+linear-gradient(
+90deg,
+#ffd600,
+#ffb300
+);
+
+
+color:#111;
+
 
 font-weight:900;
 
-font-size:16px;
+
+font-size:15px;
+
+
+margin-top:8px;
 
 
 }
-
-
-
-.panel button:active{
-
-
-transform:scale(.96);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* LISTAS */
-
-
-#listaOfertas,
-
-#listaCupones{
-
-
-display:grid;
-
-gap:15px;
-
-
-}
-
-
 
 
 
@@ -552,20 +429,22 @@ gap:15px;
 /* TARJETAS */
 
 
-.ofertaAdmin,
-
-.cuponAdmin{
+.ofertaAdmin{
 
 
-background:#111;
+background:#101010;
 
-padding:18px;
 
-border-radius:22px;
+border:1px solid #ffd600;
 
-border:
 
-1px solid rgba(255,215,0,.2);
+border-radius:20px;
+
+
+padding:15px;
+
+
+margin:15px 0;
 
 
 }
@@ -577,81 +456,152 @@ border:
 
 width:100%;
 
+
 height:160px;
 
-object-fit:cover;
 
-border-radius:18px;
+object-fit:contain;
 
-margin-bottom:12px;
-
-
-}
-
-
-
-.ofertaAdmin h3,
-
-.cuponAdmin h3{
-
-
-color:#FFD600;
-
-font-size:18px;
-
-
-}
-
-
-
-
-
-
-
-
-/* BOTONES EDITAR/BORRAR */
-
-
-.editar,
-
-.borrar{
-
-
-width:48%;
-
-padding:12px;
-
-border:none;
 
 border-radius:15px;
 
+
+background:#050505;
+
+
+}
+
+
+
+
+.ofertaAdmin strong{
+
+
+display:block;
+
+
+text-align:center;
+
+
+font-size:22px;
+
+
+background:#050505;
+
+
+border:1px dashed #ffd600;
+
+
+padding:12px;
+
+
+border-radius:15px;
+
+
+margin:12px 0;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* BOTONES ACCIONES */
+
+
+.estadoBtn{
+
+
+background:#ff9800 !important;
+
+
+color:white !important;
+
+
+}
+
+
+
+.deleteBtn{
+
+
+background:#e53935 !important;
+
+
+color:white !important;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* TOAST */
+
+
+#toastAdmin{
+
+
+position:fixed;
+
+
+bottom:30px;
+
+
+left:50%;
+
+
+transform:
+
+translateX(-50%)
+translateY(100px);
+
+
+background:#ffd600;
+
+
+color:#111;
+
+
+padding:14px 25px;
+
+
+border-radius:30px;
+
+
 font-weight:900;
 
-margin-top:12px;
+
+opacity:0;
+
+
+transition:.3s;
 
 
 }
 
 
 
-.editar{
+#toastAdmin.show{
 
 
-background:#FFD600;
-
-color:black;
+opacity:1;
 
 
-}
+transform:
 
-
-
-.borrar{
-
-
-background:#ff3131;
-
-color:white;
+translateX(-50%)
+translateY(0);
 
 
 }
@@ -663,23 +613,39 @@ color:white;
 
 
 
+@media(max-width:600px){
 
-@media(max-width:700px){
 
 
 .stats{
 
+
 grid-template-columns:1fr;
 
+
 }
+
 
 
 
 .dashboard{
 
+
 padding:15px;
 
+
 }
+
+
+
+.ofertaAdmin strong{
+
+
+font-size:19px;
+
+
+}
+
 
 
 }
