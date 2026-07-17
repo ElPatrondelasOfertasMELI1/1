@@ -1,12 +1,13 @@
-// =====================================
+// =======================================
 // EL PATRÓN DE LAS OFERTAS
-// APP PRO
-// FIREBASE OFERTAS PUBLICAS
-// =====================================
+// APP.JS PRO
+// FIRESTORE + IMAGENES BASE64
+// =======================================
 
 
-import {initializeApp} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
 import {
@@ -17,21 +18,19 @@ doc,
 getDoc,
 onSnapshot,
 updateDoc,
+setDoc,
 increment
 
 }
 
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 // FIREBASE
 
-
 const firebaseConfig={
-
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -48,7 +47,6 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 };
 
 
-
 const app=initializeApp(firebaseConfig);
 
 
@@ -59,21 +57,12 @@ const db=getFirestore(app);
 
 
 
-
 const carrusel=
-document.getElementById("ofertasPublicas");
+document.getElementById("carrusel");
 
 
-
-const puntos=
-document.getElementById("flashDots");
-
-
-
-
-let posicion=0;
-
-let timer;
+const cupones=
+document.getElementById("cupones");
 
 
 
@@ -81,9 +70,9 @@ let timer;
 
 
 
-
-
+// =======================================
 // CARGAR OFERTAS
+// =======================================
 
 
 onSnapshot(
@@ -95,91 +84,53 @@ async(snapshot)=>{
 
 carrusel.innerHTML="";
 
-puntos.innerHTML="";
-
-
-
-let ofertas=[];
-
 
 
 for(const item of snapshot.docs){
 
 
+
 const o=item.data();
 
 
+let imagen="";
 
-if(o.activo){
-
-
-ofertas.push({
-
-id:item.id,
-
-...o
-
-});
-
-
-}
-
-
-}
-
-
-
-
-for(let i=0;i<ofertas.length;i++){
-
-
-const o=ofertas[i];
-
-
-
-let imagen="logo.png";
-
-
-
-
-// BUSCAR IMAGEN
 
 
 if(o.imagenID){
 
 
-const imgDoc=
+const img=
+
 await getDoc(
+
 doc(
 db,
 "imagenes",
 o.imagenID
+
 )
 
 );
 
 
 
-if(imgDoc.exists()){
+if(img.exists()){
 
-
-imagen=
-imgDoc.data().imagen;
-
+imagen=img.data().imagen;
 
 }
 
 
 }
-
 
 
 
 
 carrusel.innerHTML+=`
 
-<div class="flash-slide"
-onclick="abrirOferta('${o.id}','${o.link}')">
+
+<div class="oferta">
 
 
 <img src="${imagen}">
@@ -194,21 +145,15 @@ ${o.titulo}
 
 
 
-<div class="flash-old">
+<p class="precioAntes">
 
-Antes:
+$${o.precioAntes || ""}
 
-<s>
-
-$${o.precioAntes}
-
-</s>
-
-</div>
+</p>
 
 
 
-<div class="flash-price">
+<div class="precioFinal">
 
 $${o.precioFinal}
 
@@ -216,28 +161,27 @@ $${o.precioFinal}
 
 
 
-<div class="flash-btn">
+
+<a
+
+class="btnComprar"
+
+href="${o.link}"
+
+target="_blank"
+
+onclick="sumarClic('${item.id}')"
+
+>
 
 🛒 COMPRAR
 
+</a>
+
+
 </div>
 
 
-
-</div>
-
-
-`;
-
-
-
-
-puntos.innerHTML+=`
-
-<div class="flash-dot ${i==0?'active':''}"
-onclick="irOferta(${i})">
-
-</div>
 
 `;
 
@@ -247,13 +191,7 @@ onclick="irOferta(${i})">
 
 
 
-iniciarCarrusel();
-
-
-
-}
-
-);
+});
 
 
 
@@ -263,34 +201,37 @@ iniciarCarrusel();
 
 
 
-// CLICK OFERTA
+// =======================================
+// CLICS DE OFERTAS
+// =======================================
 
 
-window.abrirOferta=
-async(id,link)=>{
+window.sumarClic=async(id)=>{
 
 
 const ref=
+
 doc(
 db,
 "ofertas",
 id
+
 );
 
 
 
-await updateDoc(ref,{
+await updateDoc(
+
+ref,
+
+{
 
 clics:increment(1)
 
-});
+}
 
-
-
-window.open(
-link,
-"_blank"
 );
+
 
 
 };
@@ -303,57 +244,95 @@ link,
 
 
 
-// CARRUSEL AUTOMÁTICO
+
+// =======================================
+// CUPONES
+// =======================================
 
 
-function mover(){
+onSnapshot(
+
+collection(db,"cupones"),
+
+(snapshot)=>{
 
 
-const total=
-document.querySelectorAll(".flash-slide").length;
-
-
-
-if(!total)return;
-
-
-
-posicion++;
-
-
-if(posicion>=total)
-
-posicion=0;
+cupones.innerHTML="";
 
 
 
-actualizar();
+snapshot.forEach((item)=>{
+
+
+const c=item.data();
 
 
 
-}
+let estado="🟢 ACTIVO";
+
+
+
+if(c.estado==="agotando")
+
+estado="🟠 POR AGOTARSE";
+
+
+
+if(c.estado==="agotado")
+
+estado="🔴 AGOTADO";
 
 
 
 
-function actualizar(){
+
+cupones.innerHTML+=`
 
 
-carrusel.style.transform=
-
-`translateX(-${posicion*100}%)`;
+<div class="cupon">
 
 
+<h3>
 
-document
-.querySelectorAll(".flash-dot")
-.forEach((d,i)=>{
+${c.descuento || ""} OFF
+
+</h3>
 
 
-d.classList.toggle(
-"active",
-i===posicion
-);
+
+<p>
+
+${c.minimo || ""}
+
+</p>
+
+
+
+<p>
+
+${estado}
+
+</p>
+
+
+
+<button
+
+onclick="copiarCupon('${item.id}')"
+
+>
+
+📋 COPIAR
+
+</button>
+
+
+
+</div>
+
+
+`;
+
 
 
 });
@@ -362,44 +341,48 @@ i===posicion
 }
 
 
+);
 
 
 
 
 
-function iniciarCarrusel(){
-
-
-clearInterval(timer);
-
-
-
-timer=setInterval(()=>{
-
-
-mover();
-
-
-},4000);
-
-
-
-}
 
 
 
 
-
-window.irOferta=function(i){
-
-
-posicion=i;
+// =======================================
+// COPIAR CUPÓN
+// =======================================
 
 
-actualizar();
+window.copiarCupon=async(codigo)=>{
 
 
-iniciarCarrusel();
+await navigator.clipboard.writeText(codigo);
+
+
+
+contadorCupon(codigo);
+
+
+
+alert(
+"✅ Cupón copiado"
+);
+
+
+
+setTimeout(()=>{
+
+
+window.location.href=
+
+"https://meli.la/1mj3itE";
+
+
+},500);
+
 
 
 };
@@ -410,73 +393,167 @@ iniciarCarrusel();
 
 
 
-// SWIPE MOVIL
 
 
-let inicio=0;
+// =======================================
+// CONTADORES
+// =======================================
+
+
+async function contadorCupon(codigo){
 
 
 
-carrusel.addEventListener(
-"touchstart",
-e=>{
+const global=
+
+doc(
+db,
+"contadores",
+"global"
+
+);
 
 
-inicio=e.touches[0].clientX;
+
+await updateDoc(
+
+global,
+
+{
+
+total:increment(1)
+
+}
+
+).catch(async()=>{
 
 
-},{passive:true}
+await setDoc(
+
+global,
+
+{
+
+total:1
+
+}
+
+);
+
+
+});
+
+
+
+
+
+
+
+const dia=
+
+new Date()
+
+.toISOString()
+
+.split("T")[0];
+
+
+
+
+const usuario=
+
+localStorage.getItem("usuario")
+
+|| crypto.randomUUID();
+
+
+
+
+localStorage.setItem(
+
+"usuario",
+
+usuario
 
 );
 
 
 
 
-carrusel.addEventListener(
-"touchend",
-e=>{
 
+const diario=
 
-let final=
-e.changedTouches[0].clientX;
+doc(
 
+db,
 
+"copias_diarias",
 
-if(inicio-final>50){
-
-
-posicion++;
-
-}
-
-
-if(final-inicio>50){
-
-
-posicion--;
-
-}
-
-
-
-const total=
-document.querySelectorAll(".flash-slide").length;
-
-
-
-if(posicion<0)
-posicion=total-1;
-
-
-
-if(posicion>=total)
-posicion=0;
-
-
-
-actualizar();
-
-
-},{passive:true}
+usuario+"_"+dia
 
 );
+
+
+
+
+const existe=
+
+await getDoc(diario);
+
+
+
+if(!existe.exists()){
+
+
+await setDoc(
+
+diario,
+
+{
+
+usuario,
+
+dia,
+
+codigo
+
+}
+
+);
+
+
+
+const ahorro=
+
+doc(
+
+db,
+
+"estadisticas",
+
+"ahorro"
+
+);
+
+
+
+await updateDoc(
+
+ahorro,
+
+{
+
+total:increment(
+parseInt(100)
+)
+
+}
+
+).catch(()=>{});
+
+
+}
+
+
+
+}
