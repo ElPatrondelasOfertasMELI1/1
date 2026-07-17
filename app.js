@@ -1,12 +1,11 @@
-// ======================================
+// =====================================
 // EL PATRÓN DE LAS OFERTAS
-// APP JS PRO
-// FIREBASE PUBLICO
-// ======================================
+// APP PRO
+// FIREBASE OFERTAS PUBLICAS
+// =====================================
 
 
-import {initializeApp}
-from
+import {initializeApp} from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -14,11 +13,11 @@ import {
 
 getFirestore,
 collection,
-onSnapshot,
 doc,
+getDoc,
+onSnapshot,
 updateDoc,
-increment,
-setDoc
+increment
 
 }
 
@@ -27,6 +26,8 @@ from
 
 
 
+
+// FIREBASE
 
 
 const firebaseConfig={
@@ -44,9 +45,7 @@ messagingSenderId:"292338334268",
 
 appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
-
 };
-
 
 
 
@@ -60,17 +59,17 @@ const db=getFirestore(app);
 
 
 
-// ===============================
-// OFERTAS
-// ===============================
-
 
 const carrusel=
 document.getElementById("ofertasPublicas");
 
 
 
-let ofertas=[];
+const puntos=
+document.getElementById("flashDots");
+
+
+
 
 let posicion=0;
 
@@ -81,69 +80,110 @@ let timer;
 
 
 
+
+
+
+// CARGAR OFERTAS
+
+
 onSnapshot(
 
 collection(db,"ofertas"),
 
-(snapshot)=>{
+async(snapshot)=>{
 
 
-ofertas=[];
+carrusel.innerHTML="";
+
+puntos.innerHTML="";
 
 
-snapshot.forEach(doc=>{
+
+let ofertas=[];
+
+
+
+for(const item of snapshot.docs){
+
+
+const o=item.data();
+
+
+
+if(o.activo){
 
 
 ofertas.push({
 
-id:doc.id,
+id:item.id,
 
-...doc.data()
-
-});
-
+...o
 
 });
-
-
-
-mostrarOfertas();
 
 
 }
+
+
+}
+
+
+
+
+for(let i=0;i<ofertas.length;i++){
+
+
+const o=ofertas[i];
+
+
+
+let imagen="logo.png";
+
+
+
+
+// BUSCAR IMAGEN
+
+
+if(o.imagenID){
+
+
+const imgDoc=
+await getDoc(
+doc(
+db,
+"imagenes",
+o.imagenID
+)
 
 );
 
 
 
+if(imgDoc.exists()){
+
+
+imagen=
+imgDoc.data().imagen;
+
+
+}
+
+
+}
 
 
 
-
-
-function mostrarOfertas(){
-
-
-if(!carrusel)return;
-
-
-
-carrusel.innerHTML="";
-
-
-
-ofertas.forEach((o,i)=>{
 
 
 carrusel.innerHTML+=`
 
-
 <div class="flash-slide"
-
 onclick="abrirOferta('${o.id}','${o.link}')">
 
 
-<img src="${o.imagen || 'logo.png'}">
+<img src="${imagen}">
+
 
 
 <h3>
@@ -154,12 +194,14 @@ ${o.titulo}
 
 
 
-<div>
+<div class="flash-old">
 
 Antes:
 
 <s>
-$${o.precioAntes || ""}
+
+$${o.precioAntes}
+
 </s>
 
 </div>
@@ -181,63 +223,74 @@ $${o.precioFinal}
 </div>
 
 
-</div>
 
+</div>
 
 
 `;
 
 
 
-});
 
+puntos.innerHTML+=`
 
-iniciarCarrusel();
+<div class="flash-dot ${i==0?'active':''}"
+onclick="irOferta(${i})">
+
+</div>
+
+`;
+
 
 
 }
 
 
 
+iniciarCarrusel();
 
 
-
-
-
-window.abrirOferta=async(id,link)=>{
-
-
-try{
-
-
-await updateDoc(
-
-doc(db,"ofertas",id),
-
-{
-
-clics:increment(1)
 
 }
 
 );
 
 
-}
-
-catch(e){
 
 
 
-console.log(e);
 
 
 
-}
+
+// CLICK OFERTA
+
+
+window.abrirOferta=
+async(id,link)=>{
+
+
+const ref=
+doc(
+db,
+"ofertas",
+id
+);
 
 
 
-window.open(link,"_blank");
+await updateDoc(ref,{
+
+clics:increment(1)
+
+});
+
+
+
+window.open(
+link,
+"_blank"
+);
 
 
 };
@@ -250,49 +303,40 @@ window.open(link,"_blank");
 
 
 
-// ===============================
-// CARRUSEL
-// ===============================
+// CARRUSEL AUTOMÁTICO
 
 
-function iniciarCarrusel(){
+function mover(){
 
 
-clearInterval(timer);
+const total=
+document.querySelectorAll(".flash-slide").length;
 
 
-timer=setInterval(()=>{
+
+if(!total)return;
 
 
-mover(1);
+
+posicion++;
 
 
-},3500);
+if(posicion>=total)
+
+posicion=0;
+
+
+
+actualizar();
+
 
 
 }
 
 
 
-function mover(valor){
 
-
-const total=ofertas.length;
-
-
-if(!total)return;
-
-
-posicion+=valor;
-
-
-if(posicion>=total)
-posicion=0;
-
-
-if(posicion<0)
-posicion=total-1;
-
+function actualizar(){
 
 
 carrusel.style.transform=
@@ -301,12 +345,72 @@ carrusel.style.transform=
 
 
 
+document
+.querySelectorAll(".flash-dot")
+.forEach((d,i)=>{
+
+
+d.classList.toggle(
+"active",
+i===posicion
+);
+
+
+});
+
+
 }
 
 
 
 
 
+
+
+function iniciarCarrusel(){
+
+
+clearInterval(timer);
+
+
+
+timer=setInterval(()=>{
+
+
+mover();
+
+
+},4000);
+
+
+
+}
+
+
+
+
+
+window.irOferta=function(i){
+
+
+posicion=i;
+
+
+actualizar();
+
+
+iniciarCarrusel();
+
+
+};
+
+
+
+
+
+
+
+// SWIPE MOVIL
 
 
 let inicio=0;
@@ -321,10 +425,7 @@ e=>{
 inicio=e.touches[0].clientX;
 
 
-clearInterval(timer);
-
-
-}
+},{passive:true}
 
 );
 
@@ -336,275 +437,46 @@ carrusel.addEventListener(
 e=>{
 
 
-let final=e.changedTouches[0].clientX;
-
-
-if(inicio-final>50)
-mover(1);
-
-
-if(final-inicio>50)
-mover(-1);
+let final=
+e.changedTouches[0].clientX;
 
 
 
-iniciarCarrusel();
+if(inicio-final>50){
 
+
+posicion++;
 
 }
+
+
+if(final-inicio>50){
+
+
+posicion--;
+
+}
+
+
+
+const total=
+document.querySelectorAll(".flash-slide").length;
+
+
+
+if(posicion<0)
+posicion=total-1;
+
+
+
+if(posicion>=total)
+posicion=0;
+
+
+
+actualizar();
+
+
+},{passive:true}
 
 );
-
-
-
-
-
-
-
-
-
-// ===============================
-// CUPONES
-// ===============================
-
-
-const zonaCupones=
-document.getElementById("cuponesFirebase");
-
-
-
-
-if(zonaCupones){
-
-
-onSnapshot(
-
-collection(db,"cupones"),
-
-(snapshot)=>{
-
-
-zonaCupones.innerHTML="";
-
-
-
-snapshot.forEach(docu=>{
-
-
-let c=docu.data();
-
-
-
-zonaCupones.innerHTML+=`
-
-
-<div class="cupon-card">
-
-
-<div class="badge ${c.estado}">
-
-${c.estado}
-
-</div>
-
-
-
-<h3>
-
-${c.tipo==="bancario"
-?"🏦 Bancario"
-:c.tipo==="exclusivo"
-?"💎 Meli+"
-:"⚡ Relámpago"}
-
-</h3>
-
-
-
-<h2>
-
-$${c.descuento} OFF
-
-</h2>
-
-
-
-<p>
-
-Compra mínima:
-
-<b>
-${c.minimo}
-</b>
-
-</p>
-
-
-
-
-<button class="bank-btn"
-
-onclick="copiarCupon('${docu.id}','${c.tipo}')">
-
-
-📋 COPIAR CUPÓN
-
-
-</button>
-
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-}
-
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// ===============================
-// COPIAR CUPON
-// ===============================
-
-
-window.copiarCupon=async(codigo,tipo)=>{
-
-
-await navigator.clipboard.writeText(codigo);
-
-
-
-let ref=doc(
-db,
-"cupones",
-codigo
-);
-
-
-
-await updateDoc(ref,{
-
-copias:increment(1)
-
-}).catch(()=>{});
-
-
-
-
-
-// contador general
-
-
-await setDoc(
-
-doc(db,"contadores","global"),
-
-{
-
-total:increment(1),
-
-[tipo]:increment(1)
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-
-
-
-// ahorro solo 1 vez por dia
-
-
-let dia=
-new Date()
-.toISOString()
-.split("T")[0];
-
-
-
-let llave=
-
-"ahorro_"+codigo+"_"+dia;
-
-
-
-if(!localStorage.getItem(llave)){
-
-
-
-await setDoc(
-
-doc(db,"estadisticas","ahorro"),
-
-{
-
-total:increment(
-
-Number(codigo.includes("10")?100:0)
-
-)
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-localStorage.setItem(llave,"ok");
-
-
-}
-
-
-
-
-// redireccion mercado libre
-
-
-setTimeout(()=>{
-
-
-window.location.href=
-
-"https://meli.la/1mj3itE";
-
-
-},300);
-
-
-
-
-};
