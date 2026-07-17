@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS FINAL
+// APP.JS ACTUALIZADO
 // =====================================================
 
 
@@ -29,7 +29,6 @@ from
 
 const firebaseConfig = {
 
-
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
 authDomain:"patronofertasweb.firebaseapp.com",
@@ -41,7 +40,6 @@ storageBucket:"patronofertasweb.firebasestorage.app",
 messagingSenderId:"292338334268",
 
 appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
-
 
 };
 
@@ -59,25 +57,17 @@ getFirestore(app);
 
 
 
-
-
-
 const carrusel =
 document.getElementById("carrusel");
-
-
 
 const relampago =
 document.getElementById("cuponesRelampago");
 
-
 const bancarios =
 document.getElementById("cuponesBancarios");
 
-
 const exclusivos =
 document.getElementById("cuponesExclusivos");
-
 
 const toast =
 document.getElementById("toast");
@@ -90,33 +80,20 @@ document.getElementById("toast");
 
 
 
-// ==============================
-// TOAST
-// ==============================
-
-
 function mostrarToast(texto){
-
 
 if(!toast)return;
 
-
 toast.textContent=texto;
-
 
 toast.classList.add("show");
 
 
-
 setTimeout(()=>{
-
 
 toast.classList.remove("show");
 
-
 },1800);
-
-
 
 }
 
@@ -139,14 +116,12 @@ async function cargarOfertas(){
 if(!carrusel)return;
 
 
-
 const datos =
 await getDocs(
 
 collection(db,"ofertas")
 
 );
-
 
 
 carrusel.innerHTML="";
@@ -161,8 +136,6 @@ const o=item.data();
 
 
 const card=document.createElement("div");
-
-
 
 card.className="oferta";
 
@@ -183,11 +156,36 @@ ${o.titulo}
 
 
 
-<p class="precio">
+${o.precioAntes ? `
 
-$${o.precioFinal}
+<div class="precioAntes">
 
-</p>
+❌ Antes:
+<s>$${o.precioAntes}</s>
+
+</div>
+
+`:""}
+
+
+
+${o.descuento ? `
+
+<div class="descuento">
+
+🔥 ${o.descuento}
+
+</div>
+
+`:""}
+
+
+
+<div class="precio">
+
+💥 $${o.precioFinal}
+
+</div>
 
 
 
@@ -211,13 +209,11 @@ class="btnOferta">
 carrusel.appendChild(card);
 
 
-
 });
 
 
 
 iniciarCarrusel();
-
 
 
 }
@@ -230,24 +226,16 @@ iniciarCarrusel();
 
 
 
-// ==============================
-// AUTO CARRUSEL
-// ==============================
-
-
 function iniciarCarrusel(){
 
 
-
 let posicion=0;
-
 
 
 setInterval(()=>{
 
 
 if(!carrusel)return;
-
 
 
 if(carrusel.scrollWidth <= carrusel.clientWidth)
@@ -275,7 +263,6 @@ behavior:"smooth"
 });
 
 
-
 },2200);
 
 
@@ -298,7 +285,6 @@ behavior:"smooth"
 async function cargarCupones(){
 
 
-
 const datos =
 await getDocs(
 
@@ -312,11 +298,9 @@ collection(db,"cupones")
 
 .forEach(x=>{
 
-
 if(x)
 
 x.innerHTML="";
-
 
 });
 
@@ -333,8 +317,6 @@ const c=item.data();
 
 const tarjeta=document.createElement("div");
 
-
-
 tarjeta.className="cuponCard";
 
 
@@ -344,9 +326,7 @@ tarjeta.innerHTML=`
 
 <div class="estado">
 
-
 ${
-
 c.estado==="agotado"
 
 ?
@@ -367,9 +347,7 @@ c.estado==="agotando"
 
 }
 
-
 </div>
-
 
 
 
@@ -381,26 +359,21 @@ c.estado==="agotando"
 
 
 
-
 <p>
 
 💰 Descuento:
-
 $${c.descuento}
 
 </p>
 
 
 
-
 <p>
 
 🛒 Compra mínima:
-
 $${c.minimo}
 
 </p>
-
 
 
 
@@ -416,13 +389,11 @@ $${c.minimo}
 
 
 
-
 tarjeta
 
 .querySelector(".copiarCupon")
 
 .onclick=()=>{
-
 
 copiarCupon(
 
@@ -432,12 +403,7 @@ c.codigo
 
 );
 
-
-
 };
-
-
-
 
 
 
@@ -447,11 +413,9 @@ if(c.tipo==="relampago")
 relampago?.appendChild(tarjeta);
 
 
-
 else if(c.tipo==="bancario")
 
 bancarios?.appendChild(tarjeta);
-
 
 
 else
@@ -461,7 +425,6 @@ exclusivos?.appendChild(tarjeta);
 
 
 });
-
 
 
 }
@@ -482,7 +445,6 @@ exclusivos?.appendChild(tarjeta);
 async function copiarCupon(id,codigo){
 
 
-
 try{
 
 
@@ -491,7 +453,6 @@ await navigator.clipboard.writeText(
 String(codigo)
 
 );
-
 
 
 
@@ -519,15 +480,11 @@ increment(1)
 
 
 
-
-
 mostrarToast(
 
 "✅ CUPÓN COPIADO"
 
 );
-
-
 
 
 
@@ -543,15 +500,11 @@ window.location.href=
 
 
 
-
-
 }
 
-catch(e){
+catch(error){
 
-
-console.log(e);
-
+console.log(error);
 
 mostrarToast(
 
@@ -559,8 +512,6 @@ mostrarToast(
 
 );
 
-
-
 }
 
 
@@ -576,12 +527,11 @@ mostrarToast(
 
 
 // ==============================
-// BOTÓN ARRIBA
+// SUBIR ARRIBA
 // ==============================
 
 
 const btnArriba =
-
 document.getElementById("btnArriba");
 
 
@@ -589,17 +539,12 @@ document.getElementById("btnArriba");
 if(btnArriba){
 
 
-
-window.addEventListener(
-
-"scroll",
-
-()=>{
+window.addEventListener("scroll",()=>{
 
 
 btnArriba.style.display =
 
-window.scrollY>400
+window.scrollY > 400
 
 ?
 
@@ -610,11 +555,7 @@ window.scrollY>400
 "none";
 
 
-}
-
-);
-
-
+});
 
 
 
@@ -643,12 +584,6 @@ behavior:"smooth"
 
 
 
-// ==============================
-// INICIO
-// ==============================
-
-
 cargarOfertas();
-
 
 cargarCupones();
