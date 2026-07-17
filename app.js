@@ -1,11 +1,12 @@
 // =====================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS PRO
+// APP.JS FINAL
+// FIREBASE + OFERTAS + CUPONES
 // =====================================
 
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
 import {
@@ -15,99 +16,61 @@ collection,
 onSnapshot,
 doc,
 updateDoc,
-setDoc,
-increment,
-getDoc
+increment
 
 }
 
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+from 
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 
-const firebaseConfig={
+const firebaseConfig = {
 
-apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"TU_API_KEY",
 
-authDomain:"patronofertasweb.firebaseapp.com",
+authDomain:"TU_PROYECTO.firebaseapp.com",
 
-projectId:"patronofertasweb",
+projectId:"TU_PROJECT_ID",
 
-storageBucket:"patronofertasweb.firebasestorage.app",
+storageBucket:"TU_STORAGE_BUCKET",
 
-messagingSenderId:"292338334268",
+messagingSenderId:"TU_SENDER_ID",
 
-appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
+appId:"TU_APP_ID"
 
 };
 
 
 
-const app=initializeApp(firebaseConfig);
-
-const db=getFirestore(app);
 
 
+const app = initializeApp(firebaseConfig);
 
 
-
-const LINK_MELI=
-"https://meli.la/1mj3itE";
+const db = getFirestore(app);
 
 
 
 
 
+// LINK PRINCIPAL MERCADO LIBRE
 
-
-
-// ===============================
-// TOAST
-// ===============================
-
-
-function mostrarToast(texto){
-
-
-const t=
-document.getElementById("toast");
-
-
-t.innerHTML=texto;
-
-
-t.classList.add("show");
-
-
-
-setTimeout(()=>{
-
-
-t.classList.remove("show");
-
-
-},1500);
-
-
-
-}
+const LINK_MELI = "https://meli.la/1mj3itE";
 
 
 
 
 
 
-
-
-
-// ===============================
+// =============================
 // OFERTAS
-// ===============================
+// =============================
 
 
-const carrusel=
+const carrusel =
 document.getElementById("carrusel");
 
 
@@ -123,27 +86,38 @@ let ofertas=[];
 
 
 
-snapshot.forEach(d=>{
+snapshot.forEach((doc)=>{
 
 
 ofertas.push({
 
-id:d.id,
+id:doc.id,
 
-...d.data()
-
-});
-
+...doc.data()
 
 });
 
 
+});
 
+
+
+
+
+// DESTACADAS PRIMERO
 
 ofertas.sort((a,b)=>{
 
 
-return (b.destacada===true)-(a.destacada===true);
+return (
+
+(b.destacada === true)
+
+-
+
+(a.destacada === true)
+
+);
 
 
 });
@@ -156,17 +130,58 @@ carrusel.innerHTML="";
 
 
 
+if(ofertas.length===0){
+
+
+carrusel.innerHTML=
+
+`
+<div class="loader">
+No hay ofertas disponibles
+</div>
+`;
+
+return;
+
+}
+
+
+
+
+
+
 ofertas.forEach(o=>{
 
 
-carrusel.innerHTML+=`
+
+const card=document.createElement("div");
+
+
+card.className="oferta";
 
 
 
-<div class="oferta">
+card.innerHTML=`
+
+${o.destacada ? 
+'<span class="badge">⭐ DESTACADA</span>' 
+: ''}
 
 
 <img src="${o.imagen || 'logo.png'}">
+
+
+
+<div class="info">
+
+
+
+<span class="descuento">
+
+${o.descuento || "OFERTA"}
+
+</span>
+
 
 
 
@@ -194,13 +209,14 @@ $${o.precioFinal || ""}
 
 
 
+
 <a class="btnComprar"
 
 href="${o.link}"
 
 target="_blank"
 
-onclick="clicOferta('${o.id}')">
+onclick="registrarClick('${o.id}')">
 
 
 🛒 COMPRAR
@@ -212,8 +228,11 @@ onclick="clicOferta('${o.id}')">
 
 </div>
 
-
 `;
+
+
+
+carrusel.appendChild(card);
 
 
 
@@ -222,8 +241,6 @@ onclick="clicOferta('${o.id}')">
 
 
 }
-
-
 
 );
 
@@ -235,15 +252,18 @@ onclick="clicOferta('${o.id}')">
 
 
 
-// ===============================
-// CLIC OFERTA
-// ===============================
+// =============================
+// CLIC OFERTAS
+// =============================
 
 
-window.clicOferta=async(id)=>{
+window.registrarClick = async(id)=>{
 
 
-updateDoc(
+try{
+
+
+await updateDoc(
 
 doc(db,"ofertas",id),
 
@@ -253,7 +273,10 @@ clics:increment(1)
 
 }
 
-).catch(()=>{});
+);
+
+
+}catch(e){}
 
 
 
@@ -267,50 +290,23 @@ clics:increment(1)
 
 
 
-// ===============================
+// =============================
 // CUPONES
-// ===============================
-
-
-function ordenarCupones(lista){
-
-
-return lista.sort((a,b)=>{
-
-
-let A=parseInt(
-(a.minimo||"0")
-.replace(/\D/g,"")
-);
-
-
-let B=parseInt(
-(b.minimo||"0")
-.replace(/\D/g,"")
-);
-
-
-return A-B;
-
-
-});
-
-
-}
+// =============================
 
 
 
+function cargarCupones(tipo,contenedor){
 
 
 
+const box=
+document.getElementById(contenedor);
 
 
-function pintarCupones(id,tipoClase){
 
+if(!box)return;
 
-
-const zona=
-document.getElementById(id);
 
 
 
@@ -321,20 +317,22 @@ collection(db,"cupones"),
 (snapshot)=>{
 
 
-let datos=[];
+let cupones=[];
 
 
 
-snapshot.forEach(d=>{
+
+snapshot.forEach((d)=>{
 
 
-let c=d.data();
+const c=d.data();
 
 
 
-if(c.tipo===tipoClase){
+if(c.tipo===tipo){
 
-datos.push({
+
+cupones.push({
 
 id:d.id,
 
@@ -346,32 +344,61 @@ id:d.id,
 }
 
 
+
 });
 
 
 
 
 
-datos=ordenarCupones(datos);
+
+// ORDEN MENOR A MAYOR
+
+cupones.sort((a,b)=>{
+
+
+const A=parseInt(
+String(a.minimo)
+.replace(/\D/g,"")
+)||0;
+
+
+const B=parseInt(
+String(b.minimo)
+.replace(/\D/g,"")
+)||0;
 
 
 
-zona.innerHTML="";
+return A-B;
+
+
+});
 
 
 
-datos.forEach(c=>{
 
 
-zona.innerHTML+=`
+box.innerHTML="";
 
 
-<div class="cupon ${tipoClase}">
+
+
+
+
+cupones.forEach(c=>{
+
+
+
+box.innerHTML += `
+
+
+<div class="cupon ${tipo}">
 
 
 <h3>
 
-${c.descuento}
+${c.descuento || ""}
 
 </h3>
 
@@ -385,7 +412,7 @@ Compra mínima
 
 <b>
 
-${c.minimo}
+${c.minimo || ""}
 
 </b>
 
@@ -412,53 +439,54 @@ ${c.minimo}
 
 
 
-}
-
-
-
-);
-
-
 
 }
 
 
-
-
-
-
-
-pintarCupones(
-"cupones",
-"relampago"
-);
-
-
-pintarCupones(
-"bancarios",
-"bancario"
-);
-
-
-pintarCupones(
-"meliPlus",
-"meli"
 );
 
 
 
+}
 
 
 
 
 
 
-// ===============================
-// COPIAR CUPON
-// ===============================
+
+cargarCupones(
+"relampago",
+"cupones"
+);
 
 
-window.copiarCupon=async(codigo)=>{
+cargarCupones(
+"bancario",
+"bancarios"
+);
+
+
+
+cargarCupones(
+"meli",
+"meliPlus"
+);
+
+
+
+
+
+
+
+
+
+// =============================
+// COPIAR CUPÓN
+// =============================
+
+
+window.copiarCupon = async(codigo)=>{
 
 
 try{
@@ -471,36 +499,34 @@ await navigator.clipboard.writeText(codigo);
 }catch(e){
 
 
-
-const input=document.createElement("textarea");
-
-
-input.value=codigo;
+}
 
 
-document.body.appendChild(input);
+
+const toast=
+document.getElementById("toast");
 
 
-input.select();
+if(toast){
 
 
-document.execCommand("copy");
+toast.classList.add("show");
 
 
-input.remove();
+
+setTimeout(()=>{
+
+
+toast.classList.remove("show");
+
+
+},1200);
+
 
 
 }
 
 
-
-mostrarToast(
-"✅ CUPÓN COPIADO"
-);
-
-
-
-registrarCopia(codigo);
 
 
 
@@ -510,7 +536,8 @@ setTimeout(()=>{
 window.location.href=LINK_MELI;
 
 
-},700);
+
+},1200);
 
 
 
@@ -522,178 +549,37 @@ window.location.href=LINK_MELI;
 
 
 
+// =============================
+// ESTADISTICAS LOCALES
+// =============================
 
 
-// ===============================
-// ESTADISTICAS
-// ===============================
+let visitas =
 
-
-async function registrarCopia(codigo){
-
-
-
-const contador=
-
-doc(db,"contadores","global");
+localStorage.getItem("visitas") || 0;
 
 
 
-updateDoc(contador,{
-
-total:increment(1)
-
-}).catch(()=>{});
-
-
-
-
-
-const usuario=
-
-localStorage.getItem("usuario")
-
-||
-
-crypto.randomUUID();
-
+visitas++;
 
 
 
 localStorage.setItem(
-"usuario",
-usuario
-);
 
+"visitas",
 
-
-
-
-const fecha=
-
-new Date()
-.toISOString()
-.slice(0,10);
-
-
-
-
-
-const copia=
-
-doc(
-
-db,
-
-"copias_diarias",
-
-usuario+"_"+fecha
+visitas
 
 );
 
 
 
+const usuarios=
+document.getElementById("usuarios");
 
 
-const existe=
+if(usuarios){
 
-await getDoc(copia);
-
-
-
-
-
-if(!existe.exists()){
-
-
-await setDoc(copia,{
-
-usuario,
-
-fecha,
-
-codigo
-
-});
-
-
-
-const ahorro=
-
-doc(
-
-db,
-
-"estadisticas",
-
-"ahorro"
-
-);
-
-
-
-updateDoc(ahorro,{
-
-total:increment(100)
-
-}).catch(()=>{});
-
-
+usuarios.innerHTML=visitas;
 
 }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// MOSTRAR ESTADISTICAS
-// ===============================
-
-
-onSnapshot(
-
-doc(db,"contadores","global"),
-
-(s)=>{
-
-
-document.getElementById("copias").innerHTML=
-
-s.data()?.total || 0;
-
-
-}
-
-);
-
-
-
-
-
-onSnapshot(
-
-doc(db,"estadisticas","ahorro"),
-
-(s)=>{
-
-
-document.getElementById("ahorro").innerHTML=
-
-"$"+
-
-(s.data()?.total || 0);
-
-
-}
-
-);
-
