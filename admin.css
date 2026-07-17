@@ -1,14 +1,16 @@
-/* ===================================
+/* =====================================
+   ADMIN PRO
    EL PATRÓN DE LAS OFERTAS
-   ADMIN CSS PRO
-=================================== */
+===================================== */
 
 
 *{
 
 box-sizing:border-box;
 
-font-family:'Inter',sans-serif;
+margin:0;
+
+padding:0;
 
 }
 
@@ -16,29 +18,19 @@ font-family:'Inter',sans-serif;
 
 body{
 
-margin:0;
-
-padding:15px;
+font-family:'Inter',sans-serif;
 
 background:
 
-radial-gradient(circle at top,#3a2c00,#050505 60%);
+radial-gradient(circle at top,#332600,#050505 45%);
 
 color:white;
 
-}
-
-
-
-
-
-.admin{
-
-max-width:650px;
-
-margin:auto;
+min-height:100vh;
 
 }
+
+
 
 
 
@@ -47,7 +39,7 @@ margin:auto;
 /* HEADER */
 
 
-.admin-header{
+.adminHeader{
 
 display:flex;
 
@@ -55,57 +47,43 @@ justify-content:space-between;
 
 align-items:center;
 
-background:#111;
-
 padding:20px;
 
-border-radius:25px;
+background:rgba(0,0,0,.85);
 
-border:1px solid #333;
+border-bottom:1px solid rgba(255,215,0,.25);
 
-margin-bottom:20px;
+backdrop-filter:blur(15px);
 
 }
 
 
 
-.admin-header h1{
 
-margin:0;
+
+.logo{
 
 font-size:26px;
 
 font-weight:900;
 
-color:#ffe600;
+line-height:20px;
+
+color:#FFD600;
 
 }
 
 
 
-.admin-header p{
+.logo span{
 
-margin:5px 0 0;
+display:block;
 
-color:#aaa;
-
-}
-
-
-
-#logout{
-
-background:#ff3b30;
+font-size:13px;
 
 color:white;
 
-border:0;
-
-padding:12px 18px;
-
-border-radius:15px;
-
-font-weight:900;
+letter-spacing:2px;
 
 }
 
@@ -114,216 +92,51 @@ font-weight:900;
 
 
 
+#salir{
 
-/* PANELES */
-
-
-.panel{
-
-background:#111;
-
-border:1px solid #333;
-
-border-radius:25px;
-
-padding:20px;
-
-margin-bottom:20px;
-
-box-shadow:
-
-0 12px 35px rgba(0,0,0,.45);
-
-}
-
-
-
-.panel h2{
-
-margin-top:0;
-
-font-size:21px;
-
-font-weight:900;
-
-color:#ffe600;
-
-}
-
-
-
-
-
-
-
-/* INPUTS */
-
-
-input,
-select{
-
-
-width:100%;
-
-padding:15px;
-
-margin-bottom:12px;
-
-border-radius:15px;
-
-border:0;
-
-background:#222;
+background:#ff3131;
 
 color:white;
 
-font-weight:700;
+border:none;
 
-font-size:15px;
-
-}
-
-
-
-input::placeholder{
-
-color:#999;
-
-}
-
-
-
-
-
-
-
-/* FILE */
-
-
-input[type=file]{
-
-background:#ffe600;
-
-color:#000;
-
-font-weight:900;
-
-}
-
-
-
-
-
-
-
-/* IMAGEN */
-
-
-.preview{
-
-
-width:100%;
-
-max-height:280px;
-
-object-fit:contain;
-
-background:white;
+padding:12px 20px;
 
 border-radius:20px;
 
-margin-bottom:15px;
-
-}
-
-
-
-
-
-
-
-/* CHECK */
-
-
-.check{
-
-display:flex;
-
-align-items:center;
-
-gap:10px;
-
-background:#222;
-
-padding:12px;
-
-border-radius:15px;
-
-margin-bottom:15px;
-
 font-weight:900;
 
 }
 
 
 
-.check input{
-
-width:auto;
-
-margin:0;
-
-}
 
 
 
 
 
+/* DASHBOARD */
 
 
+.dashboard{
 
-/* BOTONES */
-
-
-button{
-
-cursor:pointer;
+padding:20px;
 
 }
 
 
 
-#login,
-#guardarOferta,
-#guardarCupon{
+.dashboard h1{
 
-
-width:100%;
-
-padding:16px;
-
-border:0;
-
-border-radius:18px;
-
-background:#ffe600;
-
-color:#000;
-
-font-size:16px;
+font-size:30px;
 
 font-weight:900;
 
-}
+color:#FFD600;
 
-
-
-button:active{
-
-transform:scale(.96);
+margin-bottom:20px;
 
 }
-
 
 
 
@@ -337,50 +150,43 @@ transform:scale(.96);
 
 .stats{
 
-
 display:grid;
 
 grid-template-columns:repeat(3,1fr);
 
-gap:10px;
+gap:15px;
 
-margin-bottom:20px;
+margin-bottom:25px;
 
 }
 
 
 
-.stat{
+.cardStat{
 
+background:
 
-background:#111;
+linear-gradient(160deg,#161616,#080808);
 
-border:1px solid #333;
+border-radius:25px;
 
-border-radius:20px;
-
-padding:15px 5px;
+padding:20px;
 
 text-align:center;
 
-}
+border:1px solid rgba(255,215,0,.25);
 
+box-shadow:
 
-
-.stat b{
-
-
-font-size:23px;
-
-color:#00c853;
+0 15px 30px rgba(0,0,0,.4);
 
 }
 
 
 
-.stat p{
+.cardStat h3{
 
-font-size:12px;
+font-size:15px;
 
 color:#aaa;
 
@@ -388,25 +194,15 @@ color:#aaa;
 
 
 
+.cardStat strong{
 
+display:block;
 
+font-size:32px;
 
+margin-top:10px;
 
-
-/* LISTADOS */
-
-
-#listaOfertas,
-#listaRelampago,
-#listaBancarios,
-#listaMeli{
-
-
-display:flex;
-
-flex-direction:column;
-
-gap:12px;
+color:#FFD600;
 
 }
 
@@ -416,117 +212,226 @@ gap:12px;
 
 
 
-.item{
 
-
-background:#222;
-
-border-radius:18px;
-
-padding:15px;
-
-border:1px solid #444;
-
-}
-
-
-
-
-.item h3{
-
-margin:0 0 8px;
-
-color:#ffe600;
-
-font-size:17px;
-
-}
-
-
-
-.item p{
-
-margin:5px 0;
-
-color:#ddd;
-
-}
-
-
-
-.item img{
-
-
-width:100%;
-
-height:120px;
-
-object-fit:contain;
-
-background:white;
-
-border-radius:12px;
-
-}
-
-
-
-
-
-
-
-.item button{
-
-
-margin-top:8px;
-
-padding:10px;
-
-border:0;
-
-border-radius:12px;
-
-background:#3483fa;
-
-color:white;
-
-font-weight:900;
-
-width:48%;
-
-}
-
-
-
-.item button.delete{
-
-background:#ff3b30;
-
-}
-
-
-
-
-
-
-
-@media(max-width:600px){
-
-
-.stats b{
-
-font-size:18px;
-
-}
-
+/* PANELES */
 
 
 .panel{
 
+background:
+
+linear-gradient(160deg,#151515,#080808);
+
+padding:25px;
+
+border-radius:25px;
+
+margin-bottom:25px;
+
+border:1px solid rgba(255,215,0,.2);
+
+}
+
+
+
+
+.panel h2{
+
+font-size:22px;
+
+margin-bottom:20px;
+
+color:#FFD600;
+
+}
+
+
+
+
+
+
+
+/* INPUTS */
+
+
+.panel input{
+
+width:100%;
+
+padding:15px;
+
+margin-bottom:12px;
+
+border-radius:16px;
+
+border:none;
+
+outline:none;
+
+background:#222;
+
+color:white;
+
+font-size:15px;
+
+}
+
+
+
+.panel input::placeholder{
+
+color:#777;
+
+}
+
+
+
+
+
+
+
+/* BOTON PUBLICAR */
+
+
+#publicar{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:18px;
+
+background:#FFD600;
+
+color:#000;
+
+font-size:16px;
+
+font-weight:900;
+
+cursor:pointer;
+
+}
+
+
+
+#publicar:active{
+
+transform:scale(.96);
+
+}
+
+
+
+
+
+
+
+
+/* BOTONES CUPONES */
+
+
+.tipo{
+
+padding:14px;
+
+margin:5px;
+
+border-radius:18px;
+
+border:none;
+
+background:#111;
+
+color:white;
+
+border:1px solid #333;
+
+font-weight:900;
+
+}
+
+
+
+
+
+.tipo:hover{
+
+background:#FFD600;
+
+color:black;
+
+}
+
+
+
+
+
+
+
+
+/* LISTA OFERTAS */
+
+
+#listaOfertas{
+
+display:grid;
+
+gap:15px;
+
+}
+
+
+
+
+.ofertaAdmin{
+
+background:#111;
+
+padding:18px;
+
+border-radius:20px;
+
+border:1px solid #333;
+
+}
+
+
+
+
+
+
+
+/* MOVIL */
+
+
+@media(max-width:700px){
+
+
+
+.stats{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.dashboard{
+
 padding:15px;
 
 }
 
 
+
+.dashboard h1{
+
+font-size:25px;
+
 }
 
+
+}
