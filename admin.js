@@ -1,6 +1,7 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// ADMIN.JS FINAL MEJORADO
+// ADMIN.JS FINAL + ESTADISTICAS PRO
+// PARTE 1/4
 // =====================================================
 
 
@@ -18,7 +19,9 @@ getDoc,
 deleteDoc,
 doc,
 updateDoc,
-serverTimestamp
+serverTimestamp,
+onSnapshot,
+increment
 
 }
 
@@ -49,12 +52,17 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
+
+
 const app =
 initializeApp(firebaseConfig);
 
 
+
 const db =
 getFirestore(app);
+
+
 
 
 
@@ -79,16 +87,21 @@ function mensaje(texto){
 
 
 const toast =
+
 document.getElementById("toastAdmin");
+
 
 
 if(!toast)return;
 
 
+
 toast.innerHTML=texto;
 
 
+
 toast.classList.add("show");
+
 
 
 setTimeout(()=>{
@@ -98,6 +111,7 @@ toast.classList.remove("show");
 
 
 },2000);
+
 
 
 }
@@ -116,29 +130,39 @@ toast.classList.remove("show");
 
 
 const imagen =
+
 document.getElementById("imagen");
 
 
+
 const preview =
+
 document.getElementById("preview");
 
 
 
 
 imagen?.addEventListener(
+
 "change",
+
 ()=>{
 
 
 const archivo =
+
 imagen.files[0];
+
 
 
 if(!archivo)return;
 
 
+
 const reader =
+
 new FileReader();
+
 
 
 
@@ -148,10 +172,13 @@ reader.onload=e=>{
 imagenBase64=e.target.result;
 
 
+
 preview.src=e.target.result;
 
 
+
 preview.style.display="block";
+
 
 
 };
@@ -159,6 +186,7 @@ preview.style.display="block";
 
 
 reader.readAsDataURL(archivo);
+
 
 
 }
@@ -183,15 +211,21 @@ function limpiarOferta(){
 
 titulo.value="";
 
+
 precioAntes.value="";
+
 
 precioFinal.value="";
 
+
 descuento.value="";
+
 
 link.value="";
 
+
 tipoOferta.value="normal";
+
 
 
 imagen.value="";
@@ -206,7 +240,9 @@ preview.src="";
 preview.style.display="none";
 
 
+
 ofertaEditando=null;
+
 
 
 document.getElementById("publicar").innerHTML=
@@ -214,62 +250,73 @@ document.getElementById("publicar").innerHTML=
 "🔥 PUBLICAR OFERTA";
 
 
+
 }
 
+
+
+
+
+
+
+
+
 // ============================
-// PUBLICAR / ACTUALIZAR OFERTA
+// PUBLICAR / ACTUALIZAR
 // ============================
 
 
 document
+
 .getElementById("publicar")
+
 ?.addEventListener(
+
 "click",
+
 async()=>{
 
 
-// SI ESTAMOS EDITANDO
 
 if(ofertaEditando){
+
 
 
 await updateDoc(
 
 doc(
+
 db,
+
 "ofertas",
+
 ofertaEditando
+
 ),
 
 {
 
 
-titulo:
-titulo.value,
+titulo:titulo.value,
 
 
-imagen:
-imagenBase64,
+imagen:imagenBase64,
 
 
-precioAntes:
-precioAntes.value,
+precioAntes:precioAntes.value,
 
 
-precioFinal:
-precioFinal.value,
+precioFinal:precioFinal.value,
 
 
-descuento:
-descuento.value,
+descuento:descuento.value,
 
 
-link:
-link.value,
+link:link.value,
 
 
-tipo:
-tipoOferta.value
+tipo:tipoOferta.value
+
 
 
 }
@@ -278,8 +325,11 @@ tipoOferta.value
 
 
 
+
 mensaje(
+
 "✏️ Oferta actualizada"
+
 );
 
 
@@ -287,10 +337,13 @@ mensaje(
 limpiarOferta();
 
 
+
 cargarOfertas();
 
 
-actualizarDashboard();
+
+cargarEstadisticas();
+
 
 
 return;
@@ -303,9 +356,6 @@ return;
 
 
 
-// NUEVA OFERTA
-
-
 await addDoc(
 
 collection(db,"ofertas"),
@@ -313,39 +363,32 @@ collection(db,"ofertas"),
 {
 
 
-titulo:
-titulo.value,
+titulo:titulo.value,
 
 
-imagen:
-imagenBase64,
+imagen:imagenBase64,
 
 
-precioAntes:
-precioAntes.value,
+precioAntes:precioAntes.value,
 
 
-precioFinal:
-precioFinal.value,
+precioFinal:precioFinal.value,
 
 
-descuento:
-descuento.value,
+descuento:descuento.value,
 
 
-link:
-link.value,
+link:link.value,
 
 
-tipo:
-tipoOferta.value,
+tipo:tipoOferta.value,
 
 
 clics:0,
 
 
-creado:
-serverTimestamp()
+creado:serverTimestamp()
+
 
 
 }
@@ -357,8 +400,11 @@ serverTimestamp()
 
 
 mensaje(
+
 "🔥 Oferta publicada"
+
 );
+
 
 
 
@@ -369,22 +415,14 @@ limpiarOferta();
 cargarOfertas();
 
 
-actualizarDashboard();
+
+cargarEstadisticas();
 
 
 
 }
 
 );
-
-
-
-
-
-
-
-
-
 // ============================
 // OFERTAS ADMIN
 // ============================
@@ -394,10 +432,13 @@ async function cargarOfertas(){
 
 
 const lista =
+
 document.getElementById("listaOfertas");
 
 
+
 if(!lista)return;
+
 
 
 lista.innerHTML="";
@@ -405,11 +446,13 @@ lista.innerHTML="";
 
 
 const datos =
+
 await getDocs(
 
 collection(db,"ofertas")
 
 );
+
 
 
 
@@ -421,8 +464,10 @@ const o=item.data();
 
 
 
-const div =
+const div=
+
 document.createElement("div");
+
 
 
 div.className="ofertaAdmin";
@@ -436,32 +481,45 @@ div.innerHTML=`
 
 
 <h3>
+
 ${o.titulo}
+
 </h3>
 
 
 
 <p>
+
 ❌ Antes:
+
 $${o.precioAntes || ""}
-</p>
 
-
-<p>
-🔥 ${o.descuento || ""}
 </p>
 
 
 
 <p>
-💥 $${o.precioFinal}
+
+🔥 ${o.descuento || ""}% OFF
+
 </p>
 
 
 
 <p>
+
+💥 $${o.precioFinal || ""}
+
+</p>
+
+
+
+<p>
+
 🖱️ Clics:
+
 ${o.clics || 0}
+
 </p>
 
 
@@ -480,11 +538,7 @@ ${o.clics || 0}
 
 </button>
 
-
 `;
-
-
-
 
 
 
@@ -495,6 +549,7 @@ ${o.clics || 0}
 
 
 div.querySelector(".editBtn")
+
 .onclick=()=>{
 
 
@@ -505,16 +560,21 @@ ofertaEditando=item.id;
 titulo.value=o.titulo;
 
 
+
 precioAntes.value=o.precioAntes;
+
 
 
 precioFinal.value=o.precioFinal;
 
 
+
 descuento.value=o.descuento;
 
 
+
 link.value=o.link;
+
 
 
 tipoOferta.value=o.tipo;
@@ -526,6 +586,7 @@ imagenBase64=o.imagen;
 
 
 preview.src=o.imagen;
+
 
 
 preview.style.display="block";
@@ -547,7 +608,6 @@ behavior:"smooth"
 });
 
 
-
 };
 
 
@@ -562,6 +622,7 @@ behavior:"smooth"
 
 
 div.querySelector(".deleteBtn")
+
 .onclick=async()=>{
 
 
@@ -592,12 +653,12 @@ mensaje(
 cargarOfertas();
 
 
-actualizarDashboard();
+
+cargarEstadisticas();
+
 
 
 };
-
-
 
 
 
@@ -611,16 +672,29 @@ lista.appendChild(div);
 
 }
 
+
+
+
+
+
+
+
+
 // ============================
-// CREAR CUPÓN
+// CREAR CUPON
 // ============================
 
 
 document
+
 .getElementById("crearCupon")
+
 ?.addEventListener(
+
 "click",
+
 async()=>{
+
 
 
 let nombreFinal;
@@ -636,11 +710,12 @@ nombreFinal="CUPON";
 }else{
 
 
-nombreFinal=nombreCupon.value;
+nombreFinal=
+
+nombreCupon.value;
 
 
 }
-
 
 
 
@@ -683,7 +758,13 @@ estado:
 estadoCupon.value,
 
 
-copias:0
+copias:0,
+
+
+creado:
+
+serverTimestamp()
+
 
 
 }
@@ -704,10 +785,6 @@ mensaje(
 
 
 
-
-// LIMPIAR CAMPOS
-
-
 codigoCupon.value="";
 
 
@@ -720,6 +797,7 @@ descuentoCupon.value="";
 minimoCupon.value="";
 
 
+
 tipoCupon.value="relampago";
 
 
@@ -727,12 +805,11 @@ estadoCupon.value="activo";
 
 
 
-
-
 cargarCupones();
 
 
-actualizarDashboard();
+
+cargarEstadisticas();
 
 
 
@@ -757,17 +834,21 @@ async function cargarCupones(){
 
 
 const lista =
+
 document.getElementById("listaCupones");
 
 
+
 if(!lista)return;
+
 
 
 lista.innerHTML="";
 
 
 
-const datos =
+const datos=
+
 await getDocs(
 
 collection(db,"cupones")
@@ -785,7 +866,8 @@ const c=item.data();
 
 
 
-const div =
+const div=
+
 document.createElement("div");
 
 
@@ -815,6 +897,7 @@ ${c.codigo}
 <p>
 
 💰 Descuento:
+
 $${c.descuento}
 
 </p>
@@ -824,6 +907,7 @@ $${c.descuento}
 <p>
 
 🛒 Compra mínima:
+
 $${c.minimo}
 
 </p>
@@ -833,6 +917,7 @@ $${c.minimo}
 <p>
 
 Estado:
+
 ${c.estado}
 
 </p>
@@ -842,6 +927,7 @@ ${c.estado}
 <p>
 
 📋 Copias:
+
 ${c.copias || 0}
 
 </p>
@@ -868,12 +954,6 @@ ${c.copias || 0}
 
 
 
-
-
-
-// CAMBIAR ESTADO
-
-
 div.querySelector(".estadoBtn")
 
 .onclick=async()=>{
@@ -887,16 +967,13 @@ if(c.estado==="activo")
 
 nuevo="agotando";
 
-
 else if(c.estado==="agotando")
 
 nuevo="agotado";
 
-
 else
 
 nuevo="activo";
-
 
 
 
@@ -941,13 +1018,6 @@ cargarCupones();
 
 
 
-
-
-
-
-// ELIMINAR
-
-
 div.querySelector(".deleteBtn")
 
 .onclick=async()=>{
@@ -986,13 +1056,150 @@ cargarCupones();
 
 
 
-
-
 lista.appendChild(div);
 
 
 
 });
+
+
+}
+// ============================
+// ESTADISTICAS PRO
+// ============================
+
+
+function fechaCDMX(){
+
+
+return new Date()
+
+.toLocaleString(
+
+"en-US",
+
+{
+
+timeZone:"America/Mexico_City"
+
+}
+
+);
+
+}
+
+
+
+
+
+
+function obtenerDia(){
+
+
+const fecha=
+
+new Date(fechaCDMX());
+
+
+
+return fecha
+
+.toISOString()
+
+.split("T")[0];
+
+
+}
+
+
+
+
+
+
+function obtenerHora(){
+
+
+const fecha=
+
+new Date(fechaCDMX());
+
+
+
+return fecha.getHours()+":00";
+
+
+}
+
+
+
+
+
+
+
+
+
+async function registrarEstadistica(){
+
+
+
+const dia=
+
+obtenerDia();
+
+
+
+const hora=
+
+obtenerHora();
+
+
+
+
+
+await setDoc(
+
+doc(
+
+db,
+
+"estadisticas",
+
+"general"
+
+),
+
+{
+
+
+visitasTotal:
+
+increment(0),
+
+
+
+[dia]:
+
+increment(0),
+
+
+
+[`hora_${hora}`]:
+
+increment(0)
+
+
+
+},
+
+
+{
+
+merge:true
+
+}
+
+);
+
 
 
 }
@@ -1010,7 +1217,13 @@ lista.appendChild(div);
 // ============================
 
 
-async function actualizarDashboard(){
+async function cargarEstadisticas(){
+
+
+
+await registrarEstadistica();
+
+
 
 
 
@@ -1024,6 +1237,8 @@ collection(db,"ofertas")
 
 
 
+
+
 const cupones =
 
 await getDocs(
@@ -1034,7 +1249,10 @@ collection(db,"cupones")
 
 
 
+
+
 let clics=0;
+
 
 let copias=0;
 
@@ -1045,7 +1263,9 @@ let copias=0;
 ofertas.forEach(o=>{
 
 
-clics += o.data().clics || 0;
+clics +=
+
+o.data().clics || 0;
 
 
 });
@@ -1057,7 +1277,9 @@ clics += o.data().clics || 0;
 cupones.forEach(c=>{
 
 
-copias += c.data().copias || 0;
+copias +=
+
+c.data().copias || 0;
 
 
 });
@@ -1066,7 +1288,12 @@ copias += c.data().copias || 0;
 
 
 
+
+
+
+
 if(document.getElementById("totalOfertas"))
+
 
 totalOfertas.innerHTML=
 
@@ -1074,7 +1301,10 @@ ofertas.size;
 
 
 
+
+
 if(document.getElementById("totalCupones"))
+
 
 totalCupones.innerHTML=
 
@@ -1082,7 +1312,10 @@ cupones.size;
 
 
 
+
+
 if(document.getElementById("totalClics"))
+
 
 totalClics.innerHTML=
 
@@ -1090,48 +1323,346 @@ clics;
 
 
 
+
+
 if(document.getElementById("totalCopias"))
+
 
 totalCopias.innerHTML=
 
 copias;
 
+
+
+
+
+
+
+
 // VISITAS
 
-const visitasDoc = await getDoc(
-doc(db,"estadisticas","visitas")
+
+const visitas=
+
+await getDoc(
+
+doc(
+
+db,
+
+"estadisticas",
+
+"visitas"
+
+)
+
 );
 
 
+
+
+
 if(
-visitasDoc.exists() &&
+
+visitas.exists()
+
+&&
+
 document.getElementById("totalVisitas")
+
 ){
 
-totalVisitas.innerHTML =
-visitasDoc.data().total || 0;
+
+totalVisitas.innerHTML=
+
+visitas.data().total || 0;
+
 
 }
 
+
+
+
+
+
+
+
+
+// ESTADISTICAS DEL MES
+
+
+const general=
+
+await getDoc(
+
+doc(
+
+db,
+
+"estadisticas",
+
+"general"
+
+)
+
+);
+
+
+
+
+
+if(general.exists()){
+
+
+
+const datos=
+
+general.data();
+
+
+
+let mayorDia="";
+
+let mayorValor=0;
+
+
+
+
+
+Object.keys(datos)
+
+.forEach(x=>{
+
+
+
+if(
+
+x.match(/^\d{4}-\d{2}-\d{2}$/)
+
+){
+
+
+if(datos[x]>mayorValor){
+
+
+mayorValor=
+
+datos[x];
+
+
+
+mayorDia=x;
+
+
+
+}
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+
+if(document.getElementById("mejorDia"))
+
+
+mejorDia.innerHTML=
+
+mayorDia || "Sin datos";
+
+
+
+
+
+let mejorHora="";
+
+let mayorHora=0;
+
+
+
+
+
+Object.keys(datos)
+
+.forEach(x=>{
+
+
+
+if(
+
+x.includes("hora_")
+
+){
+
+
+if(datos[x]>mayorHora){
+
+
+mayorHora=
+
+datos[x];
+
+
+
+mejorHora=
+
+x.replace(
+
+"hora_",
+
+""
+
+);
+
+
+
+}
+
+
+}
+
+
+
+});
+
+
+
+
+
+if(document.getElementById("horaActiva"))
+
+
+horaActiva.innerHTML=
+
+mejorHora || "Sin datos";
+
+
+
+
+
 }
 
 
 
 
-
-
-
-
-
+}
+ 
 // ============================
-// INICIO
+// INICIO DEL PANEL
 // ============================
+
 
 
 cargarOfertas();
 
 
+
 cargarCupones();
 
 
-actualizarDashboard();
+
+cargarEstadisticas();
+
+
+
+
+// ACTUALIZAR DASHBOARD CADA 30 SEGUNDOS
+
+setInterval(()=>{
+
+
+cargarEstadisticas();
+
+
+},30000);
+
+
+
+
+// ============================
+// ACTUALIZAR ESTADO DE VISITAS
+// ============================
+
+
+async function actualizarVisitas(){
+
+
+
+const visitasDoc = await getDoc(
+
+doc(
+
+db,
+
+"estadisticas",
+
+"visitas"
+
+)
+
+);
+
+
+
+
+if(
+
+visitasDoc.exists()
+
+){
+
+
+
+const data=
+
+visitasDoc.data();
+
+
+
+if(document.getElementById("totalVisitas")){
+
+
+totalVisitas.innerHTML=
+
+data.total || 0;
+
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+
+actualizarVisitas();
+
+
+
+setInterval(()=>{
+
+
+actualizarVisitas();
+
+
+
+},30000);
+
+
+
+
+// ============================
+// FIN ADMIN.JS
+// ============================
