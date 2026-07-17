@@ -1,11 +1,11 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // ADMIN.JS
-// VERSION CORREGIDA
+// PARTE 1/3
 // =====================================================
 
 
-import { initializeApp } from
+import { initializeApp } from 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -24,19 +24,6 @@ serverTimestamp
 from
 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-import {
-
-getAuth,
-signOut
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
@@ -64,11 +51,14 @@ appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
-const app = initializeApp(firebaseConfig);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
 
-const auth = getAuth(app);
+
+const db =
+getFirestore(app);
+
 
 
 
@@ -85,26 +75,90 @@ let imagenBase64 = "";
 
 
 
+
 // ================================
-// IMAGEN GALERÍA
+// TOAST ADMIN
 // ================================
 
 
-const archivoImagen =
+function mostrarMensaje(texto){
+
+
+let mensaje =
+document.getElementById("toastAdmin");
+
+
+
+if(!mensaje){
+
+
+mensaje =
+document.createElement("div");
+
+
+mensaje.id =
+"toastAdmin";
+
+
+document.body.appendChild(mensaje);
+
+
+}
+
+
+
+
+mensaje.innerHTML = texto;
+
+
+mensaje.classList.add("show");
+
+
+
+setTimeout(()=>{
+
+
+mensaje.classList.remove("show");
+
+
+},2500);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// IMAGEN DESDE GALERÍA
+// ================================
+
+
+const imagenArchivo =
+
 document.getElementById("imagenArchivo");
 
 
 
-const preview =
+const previewImagen =
+
 document.getElementById("previewImagen");
 
 
 
 
-if(archivoImagen){
 
 
-archivoImagen.addEventListener(
+if(imagenArchivo){
+
+
+imagenArchivo.addEventListener(
 
 "change",
 
@@ -112,10 +166,11 @@ archivoImagen.addEventListener(
 
 
 const archivo =
-archivoImagen.files[0];
+imagenArchivo.files[0];
 
 
-if(!archivo) return;
+
+if(!archivo)return;
 
 
 
@@ -124,25 +179,29 @@ new FileReader();
 
 
 
-lector.onload = e=>{
+
+
+lector.onload = (e)=>{
 
 
 imagenBase64 =
 e.target.result;
 
 
-if(preview){
+
+if(previewImagen){
 
 
-preview.src =
+previewImagen.src =
 imagenBase64;
 
 
-preview.style.display =
+previewImagen.style.display =
 "block";
 
 
 }
+
 
 
 };
@@ -153,14 +212,18 @@ lector.readAsDataURL(archivo);
 
 
 
-});
-
-
 }
 
 
+);
 
 
+}
+// =====================================================
+// ADMIN.JS
+// PARTE 2/3
+// GUARDAR OFERTAS Y CUPONES
+// =====================================================
 
 
 
@@ -170,6 +233,7 @@ lector.readAsDataURL(archivo);
 
 
 const botonPublicar =
+
 document.getElementById("publicar");
 
 
@@ -179,34 +243,44 @@ document.getElementById("publicar");
 if(botonPublicar){
 
 
-botonPublicar.onclick = async()=>{
+botonPublicar.addEventListener(
+
+"click",
+
+async()=>{
 
 
 try{
 
 
 const titulo =
+
 document.getElementById("titulo").value.trim();
 
 
 
 const precioAntes =
+
 document.getElementById("precioAntes").value;
 
 
 
 const precioFinal =
+
 document.getElementById("precioFinal").value;
 
 
 
 const link =
+
 document.getElementById("link").value.trim();
 
 
 
 const destacada =
+
 document.getElementById("destacada").checked;
+
 
 
 
@@ -217,11 +291,14 @@ if(
 !precioFinal ||
 !link ||
 !imagenBase64
+
 ){
 
 
 mostrarMensaje(
-"Completa todos los campos"
+
+"⚠️ Completa todos los campos"
+
 );
 
 
@@ -235,12 +312,6 @@ return;
 
 
 
-botonPublicar.innerHTML =
-"PUBLICANDO...";
-
-
-
-
 
 await addDoc(
 
@@ -249,22 +320,29 @@ collection(db,"ofertas"),
 {
 
 
-titulo,
+titulo:titulo,
 
-precioAntes,
 
-precioFinal,
+precioAntes:precioAntes,
 
-link,
+
+precioFinal:precioFinal,
+
+
+link:link,
+
 
 imagen:imagenBase64,
 
+
 clics:0,
 
-destacada,
 
-creado:
-serverTimestamp()
+destacada:destacada,
+
+
+creado:serverTimestamp()
+
 
 
 }
@@ -277,16 +355,13 @@ serverTimestamp()
 
 
 mostrarMensaje(
+
 "🔥 Oferta publicada"
+
 );
 
 
 
-
-limpiarFormulario();
-
-
-cargarOfertas();
 
 
 
@@ -299,7 +374,9 @@ console.error(error);
 
 
 mostrarMensaje(
+
 "❌ Error al publicar"
+
 );
 
 
@@ -308,11 +385,15 @@ mostrarMensaje(
 
 
 
+}
 
-};
+
+);
 
 
 }
+
+
 
 
 
@@ -334,38 +415,54 @@ document.getElementById("crearCupon");
 
 
 
+
+
 if(botonCupon){
 
 
+botonCupon.addEventListener(
 
-botonCupon.onclick = async()=>{
+"click",
+
+async()=>{
+
 
 
 try{
 
 
+
 const codigo =
+
 document.getElementById("codigoCupon").value.trim();
 
 
 
+
 const descuento =
+
 document.getElementById("descuentoCupon").value;
 
 
 
 const minimo =
+
 document.getElementById("minimoCupon").value;
 
 
 
 const tipo =
+
 document.getElementById("tipoCupon").value;
 
 
 
 const estado =
+
 document.getElementById("estadoCupon").value;
+
+
+
 
 
 
@@ -375,7 +472,9 @@ if(!codigo){
 
 
 mostrarMensaje(
-"Falta código"
+
+"⚠️ Escribe el código del cupón"
+
 );
 
 
@@ -388,6 +487,8 @@ return;
 
 
 
+
+
 await addDoc(
 
 collection(db,"cupones"),
@@ -395,22 +496,29 @@ collection(db,"cupones"),
 {
 
 
-codigo,
+codigo:codigo,
 
-descuento,
 
-minimo,
+descuento:descuento,
 
-tipo,
 
-estado,
+minimo:minimo,
+
+
+tipo:tipo,
+
+
+estado:estado,
+
 
 copias:0
+
 
 
 }
 
 );
+
 
 
 
@@ -418,18 +526,18 @@ copias:0
 
 
 mostrarMensaje(
+
 "🎟️ Cupón creado"
+
 );
 
 
 
 
 
-cargarCupones();
-
-
-
 }
+
+
 
 catch(error){
 
@@ -437,48 +545,71 @@ catch(error){
 console.error(error);
 
 
+
 mostrarMensaje(
+
 "❌ Error al crear cupón"
+
+);
+
+
+
+}
+
+
+
+
+}
+
+
 );
 
 
 }
-
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
+// =====================================================
+// ADMIN.JS
+// PARTE 3/3
+// MOSTRAR Y ELIMINAR
+// =====================================================
 
 
 
 // ================================
-// LISTAR OFERTAS
+// CONTENEDORES
 // ================================
 
 
-async function cargarOfertas(){
+const listaOfertas =
 
-
-const lista =
 document.getElementById("listaOfertas");
 
 
 
-if(!lista)return;
+const listaCupones =
+
+document.getElementById("listaCupones");
 
 
 
-lista.innerHTML="";
+
+
+
+
+// ================================
+// CARGAR OFERTAS
+// ================================
+
+
+async function cargarOfertasAdmin(){
+
+
+
+if(!listaOfertas)return;
+
+
+
+listaOfertas.innerHTML =
+"";
 
 
 
@@ -492,7 +623,9 @@ collection(db,"ofertas")
 
 
 
-datos.forEach(item=>{
+
+
+datos.forEach((item)=>{
 
 
 const oferta =
@@ -510,25 +643,43 @@ div.className =
 
 
 
-div.innerHTML =
 
-`
 
-<h3>${oferta.titulo}</h3>
+div.innerHTML = `
 
-<p>$${oferta.precioFinal}</p>
+<img src="${oferta.imagen}">
+
+
+<h3>
+
+${oferta.titulo}
+
+</h3>
+
+
+<p>
+
+💰 $${oferta.precioFinal}
+
+</p>
 
 
 <button>
+
 🗑️ BORRAR
+
 </button>
+
 
 `;
 
 
 
+
+
 div.querySelector("button")
-.onclick=async()=>{
+.onclick = async()=>{
+
 
 
 await deleteDoc(
@@ -543,18 +694,31 @@ item.id
 );
 
 
-cargarOfertas();
+
+mostrarMensaje(
+
+"🗑️ Oferta eliminada"
+
+);
+
+
+
+cargarOfertasAdmin();
+
 
 
 };
 
 
 
-lista.appendChild(div);
+
+
+listaOfertas.appendChild(div);
 
 
 
 });
+
 
 
 }
@@ -566,24 +730,22 @@ lista.appendChild(div);
 
 
 
+
 // ================================
-// LISTAR CUPONES
+// CARGAR CUPONES
 // ================================
 
 
-async function cargarCupones(){
-
-
-const lista =
-document.getElementById("listaCupones");
+async function cargarCuponesAdmin(){
 
 
 
-if(!lista)return;
+if(!listaCupones)return;
 
 
 
-lista.innerHTML="";
+listaCupones.innerHTML =
+"";
 
 
 
@@ -599,11 +761,12 @@ collection(db,"cupones")
 
 
 
-datos.forEach(item=>{
+datos.forEach((item)=>{
 
 
 const cupon =
 item.data();
+
 
 
 
@@ -617,29 +780,52 @@ div.className =
 
 
 
-div.innerHTML =
 
-`
+div.innerHTML = `
+
 
 <h3>
-${cupon.codigo || "Cupón"}
+
+🎟️ ${cupon.codigo}
+
 </h3>
 
+
 <p>
+
+💰 Descuento:
 $${cupon.descuento}
+
 </p>
 
 
+<p>
+
+🛒 Mínimo:
+${cupon.minimo}
+
+</p>
+
+
+
 <button>
+
 🗑️ BORRAR
+
 </button>
+
+
 
 `;
 
 
 
+
+
+
 div.querySelector("button")
-.onclick=async()=>{
+.onclick = async()=>{
+
 
 
 await deleteDoc(
@@ -655,402 +841,16 @@ item.id
 
 
 
-cargarCupones();
+mostrarMensaje(
 
-
-};
-
-
-
-lista.appendChild(div);
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-// ================================
-// LIMPIAR
-// ================================
-
-
-function limpiarFormulario(){
-
-
-document.querySelectorAll("input")
-.forEach(i=>{
-
-
-if(i.type!=="checkbox")
-
-i.value="";
-
-
-});
-
-
-
-imagenBase64="";
-
-
-
-if(preview)
-
-preview.style.display="none";
-
-
-}
-
-
-
-
-
-
-
-// ================================
-// MENSAJE
-// ================================
-
-
-function mostrarMensaje(texto){
-
-
-console.log(texto);
-
-
-alert(texto);
-
-
-}
-
-
-
-
-
-
-
-// ================================
-// SALIR
-// ================================
-
-
-const salir =
-document.getElementById("salir");
-
-
-
-if(salir){
-
-
-salir.onclick=async()=>{
-
-
-await signOut(auth);
-
-
-location.href="login.html";
-
-
-};
-
-
-}
-
-
-
-
-
-
-// ================================
-// INICIO
-// ================================
-
-
-cargarOfertas();
-
-cargarCupones();
-
-// =====================================================
-// EL PATRÓN DE LAS OFERTAS
-// APP.JS
-// CARRUSEL + CUPONES
-// =====================================================
-
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
-import {
-
-getFirestore,
-collection,
-getDocs,
-doc,
-updateDoc,
-increment
-
-}
-
-from
-
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-
-// ================================
-// FIREBASE
-// ================================
-
-
-const firebaseConfig={
-
-
-apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
-
-authDomain:"patronofertasweb.firebaseapp.com",
-
-projectId:"patronofertasweb",
-
-storageBucket:"patronofertasweb.firebasestorage.app",
-
-messagingSenderId:"292338334268",
-
-appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
-
-
-};
-
-
-
-const app =
-initializeApp(firebaseConfig);
-
-
-const db =
-getFirestore(app);
-
-
-
-
-
-// ================================
-// ELEMENTOS
-// ================================
-
-
-const carrusel =
-document.getElementById("carrusel");
-
-
-const relampago =
-document.getElementById("cuponesRelampago");
-
-
-const bancarios =
-document.getElementById("cuponesBancarios");
-
-
-const exclusivos =
-document.getElementById("cuponesExclusivos");
-
-
-const toast =
-document.getElementById("toast");
-
-
-
-
-
-
-
-// ================================
-// TOAST
-// ================================
-
-
-function mostrarToast(texto){
-
-
-if(!toast)return;
-
-
-toast.innerHTML=texto;
-
-
-toast.classList.add("show");
-
-
-
-setTimeout(()=>{
-
-
-toast.classList.remove("show");
-
-
-},2000);
-
-
-
-}
-
-
-
-
-
-
-
-// =====================================================
-// OFERTAS
-// =====================================================
-
-
-async function cargarOfertas(){
-
-
-
-const datos =
-await getDocs(
-
-collection(db,"ofertas")
+"🗑️ Cupón eliminado"
 
 );
 
 
 
-let ofertas=[];
+cargarCuponesAdmin();
 
-
-
-datos.forEach(d=>{
-
-
-ofertas.push({
-
-id:d.id,
-
-...d.data()
-
-});
-
-
-});
-
-
-
-
-
-// PRIORIDAD
-
-
-ofertas.sort((a,b)=>{
-
-
-let A =
-a.destacada ? 1 :
-a.tipo==="relampago" ? 2 : 3;
-
-
-
-let B =
-b.destacada ? 1 :
-b.tipo==="relampago" ? 2 : 3;
-
-
-
-return A-B;
-
-
-});
-
-
-
-
-
-
-carrusel.innerHTML="";
-
-
-
-
-
-ofertas.forEach(oferta=>{
-
-
-const card =
-document.createElement("div");
-
-
-
-card.className=
-"ofertaCard";
-
-
-
-
-
-card.innerHTML=`
-
-<img src="${oferta.imagen}">
-
-
-<div class="ofertaTexto">
-
-
-<h3>
-${oferta.titulo}
-</h3>
-
-
-<p class="antes">
-
-${oferta.precioAntes || ""}
-
-</p>
-
-
-
-<h2>
-
-$${oferta.precioFinal}
-
-</h2>
-
-
-
-<a href="${oferta.link}"
-target="_blank"
-class="comprar">
-
-🛒 Comprar
-
-</a>
-
-
-</div>
-
-`;
-
-
-
-
-
-card.querySelector(".comprar")
-.onclick=()=>{
-
-
-sumarClic(oferta.id);
 
 
 };
@@ -1058,258 +858,8 @@ sumarClic(oferta.id);
 
 
 
-carrusel.appendChild(card);
 
-
-});
-
-
-
-activarCarrusel();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ================================
-// CLICS
-// ================================
-
-
-async function sumarClic(id){
-
-
-await updateDoc(
-
-doc(db,"ofertas",id),
-
-{
-
-clics:
-increment(1)
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ================================
-// CARRUSEL AUTOMÁTICO
-// ================================
-
-
-function activarCarrusel(){
-
-
-
-let posicion=0;
-
-
-let detenido=false;
-
-
-
-carrusel.addEventListener(
-
-"touchstart",
-
-()=>{
-
-detenido=true;
-
-}
-
-);
-
-
-
-carrusel.addEventListener(
-
-"touchend",
-
-()=>{
-
-
-setTimeout(()=>{
-
-detenido=false;
-
-},1000);
-
-
-}
-
-);
-
-
-
-
-
-setInterval(()=>{
-
-
-
-if(detenido)return;
-
-
-
-if(
-carrusel.scrollWidth <=
-carrusel.clientWidth
-)
-return;
-
-
-
-posicion +=
-carrusel.clientWidth;
-
-
-
-if(
-posicion >= carrusel.scrollWidth
-)
-
-{
-
-posicion=0;
-
-}
-
-
-
-
-
-carrusel.scrollTo({
-
-left:posicion,
-
-behavior:"smooth"
-
-});
-
-
-
-},3000);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// CUPONES
-// =====================================================
-
-
-async function cargarCupones(){
-
-
-
-const datos =
-
-await getDocs(
-
-collection(db,"cupones")
-
-);
-
-
-
-let lista=[];
-
-
-
-datos.forEach(d=>{
-
-
-lista.push({
-
-id:d.id,
-
-...d.data()
-
-});
-
-
-});
-
-
-
-
-
-
-lista.sort((a,b)=>{
-
-
-return (
-
-parseInt(a.minimo.replace(/\D/g,""))
-
--
-
-parseInt(b.minimo.replace(/\D/g,""))
-
-);
-
-
-});
-
-
-
-
-
-
-lista.forEach(c=>{
-
-
-let tarjeta =
-
-crearCupon(c);
-
-
-
-if(c.tipo==="relampago")
-
-relampago.appendChild(tarjeta);
-
-
-
-if(c.tipo==="bancario")
-
-bancarios.appendChild(tarjeta);
-
-
-
-if(c.tipo==="exclusivo")
-
-exclusivos.appendChild(tarjeta);
+listaCupones.appendChild(div);
 
 
 
@@ -1327,140 +877,13 @@ exclusivos.appendChild(tarjeta);
 
 
 
-function crearCupon(cupon){
-
-
-
-const div =
-document.createElement("div");
-
-
-
-div.className=
-"cuponCard";
-
-
-
-
-
-div.innerHTML=`
-
-<h3>
-🎟️ CUPÓN
-</h3>
-
-
-<strong>
-
-${cupon.codigo || "DISPONIBLE"}
-
-</strong>
-
-
-<p>
-
-💰 $${cupon.descuento}
-
-</p>
-
-
-<p>
-
-🛒 ${cupon.minimo}
-
-</p>
-
-
-<button>
-
-📋 COPIAR CUPÓN
-
-</button>
-
-
-`;
-
-
-
-
-
-
-div.querySelector("button")
-.onclick=()=>{
-
-
-copiar(
-
-cupon.codigo
-
-);
-
-
-
-};
-
-
-
-return div;
-
-
-
-}
-
-
-
-
-
-
-
-async function copiar(codigo){
-
-
-
-await navigator.clipboard.writeText(
-codigo
-);
-
-
-
-mostrarToast(
-
-"✅ CUPÓN COPIADO"
-
-);
-
-
-
-
-
-setTimeout(()=>{
-
-
-location.href=
-"https://meli.la/1mj3itE";
-
-
-},800);
-
-
-
-}
-
-
-
-
-
-
-
-
 
 // ================================
-// INICIO
+// INICIO ADMIN
 // ================================
 
 
-cargarOfertas();
+cargarOfertasAdmin();
 
 
-cargarCupones();
-
+cargarCuponesAdmin();
