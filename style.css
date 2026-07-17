@@ -1,6 +1,6 @@
 /* =====================================================
 EL PATRÓN DE LAS OFERTAS
-STYLE.CSS MEJORADO
+STYLE.CSS FINAL CORREGIDO
 ===================================================== */
 
 
@@ -175,15 +175,15 @@ font-weight:900;
 
 margin:0 18px 10px;
 
-color:#111;
-
 background:#ffd600;
 
-display:inline-flex;
+color:#111;
 
 padding:6px 14px;
 
 border-radius:20px;
+
+display:inline-flex;
 
 font-size:12px;
 
@@ -204,13 +204,11 @@ transform:translateX(0);
 }
 
 
-
 50%{
 
 transform:translateX(8px);
 
 }
-
 
 
 100%{
@@ -240,6 +238,8 @@ gap:12px;
 overflow-x:auto;
 
 padding:15px 18px;
+
+touch-action:pan-x;
 
 }
 
@@ -288,20 +288,16 @@ white-space:nowrap;
 box-shadow:0 8px 20px #000;
 
 }
-
-
-
-
-
-
-
-
-/* CARRUSEL OFERTAS */
+/* =====================================================
+CARRUSEL OFERTAS
+===================================================== */
 
 
 .carrusel{
 
 display:flex;
+
+flex-direction:row;
 
 gap:15px;
 
@@ -312,6 +308,10 @@ overflow-y:hidden;
 padding:10px 18px 25px;
 
 scroll-snap-type:x mandatory;
+
+-webkit-overflow-scrolling:touch;
+
+touch-action:pan-y;
 
 }
 
@@ -325,27 +325,44 @@ display:none;
 
 
 
+
 .oferta{
+
 
 flex:0 0 280px;
 
+
 background:#111;
+
 
 border:1px solid #333;
 
+
 border-radius:22px;
+
 
 padding:15px;
 
+
 display:flex;
+
 
 flex-direction:column;
 
+
 scroll-snap-align:center;
+
 
 min-height:500px;
 
+
+touch-action:pan-y;
+
+
 }
+
+
+
 
 .oferta img{
 
@@ -384,7 +401,7 @@ overflow:hidden;
 
 
 
-/* BLOQUE DE PRECIOS ALINEADOS */
+/* PRECIOS ALINEADOS */
 
 
 .precioAntes,
@@ -398,7 +415,6 @@ display:flex;
 align-items:center;
 
 }
-
 
 
 
@@ -478,7 +494,9 @@ text-decoration:none;
 
 
 
-/* CUPONES */
+/* =====================================================
+CUPONES
+===================================================== */
 
 
 .cupones{
@@ -501,6 +519,8 @@ scroll-snap-type:x mandatory;
 
 -webkit-overflow-scrolling:touch;
 
+touch-action:pan-y;
+
 }
 
 
@@ -510,7 +530,6 @@ scroll-snap-type:x mandatory;
 display:none;
 
 }
-
 
 
 
@@ -545,7 +564,11 @@ scroll-snap-align:start;
 min-height:260px;
 
 
+touch-action:pan-y;
+
+
 }
+
 
 
 
@@ -566,8 +589,6 @@ font-weight:900;
 width:max-content;
 
 }
-
-
 
 
 
@@ -600,9 +621,6 @@ color:#ddd;
 
 
 
-
-
-
 .copiarCupon{
 
 margin-top:auto;
@@ -622,15 +640,9 @@ color:#111;
 font-weight:900;
 
 }
-
-
-
-
-
-
-
-
-/* TOAST */
+/* =====================================================
+TOAST
+===================================================== */
 
 
 #toast{
@@ -667,7 +679,17 @@ transform:translate(-50%,0);
 
 }
 
-/* WHATSAPP */
+
+
+
+
+
+
+
+
+/* =====================================================
+WHATSAPP
+===================================================== */
 
 
 .whatsapp{
@@ -703,7 +725,10 @@ box-shadow:0 8px 20px #000;
 
 
 
-/* BOTÓN SUBIR */
+
+/* =====================================================
+BOTÓN SUBIR
+===================================================== */
 
 
 #btnArriba{
@@ -743,7 +768,10 @@ box-shadow:0 8px 20px #000;
 
 
 
-/* LOADER */
+
+/* =====================================================
+LOADER
+===================================================== */
 
 
 .loader{
@@ -767,20 +795,10 @@ font-weight:900;
 
 
 
-/* MEJOR DESLIZAMIENTO EN MÓVIL */
 
-
-.carrusel,
-.cupones{
-
-touch-action:pan-x;
-
-}
-
-
-
-
-/* RESPONSIVE */
+/* =====================================================
+MÓVIL
+===================================================== */
 
 
 @media(max-width:600px){
@@ -840,22 +858,5 @@ padding:12px 16px;
 }
 
 
-
-}
-
-/* PERMITIR SCROLL VERTICAL EN CARRUSELES */
-
-.carrusel,
-.cupones{
-
-touch-action: pan-y;
-
-}
-
-
-.oferta,
-.cuponCard{
-
-touch-action: pan-y;
 
 }
