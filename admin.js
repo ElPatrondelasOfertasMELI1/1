@@ -1,9 +1,8 @@
-// =====================================
+// =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// ADMIN.JS PRO
-// OFERTAS + CUPONES
-// BASE64 FIRESTORE
-// =====================================
+// ADMIN.JS
+// FIREBASE ADMIN PRO
+// =====================================================
 
 
 import { initializeApp } from
@@ -13,11 +12,17 @@ import { initializeApp } from
 import {
 
 getFirestore,
+
 collection,
+
 addDoc,
+
 getDocs,
-deleteDoc,
+
 doc,
+
+deleteDoc,
+
 serverTimestamp
 
 }
@@ -27,202 +32,175 @@ from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
+import {
+
+getAuth,
+
+signOut
+
+}
+
+from
+
+"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
 
-
-// =============================
+// ================================
 // FIREBASE
-// =============================
+// ================================
 
 
 const firebaseConfig = {
 
+apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-apiKey:"TU_API_KEY",
+authDomain: "patronofertasweb.firebaseapp.com",
 
-authDomain:"TU_PROYECTO.firebaseapp.com",
+projectId: "patronofertasweb",
 
-projectId:"TU_PROJECT_ID",
+storageBucket: "patronofertasweb.firebasestorage.app",
 
-storageBucket:"TU_STORAGE_BUCKET",
+messagingSenderId: "292338334268",
 
-messagingSenderId:"TU_SENDER_ID",
-
-appId:"TU_APP_ID"
-
+appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 };
 
 
 
+const app =
+initializeApp(firebaseConfig);
 
 
+const db =
+getFirestore(app);
 
 
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
-
-
-
-
-
-
-
-
-
-let imagenBase64="";
+const auth =
+getAuth(app);
 
 
 
 
 
+// ================================
+// ELEMENTOS
+// ================================
+
+
+const archivo =
+document.getElementById("imagenArchivo");
+
+
+const preview =
+document.getElementById("previewImagen");
+
+
+let imagenBase64 = "";
 
 
 
 
-// =============================
-// CARGAR IMAGEN
-// =============================
+
+// ================================
+// CONVERTIR IMAGEN A BASE64
+// ================================
 
 
-const imagen = document.getElementById("imagen");
-
-
-const preview = document.getElementById("preview");
-
-
-
-
-
-if(imagen){
-
-
-imagen.addEventListener(
-
+archivo.addEventListener(
 "change",
-
 ()=>{
 
 
-const archivo = imagen.files[0];
+const file =
+archivo.files[0];
 
 
-if(!archivo)return;
-
-
-
-
-const reader = new FileReader();
+if(!file)return;
 
 
 
-reader.onload = e=>{
+const lector =
+new FileReader();
 
 
-imagenBase64 = e.target.result;
+
+lector.onload =
+(e)=>{
 
 
-preview.src = imagenBase64;
+imagenBase64 =
+e.target.result;
 
 
-preview.style.display="block";
+preview.src =
+imagenBase64;
+
+
+preview.style.display =
+"block";
 
 
 };
 
 
 
-reader.readAsDataURL(archivo);
+lector.readAsDataURL(file);
 
 
 
-}
-
-);
-
-}
+});
 
 
 
 
 
 
-
-
-
-
-
-// =============================
+// ================================
 // PUBLICAR OFERTA
-// =============================
+// ================================
 
 
-
-const publicar =
-
-document.getElementById("publicar");
-
-
-
-
-
-if(publicar){
-
-
-publicar.onclick = async()=>{
+document
+.getElementById("publicar")
+.onclick = async()=>{
 
 
 
 const titulo =
-
 document.getElementById("titulo").value;
 
 
 
 const precioAntes =
-
 document.getElementById("precioAntes").value;
 
 
 
 const precioFinal =
-
 document.getElementById("precioFinal").value;
 
 
 
-const descuento =
-
-document.getElementById("descuento").value;
-
-
-
 const link =
-
 document.getElementById("link").value;
 
 
 
-const tipo =
-
-document.getElementById("tipoOferta").value;
-
+const destacada =
+document.getElementById("destacada").checked;
 
 
 
 
 
-
-
-if(!titulo || !imagenBase64 || !link){
+if(!titulo || !precioFinal || !link || !imagenBase64){
 
 
 alert(
-"Completa título, imagen y link"
+"Completa los datos"
 );
 
 
@@ -230,8 +208,6 @@ return;
 
 
 }
-
-
 
 
 
@@ -252,112 +228,74 @@ precioAntes,
 
 precioFinal,
 
-descuento,
-
 link,
 
 
 clics:0,
 
 
+destacada,
+
+
 creado:
-serverTimestamp(),
-
-
-
-destacada:
-
-tipo==="destacada",
-
-
-
-
-tipo:
-
-tipo,
-
-
-
-activo:true
-
+serverTimestamp()
 
 
 }
 
+
 );
-
-
-
 
 
 
 
 
 alert(
-
 "🔥 Oferta publicada"
-
 );
 
 
 
+limpiarOferta();
 
 
-
-
-limpiar();
-
-
-
-cargarOfertas();
-
+cargarOfertasAdmin();
 
 
 };
 
 
 
-}
 
 
 
 
-
-
-
-
-
-function limpiar(){
-
+function limpiarOferta(){
 
 
 document
-
-.querySelectorAll("input")
-
-.forEach(input=>{
-
-
-if(input.type!=="file")
-
-input.value="";
+.querySelectorAll(
+".panel input"
+)
+.forEach(
+(i)=>{
 
 
-});
+if(i.type!=="checkbox")
+i.value="";
 
 
+}
+);
 
 
 
 imagenBase64="";
 
 
-if(preview)
-
 preview.style.display="none";
 
 
-
 }
 
 
@@ -366,232 +304,56 @@ preview.style.display="none";
 
 
 
+// ================================
+// CREAR CUPÓN
+// ================================
 
 
-
-
-// =============================
-// MOSTRAR OFERTAS
-// =============================
-
-
-async function cargarOfertas(){
-
-
-
-const lista =
-
-document.getElementById("listaOfertas");
-
-
-
-if(!lista)return;
-
-
-
-
-
-const snap =
-
-await getDocs(
-
-collection(db,"ofertas")
-
-);
-
-
-
-
-
-
-lista.innerHTML="";
-
-
-
-let total=0;
-
-
-
-
-
-
-
-snap.forEach(item=>{
-
-
-
-total++;
-
-
-const oferta=item.data();
-
-
-
-
-
-lista.innerHTML +=
-
-
-
-`
-
-<div class="ofertaAdmin">
-
-
-
-<img src="${oferta.imagen}">
-
-
-
-<h3>
-
-${oferta.titulo}
-
-</h3>
-
-
-
-<p>
-
-$${oferta.precioFinal}
-
-</p>
-
-
-
-
-<button
-
-class="borrar"
-
-onclick="borrarOferta('${item.id}')"
-
->
-
-🗑️ BORRAR
-
-</button>
-
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-
-
-
-
-
-const contador=
-
-document.getElementById("totalOfertas");
-
-
-
-if(contador)
-
-contador.innerHTML=total;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-window.borrarOferta=
-
-async(id)=>{
-
-
-
-await deleteDoc(
-
-doc(db,"ofertas",id)
-
-);
-
-
-
-cargarOfertas();
-
-
-};
-
-
-
-
-
-
-
-
-
-
-
-// =============================
-// CREAR CUPONES
-// =============================
-
-
-
-const crearCupon =
-
-document.getElementById("crearCupon");
-
-
-
-
-
-if(crearCupon){
-
-
-
-crearCupon.onclick=async()=>{
+document
+.getElementById("crearCupon")
+.onclick = async()=>{
 
 
 
 const codigo =
-
-document.getElementById("codigoCupon").value;
-
-
-
-const nombre =
-
-document.getElementById("nombreCupon").value;
+document.getElementById("codigoCupon").value.trim();
 
 
 
 const descuento =
-
 document.getElementById("descuentoCupon").value;
 
 
 
 const minimo =
-
 document.getElementById("minimoCupon").value;
 
 
 
 const tipo =
-
 document.getElementById("tipoCupon").value;
 
 
+
+const estado =
+document.getElementById("estadoCupon").value;
+
+
+
+
+
+if(!codigo){
+
+
+alert(
+"Falta código"
+);
+
+
+return;
+
+
+}
 
 
 
@@ -604,229 +366,32 @@ collection(db,"cupones"),
 {
 
 
-codigo,
-
-nombre,
-
 descuento,
 
 minimo,
 
 tipo,
 
-creado:
+estado,
 
-serverTimestamp(),
-
-activo:true
-
-
+copias:0
 
 }
 
+
 );
-
-
-
 
 
 
 
 
 alert(
-
-"🎟️ Cupón guardado"
-
+"🎟️ Cupón creado"
 );
 
 
 
-
-
-
-cargarCupones();
-
+cargarCuponesAdmin();
 
 
 };
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =============================
-// MOSTRAR CUPONES
-// =============================
-
-
-async function cargarCupones(){
-
-
-
-const lista =
-
-document.getElementById("listaCupones");
-
-
-
-if(!lista)return;
-
-
-
-
-
-const snap =
-
-await getDocs(
-
-collection(db,"cupones")
-
-);
-
-
-
-
-
-lista.innerHTML="";
-
-
-
-let total=0;
-
-
-
-
-snap.forEach(item=>{
-
-
-total++;
-
-
-const c=item.data();
-
-
-
-
-
-lista.innerHTML+=
-
-
-
-`
-
-<div class="cuponAdmin">
-
-
-<h3>
-
-🎟️ ${c.nombre}
-
-</h3>
-
-
-
-<p>
-
-${c.descuento}
-
-</p>
-
-
-
-<p>
-
-Compra mínima:
-$${c.minimo}
-
-</p>
-
-
-
-</div>
-
-
-`;
-
-
-
-});
-
-
-
-
-
-
-const contador=
-
-document.getElementById("totalCupones");
-
-
-
-if(contador)
-
-contador.innerHTML=total;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =============================
-// SALIR
-// =============================
-
-
-const salir=
-
-document.getElementById("salir");
-
-
-
-if(salir){
-
-
-
-salir.onclick=()=>{
-
-
-window.location.href="login.html";
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// INICIO
-
-
-cargarOfertas();
-
-
-cargarCupones();
