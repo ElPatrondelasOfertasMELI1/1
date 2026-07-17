@@ -1,8 +1,7 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // ESTADISTICAS.JS
-// SISTEMA DE VISITAS + CLICS + COPIAS
-// USA COLECCIONES EXISTENTES
+// SISTEMA AVANZADO
 // =====================================================
 
 
@@ -16,9 +15,11 @@ getFirestore,
 doc,
 setDoc,
 getDoc,
-increment,
 collection,
-getDocs
+getDocs,
+increment,
+addDoc,
+serverTimestamp
 
 }
 
@@ -28,13 +29,8 @@ from
 
 
 
-
-// ==============================
-// FIREBASE
-// ==============================
-
-
 const firebaseConfig={
+
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -62,7 +58,6 @@ getFirestore(app);
 
 
 
-
 // ==============================
 // FECHA CDMX
 // ==============================
@@ -71,33 +66,20 @@ getFirestore(app);
 function fechaCDMX(){
 
 
-return new Intl.DateTimeFormat(
+return new Date()
 
-"en-CA",
-
+.toLocaleString(
+"sv-SE",
 {
-
 timeZone:"America/Mexico_City"
-
 }
 
-).format(new Date());
+)
 
-
-}
-
-
-
-
-
-function mesCDMX(){
-
-
-return fechaCDMX().substring(0,7);
+.split(" ")[0];
 
 
 }
-
 
 
 
@@ -105,26 +87,20 @@ return fechaCDMX().substring(0,7);
 function horaCDMX(){
 
 
-return new Intl.DateTimeFormat(
+return new Date()
 
+.toLocaleString(
 "es-MX",
-
 {
-
 timeZone:"America/Mexico_City",
-
 hour:"2-digit",
-
-hour12:false
-
+minute:"2-digit"
 }
 
-).format(new Date());
+);
 
 
 }
-
-
 
 
 
@@ -137,16 +113,14 @@ hour12:false
 async function registrarVisita(){
 
 
-const dia =
+const fecha =
 fechaCDMX();
 
-
-const mes =
-mesCDMX();
 
 
 const hora =
 horaCDMX();
+
 
 
 
@@ -157,19 +131,14 @@ horaCDMX();
 await setDoc(
 
 doc(
-
 db,
-
-"visitas",
-
-"contador"
-
+"estadisticas",
+"visitas"
 ),
 
 {
 
 total:
-
 increment(1)
 
 },
@@ -185,36 +154,24 @@ merge:true
 
 
 
-// ESTADISTICA DIARIA
+
+// DIARIO
 
 
 await setDoc(
 
 doc(
-
 db,
-
 "estadisticas_diarias",
-
-dia
-
+fecha
 ),
 
 {
 
-
-fecha:dia,
-
-
 visitas:
-
 increment(1),
 
-
-[`hora_${hora}`]:
-
-increment(1)
-
+fecha:fecha
 
 },
 
@@ -230,31 +187,28 @@ merge:true
 
 
 
-// ESTADISTICA MENSUAL
+// MENSUAL
+
+
+const mes =
+fecha.substring(0,7);
+
 
 
 await setDoc(
 
 doc(
-
 db,
-
 "estadisticas_mensuales",
-
 mes
-
 ),
 
 {
 
-
-mes:mes,
-
-
 visitas:
+increment(1),
 
-increment(1)
-
+mes:mes
 
 },
 
@@ -268,536 +222,68 @@ merge:true
 
 
 
+
+
+// HISTORIAL
+
+
+await addDoc(
+
+collection(
+db,
+"visitas_historial"
+),
+
+{
+
+fecha:fecha,
+
+hora:hora,
+
+creado:
+serverTimestamp()
+
 }
 
+);
 
 
 
-// EJECUTAR AL ENTRAR
+}
+
 
 
 registrarVisita();
 // =====================================================
-// REGISTRAR CLICS DE OFERTAS
+// CARGAR ESTADISTICAS EN ADMIN
 // =====================================================
 
 
-async function registrarClic(){
+async function cargarEstadisticas(){
 
 
-const dia =
+const hoy =
 fechaCDMX();
 
 
 const mes =
-mesCDMX();
+hoy.substring(0,7);
 
 
 
 
-await setDoc(
+// ==============================
+// VISITAS HOY
+// ==============================
 
-doc(
 
-db,
-
-"estadisticas_diarias",
-
-dia
-
-),
-
-{
-
-
-clics:
-
-increment(1)
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas_mensuales",
-
-mes
-
-),
-
-{
-
-
-clics:
-
-increment(1)
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// REGISTRAR COPIAS DE CUPONES
-// =====================================================
-
-
-async function registrarCopia(){
-
-
-const dia =
-fechaCDMX();
-
-
-const mes =
-mesCDMX();
-
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas_diarias",
-
-dia
-
-),
-
-{
-
-
-copias:
-
-increment(1)
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas_mensuales",
-
-mes
-
-),
-
-{
-
-
-copias:
-
-increment(1)
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// DIA MAS FUERTE
-// =====================================================
-
-
-async function analizarDias(){
-
-
-
-const datos =
-await getDocs(
-
-collection(
-
-db,
-
-"estadisticas_diarias"
-
-)
-
-);
-
-
-
-
-let mayor=0;
-
-let dia="";
-
-
-
-
-
-datos.forEach(item=>{
-
-
-const d=item.data();
-
-
-
-
-if(
-
-(d.visitas || 0)>mayor
-
-){
-
-
-mayor=d.visitas;
-
-
-dia=item.id;
-
-
-}
-
-
-});
-
-
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas",
-
-"resumen"
-
-),
-
-{
-
-
-diaMayor:dia,
-
-
-visitasMayor:mayor
-
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// HORA PICO
-// =====================================================
-
-
-async function analizarHoras(){
-
-
-
-const datos =
-await getDocs(
-
-collection(
-
-db,
-
-"estadisticas_diarias"
-
-)
-
-);
-
-
-
-let horaGanadora="";
-
-let mayor=0;
-
-
-
-
-datos.forEach(item=>{
-
-
-const d=item.data();
-
-
-
-Object.keys(d)
-
-.forEach(x=>{
-
-
-
-if(
-
-x.includes("hora_")
-
-){
-
-
-
-if(d[x]>mayor){
-
-
-
-mayor=d[x];
-
-
-horaGanadora=x;
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-});
-
-
-
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas",
-
-"resumen"
-
-),
-
-{
-
-
-horaPico:horaGanadora,
-
-
-visitasHora:mayor
-
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-}
-// =====================================================
-// REINICIO DIARIO CDMX
-// =====================================================
-
-
-async function verificarDiaNuevo(){
-
-
-const ahora =
-fechaCDMX();
-
-
-
-const ref =
-doc(
-
-db,
-
-"configuracion",
-
-"estadisticas"
-
-);
-
-
-
-const snap =
-await getDoc(ref);
-
-
-
-if(!snap.exists()){
-
-
-await setDoc(
-
-ref,
-
-{
-
-ultimoDia:ahora
-
-}
-
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-const ultimo =
-snap.data().ultimoDia;
-
-
-
-
-
-if(ultimo!==ahora){
-
-
-
-await setDoc(
-
-ref,
-
-{
-
-ultimoDia:ahora
-
-}
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// RESUMEN PARA ADMIN
-// =====================================================
-
-
-async function cargarResumen(){
-
-
-
-const snap =
+const hoyDoc =
 await getDoc(
 
 doc(
-
 db,
-
-"estadisticas",
-
-"resumen"
+"estadisticas_diarias",
+hoy
 
 )
 
@@ -805,56 +291,131 @@ db,
 
 
 
+if(
+document.getElementById("visitasHoy")
+){
+
+visitasHoy.innerHTML =
+
+hoyDoc.exists()
+
+?
+
+hoyDoc.data().visitas || 0
+
+:
+
+0;
+
+}
 
 
-if(!snap.exists())
-
-return;
 
 
 
 
-
-const datos=snap.data();
-
-
-
+// ==============================
+// VISITAS MES
+// ==============================
 
 
-const dia =
-document.getElementById(
-"diaMayor"
+const mesDoc =
+await getDoc(
+
+doc(
+db,
+"estadisticas_mensuales",
+mes
+
+)
+
 );
 
 
 
-const hora =
-document.getElementById(
-"horaPico"
+if(
+document.getElementById("visitasMes")
+){
+
+visitasMes.innerHTML =
+
+mesDoc.exists()
+
+?
+
+mesDoc.data().visitas || 0
+
+:
+
+0;
+
+}
+
+
+
+
+
+
+
+// ==============================
+// MEJOR DIA
+// ==============================
+
+
+const dias =
+await getDocs(
+
+collection(
+db,
+"estadisticas_diarias"
+
+)
+
 );
 
 
 
+let mayor=0;
 
-
-if(dia)
-
-dia.innerHTML=
-
-datos.diaMayor || "-";
+let dia="-";
 
 
 
+dias.forEach(d=>{
 
 
-if(hora)
-
-hora.innerHTML=
-
-datos.horaPico || "-";
+const datos=d.data();
 
 
 
+if(
+datos.visitas > mayor
+){
+
+mayor =
+datos.visitas;
+
+
+dia =
+d.id;
+
+
+}
+
+
+});
+
+
+
+
+
+if(
+document.getElementById("diaMayor")
+){
+
+diaMayor.innerHTML =
+
+dia+" ("+mayor+")";
 
 
 }
@@ -865,62 +426,299 @@ datos.horaPico || "-";
 
 
 
+// ==============================
+// HORA PICO
+// ==============================
 
+
+const historial =
+await getDocs(
+
+collection(
+db,
+"visitas_historial"
+
+)
+
+);
+
+
+
+let horas={};
+
+
+
+historial.forEach(v=>{
+
+
+const h =
+v.data().hora;
+
+
+
+if(h){
+
+horas[h] =
+(horas[h] || 0)+1;
+
+}
+
+
+});
+
+
+
+
+let horaMax="-";
+
+let cantidad=0;
+
+
+
+Object.keys(horas)
+
+.forEach(h=>{
+
+
+if(
+horas[h]>cantidad
+){
+
+cantidad=
+horas[h];
+
+
+horaMax=h;
+
+}
+
+
+});
+
+
+
+
+
+if(
+document.getElementById("horaPico")
+){
+
+horaPico.innerHTML=
+
+horaMax+" ("+cantidad+")";
+
+
+}
+
+
+
+}
+
+
+
+
+cargarEstadisticas();
 
 // =====================================================
-// INICIO
+// GRAFICA VISITAS
 // =====================================================
 
 
-verificarDiaNuevo();
-
-
-analizarDias();
-
-
-analizarHoras();
-
-
-cargarResumen();
+let graficaVisitas;
 
 
 
+async function crearGraficaVisitas(){
 
 
-// Actualizar cada hora
-
-setInterval(()=>{
-
-
-verificarDiaNuevo();
-
-
-analizarDias();
-
-
-analizarHoras();
-
-
-cargarResumen();
+const canvas =
+document.getElementById("graficaVisitas");
 
 
 
-},3600000);
+if(!canvas)return;
 
 
 
 
 
-// =====================================================
-// EXPORTAR FUNCIONES
-// PARA USAR DESDE APP.JS
-// =====================================================
+const datos =
+await getDocs(
+
+collection(
+db,
+"estadisticas_diarias"
+
+)
+
+);
 
 
-window.registrarClic =
-registrarClic;
 
 
 
-window.registrarCopia =
-registrarCopia;
+let fechas=[];
+
+let visitas=[];
+
+
+
+
+datos.forEach(d=>{
+
+
+fechas.push(d.id);
+
+
+visitas.push(
+d.data().visitas || 0
+);
+
+
+});
+
+
+
+
+
+// ordenar fechas
+
+
+let ordenado =
+fechas
+.map((f,i)=>({
+
+fecha:f,
+
+visitas:visitas[i]
+
+}))
+
+
+.sort((a,b)=>
+
+
+a.fecha.localeCompare(
+b.fecha
+)
+
+);
+
+
+
+
+
+fechas =
+ordenado.map(x=>x.fecha);
+
+
+
+visitas =
+ordenado.map(x=>x.visitas);
+
+
+
+
+
+
+
+if(graficaVisitas){
+
+graficaVisitas.destroy();
+
+}
+
+
+
+
+
+graficaVisitas = new Chart(
+
+canvas,
+
+{
+
+
+type:"line",
+
+
+data:{
+
+
+labels:fechas,
+
+
+datasets:[{
+
+
+label:"Visitas",
+
+data:visitas,
+
+
+borderWidth:3,
+
+
+tension:.4
+
+
+}]
+
+
+},
+
+
+
+options:{
+
+
+responsive:true,
+
+
+plugins:{
+
+
+legend:{
+
+
+display:true
+
+}
+
+
+},
+
+
+
+scales:{
+
+
+y:{
+
+
+beginAtZero:true
+
+}
+
+
+}
+
+
+
+}
+
+
+
+}
+
+);
+
+
+
+
+}
+
+
+
+
+crearGraficaVisitas();
