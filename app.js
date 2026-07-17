@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS CORREGIDO CARRUSEL ESTABLE
+// APP.JS FINAL ESTABLE + TIEMPO REAL
 // =====================================================
 
 
@@ -12,7 +12,6 @@ import {
 
 getFirestore,
 collection,
-getDocs,
 doc,
 updateDoc,
 increment,
@@ -29,7 +28,7 @@ from
 
 const firebaseConfig={
 
-apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"AIzaSyBo_wk-k88TrcSl0CMQz0hoUCvAKre94hW0",
 
 authDomain:"patronofertasweb.firebaseapp.com",
 
@@ -49,16 +48,18 @@ const app =
 initializeApp(firebaseConfig);
 
 
-
 const db =
 getFirestore(app);
 
 
+
 // ==============================
-// CONTADOR DE VISITAS
+// VISITAS
 // ==============================
 
+
 async function registrarVisita(){
+
 
 const hoy = new Date()
 .toISOString()
@@ -66,20 +67,42 @@ const hoy = new Date()
 
 
 await setDoc(
-doc(db,"estadisticas","visitas"),
+
+doc(
+db,
+"estadisticas",
+"visitas"
+),
+
 {
-total: increment(1),
-[hoy]: increment(1)
+
+total:increment(1),
+
+[hoy]:increment(1)
+
 },
+
 {
+
 merge:true
+
 }
+
 );
+
 
 }
 
 
 registrarVisita();
+
+
+
+
+
+// ==============================
+// ELEMENTOS
+// ==============================
 
 
 const carrusel =
@@ -103,12 +126,9 @@ document.getElementById("toast");
 
 
 
-let carruselActivo = true;
+let carruselActivo=true;
 
-let intervaloCarrusel;
-
-
-
+let intervaloCarrusel=null;
 
 
 
@@ -129,9 +149,7 @@ toast.classList.add("show");
 
 setTimeout(()=>{
 
-
 toast.classList.remove("show");
-
 
 },2000);
 
@@ -143,86 +161,38 @@ toast.classList.remove("show");
 
 
 
+// =====================================================
+// OFERTAS TIEMPO REAL
+// =====================================================
 
 
-
-// ==============================
-// OFERTAS
-// ==============================
-
-
-async function cargarOfertas(){
+function cargarOfertas(){
 
 
 if(!carrusel)return;
 
 
+
 onSnapshot(
+
 collection(db,"ofertas"),
+
 (datos)=>{
+
 
 carrusel.innerHTML="";
 
+
+
 datos.forEach(item=>{
 
+
 const o=item.data();
+
+
 
 const card=document.createElement("div");
 
-card.className="oferta";
-
-card.innerHTML=`
-
-<img src="${o.imagen}">
-
-<h3>
-${o.titulo}
-</h3>
-
-<div class="precioAntes">
-❌ Antes:
-<s>
-$${o.precioAntes || ""}
-</s>
-</div>
-
-<div class="descuento">
-🔥 ${o.descuento || ""}% OFF
-</div>
-
-<div class="precio">
-💥 $${o.precioFinal || ""}
-</div>
-
-<a href="${o.link}" target="_blank" class="btnOferta">
-🛒 VER OFERTA
-</a>
-
-`;
-
-carrusel.appendChild(card);
-
-});
-
-});
-
-
-
-carrusel.innerHTML="";
-
-
-
-
-datos.forEach(item=>{
-
-
-const o=item.data();
-
-
-
-const card =
-document.createElement("div");
-
 
 
 card.className="oferta";
@@ -239,6 +209,7 @@ card.innerHTML=`
 ${o.titulo}
 
 </h3>
+
 
 
 <div class="precioAntes">
@@ -295,20 +266,31 @@ carrusel.appendChild(card);
 });
 
 
+});
 
-iniciarCarrusel();
 
 
 }
-// ==============================
-// AUTO CARRUSEL ESTABLE
-// ==============================
+
+
+
+
+
+// =====================================================
+// AUTO CARRUSEL
+// =====================================================
 
 
 function iniciarCarrusel(){
 
 
 if(!carrusel)return;
+
+
+
+if(intervaloCarrusel)
+
+clearInterval(intervaloCarrusel);
 
 
 
@@ -323,17 +305,17 @@ if(!carruselActivo)return;
 
 
 
-if(carrusel.scrollWidth <= carrusel.clientWidth)
+if(carrusel.scrollWidth<=carrusel.clientWidth)
 
 return;
 
 
 
-posicion += 280;
+posicion+=280;
 
 
 
-if(posicion >= carrusel.scrollWidth - carrusel.clientWidth)
+if(posicion>=carrusel.scrollWidth-carrusel.clientWidth)
 
 posicion=0;
 
@@ -348,7 +330,6 @@ behavior:"smooth"
 });
 
 
-
 },3500);
 
 
@@ -359,50 +340,58 @@ behavior:"smooth"
 
 
 
-// PAUSAR CUANDO EL USUARIO TOCA
-
-
 if(carrusel){
 
 
-["touchstart","mousedown"]
 
-.forEach(evento=>{
-
-
-carrusel.addEventListener(evento,()=>{
-
+carrusel.addEventListener(
+"touchstart",
+()=>{
 
 carruselActivo=false;
 
-
-});
-
-
-});
+}
+);
 
 
 
-
-
-["touchend","mouseup"]
-
-.forEach(evento=>{
-
-
-carrusel.addEventListener(evento,()=>{
+carrusel.addEventListener(
+"touchend",
+()=>{
 
 
 setTimeout(()=>{
 
-
 carruselActivo=true;
-
 
 },1500);
 
 
 });
+
+
+
+carrusel.addEventListener(
+"mousedown",
+()=>{
+
+carruselActivo=false;
+
+}
+);
+
+
+
+carrusel.addEventListener(
+"mouseup",
+()=>{
+
+
+setTimeout(()=>{
+
+carruselActivo=true;
+
+},1500);
 
 
 });
@@ -414,34 +403,28 @@ carruselActivo=true;
 
 
 
-
-
-
-
-// ==============================
+// =====================================================
 // CUPONES
-// ==============================
+// =====================================================
 
 
-async function cargarCupones(){
-
-
-const datos =
-await getDocs(
-collection(db,"cupones")
-);
+function cargarCupones(){
 
 
 
+onSnapshot(
 
-// ORDEN MENOR DESCUENTO
-// A MAYOR DESCUENTO
+collection(db,"cupones"),
+
+(datos)=>{
 
 
-const cuponesOrdenados = datos.docs.sort((a,b)=>{
+const cuponesOrdenados=[...datos.docs].sort((a,b)=>{
 
 
-return Number(a.data().descuento || 0) -
+return Number(a.data().descuento || 0)
+
+-
 
 Number(b.data().descuento || 0);
 
@@ -451,20 +434,15 @@ Number(b.data().descuento || 0);
 
 
 
-
-
 [relampago,bancarios,exclusivos]
 
 .forEach(x=>{
-
 
 if(x)
 
 x.innerHTML="";
 
-
 });
-
 
 
 
@@ -477,8 +455,7 @@ const c=item.data();
 
 
 
-const tarjeta =
-document.createElement("div");
+const tarjeta=document.createElement("div");
 
 
 
@@ -554,9 +531,8 @@ $${c.minimo}
 
 
 
-tarjeta
 
-.querySelector(".copiarCupon")
+tarjeta.querySelector(".copiarCupon")
 
 .onclick=()=>{
 
@@ -575,17 +551,14 @@ c.codigo
 
 
 
-
 if(c.tipo==="relampago")
 
 relampago?.appendChild(tarjeta);
 
 
-
 else if(c.tipo==="bancario")
 
 bancarios?.appendChild(tarjeta);
-
 
 
 else
@@ -598,17 +571,25 @@ exclusivos?.appendChild(tarjeta);
 
 
 
+});
+
+
 }
-// ==============================
-// COPIAR CUPÓN ULTRA RÁPIDO
-// ==============================
+
+
+
+
+
+// =====================================================
+// COPIAR CUPÓN RÁPIDO
+// =====================================================
+
 
 async function copiarCupon(id,codigo){
 
+
 try{
 
-
-// COPIAR AL PORTAPAPELES INMEDIATO
 
 await navigator.clipboard.writeText(codigo);
 
@@ -620,18 +601,22 @@ mostrarToast(
 
 
 
-// IR A MERCADO LIBRE RÁPIDO
+// REDIRECCIÓN RÁPIDA
 
 setTimeout(()=>{
 
-window.location.href =
+
+window.location.href=
+
 "https://meli.la/1mj3itE";
 
-},300);
+
+},80);
 
 
 
-// SUMAR COPIA SIN BLOQUEAR
+// ACTUALIZA COPIAS SIN ESPERAR
+
 
 updateDoc(
 
@@ -647,43 +632,35 @@ id
 
 {
 
-copias:
-
-increment(1)
+copias:increment(1)
 
 }
 
-).catch(error=>{
-
-
-console.log(error);
-
-
-});
+);
 
 
 
 }
 
-catch(error){
+catch(e){
 
-
-console.log(error);
-
+console.log(e);
 
 }
+
 
 }
 
 
 
 
-// ==============================
+
+// =====================================================
 // SUBIR ARRIBA
-// ==============================
+// =====================================================
 
 
-const btnArriba =
+const btnArriba=
 document.getElementById("btnArriba");
 
 
@@ -691,7 +668,9 @@ document.getElementById("btnArriba");
 if(btnArriba){
 
 
-window.addEventListener("scroll",()=>{
+window.addEventListener(
+"scroll",
+()=>{
 
 
 btnArriba.style.display=
@@ -708,7 +687,6 @@ window.scrollY>400
 
 
 });
-
 
 
 btnArriba.onclick=()=>{
@@ -734,14 +712,13 @@ behavior:"smooth"
 
 
 
-
-
-// ==============================
+// =====================================================
 // INICIO
-// ==============================
+// =====================================================
 
 
 cargarOfertas();
 
-
 cargarCupones();
+
+iniciarCarrusel();
