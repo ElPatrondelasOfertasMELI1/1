@@ -16,7 +16,8 @@ getDocs,
 doc,
 updateDoc,
 increment,
-onSnapshot
+onSnapshot,
+setDoc
 
 }
 
@@ -53,7 +54,32 @@ const db =
 getFirestore(app);
 
 
+// ==============================
+// CONTADOR DE VISITAS
+// ==============================
 
+async function registrarVisita(){
+
+const hoy = new Date()
+.toISOString()
+.split("T")[0];
+
+
+await setDoc(
+doc(db,"estadisticas","visitas"),
+{
+total: increment(1),
+[hoy]: increment(1)
+},
+{
+merge:true
+}
+);
+
+}
+
+
+registrarVisita();
 
 
 const carrusel =
