@@ -2,6 +2,7 @@
 // EL PATRÓN DE LAS OFERTAS
 // ADMIN.JS
 // PARTE 1/3
+// COMPATIBLE CON admin.html ACTUAL
 // =====================================================
 
 
@@ -28,12 +29,14 @@ from
 
 
 
+
 // ================================
 // FIREBASE
 // ================================
 
 
 const firebaseConfig = {
+
 
 apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -46,6 +49,7 @@ storageBucket: "patronofertasweb.firebasestorage.app",
 messagingSenderId: "292338334268",
 
 appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
+
 
 };
 
@@ -64,6 +68,7 @@ getFirestore(app);
 
 
 
+
 // ================================
 // VARIABLES
 // ================================
@@ -76,31 +81,35 @@ let imagenBase64 = "";
 
 
 
+
+
 // ================================
-// TOAST ADMIN
+// TOAST
 // ================================
 
 
 function mostrarMensaje(texto){
 
 
-let mensaje =
+
+let toast =
+
 document.getElementById("toastAdmin");
 
 
 
-if(!mensaje){
+if(!toast){
 
 
-mensaje =
+toast =
 document.createElement("div");
 
 
-mensaje.id =
+toast.id =
 "toastAdmin";
 
 
-document.body.appendChild(mensaje);
+document.body.appendChild(toast);
 
 
 }
@@ -108,17 +117,19 @@ document.body.appendChild(mensaje);
 
 
 
-mensaje.innerHTML = texto;
+toast.innerHTML =
+texto;
 
 
-mensaje.classList.add("show");
+toast.classList.add("show");
+
 
 
 
 setTimeout(()=>{
 
 
-mensaje.classList.remove("show");
+toast.classList.remove("show");
 
 
 },2500);
@@ -136,29 +147,28 @@ mensaje.classList.remove("show");
 
 
 // ================================
-// IMAGEN DESDE GALERÍA
+// CARGAR IMAGEN
 // ================================
 
 
-const imagenArchivo =
+const inputImagen =
 
-document.getElementById("imagenArchivo");
-
-
-
-const previewImagen =
-
-document.getElementById("previewImagen");
+document.getElementById("imagen");
 
 
+
+const preview =
+
+document.getElementById("preview");
 
 
 
 
-if(imagenArchivo){
+
+if(inputImagen){
 
 
-imagenArchivo.addEventListener(
+inputImagen.addEventListener(
 
 "change",
 
@@ -166,7 +176,7 @@ imagenArchivo.addEventListener(
 
 
 const archivo =
-imagenArchivo.files[0];
+inputImagen.files[0];
 
 
 
@@ -189,22 +199,19 @@ e.target.result;
 
 
 
-if(previewImagen){
-
-
-previewImagen.src =
+preview.src =
 imagenBase64;
 
 
-previewImagen.style.display =
+
+preview.style.display =
 "block";
-
-
-}
 
 
 
 };
+
+
 
 
 
@@ -214,7 +221,6 @@ lector.readAsDataURL(archivo);
 
 }
 
-
 );
 
 
@@ -222,7 +228,7 @@ lector.readAsDataURL(archivo);
 // =====================================================
 // ADMIN.JS
 // PARTE 2/3
-// GUARDAR OFERTAS Y CUPONES
+// PUBLICAR OFERTAS Y GUARDAR CUPONES
 // =====================================================
 
 
@@ -253,6 +259,7 @@ async()=>{
 try{
 
 
+
 const titulo =
 
 document.getElementById("titulo").value.trim();
@@ -277,10 +284,9 @@ document.getElementById("link").value.trim();
 
 
 
-const destacada =
+const tipoOferta =
 
-document.getElementById("destacada").checked;
-
+document.getElementById("tipoOferta").value;
 
 
 
@@ -297,7 +303,7 @@ if(
 
 mostrarMensaje(
 
-"⚠️ Completa todos los campos"
+"⚠️ Completa título, precio, link e imagen"
 
 );
 
@@ -320,16 +326,16 @@ collection(db,"ofertas"),
 {
 
 
-titulo:titulo,
+titulo,
 
 
-precioAntes:precioAntes,
+precioAntes,
 
 
-precioFinal:precioFinal,
+precioFinal,
 
 
-link:link,
+link,
 
 
 imagen:imagenBase64,
@@ -338,10 +344,21 @@ imagen:imagenBase64,
 clics:0,
 
 
-destacada:destacada,
+tipo:
+
+tipoOferta,
 
 
-creado:serverTimestamp()
+
+destacada:
+
+tipoOferta==="destacada",
+
+
+
+creado:
+
+serverTimestamp()
 
 
 
@@ -365,7 +382,38 @@ mostrarMensaje(
 
 
 
+
+// limpiar imagen
+
+
+imagenBase64="";
+
+
+
+document.getElementById("titulo").value="";
+
+document.getElementById("precioAntes").value="";
+
+document.getElementById("precioFinal").value="";
+
+document.getElementById("link").value="";
+
+document.getElementById("imagen").value="";
+
+
+
+preview.style.display="none";
+
+
+
+
+cargarOfertasAdmin();
+
+
+
 }
+
+
 
 catch(error){
 
@@ -375,24 +423,23 @@ console.error(error);
 
 mostrarMensaje(
 
-"❌ Error al publicar"
-
-);
-
-
-
-}
-
-
-
-}
-
+"❌ Error al publicar oferta"
 
 );
 
 
 }
 
+
+
+}
+
+
+);
+
+
+
+}
 
 
 
@@ -403,14 +450,13 @@ mostrarMensaje(
 
 
 // ================================
-// CREAR CUPÓN
+// GUARDAR CUPÓN
 // ================================
 
 
 const botonCupon =
 
 document.getElementById("crearCupon");
-
 
 
 
@@ -427,7 +473,6 @@ botonCupon.addEventListener(
 async()=>{
 
 
-
 try{
 
 
@@ -435,6 +480,13 @@ try{
 const codigo =
 
 document.getElementById("codigoCupon").value.trim();
+
+
+
+
+const nombre =
+
+document.getElementById("nombreCupon").value.trim();
 
 
 
@@ -457,13 +509,6 @@ document.getElementById("tipoCupon").value;
 
 
 
-const estado =
-
-document.getElementById("estadoCupon").value;
-
-
-
-
 
 
 
@@ -473,7 +518,7 @@ if(!codigo){
 
 mostrarMensaje(
 
-"⚠️ Escribe el código del cupón"
+"⚠️ Falta código del cupón"
 
 );
 
@@ -496,19 +541,22 @@ collection(db,"cupones"),
 {
 
 
-codigo:codigo,
+codigo,
 
 
-descuento:descuento,
+nombre,
 
 
-minimo:minimo,
+descuento,
 
 
-tipo:tipo,
+minimo,
 
 
-estado:estado,
+tipo,
+
+
+estado:"activo",
 
 
 copias:0
@@ -524,10 +572,9 @@ copias:0
 
 
 
-
 mostrarMensaje(
 
-"🎟️ Cupón creado"
+"🎟️ Cupón guardado"
 
 );
 
@@ -535,7 +582,23 @@ mostrarMensaje(
 
 
 
+
+document.getElementById("codigoCupon").value="";
+
+document.getElementById("nombreCupon").value="";
+
+document.getElementById("descuentoCupon").value="";
+
+document.getElementById("minimoCupon").value="";
+
+
+
+cargarCuponesAdmin();
+
+
+
 }
+
 
 
 
@@ -545,31 +608,30 @@ catch(error){
 console.error(error);
 
 
-
 mostrarMensaje(
 
-"❌ Error al crear cupón"
-
-);
-
-
-
-}
-
-
-
-
-}
-
+"❌ Error al guardar cupón"
 
 );
 
 
 }
+
+
+
+}
+
+
+
+);
+
+
+}
+
 // =====================================================
 // ADMIN.JS
 // PARTE 3/3
-// MOSTRAR Y ELIMINAR
+// LISTAS + BORRAR
 // =====================================================
 
 
@@ -596,7 +658,7 @@ document.getElementById("listaCupones");
 
 
 // ================================
-// CARGAR OFERTAS
+// MOSTRAR OFERTAS
 // ================================
 
 
@@ -608,8 +670,7 @@ if(!listaOfertas)return;
 
 
 
-listaOfertas.innerHTML =
-"";
+listaOfertas.innerHTML="";
 
 
 
@@ -625,27 +686,32 @@ collection(db,"ofertas")
 
 
 
-datos.forEach((item)=>{
+datos.forEach((documento)=>{
+
 
 
 const oferta =
-item.data();
+
+documento.data();
 
 
 
-const div =
+
+
+const card =
+
 document.createElement("div");
 
 
 
-div.className =
-"ofertaAdmin";
+card.className="ofertaAdmin";
 
 
 
 
 
-div.innerHTML = `
+card.innerHTML = `
+
 
 <img src="${oferta.imagen}">
 
@@ -664,9 +730,19 @@ ${oferta.titulo}
 </p>
 
 
+<p>
+
+${oferta.destacada ? "⭐ Destacada" : ""}
+
+${oferta.tipo==="relampago" ? "⚡ Relámpago" : ""}
+
+</p>
+
+
+
 <button>
 
-🗑️ BORRAR
+🗑️ ELIMINAR
 
 </button>
 
@@ -677,7 +753,8 @@ ${oferta.titulo}
 
 
 
-div.querySelector("button")
+card.querySelector("button")
+
 .onclick = async()=>{
 
 
@@ -685,9 +762,12 @@ div.querySelector("button")
 await deleteDoc(
 
 doc(
+
 db,
+
 "ofertas",
-item.id
+
+documento.id
 
 )
 
@@ -713,7 +793,7 @@ cargarOfertasAdmin();
 
 
 
-listaOfertas.appendChild(div);
+listaOfertas.appendChild(card);
 
 
 
@@ -732,7 +812,7 @@ listaOfertas.appendChild(div);
 
 
 // ================================
-// CARGAR CUPONES
+// MOSTRAR CUPONES
 // ================================
 
 
@@ -744,8 +824,7 @@ if(!listaCupones)return;
 
 
 
-listaCupones.innerHTML =
-"";
+listaCupones.innerHTML="";
 
 
 
@@ -761,27 +840,31 @@ collection(db,"cupones")
 
 
 
-datos.forEach((item)=>{
+datos.forEach((documento)=>{
+
 
 
 const cupon =
-item.data();
+
+documento.data();
 
 
 
 
-const div =
+
+const card =
+
 document.createElement("div");
 
 
 
-div.className =
-"ofertaAdmin";
+card.className="ofertaAdmin";
 
 
 
 
-div.innerHTML = `
+
+card.innerHTML = `
 
 
 <h3>
@@ -807,13 +890,20 @@ ${cupon.minimo}
 </p>
 
 
+<p>
+
+Tipo:
+${cupon.tipo}
+
+</p>
+
+
 
 <button>
 
-🗑️ BORRAR
+🗑️ ELIMINAR
 
 </button>
-
 
 
 `;
@@ -823,7 +913,9 @@ ${cupon.minimo}
 
 
 
-div.querySelector("button")
+
+card.querySelector("button")
+
 .onclick = async()=>{
 
 
@@ -831,9 +923,12 @@ div.querySelector("button")
 await deleteDoc(
 
 doc(
+
 db,
+
 "cupones",
-item.id
+
+documento.id
 
 )
 
@@ -859,7 +954,7 @@ cargarCuponesAdmin();
 
 
 
-listaCupones.appendChild(div);
+listaCupones.appendChild(card);
 
 
 
@@ -877,9 +972,78 @@ listaCupones.appendChild(div);
 
 
 
+// ================================
+// CONTADORES
+// ================================
+
+
+async function actualizarEstadisticas(){
+
+
+
+const ofertas =
+
+await getDocs(
+
+collection(db,"ofertas")
+
+);
+
+
+
+const cupones =
+
+await getDocs(
+
+collection(db,"cupones")
+
+);
+
+
+
+
+const totalOfertas =
+
+document.getElementById("totalOfertas");
+
+
+
+const totalCupones =
+
+document.getElementById("totalCupones");
+
+
+
+
+
+if(totalOfertas)
+
+totalOfertas.innerHTML=
+
+ofertas.size;
+
+
+
+if(totalCupones)
+
+totalCupones.innerHTML=
+
+cupones.size;
+
+
+
+}
+
+
+
+
+
+
+
+
 
 // ================================
-// INICIO ADMIN
+// INICIO
 // ================================
 
 
@@ -887,3 +1051,6 @@ cargarOfertasAdmin();
 
 
 cargarCuponesAdmin();
+
+
+actualizarEstadisticas();
