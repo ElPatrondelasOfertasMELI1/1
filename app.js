@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS FINAL CORREGIDO
+// APP.JS CORREGIDO CARRUSEL ESTABLE
 // =====================================================
 
 
@@ -73,6 +73,12 @@ document.getElementById("cuponesExclusivos");
 
 const toast =
 document.getElementById("toast");
+
+
+
+let carruselActivo = true;
+
+let intervaloCarrusel;
 
 
 
@@ -224,21 +230,25 @@ iniciarCarrusel();
 
 }
 // ==============================
-// AUTO CARRUSEL
+// AUTO CARRUSEL ESTABLE
 // ==============================
 
 
 function iniciarCarrusel(){
 
 
+if(!carrusel)return;
+
+
+
 let posicion=0;
 
 
 
-setInterval(()=>{
+intervaloCarrusel=setInterval(()=>{
 
 
-if(!carrusel)return;
+if(!carruselActivo)return;
 
 
 
@@ -248,11 +258,11 @@ return;
 
 
 
-posicion += 300;
+posicion += 280;
 
 
 
-if(posicion >= carrusel.scrollWidth)
+if(posicion >= carrusel.scrollWidth - carrusel.clientWidth)
 
 posicion=0;
 
@@ -268,7 +278,63 @@ behavior:"smooth"
 
 
 
-},2200);
+},3500);
+
+
+
+}
+
+
+
+
+
+// PAUSAR CUANDO EL USUARIO TOCA
+
+
+if(carrusel){
+
+
+["touchstart","mousedown"]
+
+.forEach(evento=>{
+
+
+carrusel.addEventListener(evento,()=>{
+
+
+carruselActivo=false;
+
+
+});
+
+
+});
+
+
+
+
+
+["touchend","mouseup"]
+
+.forEach(evento=>{
+
+
+carrusel.addEventListener(evento,()=>{
+
+
+setTimeout(()=>{
+
+
+carruselActivo=true;
+
+
+},1500);
+
+
+});
+
+
+});
 
 
 }
@@ -296,8 +362,9 @@ collection(db,"cupones")
 
 
 
-// ORDENAR CUPONES
-// MENOR DESCUENTO → MAYOR DESCUENTO
+
+// ORDEN MENOR DESCUENTO
+// A MAYOR DESCUENTO
 
 
 const cuponesOrdenados = datos.docs.sort((a,b)=>{
@@ -314,6 +381,7 @@ Number(b.data().descuento || 0);
 
 
 
+
 [relampago,bancarios,exclusivos]
 
 .forEach(x=>{
@@ -325,6 +393,7 @@ x.innerHTML="";
 
 
 });
+
 
 
 
@@ -377,7 +446,7 @@ c.estado==="agotando"
 
 <h3>
 
-🎟️ ${c.nombre}
+🎟️ ${c.tipo==="relampago" ? "CUPON" : c.nombre}
 
 </h3>
 
@@ -400,7 +469,6 @@ $${c.descuento}
 $${c.minimo}
 
 </p>
-
 
 
 
@@ -436,14 +504,17 @@ c.codigo
 
 
 
+
 if(c.tipo==="relampago")
 
 relampago?.appendChild(tarjeta);
 
 
+
 else if(c.tipo==="bancario")
 
 bancarios?.appendChild(tarjeta);
+
 
 
 else
@@ -455,6 +526,7 @@ exclusivos?.appendChild(tarjeta);
 });
 
 
+
 }
 // ==============================
 // COPIAR CUPÓN
@@ -464,11 +536,10 @@ exclusivos?.appendChild(tarjeta);
 async function copiarCupon(id,codigo){
 
 
-await navigator.clipboard.writeText(
+try{
 
-codigo
 
-);
+await navigator.clipboard.writeText(codigo);
 
 
 
@@ -504,6 +575,10 @@ mostrarToast(
 
 
 
+
+// REDIRECCIÓN RÁPIDA
+
+
 setTimeout(()=>{
 
 
@@ -512,8 +587,19 @@ window.location.href=
 "https://meli.la/1mj3itE";
 
 
-},500);
+},300);
 
+
+
+}
+
+catch(error){
+
+
+console.log(error);
+
+
+}
 
 }
 
@@ -574,6 +660,7 @@ behavior:"smooth"
 
 
 }
+
 
 
 
