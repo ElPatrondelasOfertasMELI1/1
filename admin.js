@@ -13,17 +13,11 @@ import { initializeApp } from
 import {
 
 getFirestore,
-
 collection,
-
 addDoc,
-
 getDocs,
-
 deleteDoc,
-
 doc,
-
 serverTimestamp
 
 }
@@ -38,7 +32,9 @@ from
 
 
 
+// =============================
 // FIREBASE
+// =============================
 
 
 const firebaseConfig = {
@@ -63,24 +59,19 @@ appId:"TU_APP_ID"
 
 
 
-const app =
-initializeApp(firebaseConfig);
 
 
-
-const db =
-getFirestore(app);
+const app = initializeApp(firebaseConfig);
 
 
+const db = getFirestore(app);
 
 
 
 
 
 
-// =============================
-// VARIABLES
-// =============================
+
 
 
 let imagenBase64="";
@@ -92,40 +83,32 @@ let imagenBase64="";
 
 
 
+
 // =============================
-// IMAGEN GALERIA
+// CARGAR IMAGEN
 // =============================
 
 
-const imagenInput =
-
-document.getElementById("imagen");
+const imagen = document.getElementById("imagen");
 
 
-
-const preview =
-
-document.getElementById("preview");
+const preview = document.getElementById("preview");
 
 
 
 
 
+if(imagen){
 
-if(imagenInput){
 
-
-imagenInput.addEventListener(
+imagen.addEventListener(
 
 "change",
 
 ()=>{
 
 
-const archivo =
-
-imagenInput.files[0];
-
+const archivo = imagen.files[0];
 
 
 if(!archivo)return;
@@ -133,35 +116,23 @@ if(!archivo)return;
 
 
 
-
-const reader =
-
-new FileReader();
+const reader = new FileReader();
 
 
 
-
-reader.onload=function(e){
-
+reader.onload = e=>{
 
 
-imagenBase64=e.target.result;
+imagenBase64 = e.target.result;
 
 
-
-preview.src=
-
-imagenBase64;
-
+preview.src = imagenBase64;
 
 
 preview.style.display="block";
 
 
-
 };
-
-
 
 
 
@@ -171,12 +142,11 @@ reader.readAsDataURL(archivo);
 
 }
 
-
-
 );
 
-
 }
+
+
 
 
 
@@ -192,11 +162,18 @@ reader.readAsDataURL(archivo);
 
 
 
-document
+const publicar =
 
-.getElementById("publicar")
+document.getElementById("publicar");
 
-.onclick=async()=>{
+
+
+
+
+if(publicar){
+
+
+publicar.onclick = async()=>{
 
 
 
@@ -240,20 +217,19 @@ document.getElementById("tipoOferta").value;
 
 
 
+
 if(!titulo || !imagenBase64 || !link){
 
 
 alert(
-
 "Completa título, imagen y link"
-
 );
 
 
 return;
 
-}
 
+}
 
 
 
@@ -270,7 +246,7 @@ collection(db,"ofertas"),
 
 titulo,
 
-imagenBase64,
+imagen:imagenBase64,
 
 precioAntes,
 
@@ -281,40 +257,37 @@ descuento,
 link,
 
 
+clics:0,
+
+
+creado:
+serverTimestamp(),
+
+
+
 destacada:
 
 tipo==="destacada",
 
 
 
+
 tipo:
-
-
-tipo==="destacada"
-
-?
-
-"normal"
-
-:
 
 tipo,
 
 
 
-activo:true,
+activo:true
 
-
-fecha:
-
-serverTimestamp()
 
 
 }
 
-
-
 );
+
+
+
 
 
 
@@ -330,7 +303,9 @@ alert(
 
 
 
-limpiarOferta();
+
+
+limpiar();
 
 
 
@@ -338,39 +313,8 @@ cargarOfertas();
 
 
 
-
 };
 
-
-
-
-
-
-
-
-
-function limpiarOferta(){
-
-
-document
-.querySelectorAll("input")
-.forEach(i=>{
-
-
-if(i.type!=="file")
-
-i.value="";
-
-
-});
-
-
-
-imagenBase64="";
-
-
-
-preview.style.display="none";
 
 
 }
@@ -383,10 +327,52 @@ preview.style.display="none";
 
 
 
+function limpiar(){
+
+
+
+document
+
+.querySelectorAll("input")
+
+.forEach(input=>{
+
+
+if(input.type!=="file")
+
+input.value="";
+
+
+});
+
+
+
+
+
+imagenBase64="";
+
+
+if(preview)
+
+preview.style.display="none";
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 // =============================
 // MOSTRAR OFERTAS
 // =============================
-
 
 
 async function cargarOfertas(){
@@ -404,6 +390,7 @@ if(!lista)return;
 
 
 
+
 const snap =
 
 await getDocs(
@@ -411,6 +398,7 @@ await getDocs(
 collection(db,"ofertas")
 
 );
+
 
 
 
@@ -426,6 +414,8 @@ let total=0;
 
 
 
+
+
 snap.forEach(item=>{
 
 
@@ -433,7 +423,8 @@ snap.forEach(item=>{
 total++;
 
 
-const o=item.data();
+const oferta=item.data();
+
 
 
 
@@ -447,12 +438,14 @@ lista.innerHTML +=
 <div class="ofertaAdmin">
 
 
-<img src="${o.imagenBase64}">
+
+<img src="${oferta.imagen}">
+
 
 
 <h3>
 
-${o.titulo}
+${oferta.titulo}
 
 </h3>
 
@@ -460,17 +453,7 @@ ${o.titulo}
 
 <p>
 
-$${o.precioFinal}
-
-</p>
-
-
-
-<p>
-
-${o.destacada ? "⭐ DESTACADA" : ""}
-
-${o.tipo==="relampago" ? "⚡ RELÁMPAGO":""}
+$${oferta.precioFinal}
 
 </p>
 
@@ -493,11 +476,15 @@ onclick="borrarOferta('${item.id}')"
 
 </div>
 
+
 `;
 
 
 
 });
+
+
+
 
 
 
@@ -525,15 +512,10 @@ contador.innerHTML=total;
 
 
 
-// BORRAR
-
-
 window.borrarOferta=
 
 async(id)=>{
 
-
-if(confirm("¿Borrar oferta?")){
 
 
 await deleteDoc(
@@ -547,10 +529,6 @@ doc(db,"ofertas",id)
 cargarOfertas();
 
 
-}
-
-
-
 };
 
 
@@ -561,17 +539,27 @@ cargarOfertas();
 
 
 
+
+
 // =============================
-// CUPONES
+// CREAR CUPONES
 // =============================
 
 
 
-document
+const crearCupon =
 
-.getElementById("crearCupon")
+document.getElementById("crearCupon");
 
-.onclick=async()=>{
+
+
+
+
+if(crearCupon){
+
+
+
+crearCupon.onclick=async()=>{
 
 
 
@@ -626,12 +614,12 @@ minimo,
 
 tipo,
 
-activo:true,
+creado:
 
+serverTimestamp(),
 
-fecha:
+activo:true
 
-serverTimestamp()
 
 
 }
@@ -644,11 +632,14 @@ serverTimestamp()
 
 
 
+
 alert(
 
-"🎟️ Cupón creado"
+"🎟️ Cupón guardado"
 
 );
+
+
 
 
 
@@ -661,13 +652,25 @@ cargarCupones();
 
 
 
+}
 
 
 
 
+
+
+
+
+
+
+
+// =============================
+// MOSTRAR CUPONES
+// =============================
 
 
 async function cargarCupones(){
+
 
 
 const lista =
@@ -681,7 +684,8 @@ if(!lista)return;
 
 
 
-const snap=
+
+const snap =
 
 await getDocs(
 
@@ -701,11 +705,11 @@ let total=0;
 
 
 
+
 snap.forEach(item=>{
 
 
 total++;
-
 
 
 const c=item.data();
@@ -730,6 +734,7 @@ lista.innerHTML+=
 </h3>
 
 
+
 <p>
 
 ${c.descuento}
@@ -737,12 +742,14 @@ ${c.descuento}
 </p>
 
 
+
 <p>
 
-Mínimo:
+Compra mínima:
 $${c.minimo}
 
 </p>
+
 
 
 </div>
@@ -753,6 +760,7 @@ $${c.minimo}
 
 
 });
+
 
 
 
@@ -780,8 +788,9 @@ contador.innerHTML=total;
 
 
 
-
+// =============================
 // SALIR
+// =============================
 
 
 const salir=
@@ -793,13 +802,15 @@ document.getElementById("salir");
 if(salir){
 
 
+
 salir.onclick=()=>{
 
 
-location.href="login.html";
+window.location.href="login.html";
 
 
 };
+
 
 
 }
