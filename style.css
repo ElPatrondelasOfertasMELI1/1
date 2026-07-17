@@ -900,3 +900,20 @@ padding-left:18px;
 padding-right:18px;
 
 }
+
+.cuponCard{
+justify-content:center;
+text-align:center;
+}
+
+
+.cuponCard p{
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+
+.cuponCard h3{
+justify-content:center;
+}
