@@ -1,12 +1,11 @@
 // =======================================
 // EL PATRÓN DE LAS OFERTAS
 // APP.JS PRO
-// FIRESTORE + IMAGENES BASE64
+// FIREBASE PUBLIC
 // =======================================
 
 
 import { initializeApp }
-
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -28,9 +27,9 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
-// FIREBASE
 
 const firebaseConfig={
+
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -49,7 +48,6 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 const app=initializeApp(firebaseConfig);
 
-
 const db=getFirestore(app);
 
 
@@ -57,11 +55,11 @@ const db=getFirestore(app);
 
 
 
-const carrusel=
+const carrusel =
 document.getElementById("carrusel");
 
 
-const cupones=
+const cupones =
 document.getElementById("cupones");
 
 
@@ -71,7 +69,7 @@ document.getElementById("cupones");
 
 
 // =======================================
-// CARGAR OFERTAS
+// OFERTAS
 // =======================================
 
 
@@ -89,15 +87,14 @@ carrusel.innerHTML="";
 for(const item of snapshot.docs){
 
 
-
-const o=item.data();
+const oferta=item.data();
 
 
 let imagen="";
 
 
 
-if(o.imagenID){
+if(oferta.imagenID){
 
 
 const img=
@@ -107,7 +104,7 @@ await getDoc(
 doc(
 db,
 "imagenes",
-o.imagenID
+oferta.imagenID
 
 )
 
@@ -126,8 +123,7 @@ imagen=img.data().imagen;
 
 
 
-
-carrusel.innerHTML+=`
+carrusel.innerHTML += `
 
 
 <div class="oferta">
@@ -139,7 +135,7 @@ carrusel.innerHTML+=`
 
 <h3>
 
-${o.titulo}
+${oferta.titulo}
 
 </h3>
 
@@ -147,7 +143,7 @@ ${o.titulo}
 
 <p class="precioAntes">
 
-$${o.precioAntes || ""}
+$${oferta.precioAntes || ""}
 
 </p>
 
@@ -155,10 +151,9 @@ $${o.precioAntes || ""}
 
 <div class="precioFinal">
 
-$${o.precioFinal}
+$${oferta.precioFinal}
 
 </div>
-
 
 
 
@@ -166,11 +161,11 @@ $${o.precioFinal}
 
 class="btnComprar"
 
-href="${o.link}"
+href="${oferta.link}"
 
 target="_blank"
 
-onclick="sumarClic('${item.id}')"
+onclick="clicOferta('${item.id}')"
 
 >
 
@@ -179,8 +174,8 @@ onclick="sumarClic('${item.id}')"
 </a>
 
 
-</div>
 
+</div>
 
 
 `;
@@ -188,7 +183,6 @@ onclick="sumarClic('${item.id}')"
 
 
 }
-
 
 
 });
@@ -200,20 +194,22 @@ onclick="sumarClic('${item.id}')"
 
 
 
-
 // =======================================
-// CLICS DE OFERTAS
+// CLICS OFERTAS
 // =======================================
 
 
-window.sumarClic=async(id)=>{
+window.clicOferta=async(id)=>{
 
 
 const ref=
 
 doc(
+
 db,
+
 "ofertas",
+
 id
 
 );
@@ -230,13 +226,10 @@ clics:increment(1)
 
 }
 
-);
-
+).catch(()=>{});
 
 
 };
-
-
 
 
 
@@ -261,7 +254,7 @@ cupones.innerHTML="";
 
 
 
-snapshot.forEach((item)=>{
+snapshot.forEach(item=>{
 
 
 const c=item.data();
@@ -286,7 +279,9 @@ estado="🔴 AGOTADO";
 
 
 
-cupones.innerHTML+=`
+
+cupones.innerHTML += `
+
 
 
 <div class="cupon">
@@ -294,10 +289,9 @@ cupones.innerHTML+=`
 
 <h3>
 
-${c.descuento || ""} OFF
+$${c.descuento || ""} OFF
 
 </h3>
-
 
 
 <p>
@@ -305,7 +299,6 @@ ${c.descuento || ""} OFF
 ${c.minimo || ""}
 
 </p>
-
 
 
 <p>
@@ -322,7 +315,7 @@ onclick="copiarCupon('${item.id}')"
 
 >
 
-📋 COPIAR
+📋 COPIAR CUPÓN
 
 </button>
 
@@ -363,13 +356,11 @@ await navigator.clipboard.writeText(codigo);
 
 
 
-contadorCupon(codigo);
+await contarCupon(codigo);
 
 
 
-alert(
-"✅ Cupón copiado"
-);
+alert("✅ CUPÓN COPIADO");
 
 
 
@@ -381,7 +372,7 @@ window.location.href=
 "https://meli.la/1mj3itE";
 
 
-},500);
+},600);
 
 
 
@@ -400,15 +391,18 @@ window.location.href=
 // =======================================
 
 
-async function contadorCupon(codigo){
+async function contarCupon(codigo){
 
 
 
 const global=
 
 doc(
+
 db,
+
 "contadores",
+
 "global"
 
 );
@@ -449,24 +443,16 @@ total:1
 
 
 
-const dia=
+let usuario=
 
-new Date()
-
-.toISOString()
-
-.split("T")[0];
+localStorage.getItem("usuario");
 
 
 
-
-const usuario=
-
-localStorage.getItem("usuario")
-
-|| crypto.randomUUID();
+if(!usuario){
 
 
+usuario=crypto.randomUUID();
 
 
 localStorage.setItem(
@@ -478,10 +464,26 @@ usuario
 );
 
 
+}
 
 
 
-const diario=
+
+
+const dia=
+
+new Date()
+
+.toISOString()
+
+.substring(0,10);
+
+
+
+
+
+
+const copia=
 
 doc(
 
@@ -496,9 +498,10 @@ usuario+"_"+dia
 
 
 
+
 const existe=
 
-await getDoc(diario);
+await getDoc(copia);
 
 
 
@@ -507,7 +510,7 @@ if(!existe.exists()){
 
 await setDoc(
 
-diario,
+copia,
 
 {
 
@@ -520,6 +523,7 @@ codigo
 }
 
 );
+
 
 
 
@@ -543,9 +547,7 @@ ahorro,
 
 {
 
-total:increment(
-parseInt(100)
-)
+total:increment(100)
 
 }
 
