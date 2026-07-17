@@ -238,4 +238,208 @@ placeholder="Link Mercado Libre">
 
 <input 
 type="file"
-id="
+id="imagen"
+accept="image/*">
+
+</label>
+
+
+
+<img id="preview">
+
+
+
+
+
+<select id="estado">
+
+<option value="true">
+🟢 Activa
+</option>
+
+
+<option value="false">
+🔴 Agotada
+</option>
+
+
+</select>
+
+
+
+
+
+<select id="destacada">
+
+
+<option value="false">
+Normal
+</option>
+
+
+<option value="true">
+⭐ Destacada
+</option>
+
+
+</select>
+
+
+
+
+<button id="publicar">
+
+🚀 PUBLICAR OFERTA
+
+</button>
+
+
+
+
+<p id="mensaje"></p>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- CUPONES -->
+
+
+<section class="panel">
+
+
+<h2>
+🎟️ Crear Cupón
+</h2>
+
+
+
+<input id="codigoCupon"
+placeholder="Código cupón">
+
+
+
+<select id="tipoCupon">
+
+
+<option value="relampago">
+⚡ Relámpago
+</option>
+
+
+<option value="bancario">
+🏦 Bancario
+</option>
+
+
+<option value="exclusivo">
+💎 Meli+
+</option>
+
+
+</select>
+
+
+
+
+<input id="descuentoCupon"
+placeholder="Descuento">
+
+
+
+<input id="minimoCupon"
+placeholder="Compra mínima">
+
+
+
+<select id="estadoCupon">
+
+
+<option value="activo">
+🟢 Activo
+</option>
+
+
+<option value="agotando">
+🟠 Por agotarse
+</option>
+
+
+<option value="agotado">
+🔴 Agotado
+</option>
+
+
+</select>
+
+
+
+<button id="guardarCupon">
+
+🎟️ Guardar cupón
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- LISTADO -->
+
+
+<section class="panel">
+
+
+<h2>
+📦 Ofertas publicadas
+</h2>
+
+
+<div id="listaOfertas">
+
+Cargando...
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+</main>
+
+
+</div>
+
+
+
+
+
+
+
+<script type="module" src="admin.js"></script>
+
+
+</body>
+
+</html>
