@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS ACTUALIZADO
+// APP.JS FINAL CORREGIDO
 // =====================================================
 
 
@@ -25,9 +25,7 @@ from
 
 
 
-
-
-const firebaseConfig = {
+const firebaseConfig={
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -60,14 +58,18 @@ getFirestore(app);
 const carrusel =
 document.getElementById("carrusel");
 
+
 const relampago =
 document.getElementById("cuponesRelampago");
+
 
 const bancarios =
 document.getElementById("cuponesBancarios");
 
+
 const exclusivos =
 document.getElementById("cuponesExclusivos");
+
 
 const toast =
 document.getElementById("toast");
@@ -82,18 +84,24 @@ document.getElementById("toast");
 
 function mostrarToast(texto){
 
+
 if(!toast)return;
 
-toast.textContent=texto;
+
+toast.innerHTML=texto;
+
 
 toast.classList.add("show");
 
 
 setTimeout(()=>{
 
+
 toast.classList.remove("show");
 
-},1800);
+
+},2000);
+
 
 }
 
@@ -118,13 +126,13 @@ if(!carrusel)return;
 
 const datos =
 await getDocs(
-
 collection(db,"ofertas")
-
 );
 
 
+
 carrusel.innerHTML="";
+
 
 
 
@@ -135,7 +143,10 @@ const o=item.data();
 
 
 
-const card=document.createElement("div");
+const card =
+document.createElement("div");
+
+
 
 card.className="oferta";
 
@@ -143,9 +154,7 @@ card.className="oferta";
 
 card.innerHTML=`
 
-
 <img src="${o.imagen}">
-
 
 
 <h3>
@@ -155,35 +164,31 @@ ${o.titulo}
 </h3>
 
 
-
-${o.precioAntes ? `
-
 <div class="precioAntes">
 
 ❌ Antes:
-<s>$${o.precioAntes}</s>
+
+<s>
+
+$${o.precioAntes || ""}
+
+</s>
 
 </div>
 
-`:""}
 
-
-
-${o.descuento ? `
 
 <div class="descuento">
 
-🔥 ${o.descuento}
+🔥 ${o.descuento || ""}% OFF
 
 </div>
-
-`:""}
 
 
 
 <div class="precio">
 
-💥 $${o.precioFinal}
+💥 $${o.precioFinal || ""}
 
 </div>
 
@@ -209,6 +214,7 @@ class="btnOferta">
 carrusel.appendChild(card);
 
 
+
 });
 
 
@@ -226,16 +232,23 @@ iniciarCarrusel();
 
 
 
+// ==============================
+// AUTO CARRUSEL
+// ==============================
+
+
 function iniciarCarrusel(){
 
 
 let posicion=0;
 
 
+
 setInterval(()=>{
 
 
 if(!carrusel)return;
+
 
 
 if(carrusel.scrollWidth <= carrusel.clientWidth)
@@ -263,8 +276,8 @@ behavior:"smooth"
 });
 
 
-},2200);
 
+},2200);
 
 
 }
@@ -287,9 +300,7 @@ async function cargarCupones(){
 
 const datos =
 await getDocs(
-
 collection(db,"cupones")
-
 );
 
 
@@ -315,14 +326,16 @@ const c=item.data();
 
 
 
-const tarjeta=document.createElement("div");
+const tarjeta =
+document.createElement("div");
+
+
 
 tarjeta.className="cuponCard";
 
 
 
 tarjeta.innerHTML=`
-
 
 <div class="estado">
 
@@ -362,6 +375,7 @@ c.estado==="agotando"
 <p>
 
 💰 Descuento:
+
 $${c.descuento}
 
 </p>
@@ -371,9 +385,11 @@ $${c.descuento}
 <p>
 
 🛒 Compra mínima:
+
 $${c.minimo}
 
 </p>
+
 
 
 
@@ -388,12 +404,12 @@ $${c.minimo}
 
 
 
-
 tarjeta
 
 .querySelector(".copiarCupon")
 
 .onclick=()=>{
+
 
 copiarCupon(
 
@@ -402,6 +418,7 @@ item.id,
 c.codigo
 
 );
+
 
 };
 
@@ -437,20 +454,12 @@ exclusivos?.appendChild(tarjeta);
 
 
 
-// ==============================
-// COPIAR CUPÓN
-// ==============================
-
-
 async function copiarCupon(id,codigo){
-
-
-try{
 
 
 await navigator.clipboard.writeText(
 
-String(codigo)
+codigo
 
 );
 
@@ -499,23 +508,6 @@ window.location.href=
 },500);
 
 
-
-}
-
-catch(error){
-
-console.log(error);
-
-mostrarToast(
-
-"❌ Error al copiar"
-
-);
-
-}
-
-
-
 }
 
 
@@ -526,9 +518,7 @@ mostrarToast(
 
 
 
-// ==============================
 // SUBIR ARRIBA
-// ==============================
 
 
 const btnArriba =
@@ -542,9 +532,9 @@ if(btnArriba){
 window.addEventListener("scroll",()=>{
 
 
-btnArriba.style.display =
+btnArriba.style.display=
 
-window.scrollY > 400
+window.scrollY>400
 
 ?
 
@@ -581,9 +571,7 @@ behavior:"smooth"
 
 
 
-
-
-
 cargarOfertas();
+
 
 cargarCupones();
