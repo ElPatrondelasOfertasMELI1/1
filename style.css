@@ -787,3 +787,32 @@ flex-basis:210px;
 
 
 }
+
+.oferta,
+.cuponCard{
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+
+.oferta h3,
+.cuponCard h3{
+
+min-height:50px;
+
+display:flex;
+
+align-items:center;
+
+}
+
+
+.btnOferta,
+.copiarCupon{
+
+margin-top:auto;
+
+}
