@@ -1,33 +1,43 @@
 // =====================================
 // EL PATRÓN DE LAS OFERTAS
 // APP.JS FINAL
-// FIREBASE + OFERTAS + CUPONES
+// FIREBASE + OFERTAS
 // =====================================
 
 
-import { initializeApp } from 
+// FIREBASE
+
+import { initializeApp } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
 import {
 
 getFirestore,
+
 collection,
-onSnapshot,
-doc,
-updateDoc,
-increment
+
+getDocs,
+
+orderBy,
+
+query
 
 }
 
-from 
+from
+
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
 
+
+// CONFIGURACIÓN FIREBASE
+
 const firebaseConfig = {
+
 
 apiKey:"TU_API_KEY",
 
@@ -41,24 +51,23 @@ messagingSenderId:"TU_SENDER_ID",
 
 appId:"TU_APP_ID"
 
+
 };
 
 
 
 
 
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
-
+const app =
+initializeApp(firebaseConfig);
 
 
 
+const db =
+getFirestore(app);
 
-// LINK PRINCIPAL MERCADO LIBRE
 
-const LINK_MELI = "https://meli.la/1mj3itE";
+
 
 
 
@@ -75,53 +84,32 @@ document.getElementById("carrusel");
 
 
 
-onSnapshot(
-
-collection(db,"ofertas"),
-
-(snapshot)=>{
 
 
-let ofertas=[];
+async function cargarOfertas(){
 
 
-
-snapshot.forEach((doc)=>{
-
-
-ofertas.push({
-
-id:doc.id,
-
-...doc.data()
-
-});
+try{
 
 
-});
+const ref =
+collection(db,"ofertas");
 
 
 
+const q =
+query(
 
+ref,
 
-// DESTACADAS PRIMERO
-
-ofertas.sort((a,b)=>{
-
-
-return (
-
-(b.destacada === true)
-
--
-
-(a.destacada === true)
+orderBy("fecha","desc")
 
 );
 
 
-});
 
+const snapshot =
+await getDocs(q);
 
 
 
@@ -130,16 +118,21 @@ carrusel.innerHTML="";
 
 
 
-if(ofertas.length===0){
 
 
-carrusel.innerHTML=
+if(snapshot.empty){
 
-`
+
+carrusel.innerHTML=`
+
 <div class="loader">
+
 No hay ofertas disponibles
+
 </div>
+
 `;
+
 
 return;
 
@@ -149,90 +142,15 @@ return;
 
 
 
-
-ofertas.forEach(o=>{
-
+snapshot.forEach((doc)=>{
 
 
-const card=document.createElement("div");
-
-
-card.className="oferta";
+const oferta =
+doc.data();
 
 
 
-card.innerHTML=`
-
-${o.destacada ? 
-'<span class="badge">⭐ DESTACADA</span>' 
-: ''}
-
-
-<img src="${o.imagen || 'logo.png'}">
-
-
-
-<div class="info">
-
-
-
-<span class="descuento">
-
-${o.descuento || "OFERTA"}
-
-</span>
-
-
-
-
-<h3>
-
-${o.titulo || ""}
-
-</h3>
-
-
-
-<p class="precioAntes">
-
-$${o.precioAntes || ""}
-
-</p>
-
-
-
-<div class="precioFinal">
-
-$${o.precioFinal || ""}
-
-</div>
-
-
-
-
-<a class="btnComprar"
-
-href="${o.link}"
-
-target="_blank"
-
-onclick="registrarClick('${o.id}')">
-
-
-🛒 COMPRAR
-
-
-</a>
-
-
-
-</div>
-
-`;
-
-
-
-carrusel.appendChild(card);
+crearTarjeta(oferta);
 
 
 
@@ -242,41 +160,170 @@ carrusel.appendChild(card);
 
 }
 
+catch(error){
+
+
+
+console.error(
+
+"Error Firebase:",
+
+error
+
 );
 
 
 
+carrusel.innerHTML=`
 
+<div class="loader">
 
+Error cargando ofertas
 
+</div>
 
-
-
-// =============================
-// CLIC OFERTAS
-// =============================
-
-
-window.registrarClick = async(id)=>{
-
-
-try{
-
-
-await updateDoc(
-
-doc(db,"ofertas",id),
-
-{
-
-clics:increment(1)
+`;
 
 }
 
+
+
+}
+
+
+
+
+
+
+
+
+
+function crearTarjeta(oferta){
+
+
+
+const card =
+document.createElement("div");
+
+
+
+card.className="oferta";
+
+
+
+card.innerHTML=`
+
+<img src="${oferta.imagen || 'logo.png'}">
+
+
+
+<div class="info">
+
+
+
+<span class="descuento">
+
+${oferta.descuento || "OFERTA"}
+
+</span>
+
+
+
+
+<h3>
+
+${oferta.titulo || ""}
+
+</h3>
+
+
+
+<p class="precioAntes">
+
+$${oferta.precioAntes || ""}
+
+</p>
+
+
+
+
+<div class="precioFinal">
+
+$${oferta.precioFinal || ""}
+
+</div>
+
+
+
+
+
+<a 
+
+class="btnComprar"
+
+href="${oferta.link}"
+
+target="_blank"
+
+onclick="registrarClick()"
+
+
+>
+
+🛒 COMPRAR
+
+</a>
+
+
+
+</div>
+
+
+`;
+
+
+
+
+carrusel.appendChild(card);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =============================
+// CLICS
+// =============================
+
+
+window.registrarClick=function(){
+
+
+
+let clicks =
+
+localStorage.getItem("clicks") || 0;
+
+
+
+clicks++;
+
+
+
+localStorage.setItem(
+
+"clicks",
+
+clicks
+
 );
-
-
-}catch(e){}
 
 
 
@@ -295,13 +342,11 @@ clics:increment(1)
 // =============================
 
 
-
-function cargarCupones(tipo,contenedor){
-
+async function cargarCupones(){
 
 
-const box=
-document.getElementById(contenedor);
+const box =
+document.getElementById("cupones");
 
 
 
@@ -309,64 +354,57 @@ if(!box)return;
 
 
 
-
-onSnapshot(
-
-collection(db,"cupones"),
-
-(snapshot)=>{
+try{
 
 
-let cupones=[];
+const snap =
+await getDocs(
 
+collection(db,"cupones")
 
-
-
-snapshot.forEach((d)=>{
-
-
-const c=d.data();
+);
 
 
 
-if(c.tipo===tipo){
+box.innerHTML="";
 
 
-cupones.push({
 
-id:d.id,
-
-...c
-
-});
+let lista=[];
 
 
-}
 
 
+snap.forEach((doc)=>{
+
+
+lista.push({
+
+id:doc.id,
+
+...doc.data()
 
 });
 
 
+});
 
 
 
 
-// ORDEN MENOR A MAYOR
 
-cupones.sort((a,b)=>{
-
-
-const A=parseInt(
-String(a.minimo)
-.replace(/\D/g,"")
-)||0;
+// ORDEN POR COMPRA MINIMA
 
 
-const B=parseInt(
-String(b.minimo)
-.replace(/\D/g,"")
-)||0;
+lista.sort((a,b)=>{
+
+
+let A =
+parseInt(a.minimo)||0;
+
+
+let B =
+parseInt(b.minimo)||0;
 
 
 
@@ -379,26 +417,18 @@ return A-B;
 
 
 
-box.innerHTML="";
-
-
-
-
-
-
-cupones.forEach(c=>{
+lista.forEach((c)=>{
 
 
 
 box.innerHTML += `
 
-
-<div class="cupon ${tipo}">
+<div class="cupon relampago">
 
 
 <h3>
 
-${c.descuento || ""}
+${c.id}
 
 </h3>
 
@@ -406,15 +436,17 @@ ${c.descuento || ""}
 
 <p>
 
-Compra mínima
+${c.descuento || ""}
 
-<br>
+</p>
 
-<b>
+
+
+<p>
+
+Mínimo:
 
 ${c.minimo || ""}
-
-</b>
 
 </p>
 
@@ -425,7 +457,6 @@ ${c.minimo || ""}
 📋 COPIAR CUPÓN
 
 </button>
-
 
 
 </div>
@@ -439,39 +470,18 @@ ${c.minimo || ""}
 
 
 
+}
+
+catch(e){
+
+console.log(
+"Sin cupones todavía"
+);
 
 }
 
 
-);
-
-
-
 }
-
-
-
-
-
-
-
-cargarCupones(
-"relampago",
-"cupones"
-);
-
-
-cargarCupones(
-"bancario",
-"bancarios"
-);
-
-
-
-cargarCupones(
-"meli",
-"meliPlus"
-);
 
 
 
@@ -482,29 +492,21 @@ cargarCupones(
 
 
 // =============================
-// COPIAR CUPÓN
+// COPIAR CUPON
 // =============================
 
 
-window.copiarCupon = async(codigo)=>{
-
-
-try{
-
-
-await navigator.clipboard.writeText(codigo);
+window.copiarCupon=function(codigo){
 
 
 
-}catch(e){
-
-
-}
+navigator.clipboard.writeText(codigo);
 
 
 
-const toast=
+const toast =
 document.getElementById("toast");
+
 
 
 if(toast){
@@ -520,7 +522,7 @@ setTimeout(()=>{
 toast.classList.remove("show");
 
 
-},1200);
+},1500);
 
 
 
@@ -529,15 +531,21 @@ toast.classList.remove("show");
 
 
 
+// después redirige
 
 setTimeout(()=>{
 
 
-window.location.href=LINK_MELI;
+window.open(
+
+"https://mercadolibre.com.mx",
+
+"_blank"
+
+);
 
 
-
-},1200);
+},1500);
 
 
 
@@ -549,37 +557,11 @@ window.location.href=LINK_MELI;
 
 
 
-// =============================
-// ESTADISTICAS LOCALES
-// =============================
+
+// INICIO
 
 
-let visitas =
-
-localStorage.getItem("visitas") || 0;
+cargarOfertas();
 
 
-
-visitas++;
-
-
-
-localStorage.setItem(
-
-"visitas",
-
-visitas
-
-);
-
-
-
-const usuarios=
-document.getElementById("usuarios");
-
-
-if(usuarios){
-
-usuarios.innerHTML=visitas;
-
-}
+cargarCupones();
