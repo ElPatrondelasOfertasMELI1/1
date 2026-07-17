@@ -25,26 +25,26 @@
 <body>
 
 
-<header>
+
+<header class="header">
 
 
 <div class="logo">
 
-⚡ EL PATRÓN
-
-<span>
-DE LAS OFERTAS
-</span>
+⚡ EL PATRÓN DE LAS OFERTAS
 
 </div>
 
 
 
-<button class="menu">
+<a 
+class="canal"
+href="https://chat.whatsapp.com/"
+target="_blank">
 
-☰
+💬 ÚNETE AL CANAL
 
-</button>
+</a>
 
 
 </header>
@@ -56,21 +56,41 @@ DE LAS OFERTAS
 
 
 
-<section class="hero">
+<!-- CATEGORÍAS -->
 
 
-<h1>
-
-🔥 Ofertas que nadie encuentra
-
-</h1>
+<section class="categorias">
 
 
-<p>
+<h2>
 
-Cupones, descuentos y promociones en tiempo real
+🔥 Categorías
 
-</p>
+</h2>
+
+
+
+<div class="globos">
+
+
+<a>📱 Celulares</a>
+
+<a>🎮 Gaming</a>
+
+<a>💻 Cómputo</a>
+
+<a>🏠 Hogar</a>
+
+<a>🔧 Herramientas</a>
+
+<a>👟 Moda</a>
+
+<a>🧸 Juguetes</a>
+
+<a>🚗 Vehículos</a>
+
+
+</div>
 
 
 </section>
@@ -83,70 +103,7 @@ Cupones, descuentos y promociones en tiempo real
 
 
 
-<!-- CATEGORÍAS -->
-
-
-<nav class="categorias">
-
-
-<a href="https://meli.la/1BCxfbZ" target="_blank">
-
-🎮 Gaming
-
-</a>
-
-
-
-<a href="https://meli.la/244DRFQ" target="_blank">
-
-📱 Celulares
-
-</a>
-
-
-
-<a href="https://meli.la/2CGAShj" target="_blank">
-
-👕 Moda
-
-</a>
-
-
-
-<a href="https://meli.la/2qyeBxh" target="_blank">
-
-🏠 Hogar
-
-</a>
-
-
-
-<a href="https://meli.la/1r37XCf" target="_blank">
-
-📷 Cámaras y drones
-
-</a>
-
-
-
-<a href="https://meli.la/12DF3Ur" target="_blank">
-
-✨ Cuidado personal
-
-</a>
-
-
-</nav>
-
-
-
-
-
-
-
-
-
-<!-- OFERTAS -->
+<!-- CARRUSEL OFERTAS -->
 
 
 <section>
@@ -154,7 +111,7 @@ Cupones, descuentos y promociones en tiempo real
 
 <h2>
 
-⭐ Ofertas destacadas
+🔥 Ofertas destacadas
 
 </h2>
 
@@ -163,13 +120,6 @@ Cupones, descuentos y promociones en tiempo real
 <div id="carrusel" class="carrusel">
 
 
-<div class="loader">
-
-Cargando ofertas...
-
-</div>
-
-
 </div>
 
 
@@ -183,7 +133,7 @@ Cargando ofertas...
 
 
 
-<!-- CUPONES RELÁMPAGO -->
+<!-- CUPONES -->
 
 
 <section>
@@ -197,17 +147,11 @@ Cargando ofertas...
 
 
 
-<div id="cuponesRelampago" class="cupones">
-
-
-<div class="loader">
-
-Cargando cupones...
-
-</div>
+<div id="cuponesRelampago" class="carrusel cuponCarrusel">
 
 
 </div>
+
 
 
 </section>
@@ -217,10 +161,6 @@ Cargando cupones...
 
 
 
-
-
-
-<!-- CUPONES BANCARIOS -->
 
 
 <section>
@@ -234,17 +174,11 @@ Cargando cupones...
 
 
 
-<div id="cuponesBancarios" class="cupones">
-
-
-<div class="loader">
-
-Cargando cupones...
-
-</div>
+<div id="cuponesBancarios" class="carrusel cuponCarrusel">
 
 
 </div>
+
 
 
 </section>
@@ -254,10 +188,6 @@ Cargando cupones...
 
 
 
-
-
-
-<!-- CUPONES EXCLUSIVOS -->
 
 
 <section>
@@ -271,17 +201,11 @@ Cargando cupones...
 
 
 
-<div id="cuponesExclusivos" class="cupones">
-
-
-<div class="loader">
-
-Cargando cupones...
-
-</div>
+<div id="cuponesExclusivos" class="carrusel cuponCarrusel">
 
 
 </div>
+
 
 
 </section>
@@ -299,8 +223,6 @@ Cargando cupones...
 
 <div id="toast">
 
-✅ CUPÓN COPIADO
-
 </div>
 
 
@@ -310,7 +232,8 @@ Cargando cupones...
 
 
 
-<!-- BOTÓN SUBIR -->
+
+<!-- SUBIR -->
 
 
 <button id="btnArriba">
@@ -326,33 +249,10 @@ Cargando cupones...
 
 
 
-
-<!-- CANAL -->
-
-<a class="whatsapp"
-
-href="https://chat.whatsapp.com/"
-
-target="_blank">
-
-
-💬 Únete al canal
-
-
-</a>
-
-
-
-
-
-
-
-
 <script type="module" src="app.js"></script>
 
 
 
 </body>
-
 
 </html>
