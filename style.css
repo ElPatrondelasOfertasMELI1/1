@@ -1,6 +1,6 @@
 /* =====================================================
 EL PATRÓN DE LAS OFERTAS
-STYLE.CSS
+STYLE.CSS NUEVO
 PARTE 1/4
 ===================================================== */
 
@@ -25,7 +25,7 @@ background:
 
 radial-gradient(
 circle at top,
-#222,
+#242424,
 #050505 45%
 );
 
@@ -37,6 +37,9 @@ min-height:100vh;
 
 
 
+
+
+
 /* ==============================
 HEADER
 ============================== */
@@ -44,87 +47,114 @@ HEADER
 
 header{
 
-display:flex;
 
-align-items:center;
+display:flex;
 
 justify-content:space-between;
 
+align-items:center;
+
+
 padding:18px 20px;
 
-background:
 
-rgba(5,5,5,.95);
+background:rgba(5,5,5,.95);
+
 
 position:sticky;
 
+
 top:0;
 
-z-index:50;
+
+z-index:100;
+
 
 border-bottom:
 
 1px solid rgba(255,214,0,.25);
 
+
 }
+
+
 
 
 
 .logo{
 
+
 font-size:26px;
+
 
 font-weight:900;
 
-line-height:1;
 
 color:#ffd600;
 
-letter-spacing:-1px;
+
+line-height:1;
+
 
 }
+
 
 
 
 .logo span{
 
+
 display:block;
+
 
 font-size:14px;
 
+
 color:white;
 
-margin-top:5px;
 
 letter-spacing:2px;
 
+
+margin-top:5px;
+
+
 }
+
+
 
 
 
 .menu{
 
+
 width:48px;
+
 
 height:48px;
 
+
 border:0;
+
 
 border-radius:15px;
 
+
 background:#ffd600;
+
 
 font-size:25px;
 
+
 font-weight:900;
+
 
 cursor:pointer;
 
-box-shadow:
-
-0 5px 20px rgba(255,214,0,.25);
 
 }
+
+
 
 
 
@@ -138,9 +168,12 @@ HERO
 
 .hero{
 
+
 text-align:center;
 
+
 padding:35px 20px 20px;
+
 
 }
 
@@ -148,39 +181,47 @@ padding:35px 20px 20px;
 
 .hero h1{
 
+
 font-size:32px;
+
 
 font-weight:900;
 
-line-height:1.1;
 
 background:
 
 linear-gradient(
 90deg,
-#fff,
+white,
 #ffd600
 );
 
+
 -webkit-background-clip:text;
+
 
 color:transparent;
 
+
 }
+
 
 
 
 .hero p{
 
+
 margin-top:12px;
+
 
 color:#bbb;
 
-font-size:16px;
 
 font-weight:600;
 
+
 }
+
 
 
 
@@ -188,64 +229,56 @@ font-weight:600;
 
 
 /* ==============================
-SECCIONES
+TITULOS
 ============================== */
-
-
-section{
-
-margin-top:20px;
-
-}
-
 
 
 section h2{
 
+
 font-size:24px;
+
 
 font-weight:900;
 
-padding:
-
-10px 20px;
-
-color:white;
-
-}
-
-
-
-section h2::first-letter{
-
-color:#ffd600;
-
-}
-
-
-
-
-
-
-
-/* ==============================
-CATEGORÍAS
-============================== */
-
-
-.categorias{
-
-display:flex;
-
-gap:12px;
 
 padding:
 
 15px 20px;
 
+
+}
+
+
+
+
+
+
+
+/* ==============================
+CATEGORIAS
+============================== */
+
+
+.categorias{
+
+
+display:flex;
+
+
+gap:12px;
+
+
+padding:
+
+15px 20px;
+
+
 overflow-x:auto;
 
+
 -webkit-overflow-scrolling:touch;
+
 
 }
 
@@ -253,9 +286,12 @@ overflow-x:auto;
 
 .categorias::-webkit-scrollbar{
 
+
 display:none;
 
+
 }
+
 
 
 
@@ -265,7 +301,9 @@ display:none;
 
 display:flex;
 
+
 align-items:center;
+
 
 gap:8px;
 
@@ -281,6 +319,7 @@ linear-gradient(
 
 color:#111;
 
+
 text-decoration:none;
 
 
@@ -292,10 +331,10 @@ padding:
 border-radius:30px;
 
 
-font-size:15px;
-
-
 font-weight:900;
+
+
+font-size:15px;
 
 
 white-space:nowrap;
@@ -313,8 +352,6 @@ transition:.2s;
 
 
 
-
-
 .categorias a:active{
 
 
@@ -327,51 +364,64 @@ transform:scale(.95);
 
 
 
+
+
 /* ==============================
-CONTENEDORES
+CARGANDO
 ============================== */
 
 
 .loader{
 
+
 text-align:center;
 
-padding:40px;
+
+padding:35px;
+
 
 color:#ffd600;
 
+
 font-weight:900;
 
-}
 
+}
 /* =====================================================
-STYLE.CSS
+STYLE.CSS NUEVO
 PARTE 2/4
-CARRUSEL OFERTAS
+CARRUSEL OFERTAS PREMIUM
 ===================================================== */
 
 
 
 /* ==============================
-CARRUSEL PRINCIPAL
+CARRUSEL
 ============================== */
 
 
 .carrusel{
 
+
 display:flex;
+
 
 gap:18px;
 
+
 overflow-x:auto;
+
 
 padding:
 
 15px 20px 25px;
 
+
 scroll-snap-type:x mandatory;
 
+
 -webkit-overflow-scrolling:touch;
+
 
 }
 
@@ -379,9 +429,12 @@ scroll-snap-type:x mandatory;
 
 .carrusel::-webkit-scrollbar{
 
+
 display:none;
 
+
 }
+
 
 
 
@@ -411,9 +464,14 @@ background:
 
 linear-gradient(
 145deg,
-#191919,
-#070707
+#181818,
+#050505
 );
+
+
+border:
+
+2px solid #ffd600;
 
 
 border-radius:28px;
@@ -422,17 +480,13 @@ border-radius:28px;
 overflow:hidden;
 
 
-border:
-
-2px solid #ffd600;
-
-
 box-shadow:
 
 
-0 0 25px rgba(255,214,0,.18),
+0 0 25px rgba(255,214,0,.20),
 
-0 15px 40px rgba(0,0,0,.8);
+
+0 15px 40px #000;
 
 
 
@@ -443,8 +497,10 @@ box-shadow:
 
 
 
+
+
 /* ==============================
-IMAGEN PRODUCTO
+IMAGEN
 ============================== */
 
 
@@ -455,14 +511,13 @@ IMAGEN PRODUCTO
 width:100%;
 
 
-height:270px;
+height:260px;
 
 
 object-fit:contain;
 
 
 background:
-
 
 radial-gradient(
 circle,
@@ -484,8 +539,10 @@ display:block;
 
 
 
+
+
 /* ==============================
-INFORMACIÓN
+INFO OFERTA
 ============================== */
 
 
@@ -523,9 +580,6 @@ color:white;
 
 
 
-/* PRECIO ANTERIOR */
-
-
 .precioAntes,
 .antes{
 
@@ -533,19 +587,16 @@ color:white;
 color:#999;
 
 
-text-decoration:line-through;
-
-
 font-size:15px;
+
+
+text-decoration:line-through;
 
 
 }
 
 
 
-
-
-/* PRECIO FINAL */
 
 
 .precioFinal,
@@ -561,9 +612,7 @@ font-weight:900;
 color:#ffd600;
 
 
-margin:
-
-10px 0;
+margin:12px 0;
 
 
 }
@@ -574,8 +623,9 @@ margin:
 
 
 
+
 /* ==============================
-BOTÓN COMPRAR
+BOTÓN COMPRA
 ============================== */
 
 
@@ -587,7 +637,6 @@ display:block;
 
 
 background:
-
 
 linear-gradient(
 90deg,
@@ -611,10 +660,10 @@ padding:15px;
 border-radius:18px;
 
 
-font-weight:900;
-
-
 font-size:17px;
+
+
+font-weight:900;
 
 
 box-shadow:
@@ -661,7 +710,7 @@ top:15px;
 left:15px;
 
 
-padding:8px 14px;
+padding:8px 15px;
 
 
 border-radius:20px;
@@ -694,6 +743,8 @@ color:#111;
 
 
 
+
+
 .relampago{
 
 
@@ -706,9 +757,9 @@ color:white;
 }
 
 /* =====================================================
-STYLE.CSS
+STYLE.CSS NUEVO
 PARTE 3/4
-CUPONES PREMIUM
+CUPONES PREMIUM COMPACTOS
 ===================================================== */
 
 
@@ -724,7 +775,7 @@ CONTENEDOR CUPONES
 display:flex;
 
 
-gap:16px;
+gap:14px;
 
 
 overflow-x:auto;
@@ -732,7 +783,7 @@ overflow-x:auto;
 
 padding:
 
-15px 20px 25px;
+10px 20px 25px;
 
 
 scroll-snap-type:x mandatory;
@@ -747,9 +798,13 @@ scroll-snap-type:x mandatory;
 
 .cupones::-webkit-scrollbar{
 
+
 display:none;
 
+
 }
+
+
 
 
 
@@ -765,10 +820,13 @@ TARJETA CUPÓN
 .cuponCard{
 
 
-min-width:280px;
+position:relative;
 
 
-scroll-snap-align:start;
+min-width:255px;
+
+
+max-width:255px;
 
 
 background:
@@ -776,33 +834,33 @@ background:
 
 linear-gradient(
 145deg,
-#191919,
-#070707
+#171717,
+#060606
 );
 
 
 border:
 
 
-2px solid #ffd600;
+1px solid #ffd600;
 
 
-border-radius:25px;
+border-radius:22px;
 
 
-padding:20px;
+padding:16px;
 
 
-color:white;
+scroll-snap-align:start;
 
 
 box-shadow:
 
 
-0 0 25px rgba(255,214,0,.18),
+0 0 20px rgba(255,214,0,.18),
 
 
-0 15px 35px rgba(0,0,0,.7);
+0 10px 25px #000;
 
 
 
@@ -815,7 +873,7 @@ box-shadow:
 
 
 /* ==============================
-TÍTULO CUPÓN
+TÍTULO
 ============================== */
 
 
@@ -823,16 +881,16 @@ TÍTULO CUPÓN
 .cuponCard h3{
 
 
-color:#ffd600;
-
-
-font-size:20px;
+font-size:17px;
 
 
 font-weight:900;
 
 
-margin-bottom:12px;
+color:#ffd600;
+
+
+margin-bottom:8px;
 
 
 }
@@ -843,8 +901,9 @@ margin-bottom:12px;
 
 
 
+
 /* ==============================
-CÓDIGO CUPÓN
+CÓDIGO
 ============================== */
 
 
@@ -853,9 +912,6 @@ CÓDIGO CUPÓN
 
 
 display:block;
-
-
-text-align:center;
 
 
 background:#111;
@@ -867,13 +923,16 @@ border:
 1px dashed #ffd600;
 
 
-padding:15px;
+border-radius:14px;
 
 
-border-radius:15px;
+padding:12px;
 
 
-font-size:23px;
+text-align:center;
+
+
+font-size:22px;
 
 
 letter-spacing:2px;
@@ -884,8 +943,7 @@ color:white;
 
 margin:
 
-15px 0;
-
+12px 0;
 
 
 }
@@ -897,7 +955,7 @@ margin:
 
 
 /* ==============================
-DATOS CUPÓN
+DATOS
 ============================== */
 
 
@@ -905,7 +963,7 @@ DATOS CUPÓN
 .cuponCard p{
 
 
-font-size:15px;
+font-size:14px;
 
 
 font-weight:700;
@@ -916,10 +974,25 @@ color:#ddd;
 
 margin:
 
-8px 0;
+6px 0;
 
 
 }
+
+
+
+
+.cupon p:first-of-type{
+
+
+color:#ffd600;
+
+
+font-size:17px;
+
+
+}
+
 
 
 
@@ -942,10 +1015,10 @@ width:100%;
 border:0;
 
 
-padding:15px;
+padding:12px;
 
 
-border-radius:18px;
+border-radius:15px;
 
 
 background:
@@ -961,34 +1034,17 @@ linear-gradient(
 color:#111;
 
 
-font-size:16px;
+font-size:15px;
 
 
 font-weight:900;
 
 
-cursor:pointer;
-
-
-box-shadow:
-
-
-0 6px 18px rgba(255,214,0,.35);
+margin-top:12px;
 
 
 }
 
-
-
-
-.cupon button:active,
-.cuponCard button:active{
-
-
-transform:scale(.96);
-
-
-}
 
 
 
@@ -997,31 +1053,34 @@ transform:scale(.96);
 
 
 /* ==============================
-ESTADOS
+ESTADO NUEVO
 ============================== */
 
 
 .estado{
 
 
-display:inline-block;
+display:inline-flex;
+
+
+align-items:center;
 
 
 padding:
 
-7px 15px;
+6px 12px;
 
 
 border-radius:20px;
 
 
-font-size:13px;
+font-size:12px;
 
 
 font-weight:900;
 
 
-margin-top:10px;
+margin-bottom:8px;
 
 
 }
@@ -1030,7 +1089,7 @@ margin-top:10px;
 
 
 
-.activo{
+.disponible{
 
 
 background:#00c853;
@@ -1045,7 +1104,7 @@ color:white;
 
 
 
-.agotando{
+.ultimas{
 
 
 background:#ff9800;
@@ -1072,195 +1131,49 @@ color:white;
 }
 
 /* =====================================================
-STYLE.CSS
-PARTE 4/4
-TOAST + BOTÓN ARRIBA + ADMIN
+STYLE.CSS NUEVO
+PARTE 3/4
+CUPONES PREMIUM COMPACTOS
 ===================================================== */
 
 
 
 /* ==============================
-TOAST
+CONTENEDOR CUPONES
 ============================== */
 
 
-#toast{
-
-
-position:fixed;
-
-
-left:50%;
-
-
-bottom:30px;
-
-
-transform:
-
-
-translateX(-50%)
-
-
-translateY(120px);
-
-
-background:
-
-
-linear-gradient(
-90deg,
-#ffd600,
-#ffb300
-);
-
-
-color:#111;
-
-
-padding:15px 25px;
-
-
-border-radius:30px;
-
-
-font-weight:900;
-
-
-font-size:16px;
-
-
-box-shadow:
-
-
-0 10px 30px rgba(0,0,0,.5);
-
-
-opacity:0;
-
-
-transition:.35s;
-
-
-z-index:200;
-
-
-
-}
-
-
-
-
-
-#toast.show{
-
-
-opacity:1;
-
-
-transform:
-
-
-translateX(-50%)
-
-
-translateY(0);
-
-
-}
-
-
-
-
-
-
-
-
-/* ==============================
-BOTÓN SUBIR ARRIBA
-============================== */
-
-
-#btnArriba{
-
-
-position:fixed;
-
-
-right:20px;
-
-
-bottom:25px;
-
-
-width:52px;
-
-
-height:52px;
-
-
-border-radius:50%;
-
-
-border:0;
-
-
-background:#ffd600;
-
-
-color:#111;
-
-
-font-size:25px;
-
-
-font-weight:900;
-
-
-display:none;
-
-
-z-index:100;
-
-
-box-shadow:
-
-
-0 8px 25px rgba(255,214,0,.4);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ==============================
-LOGIN
-============================== */
-
-
-.login{
-
-
-min-height:100vh;
+.cupones{
 
 
 display:flex;
 
 
-align-items:center;
+gap:14px;
 
 
-justify-content:center;
+overflow-x:auto;
 
 
-padding:20px;
+padding:
+
+10px 20px 25px;
+
+
+scroll-snap-type:x mandatory;
+
+
+-webkit-overflow-scrolling:touch;
+
+
+}
+
+
+
+.cupones::-webkit-scrollbar{
+
+
+display:none;
 
 
 }
@@ -1269,13 +1182,25 @@ padding:20px;
 
 
 
-.loginBox{
 
 
-width:100%;
+
+/* ==============================
+TARJETA CUPÓN
+============================== */
 
 
-max-width:400px;
+.cupon,
+.cuponCard{
+
+
+position:relative;
+
+
+min-width:255px;
+
+
+max-width:255px;
 
 
 background:
@@ -1283,30 +1208,33 @@ background:
 
 linear-gradient(
 145deg,
-#191919,
-#070707
+#171717,
+#060606
 );
 
 
 border:
 
 
-2px solid #ffd600;
+1px solid #ffd600;
 
 
-border-radius:28px;
+border-radius:22px;
 
 
-padding:30px;
+padding:16px;
 
 
-text-align:center;
+scroll-snap-align:start;
 
 
 box-shadow:
 
 
-0 0 30px rgba(255,214,0,.2);
+0 0 20px rgba(255,214,0,.18),
+
+
+0 10px 25px #000;
 
 
 
@@ -1315,30 +1243,28 @@ box-shadow:
 
 
 
-.loginBox h1{
+
+
+
+/* ==============================
+TÍTULO
+============================== */
+
+
+.cupon h3,
+.cuponCard h3{
+
+
+font-size:17px;
+
+
+font-weight:900;
 
 
 color:#ffd600;
 
 
-font-size:30px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-.loginBox p{
-
-
-color:#ccc;
-
-
-margin:10px 0;
+margin-bottom:8px;
 
 
 }
@@ -1347,31 +1273,51 @@ margin:10px 0;
 
 
 
-.loginBox input{
 
 
-width:100%;
+
+/* ==============================
+CÓDIGO
+============================== */
 
 
-padding:15px;
+.cupon strong,
+.cuponCard strong{
 
 
-margin:8px 0;
-
-
-border-radius:15px;
-
-
-border:1px solid #444;
+display:block;
 
 
 background:#111;
 
 
+border:
+
+
+1px dashed #ffd600;
+
+
+border-radius:14px;
+
+
+padding:12px;
+
+
+text-align:center;
+
+
+font-size:22px;
+
+
+letter-spacing:2px;
+
+
 color:white;
 
 
-font-size:15px;
+margin:
+
+12px 0;
 
 
 }
@@ -1380,28 +1326,40 @@ font-size:15px;
 
 
 
-.loginBox button{
 
 
-width:100%;
+/* ==============================
+DATOS
+============================== */
 
 
-padding:15px;
+.cupon p,
+.cuponCard p{
 
 
-border:0;
+font-size:14px;
 
 
-border-radius:18px;
+font-weight:700;
 
 
-background:#ffd600;
+color:#ddd;
 
 
-color:#111;
+margin:
+
+6px 0;
 
 
-font-weight:900;
+}
+
+
+
+
+.cupon p:first-of-type{
+
+
+color:#ffd600;
 
 
 font-size:17px;
@@ -1417,179 +1375,98 @@ font-size:17px;
 
 
 /* ==============================
-ADMIN DASHBOARD
+BOTÓN COPIAR
 ============================== */
 
 
-.dashboard{
-
-
-padding:20px;
-
-
-}
-
-
-
-
-
-.dashboard h1{
-
-
-font-size:30px;
-
-
-font-weight:900;
-
-
-color:#ffd600;
-
-
-}
-
-
-
-
-
-.stats{
-
-
-display:grid;
-
-
-grid-template-columns:repeat(3,1fr);
-
-
-gap:12px;
-
-
-}
-
-
-
-
-
-.cardStat{
-
-
-background:
-
-
-linear-gradient(
-145deg,
-#191919,
-#070707
-);
-
-
-border:
-
-
-1px solid #ffd600;
-
-
-border-radius:20px;
-
-
-padding:15px;
-
-
-text-align:center;
-
-
-}
-
-
-
-
-
-.cardStat h3{
-
-
-font-size:14px;
-
-
-color:#ccc;
-
-
-}
-
-
-
-
-
-.cardStat strong{
-
-
-font-size:25px;
-
-
-color:#ffd600;
-
-
-}
-
-
-
-
-
-
-
-
-.panel{
-
-
-background:
-
-
-linear-gradient(
-145deg,
-#191919,
-#070707
-);
-
-
-border:
-
-
-2px solid #ffd600;
-
-
-border-radius:25px;
-
-
-padding:20px;
-
-
-margin:20px 0;
-
-
-}
-
-
-
-
-
-.panel input,
-.panel select{
+.cupon button,
+.cuponCard button{
 
 
 width:100%;
 
 
-padding:14px;
+border:0;
 
 
-margin:8px 0;
+padding:12px;
 
 
 border-radius:15px;
 
 
-background:#111;
+background:
 
 
-border:1px solid #444;
+linear-gradient(
+90deg,
+#ffd600,
+#ffb300
+);
+
+
+color:#111;
+
+
+font-size:15px;
+
+
+font-weight:900;
+
+
+margin-top:12px;
+
+
+}
+
+
+
+
+
+
+
+
+/* ==============================
+ESTADO NUEVO
+============================== */
+
+
+.estado{
+
+
+display:inline-flex;
+
+
+align-items:center;
+
+
+padding:
+
+6px 12px;
+
+
+border-radius:20px;
+
+
+font-size:12px;
+
+
+font-weight:900;
+
+
+margin-bottom:8px;
+
+
+}
+
+
+
+
+
+.disponible{
+
+
+background:#00c853;
 
 
 color:white;
@@ -1601,33 +1478,13 @@ color:white;
 
 
 
+.ultimas{
 
 
-.panel button{
+background:#ff9800;
 
 
-width:100%;
-
-
-padding:15px;
-
-
-border:0;
-
-
-border-radius:18px;
-
-
-background:#ffd600;
-
-
-color:#111;
-
-
-font-weight:900;
-
-
-font-size:16px;
+color:white;
 
 
 }
@@ -1636,121 +1493,13 @@ font-size:16px;
 
 
 
-
-
-.preview{
-
-
-width:100%;
-
-
-max-height:260px;
-
-
-object-fit:contain;
-
-
-border-radius:20px;
-
-
-margin-top:15px;
-
-
-display:none;
-
-
-}
-
-
-
-
-
-
-
-.ofertaAdmin{
-
-
-background:
-
-
-linear-gradient(
-145deg,
-#191919,
-#070707
-);
-
-
-border:
-
-
-1px solid #ffd600;
-
-
-border-radius:20px;
-
-
-padding:18px;
-
-
-margin:12px 0;
-
-
-}
-
-
-
-
-
-.ofertaAdmin button{
+.agotado{
 
 
 background:#e53935;
 
 
 color:white;
-
-
-border:0;
-
-
-padding:10px 15px;
-
-
-border-radius:12px;
-
-
-font-weight:900;
-
-
-}
-
-
-
-
-
-
-@media(max-width:600px){
-
-
-.stats{
-
-
-grid-template-columns:1fr;
-
-
-}
-
-
-
-.oferta img,
-.ofertaCard img{
-
-
-height:230px;
-
-
-}
-
 
 
 }
