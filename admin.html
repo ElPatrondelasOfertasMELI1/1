@@ -8,11 +8,9 @@
 
 <title>Admin PRO | El Patrón de las Ofertas</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="admin.css">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -26,7 +24,6 @@
 <!-- SIDEBAR -->
 
 <aside class="sidebar">
-
 
 <div class="brand">
 
@@ -45,48 +42,30 @@ ADMIN PRO
 </div>
 
 
-
-<nav>
-
-
 <button class="menuItem activo">
-
 🏠 Dashboard
-
 </button>
 
 
 <button class="menuItem">
-
 🛒 Ofertas
-
 </button>
 
 
 <button class="menuItem">
-
 🎟️ Cupones
-
 </button>
 
 
 <button class="menuItem">
-
 📊 Estadísticas
-
 </button>
-
-
-</nav>
 
 
 
 <button id="salir">
-
 🚪 Cerrar sesión
-
 </button>
-
 
 
 </aside>
@@ -97,29 +76,18 @@ ADMIN PRO
 
 <!-- CONTENIDO -->
 
-
 <main class="contenido">
-
 
 
 <header class="topbar">
 
-
-<div>
-
 <h1>
-Dashboard
+Panel de Control
 </h1>
 
-
 <p>
-Centro de control de ofertas
+Gestiona ofertas y cupones en tiempo real
 </p>
-
-
-</div>
-
-
 
 </header>
 
@@ -127,8 +95,7 @@ Centro de control de ofertas
 
 
 
-<!-- TARJETAS -->
-
+<!-- ESTADISTICAS -->
 
 <section class="cards">
 
@@ -147,7 +114,6 @@ Ofertas publicadas
 
 
 
-
 <div class="card">
 
 <h3 id="totalClicks">
@@ -155,11 +121,10 @@ Ofertas publicadas
 </h3>
 
 <p>
-Clics totales
+Clics ofertas
 </p>
 
 </div>
-
 
 
 
@@ -184,73 +149,53 @@ Más vista
 
 
 
+
+
+<!-- CREAR OFERTA -->
+
+
 <section class="panel">
 
 
 <h2>
-📈 Rendimiento
+🚀 Publicar nueva oferta
 </h2>
 
-
-<canvas id="graficaClicks"></canvas>
-
-
-</section>
-
-
-
-
-
-
-
-
-<!-- FORMULARIO -->
-
-
-<section class="panel">
-
-
-<button id="publicar" class="btnPrincipal">
-
-🚀 Publicar oferta
-
-</button>
 
 
 <div class="formGrid">
 
 
 
-<input
-id="titulo"
-placeholder="Título oferta">
+<input id="titulo"
+placeholder="Título de la oferta">
 
 
 
 <select id="categoria">
 
-<option value="Tecnología">
-Tecnología
-</option>
-
-<option value="Gaming">
+<option>
 Gaming
 </option>
 
-<option value="Celulares">
+<option>
+Tecnología
+</option>
+
+<option>
 Celulares
 </option>
 
-<option value="Hogar">
+<option>
 Hogar
 </option>
 
-<option value="Moda">
-Moda
+<option>
+Juguetes
 </option>
 
-<option value="Juguetes">
-Juguetes
+<option>
+Moda
 </option>
 
 
@@ -258,126 +203,72 @@ Juguetes
 
 
 
-
-
-<input
-id="precioAntes"
+<input id="precioAntes"
 placeholder="Precio antes">
 
 
 
-
-
-<input
-id="precioFinal"
+<input id="precioFinal"
 placeholder="Precio final">
 
 
 
-
-
-<input
-id="descuento"
-placeholder="Descuento">
+<input id="descuento"
+placeholder="Descuento %">
 
 
 
+<input id="imagen"
+placeholder="URL imagen">
 
 
-<input
-id="link"
+
+<input id="link"
 placeholder="Link Mercado Libre">
-
-
-
-
-
-
-<input
-type="file"
-id="archivoImagen"
-accept="image/*">
-
-
-
-
-
-<img
-id="vistaImagen"
-class="preview">
-
-
 
 
 
 <select id="estado">
 
-
 <option value="true">
-
 🟢 Activa
-
 </option>
-
 
 <option value="false">
-
 🔴 Agotada
-
 </option>
 
-
 </select>
-
-
 
 
 
 <select id="destacada">
 
-
 <option value="false">
-
-No destacada
-
+Oferta normal
 </option>
 
-
 <option value="true">
-
 ⭐ Destacada
-
 </option>
 
 
 </select>
 
 
-
-
 </div>
 
 
 
 
+<button id="publicar" class="btnPrincipal">
+
+🚀 PUBLICAR OFERTA
+
+</button>
 
 
-
-<!-- BARRA CARGA -->
-
-
-<div id="barraCarga" style="display:none">
-
-
-<div id="progresoCarga"></div>
-
-
-</div>
-
-
-
-<p id="estadoSubida"></p>
-
+<p id="mensaje"></p>
 
 
 </section>
@@ -389,110 +280,124 @@ No destacada
 
 
 
-
-<!-- BUSCADOR -->
+<!-- EDITAR OFERTAS -->
 
 
 <section class="panel">
 
 
 <h2>
-📦 Ofertas publicadas
+🛒 Ofertas existentes
 </h2>
 
 
-
-
-<input
-id="buscarOferta"
+<input id="buscarOferta"
 placeholder="🔍 Buscar oferta">
-
-
-
-
-
-<select id="filtroCategoria">
-
-
-<option value="todas">
-
-Todas
-
-</option>
-
-
-<option value="Tecnología">
-
-Tecnología
-
-</option>
-
-
-<option value="Gaming">
-
-Gaming
-
-</option>
-
-
-<option value="Celulares">
-
-Celulares
-
-</option>
-
-
-<option value="Hogar">
-
-Hogar
-
-</option>
-
-
-</select>
-
-
-
-
-
-
-<select id="ordenarOferta">
-
-
-<option value="reciente">
-
-Más recientes
-
-</option>
-
-
-
-<option value="clics">
-
-Más vistas
-
-</option>
-
-
-
-<option value="destacadas">
-
-Destacadas
-
-</option>
-
-
-
-</select>
-
-
-
 
 
 
 <div id="listaOfertas">
 
-Cargando...
+Cargando ofertas...
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- CUPONES -->
+
+
+<section class="panel">
+
+
+<h2>
+🎟️ Administrar cupones
+</h2>
+
+
+
+<div class="formGrid">
+
+
+<input id="codigoCupon"
+placeholder="Código cupón">
+
+
+<input id="descuentoCupon"
+placeholder="Descuento">
+
+
+<input id="minimoCupon"
+placeholder="Compra mínima">
+
+
+
+<select id="tipoCupon">
+
+
+<option value="relampago">
+⚡ Relámpago
+</option>
+
+
+<option value="bancario">
+🏦 Bancario
+</option>
+
+
+<option value="exclusivo">
+💎 Meli+
+</option>
+
+
+</select>
+
+
+
+<select id="estadoCupon">
+
+
+<option value="activo">
+🟢 Activo
+</option>
+
+
+<option value="agotando">
+🟠 Por agotarse
+</option>
+
+
+<option value="agotado">
+🔴 Agotado
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+<button id="guardarCupon" class="btnPrincipal">
+
+🎟️ GUARDAR CUPÓN
+
+</button>
+
+
+<div id="listaCupones">
+
+Cargando cupones...
 
 </div>
 
@@ -500,6 +405,52 @@ Cargando...
 
 </section>
 
+
+
+
+
+
+
+
+
+<!-- ESTADISTICAS -->
+
+<section class="panel">
+
+
+<h2>
+📊 Estadísticas comunidad
+</h2>
+
+
+<div class="stats">
+
+
+<div>
+<h3 id="copiasTotal">
+0
+</h3>
+<p>
+Copias cupones
+</p>
+</div>
+
+
+<div>
+<h3 id="ahorroTotal">
+$0
+</h3>
+<p>
+Ahorro comunidad
+</p>
+</div>
+
+
+</div>
+
+
+
+</section>
 
 
 
@@ -510,8 +461,6 @@ Cargando...
 
 
 </div>
-
-
 
 
 
