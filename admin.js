@@ -1,13 +1,13 @@
-// =====================================
+// =======================================
 // EL PATRÓN DE LAS OFERTAS
-// ADMIN PRO
-// FIREBASE SIN STORAGE
-// IMAGENES EN FIRESTORE
-// =====================================
+// ADMIN.JS PRO
+// FIRESTORE + IMAGENES BASE64
+// =======================================
 
 
-import {initializeApp} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
 import {
@@ -17,37 +17,22 @@ collection,
 addDoc,
 setDoc,
 doc,
+getDoc,
 onSnapshot,
 deleteDoc,
-serverTimestamp,
+updateDoc,
 increment
 
 }
 
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-import {
-
-getAuth,
-onAuthStateChanged,
-signOut
-
-}
-
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
 
-// CONFIG
-
+// CONFIG FIREBASE
 
 const firebaseConfig={
-
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -65,52 +50,50 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
-
 const app=initializeApp(firebaseConfig);
-
 
 const db=getFirestore(app);
 
 
-const auth=getAuth(app);
 
 
+// REFERENCIAS
 
+const titulo=
+document.getElementById("titulo");
 
+const categoria=
+document.getElementById("categoria");
 
+const precioAntes=
+document.getElementById("precioAntes");
 
+const precioFinal=
+document.getElementById("precioFinal");
 
-// SEGURIDAD LOGIN
+const descuento=
+document.getElementById("descuento");
 
+const link=
+document.getElementById("link");
 
-onAuthStateChanged(auth,user=>{
-
-
-if(!user){
-
-location.href="login.html";
-
-}
-
-
-});
-
-
-
-
-
-
-
-
-// ELEMENTOS
-
-
-const imagenInput=
-document.getElementById("imagen");
-
+const archivo=
+document.getElementById("imagenArchivo");
 
 const preview=
-document.getElementById("preview");
+document.getElementById("vistaImagen");
+
+const publicar=
+document.getElementById("publicarOferta");
+
+const mensaje=
+document.getElementById("mensajeOferta");
+
+const lista=
+document.getElementById("listaOfertas");
+
+
+
 
 
 
@@ -121,18 +104,18 @@ let imagenBase64="";
 
 
 
+// =======================================
+// PREVIEW + COMPRESION IMAGEN
+// =======================================
 
 
-// PREVIEW IMAGEN
+archivo.addEventListener("change",()=>{
 
 
-imagenInput.onchange=e=>{
+const imagen=archivo.files[0];
 
 
-const archivo=e.target.files[0];
-
-
-if(!archivo)return;
+if(!imagen)return;
 
 
 
@@ -140,51 +123,120 @@ const lector=new FileReader();
 
 
 
-lector.onload=()=>{
+lector.onload=(e)=>{
 
 
-imagenBase64=lector.result;
+const img=new Image();
+
+
+img.onload=()=>{
+
+
+const canvas=document.createElement("canvas");
+
+
+let max=800;
+
+
+let escala=max/img.width;
+
+
+
+if(img.width<=max){
+
+escala=1;
+
+}
+
+
+
+canvas.width=img.width*escala;
+
+canvas.height=img.height*escala;
+
+
+
+const ctx=canvas.getContext("2d");
+
+
+ctx.drawImage(
+
+img,
+
+0,
+
+0,
+
+canvas.width,
+
+canvas.height
+
+);
+
+
+
+imagenBase64=
+canvas.toDataURL(
+"image/jpeg",
+0.75
+);
+
 
 
 preview.src=imagenBase64;
 
-preview.style.display="block";
 
 
 };
 
 
 
-lector.readAsDataURL(archivo);
+img.src=e.target.result;
 
 
 };
 
 
 
+lector.readAsDataURL(imagen);
+
+
+});
 
 
 
 
 
 
+
+// =======================================
 // PUBLICAR OFERTA
+// =======================================
 
 
-document
-.getElementById("publicar")
-.onclick=async()=>{
-
-
-const mensaje=
-document.getElementById("mensaje");
-
+publicar.onclick=async()=>{
 
 
 try{
 
 
-mensaje.innerHTML="⏳ Publicando...";
+if(!titulo.value ||
+!precioFinal.value ||
+!link.value){
+
+alert("Completa título, precio y link");
+
+return;
+
+}
+
+
+
+publicar.disabled=true;
+
+publicar.innerHTML="⏳ Publicando...";
+
+
 
 
 
@@ -192,38 +244,41 @@ let imagenID="";
 
 
 
-// GUARDAR IMAGEN
-
+// guardar imagen
 
 if(imagenBase64){
 
 
-const img=
-await addDoc(
-collection(db,"imagenes"),
+const imagenDoc=
+doc(collection(db,"imagenes"));
+
+
+
+imagenID=
+imagenDoc.id;
+
+
+
+await setDoc(
+
+imagenDoc,
+
 {
 
-
-imagen:imagenBase64,
-
-
-fecha:serverTimestamp()
-
+imagen:imagenBase64
 
 }
 
 );
 
 
-imagenID=img.id;
-
-
 }
 
 
 
 
-// CREAR OFERTA
+
+// crear oferta
 
 
 await addDoc(
@@ -233,39 +288,26 @@ collection(db,"ofertas"),
 {
 
 
-titulo:
-titulo.value,
+titulo:titulo.value,
 
+categoria:categoria.value,
 
-categoria:
-categoria.value,
+precioAntes:precioAntes.value,
 
+precioFinal:precioFinal.value,
 
-precioAntes:
-precioAntes.value,
+descuento:descuento.value,
 
-
-precioFinal:
-precioFinal.value,
-
-
-descuento:
-descuento.value,
-
-
-link:
-link.value,
+link:link.value,
 
 
 imagenID,
 
 
-activo:
-estado.value==="true",
+activo:true,
 
 
-destacada:
-destacada.value==="true",
+destacada:false,
 
 
 clics:0
@@ -275,6 +317,7 @@ clics:0
 
 
 );
+
 
 
 
@@ -290,16 +333,24 @@ limpiar();
 
 }
 
-
-
 catch(error){
-
 
 console.error(error);
 
-
 mensaje.innerHTML=
 "❌ Error publicando";
+
+}
+
+
+
+finally{
+
+
+publicar.disabled=false;
+
+publicar.innerHTML=
+"🚀 PUBLICAR OFERTA";
 
 
 }
@@ -316,29 +367,18 @@ mensaje.innerHTML=
 
 
 
-// LIMPIAR
-
-
 function limpiar(){
 
 
 document.querySelectorAll("input")
 .forEach(i=>{
 
-
-if(i.type!="file")
 i.value="";
-
 
 });
 
 
-
-imagenInput.value="";
-
-
-preview.style.display="none";
-
+preview.src="";
 
 imagenBase64="";
 
@@ -351,49 +391,31 @@ imagenBase64="";
 
 
 
+// =======================================
+// MOSTRAR OFERTAS ADMIN
+// =======================================
 
 
-// MOSTRAR OFERTAS
+onSnapshot(
 
+collection(db,"ofertas"),
 
-const lista=
-document.getElementById("listaOfertas");
-
-
-
-const ofertasRef=
-collection(db,"ofertas");
-
-
-
-
-onSnapshot(ofertasRef,async snap=>{
+async(snapshot)=>{
 
 
 lista.innerHTML="";
 
 
-let total=0;
 
-let clicks=0;
-
-
-
-for(const item of snap.docs){
+for(const item of snapshot.docs){
 
 
 
 const o=item.data();
 
 
-total++;
 
-
-clicks+=o.clics || 0;
-
-
-
-let imagen="";
+let imagen="logo.png";
 
 
 
@@ -401,24 +423,39 @@ if(o.imagenID){
 
 
 const imgSnap=
-await import(
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+await getDoc(
+
+doc(
+db,
+"imagenes",
+o.imagenID
+
 )
-.then(()=>null);
+
+);
 
 
+
+if(imgSnap.exists()){
+
+imagen=
+imgSnap.data().imagen;
 
 }
+
+}
+
+
 
 
 
 lista.innerHTML+=`
 
 
-<div class="ofertaAdmin">
+<div class="itemAdmin">
 
 
-<div>
+<img src="${imagen}">
 
 
 <h3>
@@ -432,25 +469,19 @@ ${o.titulo}
 
 
 <p>
-${o.activo?"🟢 Activa":"🔴 Agotada"}
+👆 ${o.clics||0} clics
 </p>
 
 
 
-</div>
+<button onclick="borrarOferta('${item.id}')">
 
-
-
-<button class="eliminar"
-onclick="eliminarOferta('${item.id}')">
-
-🗑️
+🗑️ Eliminar
 
 </button>
 
 
 </div>
-
 
 
 `;
@@ -460,19 +491,10 @@ onclick="eliminarOferta('${item.id}')">
 }
 
 
+}
 
 
-document.getElementById("totalOfertas")
-.innerHTML=total;
-
-
-
-document.getElementById("totalClicks")
-.innerHTML=clicks;
-
-
-
-});
+);
 
 
 
@@ -481,105 +503,31 @@ document.getElementById("totalClicks")
 
 
 
+// =======================================
+// ELIMINAR OFERTA
+// =======================================
 
-// ELIMINAR
 
-
-window.eliminarOferta=
-async(id)=>{
+window.borrarOferta=async(id)=>{
 
 
 if(confirm("¿Eliminar oferta?")){
 
 
 await deleteDoc(
-doc(db,"ofertas",id)
-);
-
-
-}
-
-
-};
-
-
-
-
-
-
-
-
-
-// GUARDAR CUPON
-
-
-document
-.getElementById("guardarCupon")
-.onclick=async()=>{
-
-
-await setDoc(
 
 doc(
 db,
-"cupones",
-codigoCupon.value
-),
+"ofertas",
+id
 
-{
-
-
-tipo:
-tipoCupon.value,
-
-
-descuento:
-descuentoCupon.value,
-
-
-minimo:
-minimoCupon.value,
-
-
-estado:
-estadoCupon.value,
-
-
-copias:0
-
-
-}
-
+)
 
 );
 
 
+}
 
-alert("Cupón guardado");
-
-
-};
-
-
-
-
-
-
-
-
-
-// SALIR
-
-
-document
-.getElementById("salir")
-.onclick=()=>{
-
-
-signOut(auth);
-
-
-location.href="login.html";
 
 
 };
