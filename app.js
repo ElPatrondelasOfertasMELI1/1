@@ -529,21 +529,40 @@ exclusivos?.appendChild(tarjeta);
 
 }
 // ==============================
-// COPIAR CUPÓN
+// COPIAR CUPÓN ULTRA RÁPIDO
 // ==============================
-
 
 async function copiarCupon(id,codigo){
 
-
 try{
 
+
+// COPIAR AL PORTAPAPELES INMEDIATO
 
 await navigator.clipboard.writeText(codigo);
 
 
 
-await updateDoc(
+mostrarToast(
+"✅ CUPÓN COPIADO"
+);
+
+
+
+// IR A MERCADO LIBRE RÁPIDO
+
+setTimeout(()=>{
+
+window.location.href =
+"https://meli.la/1mj3itE";
+
+},300);
+
+
+
+// SUMAR COPIA SIN BLOQUEAR
+
+updateDoc(
 
 doc(
 
@@ -563,31 +582,13 @@ increment(1)
 
 }
 
-);
+).catch(error=>{
 
 
-
-mostrarToast(
-
-"✅ CUPÓN COPIADO"
-
-);
+console.log(error);
 
 
-
-
-// REDIRECCIÓN RÁPIDA
-
-
-setTimeout(()=>{
-
-
-window.location.href=
-
-"https://meli.la/1mj3itE";
-
-
-},300);
+});
 
 
 
@@ -602,11 +603,6 @@ console.log(error);
 }
 
 }
-
-
-
-
-
 
 
 
