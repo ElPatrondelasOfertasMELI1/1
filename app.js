@@ -1,10 +1,10 @@
-// =======================================
+// =====================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS PRO COMPLETO
-// =======================================
+// APP.JS PRO
+// =====================================
 
 
-import { initializeApp } 
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -26,10 +26,8 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
-// FIREBASE
 
-
-const firebaseConfig = {
+const firebaseConfig={
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -47,15 +45,15 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
-const app = initializeApp(firebaseConfig);
+const app=initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
-
-
+const db=getFirestore(app);
 
 
 
-const LINK_MELI = 
+
+
+const LINK_MELI=
 "https://meli.la/1mj3itE";
 
 
@@ -64,12 +62,52 @@ const LINK_MELI =
 
 
 
-// =======================================
-// CARGAR OFERTAS
-// =======================================
+
+// ===============================
+// TOAST
+// ===============================
 
 
-const carrusel =
+function mostrarToast(texto){
+
+
+const t=
+document.getElementById("toast");
+
+
+t.innerHTML=texto;
+
+
+t.classList.add("show");
+
+
+
+setTimeout(()=>{
+
+
+t.classList.remove("show");
+
+
+},1500);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ===============================
+// OFERTAS
+// ===============================
+
+
+const carrusel=
 document.getElementById("carrusel");
 
 
@@ -81,18 +119,48 @@ collection(db,"ofertas"),
 (snapshot)=>{
 
 
+let ofertas=[];
+
+
+
+snapshot.forEach(d=>{
+
+
+ofertas.push({
+
+id:d.id,
+
+...d.data()
+
+});
+
+
+});
+
+
+
+
+ofertas.sort((a,b)=>{
+
+
+return (b.destacada===true)-(a.destacada===true);
+
+
+});
+
+
+
+
+
 carrusel.innerHTML="";
 
 
 
-snapshot.forEach((item)=>{
+ofertas.forEach(o=>{
 
 
-const o=item.data();
+carrusel.innerHTML+=`
 
-
-
-carrusel.innerHTML += `
 
 
 <div class="oferta">
@@ -126,16 +194,17 @@ $${o.precioFinal || ""}
 
 
 
-
 <a class="btnComprar"
 
 href="${o.link}"
 
 target="_blank"
 
-onclick="clicOferta('${item.id}')">
+onclick="clicOferta('${o.id}')">
+
 
 🛒 COMPRAR
+
 
 </a>
 
@@ -151,7 +220,10 @@ onclick="clicOferta('${item.id}')">
 });
 
 
+
 }
+
+
 
 );
 
@@ -163,23 +235,26 @@ onclick="clicOferta('${item.id}')">
 
 
 
-// =======================================
-// CLICS OFERTAS
-// =======================================
+// ===============================
+// CLIC OFERTA
+// ===============================
 
 
-window.clicOferta = async(id)=>{
+window.clicOferta=async(id)=>{
 
 
-const ref =
-doc(db,"ofertas",id);
+updateDoc(
 
+doc(db,"ofertas",id),
 
-await updateDoc(ref,{
+{
 
 clics:increment(1)
 
-}).catch(()=>{});
+}
+
+).catch(()=>{});
+
 
 
 };
@@ -192,14 +267,50 @@ clics:increment(1)
 
 
 
-// =======================================
+// ===============================
 // CUPONES
-// =======================================
+// ===============================
 
 
-const zonaCupones =
-document.getElementById("cupones");
+function ordenarCupones(lista){
 
+
+return lista.sort((a,b)=>{
+
+
+let A=parseInt(
+(a.minimo||"0")
+.replace(/\D/g,"")
+);
+
+
+let B=parseInt(
+(b.minimo||"0")
+.replace(/\D/g,"")
+);
+
+
+return A-B;
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+function pintarCupones(id,tipoClase){
+
+
+
+const zona=
+document.getElementById(id);
 
 
 
@@ -210,38 +321,52 @@ collection(db,"cupones"),
 (snapshot)=>{
 
 
-zonaCupones.innerHTML="";
+let datos=[];
 
 
 
-snapshot.forEach((item)=>{
+snapshot.forEach(d=>{
 
 
-const c=item.data();
-
-
-
-let estado="🟢 ACTIVO";
-
-
-if(c.estado==="agotando")
-
-estado="🟠 POR AGOTARSE";
-
-
-if(c.estado==="agotado")
-
-estado="🔴 AGOTADO";
+let c=d.data();
 
 
 
+if(c.tipo===tipoClase){
+
+datos.push({
+
+id:d.id,
+
+...c
+
+});
 
 
-zonaCupones.innerHTML += `
+}
+
+
+});
 
 
 
-<div class="cupon">
+
+
+datos=ordenarCupones(datos);
+
+
+
+zona.innerHTML="";
+
+
+
+datos.forEach(c=>{
+
+
+zona.innerHTML+=`
+
+
+<div class="cupon ${tipoClase}">
 
 
 <h3>
@@ -254,7 +379,10 @@ ${c.descuento}
 
 <p>
 
-Compra mínima:
+Compra mínima
+
+<br>
+
 <b>
 
 ${c.minimo}
@@ -265,15 +393,7 @@ ${c.minimo}
 
 
 
-<p>
-
-${estado}
-
-</p>
-
-
-
-<button onclick="copiarCupon('${item.id}')">
+<button onclick="copiarCupon('${c.id}')">
 
 📋 COPIAR CUPÓN
 
@@ -291,8 +411,38 @@ ${estado}
 });
 
 
+
 }
 
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+pintarCupones(
+"cupones",
+"relampago"
+);
+
+
+pintarCupones(
+"bancarios",
+"bancario"
+);
+
+
+pintarCupones(
+"meliPlus",
+"meli"
 );
 
 
@@ -303,12 +453,12 @@ ${estado}
 
 
 
-// =======================================
-// COPIAR CUPÓN
-// =======================================
+// ===============================
+// COPIAR CUPON
+// ===============================
 
 
-window.copiarCupon = async(codigo)=>{
+window.copiarCupon=async(codigo)=>{
 
 
 try{
@@ -317,28 +467,40 @@ try{
 await navigator.clipboard.writeText(codigo);
 
 
-alert(
-"✅ CUPÓN COPIADO: "+codigo
-);
+
+}catch(e){
 
 
 
-}catch{
+const input=document.createElement("textarea");
 
 
-prompt(
-"Copia tu cupón:",
-codigo
-);
+input.value=codigo;
+
+
+document.body.appendChild(input);
+
+
+input.select();
+
+
+document.execCommand("copy");
+
+
+input.remove();
 
 
 }
 
 
 
+mostrarToast(
+"✅ CUPÓN COPIADO"
+);
 
 
-guardarCopia(codigo);
+
+registrarCopia(codigo);
 
 
 
@@ -348,7 +510,7 @@ setTimeout(()=>{
 window.location.href=LINK_MELI;
 
 
-},500);
+},700);
 
 
 
@@ -362,53 +524,32 @@ window.location.href=LINK_MELI;
 
 
 
-// =======================================
-// CONTADORES
-// =======================================
+// ===============================
+// ESTADISTICAS
+// ===============================
 
 
-async function guardarCopia(codigo){
+async function registrarCopia(codigo){
 
 
 
-const contador =
+const contador=
+
 doc(db,"contadores","global");
 
 
 
-await updateDoc(
-
-contador,
-
-{
+updateDoc(contador,{
 
 total:increment(1)
 
-}
-
-).catch(async()=>{
-
-
-await setDoc(
-
-contador,
-
-{
-
-total:1
-
-}
-
-);
-
-
-});
+}).catch(()=>{});
 
 
 
 
 
-const usuario =
+const usuario=
 
 localStorage.getItem("usuario")
 
@@ -427,19 +568,18 @@ usuario
 
 
 
-const fecha =
+
+const fecha=
 
 new Date()
-
 .toISOString()
-
-.substring(0,10);
-
+.slice(0,10);
 
 
 
 
-const copia =
+
+const copia=
 
 doc(
 
@@ -455,9 +595,11 @@ usuario+"_"+fecha
 
 
 
-const existe =
+const existe=
 
 await getDoc(copia);
+
+
 
 
 
@@ -476,7 +618,7 @@ codigo
 
 
 
-const ahorro =
+const ahorro=
 
 doc(
 
@@ -490,17 +632,11 @@ db,
 
 
 
-await updateDoc(
-
-ahorro,
-
-{
+updateDoc(ahorro,{
 
 total:increment(100)
 
-}
-
-).catch(()=>{});
+}).catch(()=>{});
 
 
 
@@ -509,3 +645,54 @@ total:increment(100)
 
 
 }
+
+
+
+
+
+
+
+
+
+// ===============================
+// MOSTRAR ESTADISTICAS
+// ===============================
+
+
+onSnapshot(
+
+doc(db,"contadores","global"),
+
+(s)=>{
+
+
+document.getElementById("copias").innerHTML=
+
+s.data()?.total || 0;
+
+
+}
+
+);
+
+
+
+
+
+onSnapshot(
+
+doc(db,"estadisticas","ahorro"),
+
+(s)=>{
+
+
+document.getElementById("ahorro").innerHTML=
+
+"$"+
+
+(s.data()?.total || 0);
+
+
+}
+
+);
