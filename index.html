@@ -4,124 +4,133 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>⚡ El Patrón de las Ofertas</title>
 
-<meta name="theme-color" content="#FFE600">
+<title>
+⚡ El Patrón de las Ofertas
+</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+
 
 <link rel="stylesheet" href="style.css">
 
+
 </head>
+
+
 
 <body>
 
-<!-- ===== ENCABEZADO ===== -->
 
-<header class="header">
+
+<header>
+
 
 <div class="logo">
 
-<img src="logo.png.PNG" alt="Logo">
+⚡ EL PATRÓN
 
-<div>
+<span>
+DE LAS OFERTAS
+</span>
 
-<h1>EL PATRÓN</h1>
-
-<span>DE LAS OFERTAS</span>
-
-</div>
 
 </div>
 
-<button id="menuBtn" class="menuBtn">
+
+
+<button class="menu">
+
 ☰
+
 </button>
+
 
 </header>
 
-<!-- ===== MENÚ ===== -->
 
-<aside id="sidebar" class="sidebar">
 
-<div class="sidebarHeader">
 
-<img src="logo.png.PNG">
 
-<h2>EL PATRÓN</h2>
-
-</div>
-
-<nav>
-
-<a href="#">🔥 Relámpago</a>
-
-<a href="#">💳 Bancarios</a>
-
-<a href="#">⭐ Meli+</a>
-
-<a href="#">🎮 Gaming</a>
-
-<a href="#">📱 Tecnología</a>
-
-<a href="#">🏠 Hogar</a>
-
-<a href="#">🧸 Juguetes</a>
-
-<a href="#">💄 Belleza</a>
-
-<a href="#">👕 Moda</a>
-
-</nav>
-
-</aside>
-
-<div id="overlay" class="overlay"></div>
-
-<!-- ===== HERO ===== -->
 
 <section class="hero">
 
-<h2>
+
+<h1>
 
 🔥 Ofertas que nadie encuentra
 
-</h2>
+</h1>
+
 
 <p>
 
-Cupones, descuentos y promociones actualizadas todos los días.
+Cupones, descuentos y promociones en tiempo real
 
 </p>
 
-</section>
-
-<!-- ===== CATEGORÍAS ===== -->
-
-<section class="categorias">
-
-<button>⚡ Relámpago</button>
-
-<button>💳 Bancarios</button>
-
-<button>⭐ Meli+</button>
-
-<button>🎮 Gaming</button>
-
-<button>📱 Tecnología</button>
 
 </section>
 
-<!-- ===== OFERTAS ===== -->
 
-<section class="contenedor">
 
-<div class="titulo">
+
+
+
+
+<nav class="categorias">
+
+
+<button data-cat="Relampago">
+
+🔥 Relámpago
+
+</button>
+
+
+<button data-cat="Bancario">
+
+💳 Bancarios
+
+</button>
+
+
+<button data-cat="Exclusivo">
+
+⭐ Meli+
+
+</button>
+
+
+<button data-cat="Gaming">
+
+🎮 Gaming
+
+</button>
+
+
+<button data-cat="Tecnología">
+
+📱 Tecnología
+
+</button>
+
+
+</nav>
+
+
+
+
+
+
+
+
+<section>
+
 
 <h2>
 
@@ -129,9 +138,11 @@ Cupones, descuentos y promociones actualizadas todos los días.
 
 </h2>
 
-</div>
+
+
 
 <div id="carrusel" class="carrusel">
+
 
 <div class="loader">
 
@@ -139,13 +150,23 @@ Cargando ofertas...
 
 </div>
 
+
 </div>
+
+
 
 </section>
 
-<!-- ===== CUPONES ===== -->
 
-<section class="contenedor">
+
+
+
+
+
+
+
+<section>
+
 
 <h2>
 
@@ -153,90 +174,101 @@ Cargando ofertas...
 
 </h2>
 
+
+
 <div id="cupones">
 
-<div class="loader">
 
 Cargando cupones...
 
 </div>
 
-</div>
+
 
 </section>
 
-<!-- ===== MERCADO PAGO ===== -->
 
-<section class="mercadoPago">
+
+
+
+
+
+
+
+<section class="mercadopago">
+
 
 <h2>
 
-💙 Mercado Pago
+💙 Beneficio Mercado Pago
 
 </h2>
+
+
 
 <p>
 
-Obtén <strong>$100 de descuento</strong> en tu primer pago.
+🎁 Obtén $100 de descuento
 
 </p>
 
-<a
 
-href="https://mpago.li/1VNjCFE"
 
-target="_blank"
+<p>
 
-class="btnMP">
+Compra mínima $200
+
+</p>
+
+
+
+<a href="https://mpago.li/1VNjCFE"
+
+target="_blank">
+
 
 OBTENER BENEFICIO
 
+
 </a>
 
-</section>
 
-<!-- ===== AHORRO ===== -->
-
-<section class="ahorro">
-
-<div>
-
-💰 La comunidad ha ahorrado
-
-</div>
-
-<h2 id="totalAhorro">
-
-$0 MXN
-
-</h2>
 
 </section>
 
-<!-- ===== WHATSAPP ===== -->
 
-<a
 
-class="whatsapp"
+
+
+
+
+
+
+<a class="whatsapp"
 
 href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
 
 target="_blank">
 
-💬
+
+💬 Únete al canal +200 mil seguidores
+
 
 </a>
 
-<!-- ===== TOAST ===== -->
 
-<div id="toast" class="toast">
 
-✅ Cupón copiado
 
-</div>
+
+
+
+
 
 <script type="module" src="app.js"></script>
 
+
+
 </body>
+
 
 </html>
