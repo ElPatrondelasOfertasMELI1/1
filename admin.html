@@ -1,27 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 
-
 <head>
 
-
 <meta charset="UTF-8">
-
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-
 <title>
-
 ⚡ Admin PRO | El Patrón
-
 </title>
 
 
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
 
 
 <link rel="stylesheet" href="admin.css">
@@ -30,33 +22,21 @@
 </head>
 
 
-
-
-
 <body>
-
 
 
 <header class="adminHeader">
 
 
-
 <div class="logo">
-
 
 ⚡ ADMIN
 
 <span>
-
 EL PATRÓN
-
 </span>
 
-
 </div>
-
-
-
 
 
 
@@ -67,7 +47,6 @@ SALIR
 </button>
 
 
-
 </header>
 
 
@@ -76,12 +55,7 @@ SALIR
 
 
 
-
-
 <main class="dashboard">
-
-
-
 
 
 
@@ -96,83 +70,48 @@ SALIR
 
 
 
-
-
-
 <section class="stats">
 
 
-
 <div class="cardStat">
 
-
 <h3>
-
 🔥 Ofertas
-
 </h3>
-
-
 
 <strong id="totalOfertas">
-
 0
-
 </strong>
-
-
 
 </div>
 
 
 
 
-
-
 <div class="cardStat">
 
-
 <h3>
-
 🎟️ Cupones
-
 </h3>
-
-
 
 <strong id="totalCupones">
-
 0
-
 </strong>
-
-
 
 </div>
 
 
 
 
-
-
 <div class="cardStat">
 
-
 <h3>
-
 📋 Copias
-
 </h3>
 
-
-
 <strong id="totalCopias">
-
 0
-
 </strong>
-
-
 
 </div>
 
@@ -190,20 +129,12 @@ SALIR
 
 <!-- PUBLICAR OFERTA -->
 
-
 <section class="panel">
 
 
-
 <h2>
-
 🔥 Nueva Oferta
-
 </h2>
-
-
-
-
 
 
 
@@ -214,7 +145,6 @@ id="titulo"
 placeholder="Título del producto"
 
 >
-
 
 
 
@@ -233,9 +163,6 @@ accept="image/*"
 
 
 
-
-
-
 <img
 
 id="preview"
@@ -243,8 +170,6 @@ id="preview"
 class="preview"
 
 >
-
-
 
 
 
@@ -263,8 +188,6 @@ placeholder="Precio antes"
 
 
 
-
-
 <input
 
 id="precioFinal"
@@ -278,7 +201,6 @@ placeholder="Precio final"
 
 
 
-
 <input
 
 id="descuento"
@@ -286,7 +208,6 @@ id="descuento"
 placeholder="Ejemplo: 20% OFF"
 
 >
-
 
 
 
@@ -307,16 +228,14 @@ placeholder="Link Mercado Libre"
 
 
 
-
 <select id="tipoOferta">
 
 
 <option value="normal">
 
-Oferta normal
+🔥 Oferta normal
 
 </option>
-
 
 
 <option value="relampago">
@@ -324,7 +243,6 @@ Oferta normal
 ⚡ Relámpago
 
 </option>
-
 
 
 <option value="destacada">
@@ -342,18 +260,11 @@ Oferta normal
 
 
 
-
-
 <button id="publicar">
 
 🔥 PUBLICAR OFERTA
 
 </button>
-
-
-
-
-
 
 
 </section>
@@ -366,7 +277,7 @@ Oferta normal
 
 
 
-<!-- OFERTAS -->
+<!-- LISTA OFERTAS -->
 
 
 <section class="panel">
@@ -380,15 +291,11 @@ Oferta normal
 
 
 
-
 <div id="listaOfertas">
-
 
 Cargando...
 
 </div>
-
-
 
 
 </section>
@@ -401,11 +308,9 @@ Cargando...
 
 
 
-<!-- CUPONES -->
-
+<!-- CREAR CUPÓN -->
 
 <section class="panel">
-
 
 
 <h2>
@@ -417,8 +322,6 @@ Cargando...
 
 
 
-
-
 <input
 
 id="codigoCupon"
@@ -426,7 +329,6 @@ id="codigoCupon"
 placeholder="Código del cupón"
 
 >
-
 
 
 
@@ -446,7 +348,6 @@ placeholder="Nombre del cupón"
 
 
 
-
 <input
 
 id="descuentoCupon"
@@ -454,7 +355,6 @@ id="descuentoCupon"
 placeholder="Descuento"
 
 >
-
 
 
 
@@ -485,13 +385,11 @@ placeholder="Compra mínima"
 </option>
 
 
-
 <option value="bancario">
 
 💳 Bancario
 
 </option>
-
 
 
 <option value="exclusivo">
@@ -509,14 +407,49 @@ placeholder="Compra mínima"
 
 
 
+<!-- NUEVO ESTADO DEL CUPÓN -->
+
+
+<select id="estadoCupon">
+
+
+<option value="activo">
+
+🟢 Disponible
+
+</option>
+
+
+
+<option value="agotando">
+
+⚡ Últimas piezas
+
+</option>
+
+
+
+<option value="agotado">
+
+🔴 Agotado
+
+</option>
+
+
+
+</select>
+
+
+
+
+
+
 
 <button id="crearCupon">
 
 🎟️ GUARDAR CUPÓN
 
 </button>
-
-
 
 
 
@@ -530,8 +463,10 @@ placeholder="Compra mínima"
 
 
 
-<section class="panel">
+<!-- LISTA CUPONES -->
 
+
+<section class="panel">
 
 
 <h2>
@@ -544,15 +479,14 @@ placeholder="Compra mínima"
 
 <div id="listaCupones">
 
-
 Cargando...
 
 </div>
 
 
 
-
 </section>
+
 
 
 
@@ -568,6 +502,12 @@ Cargando...
 
 
 
+<div id="toastAdmin"></div>
+
+
+
+
+
 
 
 <script type="module" src="admin.js"></script>
@@ -575,7 +515,6 @@ Cargando...
 
 
 </body>
-
 
 
 </html>
