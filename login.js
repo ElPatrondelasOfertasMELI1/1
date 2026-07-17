@@ -7,6 +7,7 @@
 
 
 import { initializeApp } from
+
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -30,7 +31,10 @@ from
 
 
 
-// CONFIGURACIÓN FIREBASE
+// =============================
+// CONFIG FIREBASE
+// =============================
+
 
 
 const firebaseConfig = {
@@ -73,7 +77,6 @@ const auth = getAuth(app);
 
 
 
-
 const boton =
 
 document.getElementById("entrar");
@@ -83,8 +86,6 @@ document.getElementById("entrar");
 const mensaje =
 
 document.getElementById("mensaje");
-
-
 
 
 
@@ -113,8 +114,9 @@ document.getElementById("password").value;
 
 
 
-if(!email || !password){
 
+
+if(!email || !password){
 
 
 mensaje.innerHTML=
@@ -147,7 +149,6 @@ boton.innerHTML=
 
 
 
-
 await signInWithEmailAndPassword(
 
 auth,
@@ -171,6 +172,7 @@ mensaje.innerHTML=
 
 
 
+
 setTimeout(()=>{
 
 
@@ -181,7 +183,6 @@ window.location.href=
 
 
 },1000);
-
 
 
 
@@ -209,8 +210,8 @@ boton.innerHTML=
 "🔐 INGRESAR";
 
 
-}
 
+}
 
 
 
