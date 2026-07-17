@@ -1,54 +1,41 @@
-/* =====================================
-   EL PATRÓN DE LAS OFERTAS
-   STYLE.CSS PRO PREMIUM
-===================================== */
-
-
 *{
 box-sizing:border-box;
-margin:0;
-padding:0;
 font-family:'Inter',sans-serif;
 }
 
 
 body{
 
+margin:0;
+
 background:
-radial-gradient(circle at top,#332700,#050505 55%);
+radial-gradient(circle at top,#ffffff,#eaf3ff 45%,#d9e9ff);
 
-color:white;
+color:#111;
 
-padding-bottom:100px;
+font-weight:700;
 
 }
 
 
 
-/* ================= HEADER ================= */
-
-
 .header{
-
-height:80px;
 
 display:flex;
 
-align-items:center;
-
 justify-content:space-between;
 
-padding:15px 20px;
+align-items:center;
 
-background:#090909;
+padding:18px;
 
-border-bottom:1px solid #333;
+margin:12px;
 
-position:sticky;
+background:#fff;
 
-top:0;
+border-radius:25px;
 
-z-index:100;
+box-shadow:0 8px 25px rgba(0,0,0,.08);
 
 }
 
@@ -56,11 +43,11 @@ z-index:100;
 
 .logo{
 
-font-size:23px;
+font-size:24px;
 
 font-weight:900;
 
-color:#FFD600;
+color:#000;
 
 }
 
@@ -70,9 +57,9 @@ color:#FFD600;
 
 display:block;
 
-font-size:12px;
+font-size:13px;
 
-color:white;
+color:#3483fa;
 
 letter-spacing:2px;
 
@@ -82,21 +69,19 @@ letter-spacing:2px;
 
 .menu{
 
+border:0;
+
+background:#ffe600;
+
 width:50px;
 
 height:50px;
 
-border:0;
-
-border-radius:16px;
-
-background:#FFD600;
+border-radius:18px;
 
 font-size:25px;
 
 font-weight:900;
-
-cursor:pointer;
 
 }
 
@@ -104,28 +89,21 @@ cursor:pointer;
 
 
 
-
-
-/* ================= HERO ================= */
-
-
 .hero{
 
-margin:20px 15px;
+margin:15px;
 
-padding:30px 20px;
+padding:25px;
+
+background:linear-gradient(135deg,#111,#333);
+
+color:white;
 
 border-radius:25px;
 
-background:
-
-linear-gradient(135deg,#111,#222);
-
 text-align:center;
 
-box-shadow:
-
-0 15px 40px rgba(0,0,0,.5);
+box-shadow:0 12px 30px rgba(0,0,0,.25);
 
 }
 
@@ -135,9 +113,9 @@ box-shadow:
 
 font-size:28px;
 
-font-weight:900;
+margin:0;
 
-color:#FFD600;
+font-weight:900;
 
 }
 
@@ -145,11 +123,7 @@ color:#FFD600;
 
 .hero p{
 
-margin-top:12px;
-
-color:#ccc;
-
-font-size:14px;
+color:#ddd;
 
 }
 
@@ -157,47 +131,17 @@ font-size:14px;
 
 
 
-/* ================= TITULOS ================= */
-
-
-.seccion h2{
-
-margin:25px 15px 15px;
-
-font-size:22px;
-
-font-weight:900;
-
-color:#FFD600;
-
-}
-
-
-
-
-
-
-
-/* ================= CATEGORIAS ================= */
 
 
 .categorias{
 
 display:flex;
 
-gap:12px;
+gap:10px;
 
 overflow-x:auto;
 
-padding:0 15px;
-
-}
-
-
-
-.categorias::-webkit-scrollbar{
-
-display:none;
+padding:10px 15px;
 
 }
 
@@ -207,21 +151,19 @@ display:none;
 
 background:white;
 
-color:#111;
-
-padding:14px 18px;
+padding:12px 18px;
 
 border-radius:30px;
 
 text-decoration:none;
 
-font-weight:900;
+color:#000;
 
 white-space:nowrap;
 
-box-shadow:
+box-shadow:0 5px 15px rgba(0,0,0,.08);
 
-0 8px 20px rgba(0,0,0,.3);
+font-weight:900;
 
 }
 
@@ -229,54 +171,49 @@ box-shadow:
 
 
 
+.seccion{
+
+margin:20px 15px;
+
+}
 
 
-/* ================= CARRUSEL ================= */
+
+.seccion h2{
+
+font-size:22px;
+
+font-weight:900;
+
+}
+
+
+
+
+
 
 
 .carrusel{
 
 display:flex;
 
-overflow-x:auto;
-
-gap:15px;
-
-padding:15px;
-
-scroll-snap-type:x mandatory;
+overflow:hidden;
 
 }
-
-
-
-.carrusel::-webkit-scrollbar{
-
-display:none;
-
-}
-
-
 
 
 
 .oferta{
 
-min-width:90%;
+min-width:100%;
 
 background:white;
-
-color:#111;
 
 border-radius:25px;
 
 padding:15px;
 
-scroll-snap-align:center;
-
-box-shadow:
-
-0 15px 35px rgba(0,0,0,.4);
+box-shadow:0 10px 25px rgba(0,0,0,.12);
 
 }
 
@@ -292,7 +229,7 @@ object-fit:contain;
 
 border-radius:20px;
 
-background:#f5f5f5;
+background:#fff;
 
 }
 
@@ -300,21 +237,21 @@ background:#f5f5f5;
 
 .oferta h3{
 
-font-size:20px;
+font-size:19px;
 
 font-weight:900;
-
-margin:15px 0;
 
 }
 
 
 
+
+
 .precioAntes{
 
-color:#777;
-
 text-decoration:line-through;
+
+color:#777;
 
 }
 
@@ -322,13 +259,15 @@ text-decoration:line-through;
 
 .precioFinal{
 
-font-size:35px;
+font-size:30px;
 
 font-weight:900;
 
 color:#00a650;
 
 }
+
+
 
 
 
@@ -336,72 +275,21 @@ color:#00a650;
 
 display:block;
 
-margin-top:15px;
+background:#3483fa;
+
+color:white;
+
+text-align:center;
 
 padding:15px;
 
-background:#FFD600;
-
-border-radius:18px;
-
-color:#000;
-
-text-align:center;
-
-font-weight:900;
+border-radius:15px;
 
 text-decoration:none;
 
-}
+font-weight:900;
 
-
-
-
-
-
-
-/* ================= ESTADISTICAS ================= */
-
-
-.estadisticas{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:10px;
-
-margin:20px 15px;
-
-}
-
-
-
-.estadisticas div{
-
-background:#111;
-
-border:1px solid #333;
-
-border-radius:20px;
-
-padding:15px 5px;
-
-text-align:center;
-
-font-size:12px;
-
-font-weight:800;
-
-}
-
-
-
-.estadisticas b{
-
-font-size:22px;
-
-color:#FFD600;
+margin-top:12px;
 
 }
 
@@ -412,11 +300,13 @@ color:#FFD600;
 
 
 
-/* ================= CUPONES ================= */
+
+/* CUPONES */
 
 
 #cupones,
-#bancarios{
+#bancarios,
+#meliPlus{
 
 display:grid;
 
@@ -424,18 +314,16 @@ grid-template-columns:repeat(2,1fr);
 
 gap:12px;
 
-padding:0 15px;
-
 }
+
 
 
 
 
 .cupon{
 
-background:white;
 
-color:#111;
+background:white;
 
 border-radius:20px;
 
@@ -443,7 +331,9 @@ padding:15px;
 
 text-align:center;
 
-border:3px solid #FFD600;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+border:2px solid #eee;
 
 }
 
@@ -451,11 +341,9 @@ border:3px solid #FFD600;
 
 .cupon h3{
 
+font-size:24px;
+
 color:#00a650;
-
-font-size:25px;
-
-font-weight:900;
 
 }
 
@@ -463,9 +351,8 @@ font-weight:900;
 
 .cupon button{
 
-width:100%;
 
-margin-top:12px;
+width:100%;
 
 padding:12px;
 
@@ -485,25 +372,42 @@ font-weight:900;
 
 
 
+.cupon-banco{
+
+
+border-top:5px solid #3483fa;
+
+}
 
 
 
-/* ================= VIP ================= */
+.cupon-meli{
+
+
+border-top:5px solid #ffe600;
+
+}
+
+
+
+
+
+
+
 
 
 .vip{
 
-margin:20px 15px;
 
-padding:25px;
+margin:15px;
 
-background:
-
-linear-gradient(135deg,#111,#333);
+padding:20px;
 
 border-radius:25px;
 
-border:2px solid #FFD600;
+background:#111;
+
+color:white;
 
 text-align:center;
 
@@ -513,25 +417,7 @@ text-align:center;
 
 .vip h2{
 
-color:#FFD600;
-
-}
-
-
-
-.vip button{
-
-margin-top:15px;
-
-width:100%;
-
-padding:15px;
-
-border:0;
-
-border-radius:15px;
-
-background:#FFD600;
+color:#ffe600;
 
 font-weight:900;
 
@@ -543,18 +429,68 @@ font-weight:900;
 
 
 
-/* ================= MERCADO PAGO ================= */
+
+
+.estadisticas{
+
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+
+margin:15px;
+
+}
+
+
+
+.estadisticas div{
+
+
+background:white;
+
+padding:15px;
+
+border-radius:20px;
+
+text-align:center;
+
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+.estadisticas b{
+
+font-size:22px;
+
+color:#00a650;
+
+}
+
+
+
+
+
+
+
 
 
 .mercadopago{
 
-margin:20px 15px;
 
-padding:25px;
+margin:15px;
+
+padding:20px;
 
 border-radius:25px;
 
 background:#009ee3;
+
+color:white;
 
 text-align:center;
 
@@ -564,21 +500,20 @@ text-align:center;
 
 .mercadopago a{
 
+
 display:block;
-
-margin-top:15px;
-
-padding:15px;
 
 background:white;
 
 color:#009ee3;
 
+padding:14px;
+
 border-radius:15px;
 
-font-weight:900;
-
 text-decoration:none;
+
+font-weight:900;
 
 }
 
@@ -589,10 +524,66 @@ text-decoration:none;
 
 
 
-/* ================= WHATSAPP ================= */
+
+
+/* TOAST */
+
+
+.toast{
+
+
+position:fixed;
+
+top:45%;
+
+left:50%;
+
+transform:translate(-50%,-50%) scale(.8);
+
+background:#111;
+
+color:white;
+
+padding:18px 25px;
+
+border-radius:20px;
+
+font-weight:900;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:.3s;
+
+z-index:9999;
+
+}
+
+
+
+.toast.show{
+
+
+opacity:1;
+
+transform:translate(-50%,-50%) scale(1);
+
+}
+
+
+
+
+
+
+
+
+
+/* WHATSAPP */
 
 
 .whatsapp{
+
 
 position:fixed;
 
@@ -612,9 +603,7 @@ text-decoration:none;
 
 font-weight:900;
 
-box-shadow:
-
-0 10px 30px rgba(0,0,0,.5);
+box-shadow:0 10px 25px rgba(0,0,0,.25);
 
 z-index:999;
 
@@ -626,35 +615,30 @@ z-index:999;
 
 
 
-.loader{
-
-padding:50px;
-
-text-align:center;
-
-color:#FFD600;
-
-font-weight:900;
-
-}
-
-
-
-
 
 @media(max-width:600px){
 
 
-.estadisticas{
+#cupones,
+#bancarios,
+#meliPlus{
 
-grid-template-columns:repeat(3,1fr);
+grid-template-columns:repeat(2,1fr);
 
 }
 
 
-.oferta{
 
-min-width:95%;
+.hero h1{
+
+font-size:23px;
+
+}
+
+
+.oferta img{
+
+height:220px;
 
 }
 
