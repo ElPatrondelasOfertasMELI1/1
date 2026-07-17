@@ -1,7 +1,8 @@
 // =====================================
 // EL PATRÓN DE LAS OFERTAS
 // ADMIN.JS PRO
-// PUBLICAR + LISTAR OFERTAS
+// OFERTAS + CUPONES
+// BASE64 FIRESTORE
 // =====================================
 
 
@@ -19,9 +20,9 @@ addDoc,
 
 getDocs,
 
-orderBy,
+deleteDoc,
 
-query,
+doc,
 
 serverTimestamp
 
@@ -37,7 +38,8 @@ from
 
 
 
-// CONFIG FIREBASE
+// FIREBASE
+
 
 const firebaseConfig = {
 
@@ -61,40 +63,13 @@ appId:"TU_APP_ID"
 
 
 
-
-
-const app = initializeApp(firebaseConfig);
-
-
-
-const db = getFirestore(app);
+const app =
+initializeApp(firebaseConfig);
 
 
 
-
-
-
-
-
-
-// ELEMENTOS
-
-
-const boton =
-
-document.getElementById("publicar");
-
-
-
-const lista =
-
-document.getElementById("listaOfertas");
-
-
-
-const total =
-
-document.getElementById("totalOfertas");
+const db =
+getFirestore(app);
 
 
 
@@ -103,27 +78,131 @@ document.getElementById("totalOfertas");
 
 
 
+// =============================
+// VARIABLES
+// =============================
 
+
+let imagenBase64="";
+
+
+
+
+
+
+
+
+// =============================
+// IMAGEN GALERIA
+// =============================
+
+
+const imagenInput =
+
+document.getElementById("imagen");
+
+
+
+const preview =
+
+document.getElementById("preview");
+
+
+
+
+
+
+if(imagenInput){
+
+
+imagenInput.addEventListener(
+
+"change",
+
+()=>{
+
+
+const archivo =
+
+imagenInput.files[0];
+
+
+
+if(!archivo)return;
+
+
+
+
+
+const reader =
+
+new FileReader();
+
+
+
+
+reader.onload=function(e){
+
+
+
+imagenBase64=e.target.result;
+
+
+
+preview.src=
+
+imagenBase64;
+
+
+
+preview.style.display="block";
+
+
+
+};
+
+
+
+
+
+reader.readAsDataURL(archivo);
+
+
+
+}
+
+
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+// =============================
 // PUBLICAR OFERTA
+// =============================
 
 
-boton.addEventListener(
 
-"click",
+document
 
-async()=>{
+.getElementById("publicar")
+
+.onclick=async()=>{
 
 
 
 const titulo =
 
 document.getElementById("titulo").value;
-
-
-
-const imagen =
-
-document.getElementById("imagen").value;
 
 
 
@@ -151,27 +230,22 @@ document.getElementById("link").value;
 
 
 
+const tipo =
+
+document.getElementById("tipoOferta").value;
 
 
 
 
 
-if(
 
-!titulo ||
 
-!imagen ||
-
-!precioFinal ||
-
-!link
-
-){
+if(!titulo || !imagenBase64 || !link){
 
 
 alert(
 
-"Completa los campos obligatorios"
+"Completa título, imagen y link"
 
 );
 
@@ -180,20 +254,6 @@ return;
 
 }
 
-
-
-
-
-
-
-
-try{
-
-
-
-boton.innerHTML=
-
-"PUBLICANDO...";
 
 
 
@@ -210,7 +270,7 @@ collection(db,"ofertas"),
 
 titulo,
 
-imagen,
+imagenBase64,
 
 precioAntes,
 
@@ -221,19 +281,40 @@ descuento,
 link,
 
 
+destacada:
+
+tipo==="destacada",
+
+
+
+tipo:
+
+
+tipo==="destacada"
+
+?
+
+"normal"
+
+:
+
+tipo,
+
+
+
+activo:true,
+
+
 fecha:
 
-serverTimestamp(),
-
-
-activo:true
+serverTimestamp()
 
 
 }
 
+
+
 );
-
-
 
 
 
@@ -241,7 +322,7 @@ activo:true
 
 alert(
 
-"🔥 Oferta publicada correctamente"
+"🔥 Oferta publicada"
 
 );
 
@@ -249,103 +330,87 @@ alert(
 
 
 
+limpiarOferta();
+
+
+
+cargarOfertas();
+
+
+
+
+};
+
+
+
+
+
+
+
+
+
+function limpiarOferta(){
 
 
 document
 .querySelectorAll("input")
-.forEach(
-
-(input)=>{
-
-input.value="";
-
-}
-
-);
+.forEach(i=>{
 
 
+if(i.type!=="file")
 
-
-
-
-cargarOfertasAdmin();
-
-
-
-
-
-
-
-boton.innerHTML=
-
-"🔥 PUBLICAR OFERTA";
-
-
-
-
-
-
-}
-
-catch(error){
-
-
-console.error(error);
-
-
-
-alert(
-
-"Error al publicar"
-
-);
-
-
-
-boton.innerHTML=
-
-"🔥 PUBLICAR OFERTA";
-
-
-}
-
-
-
+i.value="";
 
 
 });
 
 
 
+imagenBase64="";
+
+
+
+preview.style.display="none";
+
+
+}
 
 
 
 
 
 
-// CARGAR OFERTAS ADMIN
-
-
-async function cargarOfertasAdmin(){
 
 
 
-try{
+// =============================
+// MOSTRAR OFERTAS
+// =============================
 
 
-const q = query(
 
-collection(db,"ofertas"),
+async function cargarOfertas(){
 
-orderBy("fecha","desc")
+
+
+const lista =
+
+document.getElementById("listaOfertas");
+
+
+
+if(!lista)return;
+
+
+
+
+const snap =
+
+await getDocs(
+
+collection(db,"ofertas")
 
 );
-
-
-
-const snapshot =
-
-await getDocs(q);
 
 
 
@@ -355,30 +420,34 @@ lista.innerHTML="";
 
 
 
-let contador=0;
+let total=0;
 
 
 
 
 
-snapshot.forEach((doc)=>{
-
-
-contador++;
+snap.forEach(item=>{
 
 
 
-const o =
-doc.data();
+total++;
+
+
+const o=item.data();
 
 
 
 
-lista.innerHTML += `
+lista.innerHTML +=
 
 
+
+`
 
 <div class="ofertaAdmin">
+
+
+<img src="${o.imagenBase64}">
 
 
 <h3>
@@ -388,33 +457,295 @@ ${o.titulo}
 </h3>
 
 
-<p>
-
-💰 $${o.precioFinal}
-
-</p>
-
 
 <p>
 
-${o.descuento || ""}
+$${o.precioFinal}
 
 </p>
 
 
 
-<a href="${o.link}"
+<p>
 
-target="_blank">
+${o.destacada ? "⭐ DESTACADA" : ""}
 
-Ver producto
+${o.tipo==="relampago" ? "⚡ RELÁMPAGO":""}
 
-</a>
+</p>
+
+
+
+
+<button
+
+class="borrar"
+
+onclick="borrarOferta('${item.id}')"
+
+>
+
+🗑️ BORRAR
+
+</button>
 
 
 
 </div>
 
+`;
+
+
+
+});
+
+
+
+
+
+const contador=
+
+document.getElementById("totalOfertas");
+
+
+
+if(contador)
+
+contador.innerHTML=total;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// BORRAR
+
+
+window.borrarOferta=
+
+async(id)=>{
+
+
+if(confirm("¿Borrar oferta?")){
+
+
+await deleteDoc(
+
+doc(db,"ofertas",id)
+
+);
+
+
+
+cargarOfertas();
+
+
+}
+
+
+
+};
+
+
+
+
+
+
+
+
+
+// =============================
+// CUPONES
+// =============================
+
+
+
+document
+
+.getElementById("crearCupon")
+
+.onclick=async()=>{
+
+
+
+const codigo =
+
+document.getElementById("codigoCupon").value;
+
+
+
+const nombre =
+
+document.getElementById("nombreCupon").value;
+
+
+
+const descuento =
+
+document.getElementById("descuentoCupon").value;
+
+
+
+const minimo =
+
+document.getElementById("minimoCupon").value;
+
+
+
+const tipo =
+
+document.getElementById("tipoCupon").value;
+
+
+
+
+
+
+
+await addDoc(
+
+collection(db,"cupones"),
+
+{
+
+
+codigo,
+
+nombre,
+
+descuento,
+
+minimo,
+
+tipo,
+
+activo:true,
+
+
+fecha:
+
+serverTimestamp()
+
+
+}
+
+);
+
+
+
+
+
+
+
+alert(
+
+"🎟️ Cupón creado"
+
+);
+
+
+
+
+cargarCupones();
+
+
+
+};
+
+
+
+
+
+
+
+
+
+async function cargarCupones(){
+
+
+const lista =
+
+document.getElementById("listaCupones");
+
+
+
+if(!lista)return;
+
+
+
+
+const snap=
+
+await getDocs(
+
+collection(db,"cupones")
+
+);
+
+
+
+
+
+lista.innerHTML="";
+
+
+
+let total=0;
+
+
+
+snap.forEach(item=>{
+
+
+total++;
+
+
+
+const c=item.data();
+
+
+
+
+
+lista.innerHTML+=
+
+
+
+`
+
+<div class="cuponAdmin">
+
+
+<h3>
+
+🎟️ ${c.nombre}
+
+</h3>
+
+
+<p>
+
+${c.descuento}
+
+</p>
+
+
+<p>
+
+Mínimo:
+$${c.minimo}
+
+</p>
+
+
+</div>
 
 
 `;
@@ -427,48 +758,20 @@ Ver producto
 
 
 
+const contador=
 
-if(total){
-
-total.innerHTML=contador;
-
-}
+document.getElementById("totalCupones");
 
 
 
-if(contador===0){
+if(contador)
 
-
-lista.innerHTML=
-
-"Sin ofertas publicadas";
-
-
-}
+contador.innerHTML=total;
 
 
 
 }
 
-
-
-catch(error){
-
-
-console.error(error);
-
-
-
-lista.innerHTML=
-
-"Error cargando ofertas";
-
-
-}
-
-
-
-}
 
 
 
@@ -480,7 +783,8 @@ lista.innerHTML=
 
 // SALIR
 
-const salir =
+
+const salir=
 
 document.getElementById("salir");
 
@@ -492,11 +796,10 @@ if(salir){
 salir.onclick=()=>{
 
 
-window.location.href="login.html";
+location.href="login.html";
 
 
 };
-
 
 
 }
@@ -507,7 +810,12 @@ window.location.href="login.html";
 
 
 
-// INICIAR
 
 
-cargarOfertasAdmin();
+// INICIO
+
+
+cargarOfertas();
+
+
+cargarCupones();
