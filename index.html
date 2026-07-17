@@ -1,97 +1,330 @@
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>⚡ El Patrón de las Ofertas</title>
+
+<title>
+⚡ El Patrón de las Ofertas
+</title>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
+
 <link rel="stylesheet" href="style.css">
 
+
 </head>
+
 
 <body>
 
 
-<header>
 
-<div class="logo">
-⚡ EL PATRÓN
-<span>DE LAS OFERTAS</span>
+<!-- HEADER -->
+
+
+<header class="hero">
+
+
+<img 
+src="logo.png.PNG"
+class="hero-logo"
+>
+
+
+<div class="hero-info">
+
+
+<h2>
+El Patrón de las Ofertas
+</h2>
+
+
+<p>
+🔥 Cupones • Ofertas • Descuentos diarios
+</p>
+
+
+
+<a 
+class="hero-btn"
+href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
+target="_blank"
+>
+
+💬 Canal WhatsApp +200K
+
+</a>
+
+
 </div>
-
-
-<button class="menu">
-☰
-</button>
 
 
 </header>
 
 
 
-<section class="hero">
-
-<h1>
-🔥 Ofertas que nadie encuentra
-</h1>
-
-<p>
-Cupones, descuentos y promociones en tiempo real
-</p>
-
-</section>
-
-
-
-
-<nav class="categorias">
-
-<button>🔥 Relámpago</button>
-<button>💳 Bancarios</button>
-<button>⭐ Meli+</button>
-<button>🎮 Gaming</button>
-<button>📱 Tecnología</button>
-
-</nav>
 
 
 
 
 
-<section>
-
-<h2>
-🚨 Ofertas destacadas
-</h2>
+<!-- MENU -->
 
 
-<div id="carrusel" class="carrusel">
+<div class="section">
+
+🔥 OFERTAS RELÁMPAGO
+
+</div>
+
+
+
+
+
+<!-- CARRUSEL -->
+
+
+<div class="flash-carousel">
+
+
+<div 
+class="flash-track"
+id="ofertasPublicas"
+>
 
 
 <div class="loader">
+
 Cargando ofertas...
-</div>
-
 
 </div>
 
 
-</section>
+</div>
+
+
+
+</div>
 
 
 
 
 
 
-<a class="whatsapp"
-href="https://chat.whatsapp.com/"
-target="_blank">
 
-💬 Únete al canal
+
+
+<!-- AHORRO -->
+
+
+<div class="ahorro-bar">
+
+
+💰 Nuestra comunidad ha ahorrado
+
+
+<br>
+
+
+<b id="ahorro">
+
+$0 MXN
+
+</b>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MELI+ -->
+
+
+<div class="section">
+
+💎 CUPONES EXCLUSIVOS MELI+
+
+</div>
+
+
+
+
+<div 
+id="cuponesFirebase"
+>
+
+
+Cargando cupones...
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MERCADO PAGO -->
+
+
+<div class="section">
+
+💙 BENEFICIOS MERCADO PAGO
+
+</div>
+
+
+
+
+
+<div class="mp-card">
+
+
+<div class="title">
+
+🎁 $100 de regalo para nuevos usuarios
+
+</div>
+
+
+
+<p>
+
+Obtén <b>$100 de descuento</b> usando Mercado Pago por primera vez.
+
+</p>
+
+
+
+<p>
+
+Compra mínima:
+<b>$200</b>
+
+</p>
+
+
+
+<p>
+
+⏰ Disponible durante tus primeros 7 días.
+
+</p>
+
+
+
+
+<a 
+class="mp-btn"
+
+href="https://mpago.li/1VNjCFE"
+
+target="_blank"
+>
+
+OBTENER BENEFICIO
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- CATEGORIAS -->
+
+
+<div class="section">
+
+📂 CATEGORÍAS
+
+</div>
+
+
+
+
+<div class="categorias">
+
+
+<a href="https://meli.la/1wmWhqC">
+📱 Celulares
+</a>
+
+
+<a href="https://meli.la/2QLzQzB">
+🎮 Gaming
+</a>
+
+
+<a href="https://meli.la/22qVGcg">
+💻 Cómputo
+</a>
+
+
+<a href="https://meli.la/1MLzcHN">
+🏠 Electrodomésticos
+</a>
+
+
+<a href="https://meli.la/21wQwRZ">
+👗 Moda
+</a>
+
+
+<a href="https://meli.la/21wQwRZ">
+💄 Belleza
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- WHATSAPP FLOTANTE -->
+
+
+<a
+
+class="whatsapp-float"
+
+href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
+
+target="_blank"
+
+>
+
+
+💬
 
 </a>
 
@@ -100,8 +333,14 @@ target="_blank">
 
 
 
-<script type="module" src="app.js"></script>
+
+<script 
+type="module"
+src="app.js">
+</script>
+
 
 
 </body>
+
 </html>
