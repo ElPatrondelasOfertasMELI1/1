@@ -1,11 +1,12 @@
-// =======================================
+// ======================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS LIMPIO
-// FIREBASE + OFERTAS PUBLICAS
-// =======================================
+// APP JS PRO
+// FIREBASE PUBLICO
+// ======================================
 
 
-import { initializeApp } from
+import {initializeApp}
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -13,9 +14,11 @@ import {
 
 getFirestore,
 collection,
-query,
-orderBy,
-onSnapshot
+onSnapshot,
+doc,
+updateDoc,
+increment,
+setDoc
 
 }
 
@@ -25,23 +28,216 @@ from
 
 
 
-// CONFIG FIREBASE
+
+const firebaseConfig={
 
 
-const firebaseConfig = {
+apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+
+authDomain:"patronofertasweb.firebaseapp.com",
+
+projectId:"patronofertasweb",
+
+storageBucket:"patronofertasweb.firebasestorage.app",
+
+messagingSenderId:"292338334268",
+
+appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
-apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+};
 
-authDomain: "patronofertasweb.firebaseapp.com",
 
-projectId: "patronofertasweb",
 
-storageBucket: "patronofertasweb.firebasestorage.app",
 
-messagingSenderId: "292338334268",
+const app=initializeApp(firebaseConfig);
 
-appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
+
+const db=getFirestore(app);
+
+
+
+
+
+
+// ===============================
+// OFERTAS
+// ===============================
+
+
+const carrusel=
+document.getElementById("ofertasPublicas");
+
+
+
+let ofertas=[];
+
+let posicion=0;
+
+let timer;
+
+
+
+
+
+
+onSnapshot(
+
+collection(db,"ofertas"),
+
+(snapshot)=>{
+
+
+ofertas=[];
+
+
+snapshot.forEach(doc=>{
+
+
+ofertas.push({
+
+id:doc.id,
+
+...doc.data()
+
+});
+
+
+});
+
+
+
+mostrarOfertas();
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+function mostrarOfertas(){
+
+
+if(!carrusel)return;
+
+
+
+carrusel.innerHTML="";
+
+
+
+ofertas.forEach((o,i)=>{
+
+
+carrusel.innerHTML+=`
+
+
+<div class="flash-slide"
+
+onclick="abrirOferta('${o.id}','${o.link}')">
+
+
+<img src="${o.imagen || 'logo.png'}">
+
+
+<h3>
+
+${o.titulo}
+
+</h3>
+
+
+
+<div>
+
+Antes:
+
+<s>
+$${o.precioAntes || ""}
+</s>
+
+</div>
+
+
+
+<div class="flash-price">
+
+$${o.precioFinal}
+
+</div>
+
+
+
+<div class="flash-btn">
+
+🛒 COMPRAR
+
+</div>
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+iniciarCarrusel();
+
+
+}
+
+
+
+
+
+
+
+
+window.abrirOferta=async(id,link)=>{
+
+
+try{
+
+
+await updateDoc(
+
+doc(db,"ofertas",id),
+
+{
+
+clics:increment(1)
+
+}
+
+);
+
+
+}
+
+catch(e){
+
+
+
+console.log(e);
+
+
+
+}
+
+
+
+window.open(link,"_blank");
 
 
 };
@@ -50,85 +246,59 @@ appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
-const app =
-initializeApp(firebaseConfig);
-
-
-
-const db =
-getFirestore(app);
 
 
 
 
+// ===============================
+// CARRUSEL
+// ===============================
+
+
+function iniciarCarrusel(){
+
+
+clearInterval(timer);
+
+
+timer=setInterval(()=>{
+
+
+mover(1);
+
+
+},3500);
+
+
+}
 
 
 
-const carrusel =
-document.getElementById("carrusel");
+function mover(valor){
+
+
+const total=ofertas.length;
+
+
+if(!total)return;
+
+
+posicion+=valor;
+
+
+if(posicion>=total)
+posicion=0;
+
+
+if(posicion<0)
+posicion=total-1;
 
 
 
+carrusel.style.transform=
 
+`translateX(-${posicion*100}%)`;
 
-
-
-
-// CARGAR OFERTAS EN TIEMPO REAL
-
-
-function cargarOfertas(){
-
-
-
-const referencia =
-collection(db,"ofertas");
-
-
-
-const consulta =
-query(
-
-referencia,
-
-orderBy(
-"fecha",
-"desc"
-
-)
-
-);
-
-
-
-
-
-onSnapshot(
-
-consulta,
-
-(snapshot)=>{
-
-
-carrusel.innerHTML="";
-
-
-
-if(snapshot.empty){
-
-
-carrusel.innerHTML=`
-
-<div class="loader">
-
-No hay ofertas disponibles
-
-</div>
-
-`;
-
-
-return;
 
 
 }
@@ -139,15 +309,155 @@ return;
 
 
 
-snapshot.forEach((doc)=>{
-
-
-const oferta =
-doc.data();
+let inicio=0;
 
 
 
-crearTarjeta(oferta);
+carrusel.addEventListener(
+"touchstart",
+e=>{
+
+
+inicio=e.touches[0].clientX;
+
+
+clearInterval(timer);
+
+
+}
+
+);
+
+
+
+
+carrusel.addEventListener(
+"touchend",
+e=>{
+
+
+let final=e.changedTouches[0].clientX;
+
+
+if(inicio-final>50)
+mover(1);
+
+
+if(final-inicio>50)
+mover(-1);
+
+
+
+iniciarCarrusel();
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+
+// ===============================
+// CUPONES
+// ===============================
+
+
+const zonaCupones=
+document.getElementById("cuponesFirebase");
+
+
+
+
+if(zonaCupones){
+
+
+onSnapshot(
+
+collection(db,"cupones"),
+
+(snapshot)=>{
+
+
+zonaCupones.innerHTML="";
+
+
+
+snapshot.forEach(docu=>{
+
+
+let c=docu.data();
+
+
+
+zonaCupones.innerHTML+=`
+
+
+<div class="cupon-card">
+
+
+<div class="badge ${c.estado}">
+
+${c.estado}
+
+</div>
+
+
+
+<h3>
+
+${c.tipo==="bancario"
+?"🏦 Bancario"
+:c.tipo==="exclusivo"
+?"💎 Meli+"
+:"⚡ Relámpago"}
+
+</h3>
+
+
+
+<h2>
+
+$${c.descuento} OFF
+
+</h2>
+
+
+
+<p>
+
+Compra mínima:
+
+<b>
+${c.minimo}
+</b>
+
+</p>
+
+
+
+
+<button class="bank-btn"
+
+onclick="copiarCupon('${docu.id}','${c.tipo}')">
+
+
+📋 COPIAR CUPÓN
+
+
+</button>
+
+
+
+</div>
+
+
+`;
 
 
 
@@ -155,145 +465,125 @@ crearTarjeta(oferta);
 
 
 
-},
+}
 
-(error)=>{
-
-
-console.error(error);
-
-
-
-carrusel.innerHTML=`
-
-<div class="loader">
-
-Error conectando Firebase
-
-</div>
-
-`;
+);
 
 
 }
 
 
+
+
+
+
+
+
+
+
+// ===============================
+// COPIAR CUPON
+// ===============================
+
+
+window.copiarCupon=async(codigo,tipo)=>{
+
+
+await navigator.clipboard.writeText(codigo);
+
+
+
+let ref=doc(
+db,
+"cupones",
+codigo
+);
+
+
+
+await updateDoc(ref,{
+
+copias:increment(1)
+
+}).catch(()=>{});
+
+
+
+
+
+// contador general
+
+
+await setDoc(
+
+doc(db,"contadores","global"),
+
+{
+
+total:increment(1),
+
+[tipo]:increment(1)
+
+},
+
+{
+
+merge:true
+
+}
 
 );
 
 
 
+
+
+
+// ahorro solo 1 vez por dia
+
+
+let dia=
+new Date()
+.toISOString()
+.split("T")[0];
+
+
+
+let llave=
+
+"ahorro_"+codigo+"_"+dia;
+
+
+
+if(!localStorage.getItem(llave)){
+
+
+
+await setDoc(
+
+doc(db,"estadisticas","ahorro"),
+
+{
+
+total:increment(
+
+Number(codigo.includes("10")?100:0)
+
+)
+
+},
+
+{
+
+merge:true
+
 }
 
+);
 
 
 
-
-
-
-
-
-// CREAR TARJETA
-
-
-function crearTarjeta(oferta){
-
-
-
-const tarjeta =
-document.createElement("div");
-
-
-
-tarjeta.className="oferta";
-
-
-
-tarjeta.innerHTML=`
-
-
-<img
-
-src="${oferta.imagen || 'logo.png'}"
-
->
-
-
-
-
-<div class="info">
-
-
-
-<span class="descuento">
-
-${oferta.descuento || "OFERTA"}
-
-</span>
-
-
-
-
-
-<h3>
-
-${oferta.titulo}
-
-</h3>
-
-
-
-
-
-<p class="precioAntes">
-
-$${oferta.precioAntes || ""}
-
-</p>
-
-
-
-
-
-<div class="precioFinal">
-
-$${oferta.precioFinal}
-
-</div>
-
-
-
-
-
-<a
-
-class="btnComprar"
-
-href="${oferta.link}"
-
-target="_blank"
-
->
-
-🛒 COMPRAR
-
-</a>
-
-
-
-
-
-</div>
-
-
-`;
-
-
-
-
-
-carrusel.appendChild(tarjeta);
-
+localStorage.setItem(llave,"ok");
 
 
 }
@@ -301,12 +591,20 @@ carrusel.appendChild(tarjeta);
 
 
 
+// redireccion mercado libre
+
+
+setTimeout(()=>{
+
+
+window.location.href=
+
+"https://meli.la/1mj3itE";
+
+
+},300);
 
 
 
 
-
-// INICIAR
-
-
-cargarOfertas();
+};
