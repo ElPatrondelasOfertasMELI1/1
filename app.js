@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS FINAL CORREGIDO
+// APP.JS MEJORADO V2
 // =====================================================
 
 
@@ -25,6 +25,8 @@ from
 
 
 
+
+
 const firebaseConfig={
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
@@ -43,9 +45,10 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
+
+
 const app =
 initializeApp(firebaseConfig);
-
 
 
 const db =
@@ -78,6 +81,12 @@ document.getElementById("toast");
 
 
 
+let intervaloCarrusel=null;
+
+
+
+
+
 
 
 
@@ -92,6 +101,7 @@ toast.innerHTML=texto;
 
 
 toast.classList.add("show");
+
 
 
 setTimeout(()=>{
@@ -124,14 +134,18 @@ async function cargarOfertas(){
 if(!carrusel)return;
 
 
+
 const datos =
 await getDocs(
+
 collection(db,"ofertas")
+
 );
 
 
 
 carrusel.innerHTML="";
+
 
 
 
@@ -157,11 +171,13 @@ card.innerHTML=`
 <img src="${o.imagen}">
 
 
+
 <h3>
 
 ${o.titulo}
 
 </h3>
+
 
 
 <div class="precioAntes">
@@ -178,6 +194,7 @@ $${o.precioAntes || ""}
 
 
 
+
 <div class="descuento">
 
 🔥 ${o.descuento || ""}% OFF
@@ -186,11 +203,13 @@ $${o.precioAntes || ""}
 
 
 
+
 <div class="precio">
 
 💥 $${o.precioFinal || ""}
 
 </div>
+
 
 
 
@@ -233,18 +252,24 @@ iniciarCarrusel();
 
 
 // ==============================
-// AUTO CARRUSEL
+// AUTO CARRUSEL MEJORADO
 // ==============================
 
 
 function iniciarCarrusel(){
 
 
+if(intervaloCarrusel)
+
+clearInterval(intervaloCarrusel);
+
+
+
 let posicion=0;
 
 
 
-setInterval(()=>{
+intervaloCarrusel=setInterval(()=>{
 
 
 if(!carrusel)return;
@@ -281,15 +306,6 @@ behavior:"smooth"
 
 
 }
-
-
-
-
-
-
-
-
-
 // ==============================
 // CUPONES
 // ==============================
@@ -300,18 +316,39 @@ async function cargarCupones(){
 
 const datos =
 await getDocs(
+
 collection(db,"cupones")
+
 );
 
 
 
-[relampago,bancarios,exclusivos]
+// ORDENAR MENOR COMPRA MINIMA A MAYOR
 
-.forEach(x=>{
+let cupones=[];
 
-if(x)
 
-x.innerHTML="";
+datos.forEach(item=>{
+
+
+cupones.push({
+
+id:item.id,
+
+...item.data()
+
+});
+
+
+});
+
+
+
+cupones.sort((a,b)=>{
+
+
+return Number(a.minimo || 0) - Number(b.minimo || 0);
+
 
 });
 
@@ -319,10 +356,26 @@ x.innerHTML="";
 
 
 
-datos.forEach(item=>{
+
+[relampago,bancarios,exclusivos]
+
+.forEach(x=>{
 
 
-const c=item.data();
+if(x)
+
+x.innerHTML="";
+
+
+});
+
+
+
+
+
+
+
+cupones.forEach(c=>{
 
 
 
@@ -338,6 +391,7 @@ tarjeta.className="cuponCard";
 tarjeta.innerHTML=`
 
 <div class="estado">
+
 
 ${
 c.estado==="agotado"
@@ -360,15 +414,32 @@ c.estado==="agotando"
 
 }
 
+
 </div>
+
+
 
 
 
 <h3>
 
-🎟️ ${c.nombre}
+🎟️ ${
+
+c.tipo==="relampago"
+
+?
+
+"CUPON"
+
+:
+
+c.nombre
+
+}
 
 </h3>
+
+
 
 
 
@@ -376,9 +447,11 @@ c.estado==="agotando"
 
 💰 Descuento:
 
-$${c.descuento}
+$${c.descuento || ""}
 
 </p>
+
+
 
 
 
@@ -386,9 +459,10 @@ $${c.descuento}
 
 🛒 Compra mínima:
 
-$${c.minimo}
+$${c.minimo || ""}
 
 </p>
+
 
 
 
@@ -404,6 +478,9 @@ $${c.minimo}
 
 
 
+
+
+
 tarjeta
 
 .querySelector(".copiarCupon")
@@ -413,7 +490,7 @@ tarjeta
 
 copiarCupon(
 
-item.id,
+c.id,
 
 c.codigo
 
@@ -425,23 +502,35 @@ c.codigo
 
 
 
+
+
 if(c.tipo==="relampago")
+
 
 relampago?.appendChild(tarjeta);
 
 
+
 else if(c.tipo==="bancario")
+
 
 bancarios?.appendChild(tarjeta);
 
 
+
 else
+
 
 exclusivos?.appendChild(tarjeta);
 
 
 
 });
+
+
+
+agregarAvisoDeslizar();
+
 
 
 }
@@ -454,18 +543,22 @@ exclusivos?.appendChild(tarjeta);
 
 
 
+// ==============================
+// COPIAR CUPÓN RÁPIDO
+// ==============================
+
+
 async function copiarCupon(id,codigo){
 
 
-await navigator.clipboard.writeText(
 
-codigo
-
-);
+navigator.clipboard.writeText(codigo);
 
 
 
-await updateDoc(
+
+
+updateDoc(
 
 doc(
 
@@ -489,11 +582,16 @@ increment(1)
 
 
 
+
+
 mostrarToast(
 
 "✅ CUPÓN COPIADO"
 
 );
+
+
+
 
 
 
@@ -505,7 +603,8 @@ window.location.href=
 "https://meli.la/1mj3itE";
 
 
-},500);
+},100);
+
 
 
 }
@@ -518,7 +617,79 @@ window.location.href=
 
 
 
-// SUBIR ARRIBA
+// ==============================
+// AVISO DESLIZAR
+// ==============================
+
+
+function agregarAvisoDeslizar(){
+
+
+
+const cajas=document.querySelectorAll(".carruselCupon");
+
+
+
+cajas.forEach(caja=>{
+
+
+
+if(caja.dataset.aviso)
+
+return;
+
+
+
+caja.dataset.aviso="true";
+
+
+
+const aviso=document.createElement("div");
+
+
+
+aviso.className="avisoDesliza";
+
+
+aviso.innerHTML=
+
+"👉 Desliza para ver más";
+
+
+
+caja.parentElement.appendChild(aviso);
+
+
+
+
+
+setTimeout(()=>{
+
+
+aviso.classList.add("ocultar");
+
+
+},4500);
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==============================
+// BOTON SUBIR
+// ==============================
 
 
 const btnArriba =
@@ -534,6 +705,7 @@ window.addEventListener("scroll",()=>{
 
 btnArriba.style.display=
 
+
 window.scrollY>400
 
 ?
@@ -546,6 +718,8 @@ window.scrollY>400
 
 
 });
+
+
 
 
 
@@ -569,6 +743,12 @@ behavior:"smooth"
 
 
 
+
+
+
+
+
+// INICIO
 
 
 cargarOfertas();
