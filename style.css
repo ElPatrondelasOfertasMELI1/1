@@ -1,6 +1,6 @@
 /* =====================================================
 EL PATRÓN DE LAS OFERTAS
-STYLE.CSS FINAL CORREGIDO
+STYLE.CSS CORREGIDO CARRUSELES ESTABLES
 ===================================================== */
 
 
@@ -109,6 +109,7 @@ font-size:25px;
 
 
 
+
 /* HERO */
 
 
@@ -151,7 +152,7 @@ margin-top:10px;
 
 h2{
 
-margin:25px 18px 10px;
+margin:25px 18px 15px;
 
 color:#ffd600;
 
@@ -161,63 +162,6 @@ font-weight:900;
 
 }
 
-
-
-
-
-
-
-
-/* AVISO DESLIZAR */
-
-
-.avisoDesliza{
-
-margin:0 18px 10px;
-
-background:#ffd600;
-
-color:#111;
-
-padding:6px 14px;
-
-border-radius:20px;
-
-display:inline-flex;
-
-font-size:12px;
-
-font-weight:900;
-
-animation:desliza 1.8s infinite;
-
-}
-
-
-
-@keyframes desliza{
-
-0%{
-
-transform:translateX(0);
-
-}
-
-
-50%{
-
-transform:translateX(8px);
-
-}
-
-
-100%{
-
-transform:translateX(0);
-
-}
-
-}
 
 
 
@@ -239,7 +183,7 @@ overflow-x:auto;
 
 padding:15px 18px;
 
-touch-action:pan-x;
+-webkit-overflow-scrolling:touch;
 
 }
 
@@ -311,8 +255,6 @@ scroll-snap-type:x mandatory;
 
 -webkit-overflow-scrolling:touch;
 
-touch-action:pan-y;
-
 }
 
 
@@ -322,7 +264,6 @@ touch-action:pan-y;
 display:none;
 
 }
-
 
 
 
@@ -356,11 +297,7 @@ scroll-snap-align:center;
 min-height:500px;
 
 
-touch-action:pan-y;
-
-
 }
-
 
 
 
@@ -401,14 +338,14 @@ overflow:hidden;
 
 
 
+
+
 /* PRECIOS ALINEADOS */
 
 
 .precioAntes,
 .descuento,
 .precio{
-
-height:42px;
 
 display:flex;
 
@@ -420,6 +357,8 @@ align-items:center;
 
 .precioAntes{
 
+height:35px;
+
 color:#aaa;
 
 font-size:14px;
@@ -429,6 +368,8 @@ font-size:14px;
 
 
 .descuento{
+
+height:35px;
 
 background:#ffd600;
 
@@ -442,7 +383,7 @@ font-weight:900;
 
 width:max-content;
 
-font-size:14px;
+margin:8px 0;
 
 }
 
@@ -450,16 +391,17 @@ font-size:14px;
 
 .precio{
 
+height:45px;
+
 color:#ffd600;
 
 font-size:27px;
 
 font-weight:900;
 
-margin-bottom:10px;
+margin:8px 0;
 
 }
-
 
 
 
@@ -494,6 +436,7 @@ text-decoration:none;
 
 
 
+
 /* =====================================================
 CUPONES
 ===================================================== */
@@ -519,8 +462,6 @@ scroll-snap-type:x mandatory;
 
 -webkit-overflow-scrolling:touch;
 
-touch-action:pan-y;
-
 }
 
 
@@ -530,6 +471,7 @@ touch-action:pan-y;
 display:none;
 
 }
+
 
 
 
@@ -561,13 +503,11 @@ flex-direction:column;
 scroll-snap-align:start;
 
 
-min-height:260px;
-
-
-touch-action:pan-y;
+min-height:270px;
 
 
 }
+
 
 
 
@@ -617,7 +557,6 @@ margin:6px 0;
 color:#ddd;
 
 }
-
 
 
 
@@ -678,7 +617,6 @@ z-index:100;
 transform:translate(-50%,0);
 
 }
-
 
 
 
