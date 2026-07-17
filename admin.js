@@ -395,3 +395,467 @@ cargarCuponesAdmin();
 
 
 };
+
+// =====================================================
+// ADMIN.JS
+// PARTE 2
+// LISTADOS + BORRAR + SESIÓN
+// =====================================================
+
+
+
+
+
+// ================================
+// CARGAR OFERTAS ADMIN
+// ================================
+
+
+async function cargarOfertasAdmin(){
+
+
+const lista =
+
+document.getElementById(
+"listaOfertas"
+);
+
+
+
+const total =
+
+document.getElementById(
+"totalOfertas"
+);
+
+
+
+lista.innerHTML =
+"";
+
+
+
+const snapshot =
+
+await getDocs(
+
+collection(
+db,
+"ofertas"
+)
+
+);
+
+
+
+total.innerHTML =
+snapshot.size;
+
+
+
+
+
+if(snapshot.empty){
+
+
+lista.innerHTML =
+
+`
+<div class="ofertaAdmin">
+No hay ofertas
+</div>
+`;
+
+return;
+
+}
+
+
+
+
+
+snapshot.forEach((item)=>{
+
+
+
+const oferta =
+item.data();
+
+
+
+const id =
+item.id;
+
+
+
+
+
+const div =
+document.createElement(
+"div"
+);
+
+
+
+div.className =
+"ofertaAdmin";
+
+
+
+
+
+div.innerHTML =
+
+
+`
+
+<h3>
+${oferta.titulo}
+</h3>
+
+
+<p>
+💰 $${oferta.precioFinal}
+</p>
+
+
+<p>
+${oferta.destacada ? "⭐ Destacada" : "Normal"}
+</p>
+
+
+
+<button class="borrarOferta">
+
+🗑️ Borrar
+
+</button>
+
+
+`;
+
+
+
+
+
+div
+.querySelector(".borrarOferta")
+.onclick = async()=>{
+
+
+if(confirm("¿Borrar oferta?")){
+
+
+await deleteDoc(
+
+doc(
+db,
+"ofertas",
+id
+)
+
+);
+
+
+
+cargarOfertasAdmin();
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+lista.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// CARGAR CUPONES ADMIN
+// ================================
+
+
+async function cargarCuponesAdmin(){
+
+
+
+const lista =
+
+document.getElementById(
+"listaCupones"
+);
+
+
+
+const total =
+
+document.getElementById(
+"totalCupones"
+);
+
+
+
+
+lista.innerHTML =
+"";
+
+
+
+
+
+const snapshot =
+
+await getDocs(
+
+collection(
+db,
+"cupones"
+)
+
+);
+
+
+
+
+
+total.innerHTML =
+snapshot.size;
+
+
+
+
+
+
+
+if(snapshot.empty){
+
+
+lista.innerHTML =
+
+
+`
+
+<div class="ofertaAdmin">
+
+No hay cupones
+
+</div>
+
+
+`;
+
+return;
+
+}
+
+
+
+
+
+
+snapshot.forEach((item)=>{
+
+
+const cupon =
+item.data();
+
+
+
+const id =
+item.id;
+
+
+
+
+
+const div =
+
+document.createElement(
+"div"
+);
+
+
+
+div.className =
+"ofertaAdmin";
+
+
+
+
+
+div.innerHTML =
+
+
+`
+
+<h3>
+
+🎟️ ${id}
+
+</h3>
+
+
+
+<p>
+
+💰 Descuento:
+$${cupon.descuento}
+
+</p>
+
+
+
+<p>
+
+🛒 Mínimo:
+${cupon.minimo}
+
+</p>
+
+
+
+<p>
+
+${cupon.tipo}
+
+</p>
+
+
+
+<button class="borrarCupon">
+
+🗑️ Borrar
+
+</button>
+
+
+`;
+
+
+
+
+
+div
+.querySelector(".borrarCupon")
+.onclick = async()=>{
+
+
+
+if(confirm("¿Borrar cupón?")){
+
+
+await deleteDoc(
+
+doc(
+db,
+"cupones",
+id
+
+)
+
+);
+
+
+
+cargarCuponesAdmin();
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+lista.appendChild(div);
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// CERRAR SESIÓN
+// ================================
+
+
+const salir =
+
+document.getElementById(
+"salir"
+);
+
+
+
+
+if(salir){
+
+
+salir.onclick = async()=>{
+
+
+await signOut(auth);
+
+
+
+window.location.href =
+"login.html";
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+// ================================
+// INICIAR PANEL
+// ================================
+
+
+cargarOfertasAdmin();
+
+
+cargarCuponesAdmin();
+
