@@ -4,109 +4,134 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>⚡ El Patrón de las Ofertas</title>
 
-<title>
-⚡ El Patrón de las Ofertas
-</title>
+<meta name="theme-color" content="#FFE600">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css">
 
-
 </head>
-
-
 
 <body>
 
-
+<!-- ===== ENCABEZADO ===== -->
 
 <header class="header">
 
-
 <div class="logo">
 
-⚡
-
-</div>
-
+<img src="logo.png.PNG" alt="Logo">
 
 <div>
 
-<h1>
-EL PATRÓN
-</h1>
+<h1>EL PATRÓN</h1>
 
-<p>
-DE LAS OFERTAS
-</p>
+<span>DE LAS OFERTAS</span>
 
 </div>
 
+</div>
+
+<button id="menuBtn" class="menuBtn">
+☰
+</button>
 
 </header>
 
+<!-- ===== MENÚ ===== -->
 
+<aside id="sidebar" class="sidebar">
 
+<div class="sidebarHeader">
 
+<img src="logo.png.PNG">
 
+<h2>EL PATRÓN</h2>
 
+</div>
+
+<nav>
+
+<a href="#">🔥 Relámpago</a>
+
+<a href="#">💳 Bancarios</a>
+
+<a href="#">⭐ Meli+</a>
+
+<a href="#">🎮 Gaming</a>
+
+<a href="#">📱 Tecnología</a>
+
+<a href="#">🏠 Hogar</a>
+
+<a href="#">🧸 Juguetes</a>
+
+<a href="#">💄 Belleza</a>
+
+<a href="#">👕 Moda</a>
+
+</nav>
+
+</aside>
+
+<div id="overlay" class="overlay"></div>
+
+<!-- ===== HERO ===== -->
 
 <section class="hero">
 
-
 <h2>
-🔥 Ofertas que nadie encuentra
-</h2>
 
+🔥 Ofertas que nadie encuentra
+
+</h2>
 
 <p>
 
-Cupones • Descuentos • Mercado Libre
+Cupones, descuentos y promociones actualizadas todos los días.
 
 </p>
 
+</section>
 
+<!-- ===== CATEGORÍAS ===== -->
 
-<a href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
-target="_blank"
-class="whatsapp">
+<section class="categorias">
 
-💬 Canal WhatsApp +200 mil seguidores
+<button>⚡ Relámpago</button>
 
-</a>
+<button>💳 Bancarios</button>
 
+<button>⭐ Meli+</button>
 
+<button>🎮 Gaming</button>
+
+<button>📱 Tecnología</button>
 
 </section>
 
+<!-- ===== OFERTAS ===== -->
 
+<section class="contenedor">
 
+<div class="titulo">
 
+<h2>
 
+🚨 Ofertas destacadas
 
+</h2>
 
-<section class="titulo">
+</div>
 
-⚡🔥 OFERTAS RELÁMPAGO 🔥⚡
-
-</section>
-
-
-
-
-<div class="flash-carousel">
-
-
-<div id="ofertasPublicas"
-class="flash-track">
-
+<div id="carrusel" class="carrusel">
 
 <div class="loader">
 
@@ -114,143 +139,85 @@ Cargando ofertas...
 
 </div>
 
-
 </div>
-
-
-
-<div id="flashDots"
-class="flash-dots">
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<section class="ahorro">
-
-
-💰 La comunidad ha ahorrado
-
-
-<b id="ahorroTotal">
-
-$0 MXN
-
-</b>
-
 
 </section>
 
+<!-- ===== CUPONES ===== -->
 
+<section class="contenedor">
 
+<h2>
 
+🎟️ Cupones disponibles
 
+</h2>
 
+<div id="cupones">
 
+<div class="loader">
 
-<section class="titulo">
-
-🏦 CUPONES BANCARIOS
-
-</section>
-
-
-<div id="cuponesBancarios"
-class="cupon-grid">
-
+Cargando cupones...
 
 </div>
 
-
-
-
-
-
-
-
-
-<section class="titulo">
-
-💎 CUPONES EXCLUSIVOS MELI+
-
-</section>
-
-
-<div id="cuponesMeli"
-class="cupon-grid">
-
-
 </div>
 
-
-
-
-
-
-
-
-
-<section class="titulo">
-
-💙 BENEFICIOS MERCADO PAGO
-
 </section>
 
+<!-- ===== MERCADO PAGO ===== -->
 
+<section class="mercadoPago">
 
+<h2>
 
-<div class="beneficio">
+💙 Mercado Pago
 
-
-<h3>
-
-🎁 $100 de regalo
-
-</h3>
-
+</h2>
 
 <p>
 
-Descuento para nuevos usuarios.
+Obtén <strong>$100 de descuento</strong> en tu primer pago.
 
 </p>
 
+<a
 
-<p>
+href="https://mpago.li/1VNjCFE"
 
-Compra mínima $200
+target="_blank"
 
-</p>
-
-
-<a href="https://mpago.li/1VNjCFE"
-target="_blank">
+class="btnMP">
 
 OBTENER BENEFICIO
 
 </a>
 
+</section>
+
+<!-- ===== AHORRO ===== -->
+
+<section class="ahorro">
+
+<div>
+
+💰 La comunidad ha ahorrado
 
 </div>
 
+<h2 id="totalAhorro">
 
+$0 MXN
 
+</h2>
 
+</section>
 
+<!-- ===== WHATSAPP ===== -->
 
+<a
 
-
-
-<a class="flotante"
+class="whatsapp"
 
 href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
 
@@ -260,19 +227,15 @@ target="_blank">
 
 </a>
 
+<!-- ===== TOAST ===== -->
 
+<div id="toast" class="toast">
 
+✅ Cupón copiado
 
-
-
-
-
+</div>
 
 <script type="module" src="app.js"></script>
-
-
-<script type="module" src="cupones.js"></script>
-
 
 </body>
 
