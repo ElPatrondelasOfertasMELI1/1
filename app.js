@@ -1,12 +1,14 @@
 // =====================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS PRO
-// FIREBASE + OFERTAS + CUPONES
+// APP.JS
+// FIREBASE OFERTAS + CUPONES
 // =====================================
+
 
 
 import { initializeApp } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 
 import {
@@ -25,9 +27,11 @@ from
 
 
 
-// ===============================
+
+
+// ============================
 // FIREBASE
-// ===============================
+// ============================
 
 
 const firebaseConfig = {
@@ -52,7 +56,9 @@ appId:"TU_APP_ID"
 
 
 
+
 const app = initializeApp(firebaseConfig);
+
 
 
 const db = getFirestore(app);
@@ -64,12 +70,14 @@ const db = getFirestore(app);
 
 
 
-// ===============================
+
+// ============================
 // OFERTAS
-// ===============================
+// ============================
 
 
 const carrusel =
+
 document.getElementById("carrusel");
 
 
@@ -80,10 +88,13 @@ document.getElementById("carrusel");
 async function cargarOfertas(){
 
 
+
 try{
 
 
+
 const snap =
+
 await getDocs(
 
 collection(db,"ofertas")
@@ -93,14 +104,24 @@ collection(db,"ofertas")
 
 
 
+
 let ofertas=[];
+
+
+
 
 
 
 snap.forEach(doc=>{
 
 
-ofertas.push(doc.data());
+ofertas.push({
+
+id:doc.id,
+
+...doc.data()
+
+});
 
 
 });
@@ -110,30 +131,39 @@ ofertas.push(doc.data());
 
 
 
-// ORDEN PRIORIDAD
+
+
+// PRIORIDAD
+// ⭐ Destacada
+// ⚡ Relámpago
+// Normal
 
 
 ofertas.sort((a,b)=>{
 
 
-let prioridadA =
+let A =
+
 a.destacada ? 1 :
 
 a.tipo==="relampago" ? 2 : 3;
 
 
 
-let prioridadB =
+let B =
+
 b.destacada ? 1 :
 
 b.tipo==="relampago" ? 2 : 3;
 
 
 
-return prioridadA-prioridadB;
+return A-B;
 
 
 });
+
+
 
 
 
@@ -142,6 +172,32 @@ return prioridadA-prioridadB;
 
 
 carrusel.innerHTML="";
+
+
+
+
+
+
+if(ofertas.length===0){
+
+
+carrusel.innerHTML=
+
+`
+
+<div class="loader">
+
+No hay ofertas
+
+</div>
+
+`;
+
+return;
+
+
+}
+
 
 
 
@@ -159,13 +215,14 @@ crearOferta(oferta);
 
 
 
+
 }
 
 catch(error){
 
 
+
 console.error(
-"Error ofertas",
 error
 );
 
@@ -174,6 +231,7 @@ error
 carrusel.innerHTML=
 
 `
+
 <div class="loader">
 
 Error cargando ofertas
@@ -181,6 +239,8 @@ Error cargando ofertas
 </div>
 
 `;
+
+
 
 }
 
@@ -199,8 +259,11 @@ Error cargando ofertas
 function crearOferta(oferta){
 
 
+
 const card =
+
 document.createElement("div");
+
 
 
 card.className="oferta";
@@ -208,19 +271,25 @@ card.className="oferta";
 
 
 
-let etiqueta="";
+
+
+let badge="";
 
 
 
 if(oferta.destacada){
 
 
-etiqueta=
+badge=
 
 `
+
 <div class="badge destacada">
+
 ⭐ DESTACADA
+
 </div>
+
 `;
 
 
@@ -229,15 +298,20 @@ etiqueta=
 else if(oferta.tipo==="relampago"){
 
 
-etiqueta=
+badge=
 
 `
+
 <div class="badge relampago">
+
 ⚡ RELÁMPAGO
+
 </div>
+
 `;
 
 }
+
 
 
 
@@ -248,11 +322,11 @@ card.innerHTML=
 
 `
 
-${etiqueta}
+${badge}
 
 
 
-<img src="${oferta.imagenBase64}">
+<img src="${oferta.imagen}">
 
 
 
@@ -268,7 +342,6 @@ ${oferta.descuento || "OFERTA"}
 
 
 
-
 <h3>
 
 ${oferta.titulo}
@@ -277,13 +350,11 @@ ${oferta.titulo}
 
 
 
-
 <p class="precioAntes">
 
-$${oferta.precioAntes || ""}
+${oferta.precioAntes ? "$"+oferta.precioAntes : ""}
 
 </p>
-
 
 
 
@@ -295,9 +366,6 @@ $${oferta.precioFinal}
 
 
 
-
-
-
 <a
 
 class="btnComprar"
@@ -306,7 +374,7 @@ href="${oferta.link}"
 
 target="_blank"
 
-onclick="registrarClick()"
+onclick="registrarClick('${oferta.id}')"
 
 >
 
@@ -316,10 +384,10 @@ onclick="registrarClick()"
 
 
 
-
 </div>
 
 `;
+
 
 
 
@@ -337,9 +405,9 @@ carrusel.appendChild(card);
 
 
 
-// ===============================
+// ============================
 // CUPONES
-// ===============================
+// ============================
 
 
 
@@ -347,36 +415,7 @@ async function cargarCupones(){
 
 
 
-const tipos=[
-
-{
-
-id:"cuponesRelampago",
-
-tipo:"relampago"
-
-},
-
-{
-
-id:"cuponesBancarios",
-
-tipo:"bancario"
-
-},
-
-{
-
-id:"cuponesExclusivos",
-
-tipo:"exclusivo"
-
-}
-
-];
-
-
-
+try{
 
 
 
@@ -396,6 +435,8 @@ let cupones=[];
 
 
 
+
+
 snap.forEach(doc=>{
 
 
@@ -412,30 +453,71 @@ cupones.push(doc.data());
 
 
 
-tipos.forEach(seccion=>{
+mostrarCupones(
+
+"cuponesRelampago",
+
+cupones.filter(c=>c.tipo==="relampago")
+
+);
+
+
+
+mostrarCupones(
+
+"cuponesBancarios",
+
+cupones.filter(c=>c.tipo==="bancario")
+
+);
+
+
+
+mostrarCupones(
+
+"cuponesExclusivos",
+
+cupones.filter(c=>c.tipo==="exclusivo")
+
+);
+
+
+
+
+
+}
+
+catch(error){
+
+
+console.error(error);
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function mostrarCupones(id,lista){
 
 
 
 const contenedor=
 
-document.getElementById(seccion.id);
+document.getElementById(id);
 
 
 
 if(!contenedor)return;
-
-
-
-
-
-let lista =
-
-cupones.filter(c=>
-
-c.tipo===seccion.tipo
-
-);
-
 
 
 
@@ -459,7 +541,6 @@ Number(b.minimo || 0);
 
 
 
-
 contenedor.innerHTML="";
 
 
@@ -468,6 +549,8 @@ contenedor.innerHTML="";
 
 
 lista.forEach(c=>{
+
+
 
 
 
@@ -482,7 +565,7 @@ contenedor.innerHTML+=
 
 <h3>
 
-🎟 ${c.nombre || "CUPÓN"}
+🎟️ ${c.nombre || "Cupón"}
 
 </h3>
 
@@ -498,7 +581,7 @@ contenedor.innerHTML+=
 
 <p>
 
-${c.descuento}
+${c.descuento || ""}
 
 </p>
 
@@ -507,9 +590,10 @@ ${c.descuento}
 <p>
 
 Compra mínima:
-$${c.minimo}
+$${c.minimo || 0}
 
 </p>
+
 
 
 
@@ -524,7 +608,6 @@ onclick="copiarCupon('${c.codigo}')"
 </button>
 
 
-
 </div>
 
 
@@ -533,12 +616,8 @@ onclick="copiarCupon('${c.codigo}')"
 
 
 
-});
-
-
 
 });
-
 
 
 
@@ -552,9 +631,9 @@ onclick="copiarCupon('${c.codigo}')"
 
 
 
-// ===============================
+// ============================
 // COPIAR CUPON
-// ===============================
+// ============================
 
 
 window.copiarCupon=function(codigo){
@@ -562,6 +641,7 @@ window.copiarCupon=function(codigo){
 
 
 navigator.clipboard.writeText(codigo);
+
 
 
 
@@ -577,79 +657,14 @@ toast.classList.add("show");
 
 
 
+
 setTimeout(()=>{
 
 
 toast.classList.remove("show");
 
 
-
 },1200);
-
-
-
-
-
-
-// contador local
-
-
-let copias=
-
-Number(localStorage.getItem("copias") || 0);
-
-
-
-copias++;
-
-
-
-localStorage.setItem(
-
-"copias",
-
-copias
-
-);
-
-
-
-
-
-
-
-
-// ahorro comunidad diario
-
-
-let dia=
-
-new Date().toDateString();
-
-
-
-let guardado=
-
-localStorage.getItem("ahorroDia");
-
-
-
-if(guardado!==dia){
-
-
-
-localStorage.setItem(
-
-"ahorroDia",
-
-dia
-
-);
-
-
-
-}
-
 
 
 
@@ -680,13 +695,13 @@ window.location.href=
 
 
 
+// ============================
+// CLICS
+// ============================
 
-// ===============================
-// CLICS OFERTAS
-// ===============================
 
+window.registrarClick=function(id){
 
-window.registrarClick=function(){
 
 
 let clicks=
@@ -710,6 +725,7 @@ localStorage.setItem(
 clicks
 
 );
+
 
 
 };
