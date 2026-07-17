@@ -25,22 +25,12 @@
 <body>
 
 
-<!-- HEADER -->
-
-<header class="hero-header">
+<header>
 
 
-<div class="marca">
+<div class="logo">
 
-
-<img src="logo.png.PNG" class="logo">
-
-
-<div>
-
-<h1>
 ⚡ EL PATRÓN
-</h1>
 
 <span>
 DE LAS OFERTAS
@@ -50,11 +40,8 @@ DE LAS OFERTAS
 </div>
 
 
-</div>
 
-
-
-<button class="menu-btn">
+<button class="menu">
 
 ☰
 
@@ -69,36 +56,21 @@ DE LAS OFERTAS
 
 
 
-
-<!-- HERO -->
-
-
 <section class="hero">
 
 
-<h2>
+<h1>
 
 🔥 Ofertas que nadie encuentra
 
-</h2>
+</h1>
 
 
 <p>
 
-Cupones, descuentos y promociones todos los días
+Cupones, descuentos y promociones en tiempo real
 
 </p>
-
-
-<a href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
-
-target="_blank"
-
-class="hero-whatsapp">
-
-💬 Únete al canal +200 mil seguidores
-
-</a>
 
 
 </section>
@@ -109,44 +81,37 @@ class="hero-whatsapp">
 
 
 
-<!-- CATEGORIAS -->
 
 
-<div class="categorias">
+<nav class="categorias">
 
 
-<a href="https://meli.la/1BCxfbZ">
+<button>
+🔥 Relámpago
+</button>
+
+
+<button>
+💳 Bancarios
+</button>
+
+
+<button>
+⭐ Meli+
+</button>
+
+
+<button>
 🎮 Gaming
-</a>
+</button>
 
 
-<a href="https://meli.la/244DRFQ">
-📱 Celulares
-</a>
+<button>
+📱 Tecnología
+</button>
 
 
-<a href="https://meli.la/2CGAShj">
-👕 Moda
-</a>
-
-
-<a href="https://meli.la/2qyeBxh">
-🏠 Hogar
-</a>
-
-
-<a href="https://meli.la/1r37XCf">
-📷 Cámaras
-</a>
-
-
-<a href="https://meli.la/12DF3Ur">
-✨ Cuidado personal
-</a>
-
-
-</div>
-
+</nav>
 
 
 
@@ -156,12 +121,13 @@ class="hero-whatsapp">
 
 <!-- OFERTAS -->
 
-
-<section class="bloque">
+<section>
 
 
 <h2>
-⚡🔥 OFERTAS RELÁMPAGO
+
+🚨 Ofertas destacadas
+
 </h2>
 
 
@@ -169,7 +135,7 @@ class="hero-whatsapp">
 <div id="carrusel" class="carrusel">
 
 
-<div class="cargando">
+<div class="loader">
 
 Cargando ofertas...
 
@@ -191,41 +157,26 @@ Cargando ofertas...
 
 <!-- CUPONES -->
 
-
-<section class="bloque">
+<section>
 
 
 <h2>
-🎟️ CUPONES DISPONIBLES
+
+⚡ Cupones Relámpago
+
 </h2>
 
 
-<div id="cupones">
+
+<div id="cupones" class="cupones">
+
+
+<div class="loader">
+
+Cargando cupones...
 
 </div>
 
-
-</section>
-
-
-
-
-
-
-
-
-<!-- BANCARIOS -->
-
-
-<section class="bloque">
-
-
-<h2>
-💳 CUPONES BANCARIOS
-</h2>
-
-
-<div id="bancarios">
 
 </div>
 
@@ -240,27 +191,60 @@ Cargando ofertas...
 
 
 
-<!-- MELI+ -->
+<section>
 
 
-<section class="meli-card">
+<h2>
+
+💳 Cupones Bancarios
+
+</h2>
 
 
-<div class="meli-titulo">
 
-💎 MELI+
+<div id="bancarios" class="cupones">
+
+
+<div class="loader">
+
+Cargando bancos...
 
 </div>
 
 
-<p>
-
-Cupón exclusivo para usuarios Meli+
-
-</p>
+</div>
 
 
-<div id="meliPlus">
+</section>
+
+
+
+
+
+
+
+
+
+<section>
+
+
+<h2>
+
+💎 Exclusivos Meli+
+
+</h2>
+
+
+
+<div id="meliPlus" class="cupones">
+
+
+<div class="loader">
+
+Cargando Meli+
+
+</div>
+
 
 </div>
 
@@ -278,7 +262,7 @@ Cupón exclusivo para usuarios Meli+
 <!-- MERCADO PAGO -->
 
 
-<section class="mp-card">
+<section class="mercadopago">
 
 
 <h2>
@@ -302,6 +286,7 @@ Compra mínima $200
 </p>
 
 
+
 <a href="https://mpago.li/1VNjCFE"
 
 target="_blank">
@@ -321,7 +306,7 @@ OBTENER BENEFICIO
 
 
 
-<!-- ESTADISTICAS -->
+<!-- COMUNIDAD -->
 
 
 <section class="comunidad">
@@ -374,7 +359,6 @@ Usuarios
 </div>
 
 
-
 </section>
 
 
@@ -384,7 +368,79 @@ Usuarios
 
 
 
-<!-- TOAST -->
+
+<!-- MENÚ LATERAL -->
+
+<div class="menuPanel">
+
+
+<h2>
+
+📂 Categorías
+
+</h2>
+
+
+
+<a href="https://meli.la/1BCxfbZ">
+
+🎮 Gaming
+
+</a>
+
+
+<a href="https://meli.la/244DRFQ">
+
+📱 Celulares
+
+</a>
+
+
+<a href="https://meli.la/2CGAShj">
+
+👕 Moda
+
+</a>
+
+
+<a href="https://meli.la/2qyeBxh">
+
+🏠 Hogar
+
+</a>
+
+
+<a href="https://meli.la/1r37XCf">
+
+📷 Cámaras y drones
+
+</a>
+
+
+<a href="https://meli.la/12DF3Ur">
+
+✨ Cuidado personal
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+<div class="overlay"></div>
+
+
+
+
+
+
+
+
+<!-- MENSAJE COPIADO -->
 
 
 <div id="toast">
@@ -400,8 +456,6 @@ Usuarios
 
 
 
-<!-- WHATSAPP -->
-
 
 <a class="whatsapp"
 
@@ -410,10 +464,11 @@ href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
 target="_blank">
 
 
-💬 Canal de ofertas
+💬 Únete al canal
 
 
 </a>
+
 
 
 
