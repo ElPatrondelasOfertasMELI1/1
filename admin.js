@@ -1,12 +1,11 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// ADMIN.JS
+// ADMIN.JS FINAL
 // PARTE 1/3
-// COMPATIBLE CON admin.html ACTUAL
 // =====================================================
 
 
-import { initializeApp } from 
+import { initializeApp } from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -29,7 +28,6 @@ from
 
 
 
-
 // ================================
 // FIREBASE
 // ================================
@@ -38,20 +36,21 @@ from
 const firebaseConfig = {
 
 
-apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-authDomain: "patronofertasweb.firebaseapp.com",
+authDomain:"patronofertasweb.firebaseapp.com",
 
-projectId: "patronofertasweb",
+projectId:"patronofertasweb",
 
-storageBucket: "patronofertasweb.firebasestorage.app",
+storageBucket:"patronofertasweb.firebasestorage.app",
 
-messagingSenderId: "292338334268",
+messagingSenderId:"292338334268",
 
-appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
+appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 };
+
 
 
 
@@ -62,7 +61,6 @@ initializeApp(firebaseConfig);
 
 const db =
 getFirestore(app);
-
 
 
 
@@ -82,9 +80,8 @@ let imagenBase64 = "";
 
 
 
-
 // ================================
-// TOAST
+// MENSAJE TOAST
 // ================================
 
 
@@ -98,6 +95,7 @@ document.getElementById("toastAdmin");
 
 
 
+
 if(!toast){
 
 
@@ -105,8 +103,7 @@ toast =
 document.createElement("div");
 
 
-toast.id =
-"toastAdmin";
+toast.id="toastAdmin";
 
 
 document.body.appendChild(toast);
@@ -117,11 +114,11 @@ document.body.appendChild(toast);
 
 
 
-toast.innerHTML =
-texto;
+toast.innerHTML = texto;
 
 
 toast.classList.add("show");
+
 
 
 
@@ -147,11 +144,11 @@ toast.classList.remove("show");
 
 
 // ================================
-// CARGAR IMAGEN
+// IMAGEN BASE64
 // ================================
 
 
-const inputImagen =
+const imagenInput =
 
 document.getElementById("imagen");
 
@@ -165,18 +162,23 @@ document.getElementById("preview");
 
 
 
-if(inputImagen){
+
+if(imagenInput){
 
 
-inputImagen.addEventListener(
+
+imagenInput.addEventListener(
 
 "change",
 
 ()=>{
 
 
+
 const archivo =
-inputImagen.files[0];
+
+imagenInput.files[0];
+
 
 
 
@@ -184,32 +186,43 @@ if(!archivo)return;
 
 
 
+
+
 const lector =
+
 new FileReader();
 
 
 
 
 
-lector.onload = (e)=>{
+lector.onload=(e)=>{
 
 
-imagenBase64 =
-e.target.result;
-
-
-
-preview.src =
-imagenBase64;
+imagenBase64 = e.target.result;
 
 
 
-preview.style.display =
-"block";
+
+if(preview){
+
+
+
+preview.src = imagenBase64;
+
+
+
+preview.style.display="block";
+
+
+
+}
+
 
 
 
 };
+
 
 
 
@@ -226,9 +239,9 @@ lector.readAsDataURL(archivo);
 
 }
 // =====================================================
-// ADMIN.JS
+// ADMIN.JS FINAL
 // PARTE 2/3
-// PUBLICAR OFERTAS Y GUARDAR CUPONES
+// GUARDAR OFERTAS Y CUPONES
 // =====================================================
 
 
@@ -238,7 +251,7 @@ lector.readAsDataURL(archivo);
 // ================================
 
 
-const botonPublicar =
+const publicar =
 
 document.getElementById("publicar");
 
@@ -246,14 +259,12 @@ document.getElementById("publicar");
 
 
 
-if(botonPublicar){
+if(publicar){
 
 
-botonPublicar.addEventListener(
 
-"click",
+publicar.onclick = async()=>{
 
-async()=>{
 
 
 try{
@@ -292,6 +303,7 @@ document.getElementById("tipoOferta").value;
 
 
 
+
 if(
 !titulo ||
 !precioFinal ||
@@ -303,7 +315,7 @@ if(
 
 mostrarMensaje(
 
-"⚠️ Completa título, precio, link e imagen"
+"⚠️ Completa los datos"
 
 );
 
@@ -344,10 +356,7 @@ imagen:imagenBase64,
 clics:0,
 
 
-tipo:
-
-tipoOferta,
-
+tipo:tipoOferta,
 
 
 destacada:
@@ -363,6 +372,7 @@ serverTimestamp()
 
 
 }
+
 
 );
 
@@ -381,28 +391,29 @@ mostrarMensaje(
 
 
 
-
-
-// limpiar imagen
-
-
 imagenBase64="";
-
 
 
 document.getElementById("titulo").value="";
 
+
 document.getElementById("precioAntes").value="";
+
 
 document.getElementById("precioFinal").value="";
 
+
 document.getElementById("link").value="";
+
 
 document.getElementById("imagen").value="";
 
 
 
+if(preview)
+
 preview.style.display="none";
+
 
 
 
@@ -418,28 +429,29 @@ cargarOfertasAdmin();
 catch(error){
 
 
+
 console.error(error);
+
 
 
 mostrarMensaje(
 
-"❌ Error al publicar oferta"
-
-);
-
-
-}
-
-
-
-}
-
+"❌ Error al publicar"
 
 );
 
 
 
 }
+
+
+
+};
+
+
+
+}
+
 
 
 
@@ -454,7 +466,7 @@ mostrarMensaje(
 // ================================
 
 
-const botonCupon =
+const crearCupon =
 
 document.getElementById("crearCupon");
 
@@ -463,14 +475,12 @@ document.getElementById("crearCupon");
 
 
 
-if(botonCupon){
+if(crearCupon){
 
 
-botonCupon.addEventListener(
 
-"click",
+crearCupon.onclick = async()=>{
 
-async()=>{
 
 
 try{
@@ -483,11 +493,9 @@ document.getElementById("codigoCupon").value.trim();
 
 
 
-
 const nombre =
 
 document.getElementById("nombreCupon").value.trim();
-
 
 
 
@@ -512,21 +520,45 @@ document.getElementById("tipoCupon").value;
 
 
 
+// nuevo estado
+
+
+const estado =
+
+document.getElementById("estadoCupon")
+
+?
+
+document.getElementById("estadoCupon").value
+
+:
+
+"activo";
+
+
+
+
+
+
 
 if(!codigo){
 
 
+
 mostrarMensaje(
 
-"⚠️ Falta código del cupón"
+"⚠️ Falta código"
 
 );
+
 
 
 return;
 
 
+
 }
+
 
 
 
@@ -556,7 +588,7 @@ minimo,
 tipo,
 
 
-estado:"activo",
+estado,
 
 
 copias:0
@@ -565,7 +597,10 @@ copias:0
 
 }
 
+
+
 );
+
 
 
 
@@ -585,11 +620,17 @@ mostrarMensaje(
 
 document.getElementById("codigoCupon").value="";
 
+
 document.getElementById("nombreCupon").value="";
+
 
 document.getElementById("descuentoCupon").value="";
 
+
 document.getElementById("minimoCupon").value="";
+
+
+
 
 
 
@@ -597,15 +638,18 @@ cargarCuponesAdmin();
 
 
 
-}
 
+
+}
 
 
 
 catch(error){
 
 
+
 console.error(error);
+
 
 
 mostrarMensaje(
@@ -615,30 +659,23 @@ mostrarMensaje(
 );
 
 
-}
-
-
 
 }
 
 
 
-);
+};
+
 
 
 }
 
 // =====================================================
-// ADMIN.JS
+// ADMIN.JS FINAL
 // PARTE 3/3
-// LISTAS + BORRAR
+// LISTAS + BORRAR + CONTADORES
 // =====================================================
 
-
-
-// ================================
-// CONTENEDORES
-// ================================
 
 
 const listaOfertas =
@@ -657,8 +694,10 @@ document.getElementById("listaCupones");
 
 
 
+
+
 // ================================
-// MOSTRAR OFERTAS
+// OFERTAS ADMIN
 // ================================
 
 
@@ -674,6 +713,7 @@ listaOfertas.innerHTML="";
 
 
 
+
 const datos =
 
 await getDocs(
@@ -686,34 +726,31 @@ collection(db,"ofertas")
 
 
 
-datos.forEach((documento)=>{
+datos.forEach((item)=>{
 
 
 
-const oferta =
-
-documento.data();
+const oferta=item.data();
 
 
 
-
-
-const card =
+const tarjeta=
 
 document.createElement("div");
 
 
 
-card.className="ofertaAdmin";
+tarjeta.className="ofertaAdmin";
 
 
 
 
 
-card.innerHTML = `
 
+tarjeta.innerHTML=`
 
 <img src="${oferta.imagen}">
+
 
 
 <h3>
@@ -723,6 +760,7 @@ ${oferta.titulo}
 </h3>
 
 
+
 <p>
 
 💰 $${oferta.precioFinal}
@@ -730,11 +768,24 @@ ${oferta.titulo}
 </p>
 
 
+
 <p>
 
-${oferta.destacada ? "⭐ Destacada" : ""}
+${oferta.tipo==="relampago"
 
-${oferta.tipo==="relampago" ? "⚡ Relámpago" : ""}
+?"⚡ RELÁMPAGO"
+
+:
+
+oferta.destacada
+
+?"⭐ DESTACADA"
+
+:
+
+"🔥 NORMAL"
+
+}
 
 </p>
 
@@ -753,9 +804,9 @@ ${oferta.tipo==="relampago" ? "⚡ Relámpago" : ""}
 
 
 
-card.querySelector("button")
+tarjeta.querySelector("button")
 
-.onclick = async()=>{
+.onclick=async()=>{
 
 
 
@@ -767,7 +818,7 @@ db,
 
 "ofertas",
 
-documento.id
+item.id
 
 )
 
@@ -793,7 +844,7 @@ cargarOfertasAdmin();
 
 
 
-listaOfertas.appendChild(card);
+listaOfertas.appendChild(tarjeta);
 
 
 
@@ -812,7 +863,7 @@ listaOfertas.appendChild(card);
 
 
 // ================================
-// MOSTRAR CUPONES
+// CUPONES ADMIN
 // ================================
 
 
@@ -828,6 +879,7 @@ listaCupones.innerHTML="";
 
 
 
+
 const datos =
 
 await getDocs(
@@ -840,38 +892,85 @@ collection(db,"cupones")
 
 
 
-datos.forEach((documento)=>{
+
+datos.forEach((item)=>{
 
 
 
-const cupon =
-
-documento.data();
+const cupon=item.data();
 
 
 
-
-
-const card =
+const tarjeta=
 
 document.createElement("div");
 
 
 
-card.className="ofertaAdmin";
+tarjeta.className="ofertaAdmin";
 
 
 
 
 
-card.innerHTML = `
 
+let estado=
+
+"🟢 DISPONIBLE";
+
+
+
+if(cupon.estado==="agotando"){
+
+
+estado=
+
+"⚡ ÚLTIMAS PIEZAS";
+
+
+}
+
+
+
+if(cupon.estado==="agotado"){
+
+
+estado=
+
+"🔴 AGOTADO";
+
+
+}
+
+
+
+
+
+
+tarjeta.innerHTML=`
 
 <h3>
 
-🎟️ ${cupon.codigo}
+🎟️ ${cupon.nombre || "CUPÓN"}
 
 </h3>
+
+
+
+<strong>
+
+${cupon.codigo}
+
+</strong>
+
+
+
+<p>
+
+${estado}
+
+</p>
+
 
 
 <p>
@@ -882,18 +981,20 @@ $${cupon.descuento}
 </p>
 
 
+
 <p>
 
-🛒 Mínimo:
-${cupon.minimo}
+🛒 Compra mínima:
+$${cupon.minimo}
 
 </p>
 
 
+
 <p>
 
-Tipo:
-${cupon.tipo}
+📋 Copias:
+${cupon.copias || 0}
 
 </p>
 
@@ -913,10 +1014,9 @@ ${cupon.tipo}
 
 
 
+tarjeta.querySelector("button")
 
-card.querySelector("button")
-
-.onclick = async()=>{
+.onclick=async()=>{
 
 
 
@@ -928,7 +1028,7 @@ db,
 
 "cupones",
 
-documento.id
+item.id
 
 )
 
@@ -954,7 +1054,8 @@ cargarCuponesAdmin();
 
 
 
-listaCupones.appendChild(card);
+
+listaCupones.appendChild(tarjeta);
 
 
 
@@ -977,7 +1078,7 @@ listaCupones.appendChild(card);
 // ================================
 
 
-async function actualizarEstadisticas(){
+async function actualizarContadores(){
 
 
 
@@ -998,6 +1099,7 @@ await getDocs(
 collection(db,"cupones")
 
 );
+
 
 
 
@@ -1053,4 +1155,4 @@ cargarOfertasAdmin();
 cargarCuponesAdmin();
 
 
-actualizarEstadisticas();
+actualizarContadores();
