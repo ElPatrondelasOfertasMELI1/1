@@ -1,7 +1,7 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // GRAFICAS.JS
-// SISTEMA DE GRAFICAS ADMIN PRO
+// ESTADISTICAS VISUALES ADMIN
 // =====================================================
 
 
@@ -13,7 +13,9 @@ import {
 
 getFirestore,
 collection,
-getDocs
+getDocs,
+doc,
+getDoc
 
 }
 
@@ -24,11 +26,15 @@ from
 
 
 
+// ==============================
+// FIREBASE
+// ==============================
+
 
 const firebaseConfig={
 
 
-apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"AIzaSyBo_wk-k8TrcSl0MQzQ0hoUCvAKre94hW0",
 
 authDomain:"patronofertasweb.firebaseapp.com",
 
@@ -39,6 +45,7 @@ storageBucket:"patronofertasweb.firebasestorage.app",
 messagingSenderId:"292338334268",
 
 appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
+
 
 };
 
@@ -55,50 +62,44 @@ getFirestore(app);
 
 
 
-
-let graficaVisitas=null;
-
-
-
+let graficaVisitas;
+let graficaCopias;
+let graficaClics;
 
 
 
 
 
 
-// =====================================================
-// GRAFICA DE VISITAS
-// =====================================================
+// ==============================
+// CARGAR ESTADISTICAS
+// ==============================
 
 
-async function graficaVisitasAdmin(){
+async function cargarGraficas(){
 
 
-const canvas =
-document.getElementById(
-"graficaVisitas"
+const visitas =
+await getDoc(
+doc(db,"estadisticas","visitas")
 );
 
 
 
-if(!canvas)return;
+const datosVisitas =
+visitas.exists()
+?
+visitas.data()
+:
+{};
 
 
 
 
 
-const datos =
-await getDocs(
-
-collection(
-db,
-"estadisticas_diarias"
-)
-
-);
-
-
-
+// ==============================
+// VISITAS
+// ==============================
 
 
 let fechas=[];
@@ -107,18 +108,20 @@ let valores=[];
 
 
 
+Object.keys(datosVisitas)
 
-datos.forEach(item=>{
+.filter(x=>x!=="total")
+
+.sort()
+
+.forEach(dia=>{
 
 
-const d=item.data();
-
-
-fechas.push(item.id);
+fechas.push(dia);
 
 
 valores.push(
-d.visitas || 0
+datosVisitas[dia] || 0
 );
 
 
@@ -128,44 +131,60 @@ d.visitas || 0
 
 
 
-// ORDENAR POR FECHA
 
-
-const ordenado =
-fechas.map((fecha,i)=>{
-
-
-return {
-
-fecha:fecha,
-
-valor:valores[i]
-
-};
-
-
-})
-
-.sort((a,b)=>
-
-a.fecha.localeCompare(
-b.fecha
-
-)
-
+crearGraficaVisitas(
+fechas,
+valores
 );
 
 
 
 
 
-fechas =
-ordenado.map(x=>x.fecha);
+// ==============================
+// COPIAS CUPONES
+// ==============================
+
+
+const cupones =
+await getDocs(
+collection(db,"cupones")
+);
 
 
 
-valores =
-ordenado.map(x=>x.valor);
+let nombresCupon=[];
+
+let copias=[];
+
+
+
+cupones.forEach(item=>{
+
+
+const c=item.data();
+
+
+nombresCupon.push(
+c.nombre || "Cupón"
+);
+
+
+copias.push(
+Number(c.copias || 0)
+);
+
+
+});
+
+
+
+
+
+crearGraficaCopias(
+nombresCupon,
+copias
+);
 
 
 
@@ -173,22 +192,85 @@ ordenado.map(x=>x.valor);
 
 
 
-if(graficaVisitas){
 
-graficaVisitas.destroy();
+// ==============================
+// CLICS OFERTAS
+// ==============================
+
+
+const ofertas =
+await getDocs(
+collection(db,"ofertas")
+);
+
+
+
+let productos=[];
+
+let clicks=[];
+
+
+
+ofertas.forEach(item=>{
+
+
+const o=item.data();
+
+
+productos.push(
+o.titulo.substring(0,15)
+);
+
+
+
+clicks.push(
+Number(o.clics || 0)
+);
+
+
+
+});
+
+
+
+
+
+crearGraficaClics(
+productos,
+clicks
+);
+
+
+
 
 }
 
 
 
 
+// =====================================================
+// GRAFICA VISITAS
+// =====================================================
+
+
+function crearGraficaVisitas(labels,data){
+
+
+const canvas =
+document.getElementById("graficaVisitas");
+
+
+if(!canvas)return;
+
+
+
+if(graficaVisitas)
+graficaVisitas.destroy();
+
+
 
 graficaVisitas =
-new Chart(
-
-canvas,
-
-{
+new Chart(canvas,{
 
 
 type:"line",
@@ -197,60 +279,36 @@ type:"line",
 data:{
 
 
-labels:fechas,
+labels,
 
 
 datasets:[{
 
+
 label:"Visitas",
 
-data:valores,
+data,
 
-borderWidth:3,
-
-tension:.4
+tension:.3
 
 }]
 
-
 },
-
 
 
 options:{
 
 
-responsive:true,
-
-
-plugins:{
-
-
-legend:{
-
-
-display:true
-
-}
+responsive:true
 
 
 }
 
 
-
-}
-
-
-}
-
-);
-
-
+});
 
 
 }
-
-
 
 
 
@@ -259,79 +317,28 @@ display:true
 
 
 // =====================================================
-// GRAFICA COPIAS CUPONES
+// GRAFICA COPIAS
 // =====================================================
 
 
-async function graficaCopias(){
-
+function crearGraficaCopias(labels,data){
 
 
 const canvas =
-document.getElementById(
-"graficaCopias"
-);
-
+document.getElementById("graficaCopias");
 
 
 if(!canvas)return;
 
 
 
-
-const datos =
-await getDocs(
-
-collection(
-db,
-"cupones"
-)
-
-);
+if(graficaCopias)
+graficaCopias.destroy();
 
 
 
-
-
-let nombres=[];
-
-let copias=[];
-
-
-
-
-
-datos.forEach(item=>{
-
-
-const c=item.data();
-
-
-
-nombres.push(
-c.nombre || "Cupón"
-);
-
-
-
-copias.push(
-Number(c.copias || 0)
-);
-
-
-
-});
-
-
-
-
-
-
-new Chart(
-
-canvas,
-
-{
+graficaCopias =
+new Chart(canvas,{
 
 
 type:"bar",
@@ -340,7 +347,7 @@ type:"bar",
 data:{
 
 
-labels:nombres,
+labels,
 
 
 datasets:[{
@@ -348,11 +355,7 @@ datasets:[{
 
 label:"Copias",
 
-data:copias,
-
-
-borderWidth:2
-
+data
 
 }]
 
@@ -365,105 +368,46 @@ options:{
 
 responsive:true
 
-}
-
-
 
 }
-
-);
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// GRAFICA OFERTAS CLICS
-// =====================================================
-
-
-async function graficaClics(){
-
-
-
-const canvas =
-document.getElementById(
-"graficaClics"
-);
-
-
-
-if(!canvas)return;
-
-
-
-
-const datos =
-await getDocs(
-
-collection(
-db,
-"ofertas"
-)
-
-);
-
-
-
-
-
-let nombres=[];
-
-let clics=[];
-
-
-
-
-
-datos.forEach(item=>{
-
-
-const o=item.data();
-
-
-
-nombres.push(
-
-o.titulo.substring(0,15)
-
-);
-
-
-
-clics.push(
-
-Number(o.clics || 0)
-
-);
-
 
 
 });
 
 
 
+}
 
 
 
-new Chart(
 
-canvas,
 
-{
+
+
+
+// =====================================================
+// GRAFICA CLICS
+// =====================================================
+
+
+function crearGraficaClics(labels,data){
+
+
+const canvas =
+document.getElementById("graficaClics");
+
+
+if(!canvas)return;
+
+
+
+if(graficaClics)
+graficaClics.destroy();
+
+
+
+graficaClics =
+new Chart(canvas,{
 
 
 type:"bar",
@@ -472,7 +416,7 @@ type:"bar",
 data:{
 
 
-labels:nombres,
+labels,
 
 
 datasets:[{
@@ -480,11 +424,7 @@ datasets:[{
 
 label:"Clics",
 
-data:clics,
-
-
-borderWidth:2
-
+data
 
 }]
 
@@ -492,27 +432,20 @@ borderWidth:2
 },
 
 
-
 options:{
 
 
 responsive:true
 
-}
-
-
-
-}
-
-);
-
-
-
-
 
 }
 
 
+});
+
+
+
+}
 
 
 
@@ -520,16 +453,9 @@ responsive:true
 
 
 
-
-// =====================================================
+// ==============================
 // INICIO
-// =====================================================
+// ==============================
 
 
-graficaVisitasAdmin();
-
-
-graficaCopias();
-
-
-graficaClics();
+cargarGraficas();
