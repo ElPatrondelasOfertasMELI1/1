@@ -629,7 +629,7 @@ let nombreFinal;
 if(tipoCupon.value==="relampago"){
 
 
-nombreFinal="Cupon";
+nombreFinal="CUPON";
 
 
 }else{
