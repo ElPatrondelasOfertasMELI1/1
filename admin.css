@@ -642,3 +642,280 @@ font-size:18px;
 
 
 }
+
+/* =====================================================
+   ESTADISTICAS PRO - DASHBOARD GRAFICAS
+   EL PATRÓN DE LAS OFERTAS
+===================================================== */
+
+
+.estadisticasPro{
+
+margin-top:25px;
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+gap:18px;
+
+}
+
+
+
+
+.graficaCard{
+
+background:
+
+linear-gradient(
+145deg,
+#151515,
+#080808
+);
+
+border:1px solid #333;
+
+border-radius:22px;
+
+padding:20px;
+
+box-shadow:
+
+0 10px 30px rgba(0,0,0,.5);
+
+}
+
+
+
+.graficaCard h2{
+
+margin:0 0 15px;
+
+font-size:20px;
+
+color:#ffd600;
+
+font-weight:900;
+
+}
+
+
+
+
+.graficaCard canvas{
+
+width:100%!important;
+
+height:250px!important;
+
+background:#0b0b0b;
+
+border-radius:15px;
+
+padding:10px;
+
+}
+
+
+
+
+
+/* RESUMEN DEL DIA */
+
+
+.resumenDia{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(150px,1fr));
+
+gap:15px;
+
+margin-top:20px;
+
+}
+
+
+
+.resumenItem{
+
+background:#111;
+
+border:1px solid #ffd600;
+
+border-radius:18px;
+
+padding:18px;
+
+text-align:center;
+
+}
+
+
+
+.resumenItem strong{
+
+display:block;
+
+font-size:32px;
+
+color:#ffd600;
+
+font-weight:900;
+
+}
+
+
+
+.resumenItem span{
+
+color:#ddd;
+
+font-size:14px;
+
+font-weight:700;
+
+}
+
+
+
+
+
+/* TABLA ESTADISTICAS */
+
+
+.tablaStats{
+
+width:100%;
+
+overflow-x:auto;
+
+margin-top:20px;
+
+}
+
+
+
+.tablaStats table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:#111;
+
+border-radius:15px;
+
+overflow:hidden;
+
+}
+
+
+
+.tablaStats th{
+
+background:#ffd600;
+
+color:#111;
+
+padding:12px;
+
+font-weight:900;
+
+}
+
+
+
+.tablaStats td{
+
+padding:12px;
+
+border-bottom:1px solid #333;
+
+color:white;
+
+text-align:center;
+
+}
+
+
+
+
+/* BOTONES FILTROS */
+
+
+.filtrosStats{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-bottom:20px;
+
+}
+
+
+
+.filtrosStats button{
+
+background:#ffd600;
+
+color:#111;
+
+border:0;
+
+padding:10px 18px;
+
+border-radius:50px;
+
+font-weight:900;
+
+cursor:pointer;
+
+}
+
+
+
+.filtrosStats button:hover{
+
+transform:scale(1.05);
+
+}
+
+
+
+
+
+/* MOVIL */
+
+
+@media(max-width:600px){
+
+
+.graficaCard{
+
+padding:15px;
+
+}
+
+
+.graficaCard canvas{
+
+height:220px!important;
+
+}
+
+
+.resumenItem strong{
+
+font-size:26px;
+
+}
+
+
+}
