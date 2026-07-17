@@ -1,23 +1,15 @@
-/* ===================================
-   EL PATRÓN DE LAS OFERTAS
-   ADMIN CSS PRO LIMPIO
-=================================== */
-
-
 *{
 box-sizing:border-box;
 margin:0;
 padding:0;
+font-family:'Inter',sans-serif;
 }
-
 
 
 body{
 
-font-family:'Inter',sans-serif;
-
 background:
-radial-gradient(circle at top,#2b2100,#050505 50%);
+radial-gradient(circle at top,#3b3000,#050505 55%);
 
 color:white;
 
@@ -27,7 +19,7 @@ min-height:100vh;
 
 
 
-
+/* APP */
 
 .app{
 
@@ -37,16 +29,9 @@ display:flex;
 
 
 
-
-
 /* SIDEBAR */
 
-
 .sidebar{
-
-width:260px;
-
-height:100vh;
 
 position:fixed;
 
@@ -54,11 +39,17 @@ left:0;
 
 top:0;
 
-background:#090909;
+height:100vh;
+
+width:260px;
+
+background:#0b0b0b;
 
 border-right:1px solid #333;
 
 padding:25px;
+
+z-index:10;
 
 }
 
@@ -68,15 +59,14 @@ padding:25px;
 
 text-align:center;
 
-margin-bottom:40px;
+margin-bottom:35px;
 
 }
 
 
-
 .logo{
 
-font-size:45px;
+font-size:55px;
 
 }
 
@@ -84,22 +74,28 @@ font-size:45px;
 
 .brand h2{
 
-color:#FFD600;
+color:#ffd600;
+
+font-size:28px;
 
 font-weight:900;
 
 }
 
 
-
 .brand span{
 
 color:#aaa;
+
+font-weight:800;
 
 font-size:13px;
 
 }
 
+
+
+/* MENU */
 
 
 .menuItem{
@@ -108,34 +104,42 @@ width:100%;
 
 padding:15px;
 
-margin-bottom:10px;
+margin-bottom:12px;
 
 border:0;
 
-border-radius:15px;
+border-radius:18px;
 
-background:#151515;
+background:#171717;
 
 color:white;
 
-font-weight:800;
+font-size:15px;
+
+font-weight:900;
 
 cursor:pointer;
 
-}
-
-
-
-.menuItem:hover{
-
-background:#FFD600;
-
-color:black;
+transition:.25s;
 
 }
 
 
 
+.menuItem:hover,
+.menuItem.activo{
+
+background:#ffd600;
+
+color:#000;
+
+transform:translateX(5px);
+
+}
+
+
+
+/* SALIR */
 
 
 #salir{
@@ -152,7 +156,7 @@ padding:15px;
 
 border:0;
 
-border-radius:20px;
+border-radius:18px;
 
 background:#ff3131;
 
@@ -160,8 +164,9 @@ color:white;
 
 font-weight:900;
 
-}
+cursor:pointer;
 
+}
 
 
 
@@ -187,9 +192,11 @@ width:100%;
 
 .topbar h1{
 
-font-size:32px;
+font-size:36px;
 
-color:#FFD600;
+color:#ffd600;
+
+font-weight:900;
 
 }
 
@@ -199,8 +206,9 @@ color:#FFD600;
 
 color:#aaa;
 
-}
+margin-top:5px;
 
+}
 
 
 
@@ -230,11 +238,13 @@ background:#111;
 
 border:1px solid #333;
 
-padding:25px;
-
 border-radius:25px;
 
+padding:25px;
+
 text-align:center;
+
+box-shadow:0 10px 25px rgba(0,0,0,.3);
 
 }
 
@@ -244,9 +254,25 @@ text-align:center;
 
 font-size:35px;
 
-color:#FFD600;
+color:#ffd600;
+
+font-weight:900;
 
 }
+
+
+
+
+
+.card p{
+
+color:#aaa;
+
+font-weight:800;
+
+}
+
+
 
 
 
@@ -261,21 +287,25 @@ background:#111;
 
 border:1px solid #333;
 
-padding:25px;
-
 border-radius:25px;
+
+padding:25px;
 
 margin-bottom:25px;
 
+box-shadow:0 10px 25px rgba(0,0,0,.25);
+
 }
-
-
 
 
 
 .panel h2{
 
+font-size:22px;
+
 margin-bottom:20px;
+
+color:#fff;
 
 }
 
@@ -283,7 +313,7 @@ margin-bottom:20px;
 
 
 
-/* FORMULARIO */
+/* FORMULARIOS */
 
 
 .formGrid{
@@ -301,37 +331,32 @@ gap:15px;
 input,
 select{
 
+
 width:100%;
 
 padding:15px;
 
-background:#222;
+border:none;
 
-border:0;
+outline:none;
 
 border-radius:15px;
+
+background:#222;
 
 color:white;
 
 font-size:15px;
 
+font-weight:700;
+
 }
 
 
 
+input::placeholder{
 
-
-.preview{
-
-width:150px;
-
-height:150px;
-
-object-fit:cover;
-
-border-radius:20px;
-
-border:2px solid #FFD600;
+color:#777;
 
 }
 
@@ -339,26 +364,63 @@ border:2px solid #FFD600;
 
 
 
-#publicar{
 
-margin-top:20px;
+
+/* BOTONES */
+
+
+.btnPrincipal{
+
 
 width:100%;
 
+margin-top:20px;
+
 padding:18px;
 
-background:#FFD600;
-
-color:black;
-
-border:0;
+border:none;
 
 border-radius:20px;
+
+background:#ffd600;
+
+color:#000;
 
 font-size:18px;
 
 font-weight:900;
 
+cursor:pointer;
+
+transition:.25s;
+
+
+}
+
+
+
+.btnPrincipal:hover{
+
+transform:scale(1.02);
+
+box-shadow:0 0 25px #ffd600;
+
+}
+
+
+
+
+
+#mensaje{
+
+margin-top:15px;
+
+color:#ffd600;
+
+font-weight:900;
+
+text-align:center;
+
 }
 
 
@@ -367,18 +429,16 @@ font-weight:900;
 
 
 
-/* BARRA CARGA */
+
+/* LISTAS */
 
 
-#barraCarga{
+#listaOfertas,
+#listaCupones{
 
-height:12px;
+display:grid;
 
-background:#222;
-
-border-radius:20px;
-
-overflow:hidden;
+gap:15px;
 
 margin-top:20px;
 
@@ -386,54 +446,26 @@ margin-top:20px;
 
 
 
-#progresoCarga{
 
-height:100%;
-
-width:0%;
-
-background:#FFD600;
-
-transition:.3s;
-
-}
-
-
-
-#estadoSubida{
-
-margin-top:10px;
-
-color:#FFD600;
-
-}
-
-
-
-
-
-/* LISTA OFERTAS */
-
-
-#listaOfertas{
-
-display:grid;
-
-gap:15px;
-
-}
-
+/* TARJETA OFERTA ADMIN */
 
 
 .ofertaAdmin{
 
+
 background:#171717;
 
-padding:20px;
+border:1px solid #333;
 
 border-radius:20px;
 
-border:1px solid #333;
+padding:18px;
+
+display:flex;
+
+gap:15px;
+
+align-items:center;
 
 }
 
@@ -441,33 +473,22 @@ border:1px solid #333;
 
 .ofertaAdmin img{
 
-width:100px;
 
-height:100px;
+width:90px;
+
+height:90px;
 
 object-fit:cover;
 
 border-radius:15px;
 
+background:white;
+
 }
 
 
 
-
-
-.ofertaAdmin button{
-
-margin-top:15px;
-
-padding:12px;
-
-border:0;
-
-border-radius:15px;
-
-background:#ff3131;
-
-color:white;
+.ofertaAdmin h3{
 
 font-weight:900;
 
@@ -476,16 +497,99 @@ font-weight:900;
 
 
 
+.ofertaAdmin button{
 
 
+background:#ff3131;
 
-#graficaClicks{
+color:white;
 
-width:100%!important;
+border:0;
 
-max-height:350px;
+padding:10px;
+
+border-radius:12px;
+
+font-weight:900;
+
+cursor:pointer;
 
 }
+
+
+
+
+
+/* CUPONES */
+
+
+.cuponAdmin{
+
+
+background:#181818;
+
+border-radius:20px;
+
+border:1px solid #333;
+
+padding:20px;
+
+}
+
+
+
+.cuponAdmin strong{
+
+color:#ffd600;
+
+font-size:20px;
+
+}
+
+
+
+
+
+/* ESTADISTICAS */
+
+
+.stats{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+}
+
+
+
+.stats div{
+
+background:#181818;
+
+padding:25px;
+
+border-radius:20px;
+
+text-align:center;
+
+}
+
+
+
+.stats h3{
+
+font-size:35px;
+
+color:#00c853;
+
+font-weight:900;
+
+}
+
+
 
 
 
@@ -502,7 +606,6 @@ max-height:350px;
 display:none;
 
 }
-
 
 
 .contenido{
@@ -526,6 +629,24 @@ grid-template-columns:1fr;
 .formGrid{
 
 grid-template-columns:1fr;
+
+}
+
+
+
+.stats{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.ofertaAdmin{
+
+flex-direction:column;
+
+align-items:flex-start;
 
 }
 
