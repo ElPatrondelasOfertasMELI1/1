@@ -16,13 +16,15 @@ padding:0;
 
 
 
+
 body{
+
 
 font-family:'Inter',sans-serif;
 
 background:
 
-radial-gradient(circle at top,#332600,#050505 45%);
+radial-gradient(circle at top,#392b00,#050505 50%);
 
 color:white;
 
@@ -36,10 +38,12 @@ min-height:100vh;
 
 
 
+
 /* HEADER */
 
 
 .adminHeader{
+
 
 display:flex;
 
@@ -51,25 +55,28 @@ padding:20px;
 
 background:rgba(0,0,0,.85);
 
-border-bottom:1px solid rgba(255,215,0,.25);
+border-bottom:
+
+1px solid rgba(255,215,0,.25);
 
 backdrop-filter:blur(15px);
+
 
 }
 
 
 
-
-
 .logo{
 
-font-size:26px;
+
+font-size:25px;
 
 font-weight:900;
 
+color:#FFD600;
+
 line-height:20px;
 
-color:#FFD600;
 
 }
 
@@ -77,13 +84,15 @@ color:#FFD600;
 
 .logo span{
 
+
 display:block;
 
-font-size:13px;
+font-size:12px;
 
 color:white;
 
 letter-spacing:2px;
+
 
 }
 
@@ -93,6 +102,7 @@ letter-spacing:2px;
 
 
 #salir{
+
 
 background:#ff3131;
 
@@ -105,6 +115,7 @@ padding:12px 20px;
 border-radius:20px;
 
 font-weight:900;
+
 
 }
 
@@ -120,7 +131,9 @@ font-weight:900;
 
 .dashboard{
 
+
 padding:20px;
+
 
 }
 
@@ -128,13 +141,15 @@ padding:20px;
 
 .dashboard h1{
 
-font-size:30px;
 
-font-weight:900;
+font-size:30px;
 
 color:#FFD600;
 
-margin-bottom:20px;
+font-weight:900;
+
+margin-bottom:25px;
+
 
 }
 
@@ -150,6 +165,7 @@ margin-bottom:20px;
 
 .stats{
 
+
 display:grid;
 
 grid-template-columns:repeat(3,1fr);
@@ -158,27 +174,30 @@ gap:15px;
 
 margin-bottom:25px;
 
+
 }
+
 
 
 
 .cardStat{
 
+
 background:
 
-linear-gradient(160deg,#161616,#080808);
+linear-gradient(160deg,#171717,#080808);
 
-border-radius:25px;
 
 padding:20px;
 
+border-radius:25px;
+
 text-align:center;
 
-border:1px solid rgba(255,215,0,.25);
+border:
 
-box-shadow:
+1px solid rgba(255,215,0,.25);
 
-0 15px 30px rgba(0,0,0,.4);
 
 }
 
@@ -186,9 +205,11 @@ box-shadow:
 
 .cardStat h3{
 
-font-size:15px;
 
 color:#aaa;
+
+font-size:15px;
+
 
 }
 
@@ -196,15 +217,18 @@ color:#aaa;
 
 .cardStat strong{
 
+
 display:block;
 
 font-size:32px;
 
-margin-top:10px;
-
 color:#FFD600;
 
+margin-top:10px;
+
+
 }
+
 
 
 
@@ -218,9 +242,11 @@ color:#FFD600;
 
 .panel{
 
+
 background:
 
-linear-gradient(160deg,#151515,#080808);
+linear-gradient(160deg,#151515,#090909);
+
 
 padding:25px;
 
@@ -228,22 +254,28 @@ border-radius:25px;
 
 margin-bottom:25px;
 
-border:1px solid rgba(255,215,0,.2);
+border:
+
+1px solid rgba(255,215,0,.2);
+
 
 }
-
 
 
 
 .panel h2{
 
-font-size:22px;
-
-margin-bottom:20px;
 
 color:#FFD600;
 
+margin-bottom:20px;
+
+font-size:22px;
+
+
 }
+
+
 
 
 
@@ -254,7 +286,10 @@ color:#FFD600;
 /* INPUTS */
 
 
-.panel input{
+.panel input,
+
+.panel select{
+
 
 width:100%;
 
@@ -266,34 +301,69 @@ border-radius:16px;
 
 border:none;
 
-outline:none;
-
 background:#222;
 
 color:white;
 
 font-size:15px;
 
-}
-
-
-
-.panel input::placeholder{
-
-color:#777;
 
 }
 
 
 
 
+.panel select{
+
+
+cursor:pointer;
+
+
+}
 
 
 
-/* BOTON PUBLICAR */
 
 
-#publicar{
+
+
+/* PREVIEW IMAGEN */
+
+
+.preview{
+
+
+width:100%;
+
+max-height:250px;
+
+object-fit:contain;
+
+display:none;
+
+border-radius:20px;
+
+margin-bottom:15px;
+
+border:
+
+1px solid #333;
+
+
+}
+
+
+
+
+
+
+
+
+/* BOTONES */
+
+
+.panel button{
+
 
 width:100%;
 
@@ -307,61 +377,22 @@ background:#FFD600;
 
 color:#000;
 
-font-size:16px;
-
 font-weight:900;
+
+font-size:16px;
 
 cursor:pointer;
 
+
 }
 
 
 
-#publicar:active{
+.panel button:active{
+
 
 transform:scale(.96);
 
-}
-
-
-
-
-
-
-
-
-/* BOTONES CUPONES */
-
-
-.tipo{
-
-padding:14px;
-
-margin:5px;
-
-border-radius:18px;
-
-border:none;
-
-background:#111;
-
-color:white;
-
-border:1px solid #333;
-
-font-weight:900;
-
-}
-
-
-
-
-
-.tipo:hover{
-
-background:#FFD600;
-
-color:black;
 
 }
 
@@ -372,29 +403,83 @@ color:black;
 
 
 
-/* LISTA OFERTAS */
+/* LISTAS */
 
 
-#listaOfertas{
+#listaOfertas,
+
+#listaCupones{
+
 
 display:grid;
 
 gap:15px;
 
+
 }
 
 
 
 
-.ofertaAdmin{
+
+
+
+
+
+/* TARJETAS ADMIN */
+
+
+.ofertaAdmin,
+
+.cuponAdmin{
+
 
 background:#111;
 
 padding:18px;
 
-border-radius:20px;
+border-radius:22px;
 
-border:1px solid #333;
+border:
+
+1px solid rgba(255,215,0,.2);
+
+
+}
+
+
+
+
+.ofertaAdmin h3,
+
+.cuponAdmin h3{
+
+
+color:#FFD600;
+
+font-size:18px;
+
+
+}
+
+
+
+
+
+
+.ofertaAdmin img{
+
+
+width:100%;
+
+height:160px;
+
+object-fit:cover;
+
+border-radius:18px;
+
+margin:12px 0;
+
 
 }
 
@@ -404,16 +489,176 @@ border:1px solid #333;
 
 
 
-/* MOVIL */
+
+/* BOTONES ACCIONES */
+
+
+.editar,
+
+
+.borrar{
+
+
+padding:12px;
+
+border:none;
+
+border-radius:15px;
+
+font-weight:900;
+
+margin-top:10px;
+
+width:48%;
+
+
+}
+
+
+
+.editar{
+
+
+background:#FFD600;
+
+color:black;
+
+
+}
+
+
+
+.borrar{
+
+
+background:#ff3131;
+
+color:white;
+
+
+}
+
+
+
+
+
+
+
+
+/* LOGIN */
+
+
+.login{
+
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+
+}
+
+
+
+.loginBox{
+
+
+width:100%;
+
+max-width:380px;
+
+background:#111;
+
+padding:30px;
+
+border-radius:30px;
+
+text-align:center;
+
+border:
+
+1px solid rgba(255,215,0,.25);
+
+
+}
+
+
+
+.loginBox h1{
+
+
+color:#FFD600;
+
+font-size:32px;
+
+
+}
+
+
+
+.loginBox input{
+
+
+width:100%;
+
+padding:15px;
+
+margin:8px 0;
+
+background:#222;
+
+border:none;
+
+border-radius:15px;
+
+color:white;
+
+
+}
+
+
+
+.loginBox button{
+
+
+width:100%;
+
+padding:16px;
+
+background:#FFD600;
+
+border:none;
+
+border-radius:15px;
+
+font-weight:900;
+
+margin-top:15px;
+
+
+}
+
+
+
+
+
+
 
 
 @media(max-width:700px){
 
 
-
 .stats{
 
+
 grid-template-columns:1fr;
+
 
 }
 
@@ -421,15 +666,9 @@ grid-template-columns:1fr;
 
 .dashboard{
 
+
 padding:15px;
 
-}
-
-
-
-.dashboard h1{
-
-font-size:25px;
 
 }
 
