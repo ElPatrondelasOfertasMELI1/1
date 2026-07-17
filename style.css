@@ -1,28 +1,37 @@
 /* =====================================================
 EL PATRÓN DE LAS OFERTAS
-STYLE.CSS COMPLETO
+STYLE.CSS
+PARTE 1/4
 ===================================================== */
 
 
 *{
+
 box-sizing:border-box;
+
+margin:0;
+
+padding:0;
+
 }
+
 
 
 body{
 
-margin:0;
-
 font-family:'Inter',sans-serif;
 
 background:
-linear-gradient(
-180deg,
-#050505,
-#111
+
+radial-gradient(
+circle at top,
+#222,
+#050505 45%
 );
 
 color:white;
+
+min-height:100vh;
 
 }
 
@@ -37,19 +46,25 @@ header{
 
 display:flex;
 
-justify-content:space-between;
-
 align-items:center;
 
-padding:18px;
+justify-content:space-between;
 
-background:#080808;
+padding:18px 20px;
+
+background:
+
+rgba(5,5,5,.95);
 
 position:sticky;
 
 top:0;
 
-z-index:20;
+z-index:50;
+
+border-bottom:
+
+1px solid rgba(255,214,0,.25);
 
 }
 
@@ -57,40 +72,57 @@ z-index:20;
 
 .logo{
 
-font-size:24px;
+font-size:26px;
 
 font-weight:900;
 
+line-height:1;
+
 color:#ffd600;
 
+letter-spacing:-1px;
+
 }
+
 
 
 .logo span{
 
 display:block;
 
+font-size:14px;
+
 color:white;
 
-font-size:15px;
+margin-top:5px;
+
+letter-spacing:2px;
 
 }
 
 
 
-
-
 .menu{
 
-background:#ffd600;
+width:48px;
+
+height:48px;
 
 border:0;
 
+border-radius:15px;
+
+background:#ffd600;
+
 font-size:25px;
 
-border-radius:12px;
+font-weight:900;
 
-padding:8px 14px;
+cursor:pointer;
+
+box-shadow:
+
+0 5px 20px rgba(255,214,0,.25);
 
 }
 
@@ -108,7 +140,7 @@ HERO
 
 text-align:center;
 
-padding:35px 20px;
+padding:35px 20px 20px;
 
 }
 
@@ -120,7 +152,19 @@ font-size:32px;
 
 font-weight:900;
 
-margin:0;
+line-height:1.1;
+
+background:
+
+linear-gradient(
+90deg,
+#fff,
+#ffd600
+);
+
+-webkit-background-clip:text;
+
+color:transparent;
 
 }
 
@@ -128,9 +172,56 @@ margin:0;
 
 .hero p{
 
-color:#ccc;
+margin-top:12px;
+
+color:#bbb;
+
+font-size:16px;
+
+font-weight:600;
 
 }
+
+
+
+
+
+
+/* ==============================
+SECCIONES
+============================== */
+
+
+section{
+
+margin-top:20px;
+
+}
+
+
+
+section h2{
+
+font-size:24px;
+
+font-weight:900;
+
+padding:
+
+10px 20px;
+
+color:white;
+
+}
+
+
+
+section h2::first-letter{
+
+color:#ffd600;
+
+}
+
 
 
 
@@ -144,14 +235,17 @@ CATEGORÍAS
 
 .categorias{
 
-
 display:flex;
 
 gap:12px;
 
-padding:15px;
+padding:
+
+15px 20px;
 
 overflow-x:auto;
+
+-webkit-overflow-scrolling:touch;
 
 }
 
@@ -165,25 +259,55 @@ display:none;
 
 
 
+
 .categorias a{
 
 
-text-decoration:none;
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+
+background:
+
+linear-gradient(
+145deg,
+#ffd600,
+#ffb300
+);
+
 
 color:#111;
 
-background:#ffd600;
+text-decoration:none;
 
-padding:12px 18px;
 
-border-radius:25px;
+padding:
 
-font-weight:800;
+12px 18px;
+
+
+border-radius:30px;
+
+
+font-size:15px;
+
+
+font-weight:900;
+
 
 white-space:nowrap;
 
+
 box-shadow:
-0 5px 15px #0008;
+
+0 8px 20px rgba(255,214,0,.25);
+
+
+transition:.2s;
+
 
 }
 
@@ -191,36 +315,49 @@ box-shadow:
 
 
 
+.categorias a:active{
+
+
+transform:scale(.95);
+
+
+}
+
+
+
 
 
 /* ==============================
-TÍTULOS
+CONTENEDORES
 ============================== */
 
 
-h2{
+.loader{
 
-padding-left:18px;
+text-align:center;
 
-font-size:25px;
+padding:40px;
+
+color:#ffd600;
 
 font-weight:900;
 
 }
 
-
-
-
+/* =====================================================
+STYLE.CSS
+PARTE 2/4
+CARRUSEL OFERTAS
+===================================================== */
 
 
 
 /* ==============================
-CARRUSEL OFERTAS
+CARRUSEL PRINCIPAL
 ============================== */
 
 
 .carrusel{
-
 
 display:flex;
 
@@ -228,9 +365,11 @@ gap:18px;
 
 overflow-x:auto;
 
-scroll-snap-type:x mandatory;
+padding:
 
-padding:20px;
+15px 20px 25px;
+
+scroll-snap-type:x mandatory;
 
 -webkit-overflow-scrolling:touch;
 
@@ -247,29 +386,66 @@ display:none;
 
 
 
+
+/* ==============================
+TARJETA OFERTA
+============================== */
+
+
 .oferta,
 .ofertaCard{
 
 
-background:white;
+position:relative;
 
-color:#111;
 
-border-radius:25px;
+min-width:
 
-min-width:90%;
+calc(100% - 40px);
+
 
 scroll-snap-align:center;
 
+
+background:
+
+linear-gradient(
+145deg,
+#191919,
+#070707
+);
+
+
+border-radius:28px;
+
+
 overflow:hidden;
 
+
+border:
+
+2px solid #ffd600;
+
+
 box-shadow:
-0 10px 30px #0008;
+
+
+0 0 25px rgba(255,214,0,.18),
+
+0 15px 40px rgba(0,0,0,.8);
+
+
 
 }
 
 
 
+
+
+
+/* ==============================
+IMAGEN PRODUCTO
+============================== */
 
 
 .oferta img,
@@ -278,28 +454,50 @@ box-shadow:
 
 width:100%;
 
-height:250px;
+
+height:270px;
+
 
 object-fit:contain;
 
-background:white;
 
-padding:10px;
+background:
+
+
+radial-gradient(
+circle,
+#333,
+#111
+);
+
+
+padding:15px;
+
+
+display:block;
+
 
 }
 
 
 
 
+
+
+/* ==============================
+INFORMACIÓN
+============================== */
 
 
 .ofertaTexto,
 .info{
 
 
-padding:18px;
+padding:20px;
+
 
 }
+
 
 
 
@@ -307,41 +505,78 @@ padding:18px;
 .info h3{
 
 
-font-size:18px;
+font-size:19px;
+
 
 font-weight:900;
+
+
+line-height:1.3;
+
+
+color:white;
+
 
 }
 
 
 
+
+
+/* PRECIO ANTERIOR */
 
 
 .precioAntes,
 .antes{
 
 
+color:#999;
+
+
 text-decoration:line-through;
 
-color:#777;
+
+font-size:15px;
+
 
 }
 
+
+
+
+
+/* PRECIO FINAL */
 
 
 .precioFinal,
 .oferta h2{
 
 
-font-size:30px;
+font-size:34px;
+
 
 font-weight:900;
 
-color:#111;
+
+color:#ffd600;
+
+
+margin:
+
+10px 0;
+
 
 }
 
 
+
+
+
+
+
+/* ==============================
+BOTÓN COMPRAR
+============================== */
 
 
 .comprar,
@@ -350,19 +585,43 @@ color:#111;
 
 display:block;
 
-background:#ffd600;
+
+background:
+
+
+linear-gradient(
+90deg,
+#ffd600,
+#ffb300
+);
+
 
 color:#111;
 
+
 text-align:center;
 
-padding:14px;
 
-border-radius:15px;
+text-decoration:none;
+
+
+padding:15px;
+
+
+border-radius:18px;
+
 
 font-weight:900;
 
-text-decoration:none;
+
+font-size:17px;
+
+
+box-shadow:
+
+
+0 6px 20px rgba(255,214,0,.35);
+
 
 }
 
@@ -370,8 +629,92 @@ text-decoration:none;
 
 
 
+.comprar:active,
+.btnComprar:active{
+
+
+transform:scale(.96);
+
+
+}
+
+
+
+
+
+
+
 /* ==============================
-CUPONES
+ETIQUETAS
+============================== */
+
+
+.badge{
+
+
+position:absolute;
+
+
+top:15px;
+
+
+left:15px;
+
+
+padding:8px 14px;
+
+
+border-radius:20px;
+
+
+font-size:13px;
+
+
+font-weight:900;
+
+
+z-index:5;
+
+
+}
+
+
+
+
+.destacada{
+
+
+background:#ffd600;
+
+
+color:#111;
+
+
+}
+
+
+
+.relampago{
+
+
+background:#ff6b00;
+
+
+color:white;
+
+
+}
+
+/* =====================================================
+STYLE.CSS
+PARTE 3/4
+CUPONES PREMIUM
+===================================================== */
+
+
+
+/* ==============================
+CONTENEDOR CUPONES
 ============================== */
 
 
@@ -380,13 +723,23 @@ CUPONES
 
 display:flex;
 
-gap:15px;
+
+gap:16px;
+
 
 overflow-x:auto;
 
-padding:20px;
+
+padding:
+
+15px 20px 25px;
+
 
 scroll-snap-type:x mandatory;
+
+
+-webkit-overflow-scrolling:touch;
+
 
 }
 
@@ -402,29 +755,181 @@ display:none;
 
 
 
+
+/* ==============================
+TARJETA CUPÓN
+============================== */
+
+
 .cupon,
 .cuponCard{
 
 
-background:#fff;
-
-color:#111;
-
 min-width:280px;
 
-padding:20px;
-
-border-radius:22px;
 
 scroll-snap-align:start;
 
+
+background:
+
+
+linear-gradient(
+145deg,
+#191919,
+#070707
+);
+
+
+border:
+
+
+2px solid #ffd600;
+
+
+border-radius:25px;
+
+
+padding:20px;
+
+
+color:white;
+
+
 box-shadow:
-0 8px 25px #0007;
+
+
+0 0 25px rgba(255,214,0,.18),
+
+
+0 15px 35px rgba(0,0,0,.7);
+
+
 
 }
 
 
 
+
+
+
+
+/* ==============================
+TÍTULO CUPÓN
+============================== */
+
+
+.cupon h3,
+.cuponCard h3{
+
+
+color:#ffd600;
+
+
+font-size:20px;
+
+
+font-weight:900;
+
+
+margin-bottom:12px;
+
+
+}
+
+
+
+
+
+
+
+/* ==============================
+CÓDIGO CUPÓN
+============================== */
+
+
+.cupon strong,
+.cuponCard strong{
+
+
+display:block;
+
+
+text-align:center;
+
+
+background:#111;
+
+
+border:
+
+
+1px dashed #ffd600;
+
+
+padding:15px;
+
+
+border-radius:15px;
+
+
+font-size:23px;
+
+
+letter-spacing:2px;
+
+
+color:white;
+
+
+margin:
+
+15px 0;
+
+
+
+}
+
+
+
+
+
+
+
+/* ==============================
+DATOS CUPÓN
+============================== */
+
+
+.cupon p,
+.cuponCard p{
+
+
+font-size:15px;
+
+
+font-weight:700;
+
+
+color:#ddd;
+
+
+margin:
+
+8px 0;
+
+
+}
+
+
+
+
+
+
+
+/* ==============================
+BOTÓN COPIAR
+============================== */
 
 
 .cupon button,
@@ -433,59 +938,144 @@ box-shadow:
 
 width:100%;
 
-background:#ffd600;
 
 border:0;
 
-padding:12px;
 
-border-radius:15px;
+padding:15px;
+
+
+border-radius:18px;
+
+
+background:
+
+
+linear-gradient(
+90deg,
+#ffd600,
+#ffb300
+);
+
+
+color:#111;
+
+
+font-size:16px;
+
 
 font-weight:900;
+
+
+cursor:pointer;
+
+
+box-shadow:
+
+
+0 6px 18px rgba(255,214,0,.35);
+
 
 }
 
 
 
+
+.cupon button:active,
+.cuponCard button:active{
+
+
+transform:scale(.96);
+
+
+}
+
+
+
+
+
+
+
+/* ==============================
+ESTADOS
+============================== */
 
 
 .estado{
 
-padding:5px 12px;
+
+display:inline-block;
+
+
+padding:
+
+7px 15px;
+
 
 border-radius:20px;
 
-font-weight:800;
+
+font-size:13px;
+
+
+font-weight:900;
+
+
+margin-top:10px;
+
 
 }
+
 
 
 
 
 .activo{
 
-background:#3cff72;
+
+background:#00c853;
+
+
+color:white;
+
 
 }
+
+
 
 
 
 .agotando{
 
-background:#ffb300;
+
+background:#ff9800;
+
+
+color:white;
+
 
 }
+
+
 
 
 
 .agotado{
 
-background:#ff4444;
+
+background:#e53935;
+
+
+color:white;
+
 
 }
 
-
-
+/* =====================================================
+STYLE.CSS
+PARTE 4/4
+TOAST + BOTÓN ARRIBA + ADMIN
+===================================================== */
 
 
 
@@ -499,43 +1089,83 @@ TOAST
 
 position:fixed;
 
-bottom:30px;
 
 left:50%;
 
-transform:translateX(-50%)
-translateY(100px);
 
-background:#ffd600;
+bottom:30px;
+
+
+transform:
+
+
+translateX(-50%)
+
+
+translateY(120px);
+
+
+background:
+
+
+linear-gradient(
+90deg,
+#ffd600,
+#ffb300
+);
+
 
 color:#111;
 
+
 padding:15px 25px;
+
 
 border-radius:30px;
 
+
 font-weight:900;
+
+
+font-size:16px;
+
+
+box-shadow:
+
+
+0 10px 30px rgba(0,0,0,.5);
+
 
 opacity:0;
 
-transition:.3s;
 
-z-index:100;
+transition:.35s;
+
+
+z-index:200;
+
 
 
 }
+
 
 
 
 
 #toast.show{
 
+
 opacity:1;
+
 
 transform:
 
+
 translateX(-50%)
+
+
 translateY(0);
+
 
 }
 
@@ -543,8 +1173,11 @@ translateY(0);
 
 
 
+
+
+
 /* ==============================
-BOTÓN SUBIR
+BOTÓN SUBIR ARRIBA
 ============================== */
 
 
@@ -553,32 +1186,53 @@ BOTÓN SUBIR
 
 position:fixed;
 
+
 right:20px;
+
 
 bottom:25px;
 
-background:#ffd600;
 
-color:#111;
+width:52px;
 
-border:0;
 
-width:50px;
+height:52px;
 
-height:50px;
 
 border-radius:50%;
 
+
+border:0;
+
+
+background:#ffd600;
+
+
+color:#111;
+
+
 font-size:25px;
+
 
 font-weight:900;
 
+
 display:none;
 
-z-index:50;
+
+z-index:100;
+
+
+box-shadow:
+
+
+0 8px 25px rgba(255,214,0,.4);
+
 
 
 }
+
+
 
 
 
@@ -594,36 +1248,101 @@ LOGIN
 .login{
 
 
-height:100vh;
+min-height:100vh;
+
 
 display:flex;
 
+
 align-items:center;
+
 
 justify-content:center;
 
+
+padding:20px;
+
+
 }
+
+
 
 
 
 .loginBox{
 
 
-background:white;
+width:100%;
 
-color:#111;
-
-padding:30px;
-
-border-radius:25px;
-
-width:90%;
 
 max-width:400px;
 
+
+background:
+
+
+linear-gradient(
+145deg,
+#191919,
+#070707
+);
+
+
+border:
+
+
+2px solid #ffd600;
+
+
+border-radius:28px;
+
+
+padding:30px;
+
+
 text-align:center;
 
+
+box-shadow:
+
+
+0 0 30px rgba(255,214,0,.2);
+
+
+
 }
+
+
+
+
+.loginBox h1{
+
+
+color:#ffd600;
+
+
+font-size:30px;
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+.loginBox p{
+
+
+color:#ccc;
+
+
+margin:10px 0;
+
+
+}
+
 
 
 
@@ -633,13 +1352,27 @@ text-align:center;
 
 width:100%;
 
+
 padding:15px;
+
 
 margin:8px 0;
 
-border-radius:12px;
 
-border:1px solid #ddd;
+border-radius:15px;
+
+
+border:1px solid #444;
+
+
+background:#111;
+
+
+color:white;
+
+
+font-size:15px;
+
 
 }
 
@@ -652,17 +1385,30 @@ border:1px solid #ddd;
 
 width:100%;
 
+
 padding:15px;
 
-background:#ffd600;
 
 border:0;
 
-border-radius:15px;
+
+border-radius:18px;
+
+
+background:#ffd600;
+
+
+color:#111;
+
 
 font-weight:900;
 
+
+font-size:17px;
+
+
 }
+
 
 
 
@@ -671,34 +1417,156 @@ font-weight:900;
 
 
 /* ==============================
-ADMIN
+ADMIN DASHBOARD
 ============================== */
 
 
 .dashboard{
 
+
 padding:20px;
+
 
 }
 
 
 
-.panel,
-.cardStat,
-.ofertaAdmin{
 
 
-background:white;
+.dashboard h1{
 
-color:#111;
 
-padding:20px;
+font-size:30px;
+
+
+font-weight:900;
+
+
+color:#ffd600;
+
+
+}
+
+
+
+
+
+.stats{
+
+
+display:grid;
+
+
+grid-template-columns:repeat(3,1fr);
+
+
+gap:12px;
+
+
+}
+
+
+
+
+
+.cardStat{
+
+
+background:
+
+
+linear-gradient(
+145deg,
+#191919,
+#070707
+);
+
+
+border:
+
+
+1px solid #ffd600;
+
 
 border-radius:20px;
 
-margin:15px 0;
+
+padding:15px;
+
+
+text-align:center;
+
 
 }
+
+
+
+
+
+.cardStat h3{
+
+
+font-size:14px;
+
+
+color:#ccc;
+
+
+}
+
+
+
+
+
+.cardStat strong{
+
+
+font-size:25px;
+
+
+color:#ffd600;
+
+
+}
+
+
+
+
+
+
+
+
+.panel{
+
+
+background:
+
+
+linear-gradient(
+145deg,
+#191919,
+#070707
+);
+
+
+border:
+
+
+2px solid #ffd600;
+
+
+border-radius:25px;
+
+
+padding:20px;
+
+
+margin:20px 0;
+
+
+}
+
+
 
 
 
@@ -708,13 +1576,29 @@ margin:15px 0;
 
 width:100%;
 
+
 padding:14px;
+
 
 margin:8px 0;
 
-border-radius:12px;
+
+border-radius:15px;
+
+
+background:#111;
+
+
+border:1px solid #444;
+
+
+color:white;
+
 
 }
+
+
+
 
 
 
@@ -724,17 +1608,31 @@ border-radius:12px;
 
 width:100%;
 
+
 padding:15px;
 
-background:#ffd600;
 
 border:0;
 
-border-radius:15px;
+
+border-radius:18px;
+
+
+background:#ffd600;
+
+
+color:#111;
+
 
 font-weight:900;
 
+
+font-size:16px;
+
+
 }
+
+
 
 
 
@@ -745,11 +1643,57 @@ font-weight:900;
 
 width:100%;
 
-max-height:250px;
+
+max-height:260px;
+
 
 object-fit:contain;
 
+
+border-radius:20px;
+
+
+margin-top:15px;
+
+
 display:none;
+
+
+}
+
+
+
+
+
+
+
+.ofertaAdmin{
+
+
+background:
+
+
+linear-gradient(
+145deg,
+#191919,
+#070707
+);
+
+
+border:
+
+
+1px solid #ffd600;
+
+
+border-radius:20px;
+
+
+padding:18px;
+
+
+margin:12px 0;
+
 
 }
 
@@ -760,16 +1704,53 @@ display:none;
 .ofertaAdmin button{
 
 
-background:#ff3333;
+background:#e53935;
+
 
 color:white;
 
+
 border:0;
 
-padding:10px;
 
-border-radius:10px;
+padding:10px 15px;
 
-font-weight:800;
+
+border-radius:12px;
+
+
+font-weight:900;
+
+
+}
+
+
+
+
+
+
+@media(max-width:600px){
+
+
+.stats{
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+
+.oferta img,
+.ofertaCard img{
+
+
+height:230px;
+
+
+}
+
+
 
 }
