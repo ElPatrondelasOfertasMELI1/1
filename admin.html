@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Admin PRO | El Patrón de las Ofertas</title>
+<title>⚡ Admin PRO | El Patrón de las Ofertas</title>
 
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -25,56 +25,57 @@
 <div class="app">
 
 
+
 <!-- MENU LATERAL -->
 
 <aside class="sidebar">
 
 
-<div class="brand">
+<div class="marca">
 
 <div class="logo">
 ⚡
 </div>
 
-
 <h2>
 El Patrón
 </h2>
-
 
 <span>
 ADMIN PRO
 </span>
 
-
 </div>
 
 
 
-<button class="menuItem activo">
+<button class="menuActivo">
 🏠 Dashboard
 </button>
 
 
-<button class="menuItem">
+<button>
 🛒 Ofertas
 </button>
 
 
-<button class="menuItem">
+<button>
 🎟️ Cupones
 </button>
 
 
-<button class="menuItem">
+<button>
 📊 Estadísticas
 </button>
 
 
 
 <button id="salir">
+
 🚪 Salir
+
 </button>
+
 
 
 </aside>
@@ -83,24 +84,25 @@ ADMIN PRO
 
 
 
-<!-- CONTENIDO -->
 
 
 <main class="contenido">
 
 
 
-<header class="topbar">
+<header>
 
 <h1>
-Panel PRO
+Dashboard
 </h1>
 
 <p>
-Centro de control de ofertas
+Centro de control de El Patrón de las Ofertas
 </p>
 
+
 </header>
+
 
 
 
@@ -110,10 +112,10 @@ Centro de control de ofertas
 <!-- ESTADISTICAS -->
 
 
-<section class="cards">
+<section class="tarjetas">
 
 
-<div class="card">
+<div class="tarjeta">
 
 <h2 id="totalOfertas">
 0
@@ -127,7 +129,7 @@ Ofertas
 
 
 
-<div class="card">
+<div class="tarjeta">
 
 <h2 id="totalClicks">
 0
@@ -141,7 +143,7 @@ Clics
 
 
 
-<div class="card">
+<div class="tarjeta">
 
 <h2 id="ahorroTotal">
 $0
@@ -154,8 +156,8 @@ Ahorro comunidad
 </div>
 
 
-
 </section>
+
 
 
 
@@ -170,40 +172,51 @@ Ahorro comunidad
 
 
 <h2>
-🚀 Publicar Oferta
+🚀 Publicar oferta
 </h2>
 
 
 
-<input id="titulo"
-placeholder="Título del producto">
+<div class="formulario">
+
+
+
+<input 
+id="titulo"
+placeholder="Título oferta">
 
 
 
 <select id="categoria">
 
+
 <option>
 Gaming
 </option>
+
 
 <option>
 Tecnología
 </option>
 
+
 <option>
 Celulares
 </option>
+
 
 <option>
 Hogar
 </option>
 
-<option>
-Juguetes
-</option>
 
 <option>
 Moda
+</option>
+
+
+<option>
+Juguetes
 </option>
 
 
@@ -212,46 +225,65 @@ Moda
 
 
 
-<input id="precioAntes"
+<input
+id="precioAntes"
 placeholder="Precio antes">
 
 
-<input id="precioFinal"
+
+<input
+id="precioFinal"
 placeholder="Precio final">
 
 
-<input id="descuento"
-placeholder="Descuento %">
+
+<input
+id="descuento"
+placeholder="Descuento">
 
 
 
-<input id="link"
+<input
+id="link"
 placeholder="Link Mercado Libre">
 
 
 
 
 
-<label class="upload">
+<label class="subir">
 
-📷 Subir imagen
 
-<input 
+📷 Seleccionar imagen
+
+
+<input
+
 type="file"
-id="imagen"
-accept="image/*">
+
+id="imagenArchivo"
+
+accept="image/*"
+
+hidden>
+
 
 </label>
 
 
 
-<img id="preview">
+
+
+<img 
+id="vistaImagen"
+class="preview">
 
 
 
 
 
-<select id="estado">
+<select id="activo">
+
 
 <option value="true">
 🟢 Activa
@@ -264,7 +296,6 @@ accept="image/*">
 
 
 </select>
-
 
 
 
@@ -286,8 +317,13 @@ Normal
 
 
 
+</div>
 
-<button id="publicar">
+
+
+
+
+<button id="publicarOferta">
 
 🚀 PUBLICAR OFERTA
 
@@ -295,12 +331,12 @@ Normal
 
 
 
-
-<p id="mensaje"></p>
+<p id="mensajeOferta"></p>
 
 
 
 </section>
+
 
 
 
@@ -317,76 +353,25 @@ Normal
 
 
 <h2>
-🎟️ Crear Cupón
+🎟️ Administrar cupones
 </h2>
 
 
 
-<input id="codigoCupon"
-placeholder="Código cupón">
+<button id="nuevoCupon">
 
-
-
-<select id="tipoCupon">
-
-
-<option value="relampago">
-⚡ Relámpago
-</option>
-
-
-<option value="bancario">
-🏦 Bancario
-</option>
-
-
-<option value="exclusivo">
-💎 Meli+
-</option>
-
-
-</select>
-
-
-
-
-<input id="descuentoCupon"
-placeholder="Descuento">
-
-
-
-<input id="minimoCupon"
-placeholder="Compra mínima">
-
-
-
-<select id="estadoCupon">
-
-
-<option value="activo">
-🟢 Activo
-</option>
-
-
-<option value="agotando">
-🟠 Por agotarse
-</option>
-
-
-<option value="agotado">
-🔴 Agotado
-</option>
-
-
-</select>
-
-
-
-<button id="guardarCupon">
-
-🎟️ Guardar cupón
+➕ Nuevo cupón
 
 </button>
+
+
+
+
+<div id="listaCupones">
+
+Cargando...
+
+</div>
 
 
 
@@ -400,15 +385,18 @@ placeholder="Compra mínima">
 
 
 
-<!-- LISTADO -->
+<!-- OFERTAS EXISTENTES -->
 
 
 <section class="panel">
 
 
 <h2>
-📦 Ofertas publicadas
+
+🛒 Ofertas publicadas
+
 </h2>
+
 
 
 <div id="listaOfertas">
@@ -426,11 +414,13 @@ Cargando...
 
 
 
+
+
+
 </main>
 
 
 </div>
-
 
 
 
