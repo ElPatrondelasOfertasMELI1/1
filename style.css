@@ -17,8 +17,7 @@ body{
 font-family:'Inter',sans-serif;
 
 background:
-
-radial-gradient(circle at top,#332600,#050505 45%);
+radial-gradient(circle at top,#3a2b00,#050505 45%);
 
 color:white;
 
@@ -37,8 +36,6 @@ min-height:100vh;
 
 header{
 
-width:100%;
-
 padding:18px 20px;
 
 display:flex;
@@ -53,7 +50,7 @@ top:0;
 
 z-index:100;
 
-background:rgba(0,0,0,.88);
+background:rgba(0,0,0,.85);
 
 backdrop-filter:blur(15px);
 
@@ -63,17 +60,16 @@ border-bottom:1px solid rgba(255,215,0,.25);
 
 
 
+
 .logo{
 
 font-size:25px;
 
 font-weight:900;
 
-line-height:20px;
-
 color:#FFD600;
 
-letter-spacing:-1px;
+line-height:20px;
 
 }
 
@@ -95,23 +91,23 @@ letter-spacing:2px;
 
 
 
+
+
 .menu{
 
 width:45px;
 
 height:45px;
 
-border-radius:14px;
+border-radius:15px;
 
 border:none;
 
 background:#FFD600;
 
-font-size:24px;
+font-size:25px;
 
 font-weight:900;
-
-cursor:pointer;
 
 }
 
@@ -127,9 +123,9 @@ cursor:pointer;
 
 .hero{
 
-padding:35px 20px 15px;
-
 text-align:center;
+
+padding:35px 20px 15px;
 
 }
 
@@ -141,9 +137,11 @@ font-size:32px;
 
 font-weight:900;
 
-background:
-
-linear-gradient(90deg,#FFD600,#fff);
+background:linear-gradient(
+90deg,
+#FFD600,
+white
+);
 
 -webkit-background-clip:text;
 
@@ -155,11 +153,9 @@ color:transparent;
 
 .hero p{
 
-margin-top:10px;
-
 color:#aaa;
 
-font-size:15px;
+margin-top:10px;
 
 }
 
@@ -197,9 +193,11 @@ display:none;
 
 
 
-.categorias button{
+.categorias a{
 
 flex-shrink:0;
+
+text-decoration:none;
 
 padding:12px 18px;
 
@@ -211,13 +209,27 @@ color:white;
 
 border:1px solid #333;
 
-font-weight:800;
+font-weight:900;
+
+font-size:14px;
+
+transition:.3s;
 
 }
 
 
 
-.categorias button:first-child{
+.categorias a:hover{
+
+background:#FFD600;
+
+color:black;
+
+}
+
+
+
+.categorias a:first-child{
 
 background:#FFD600;
 
@@ -251,6 +263,7 @@ font-weight:900;
 
 
 
+
 /* CARRUSEL */
 
 
@@ -268,8 +281,6 @@ scroll-snap-type:x mandatory;
 
 scrollbar-width:none;
 
--webkit-overflow-scrolling:touch;
-
 }
 
 
@@ -286,8 +297,7 @@ display:none;
 
 
 
-
-/* OFERTA */
+/* TARJETA OFERTA */
 
 
 .oferta{
@@ -298,7 +308,11 @@ max-width:300px;
 
 background:
 
-linear-gradient(160deg,#161616,#080808);
+linear-gradient(
+160deg,
+#171717,
+#080808
+);
 
 border-radius:25px;
 
@@ -310,11 +324,11 @@ border:1px solid rgba(255,215,0,.25);
 
 box-shadow:
 
-0 15px 35px rgba(0,0,0,.5);
-
-animation:entrada .5s ease;
+0 15px 35px rgba(0,0,0,.6);
 
 }
+
+
 
 
 
@@ -326,7 +340,10 @@ height:230px;
 
 object-fit:cover;
 
+display:block;
+
 }
+
 
 
 
@@ -342,8 +359,6 @@ padding:18px;
 
 
 
-
-
 .info h3{
 
 font-size:18px;
@@ -352,11 +367,7 @@ font-weight:900;
 
 line-height:22px;
 
-min-height:45px;
-
 }
-
-
 
 
 
@@ -366,22 +377,21 @@ min-height:45px;
 
 display:inline-block;
 
-margin:12px 0;
-
-padding:7px 12px;
-
 background:#FFD600;
 
 color:#000;
 
-border-radius:20px;
+padding:7px 12px;
 
-font-size:13px;
+border-radius:20px;
 
 font-weight:900;
 
-}
+font-size:13px;
 
+margin:12px 0;
+
+}
 
 
 
@@ -392,9 +402,8 @@ color:#888;
 
 text-decoration:line-through;
 
-font-size:14px;
-
 }
+
 
 
 
@@ -407,9 +416,7 @@ font-weight:900;
 
 color:#FFD600;
 
-margin:5px 0;
-
-animation:brillo 2s infinite;
+margin:8px 0;
 
 }
 
@@ -418,15 +425,15 @@ animation:brillo 2s infinite;
 
 
 
+
 .btnComprar{
+
 
 display:block;
 
 width:100%;
 
 padding:15px;
-
-margin-top:15px;
 
 border-radius:16px;
 
@@ -439,6 +446,8 @@ text-align:center;
 text-decoration:none;
 
 font-weight:900;
+
+margin-top:15px;
 
 }
 
@@ -476,14 +485,11 @@ display:none;
 
 
 
-
 .cupon{
 
 min-width:260px;
 
-background:
-
-linear-gradient(160deg,#161616,#080808);
+background:#111;
 
 border-radius:25px;
 
@@ -509,48 +515,19 @@ font-size:22px;
 
 width:100%;
 
-margin-top:15px;
-
 padding:14px;
 
-border:none;
+margin-top:15px;
 
 border-radius:15px;
+
+border:none;
 
 background:#FFD600;
 
 font-weight:900;
 
 }
-
-
-
-
-
-
-
-.relampago{
-
-border-top:5px solid #FFD600;
-
-}
-
-
-
-.bancario{
-
-border-top:5px solid #1565ff;
-
-}
-
-
-
-.meli{
-
-border-top:5px solid #8e2de2;
-
-}
-
 
 
 
@@ -573,7 +550,7 @@ transform:translate(-50%,-50%) scale(.8);
 
 background:#FFD600;
 
-color:#000;
+color:black;
 
 padding:18px 25px;
 
@@ -583,9 +560,11 @@ font-weight:900;
 
 opacity:0;
 
-z-index:500;
+pointer-events:none;
 
 transition:.3s;
+
+z-index:500;
 
 }
 
@@ -628,9 +607,7 @@ font-weight:900;
 
 text-decoration:none;
 
-z-index:200;
-
-box-shadow:0 10px 25px rgba(0,0,0,.5);
+box-shadow:0 10px 25px #000;
 
 }
 
@@ -640,67 +617,8 @@ box-shadow:0 10px 25px rgba(0,0,0,.5);
 
 
 
-/* MENU LATERAL */
 
-
-.menuPanel{
-
-position:fixed;
-
-top:0;
-
-left:-320px;
-
-width:290px;
-
-height:100vh;
-
-background:#080808;
-
-z-index:300;
-
-padding:25px;
-
-transition:.35s;
-
-}
-
-
-
-.menuPanel.active{
-
-left:0;
-
-}
-
-
-
-.overlay{
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.7);
-
-display:none;
-
-z-index:250;
-
-}
-
-
-
-.overlay.active{
-
-display:block;
-
-}
-
-
-
-
-
+/* LOADER */
 
 
 .loader{
@@ -712,48 +630,6 @@ text-align:center;
 color:#FFD600;
 
 font-weight:900;
-
-}
-
-
-
-
-
-
-
-
-@keyframes entrada{
-
-from{
-
-opacity:0;
-
-transform:translateY(30px);
-
-}
-
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-
-
-
-@keyframes brillo{
-
-
-50%{
-
-filter:brightness(1.4);
-
-}
-
 
 }
 
@@ -779,7 +655,6 @@ font-size:27px;
 min-width:88vw;
 
 }
-
 
 
 }
