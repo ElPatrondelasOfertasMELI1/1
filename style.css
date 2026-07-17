@@ -5,11 +5,9 @@
 
 
 *{
-
 box-sizing:border-box;
 margin:0;
 padding:0;
-
 }
 
 
@@ -20,13 +18,14 @@ font-family:'Inter',sans-serif;
 
 background:
 
-radial-gradient(circle at top,#2b2100,#050505 45%);
+radial-gradient(circle at top,#332600,#050505 45%);
 
 color:white;
 
 min-height:100vh;
 
 }
+
 
 
 
@@ -54,7 +53,7 @@ top:0;
 
 z-index:100;
 
-background:rgba(0,0,0,.85);
+background:rgba(0,0,0,.88);
 
 backdrop-filter:blur(15px);
 
@@ -66,7 +65,7 @@ border-bottom:1px solid rgba(255,215,0,.25);
 
 .logo{
 
-font-size:24px;
+font-size:25px;
 
 font-weight:900;
 
@@ -84,13 +83,15 @@ letter-spacing:-1px;
 
 display:block;
 
+color:white;
+
 font-size:13px;
 
 letter-spacing:2px;
 
-color:white;
-
 }
+
+
 
 
 
@@ -113,6 +114,7 @@ font-weight:900;
 cursor:pointer;
 
 }
+
 
 
 
@@ -167,6 +169,7 @@ font-size:15px;
 
 
 
+
 /* CATEGORIAS */
 
 
@@ -202,11 +205,11 @@ padding:12px 18px;
 
 border-radius:30px;
 
-border:1px solid #333;
-
 background:#111;
 
 color:white;
+
+border:1px solid #333;
 
 font-weight:800;
 
@@ -218,9 +221,10 @@ font-weight:800;
 
 background:#FFD600;
 
-color:black;
+color:#000;
 
 }
+
 
 
 
@@ -233,14 +237,13 @@ color:black;
 
 h2{
 
-padding:15px 20px;
+padding:10px 20px;
 
 font-size:22px;
 
 font-weight:900;
 
 }
-
 
 
 
@@ -282,7 +285,9 @@ display:none;
 
 
 
-/* TARJETA OFERTA */
+
+
+/* OFERTA */
 
 
 .oferta{
@@ -307,7 +312,7 @@ box-shadow:
 
 0 15px 35px rgba(0,0,0,.5);
 
-animation:aparecer .5s ease;
+animation:entrada .5s ease;
 
 }
 
@@ -325,11 +330,17 @@ object-fit:cover;
 
 
 
+
+
+
+
 .info{
 
 padding:18px;
 
 }
+
+
 
 
 
@@ -347,6 +358,10 @@ min-height:45px;
 
 
 
+
+
+
+
 .descuento{
 
 display:inline-block;
@@ -361,11 +376,13 @@ color:#000;
 
 border-radius:20px;
 
-font-weight:900;
-
 font-size:13px;
 
+font-weight:900;
+
 }
+
+
 
 
 
@@ -375,7 +392,10 @@ color:#888;
 
 text-decoration:line-through;
 
+font-size:14px;
+
 }
+
 
 
 
@@ -397,15 +417,16 @@ animation:brillo 2s infinite;
 
 
 
+
 .btnComprar{
 
 display:block;
 
 width:100%;
 
-margin-top:15px;
-
 padding:15px;
+
+margin-top:15px;
 
 border-radius:16px;
 
@@ -418,8 +439,6 @@ text-align:center;
 text-decoration:none;
 
 font-weight:900;
-
-font-size:16px;
 
 }
 
@@ -434,29 +453,43 @@ font-size:16px;
 
 .cupones{
 
-display:grid;
+display:flex;
 
-grid-template-columns:repeat(2,1fr);
-
-gap:12px;
+gap:15px;
 
 padding:20px;
+
+overflow-x:auto;
+
+scrollbar-width:none;
 
 }
 
 
 
+.cupones::-webkit-scrollbar{
+
+display:none;
+
+}
+
+
+
+
+
 .cupon{
 
-background:#111;
+min-width:260px;
 
-border-radius:22px;
+background:
 
-padding:18px;
+linear-gradient(160deg,#161616,#080808);
+
+border-radius:25px;
+
+padding:20px;
 
 border:1px solid rgba(255,215,0,.25);
-
-text-align:center;
 
 }
 
@@ -472,29 +505,19 @@ font-size:22px;
 
 
 
-.cupon p{
-
-color:#ccc;
-
-margin:8px;
-
-}
-
-
-
 .cupon button{
 
 width:100%;
 
-padding:12px;
+margin-top:15px;
 
-border-radius:15px;
+padding:14px;
 
 border:none;
 
-background:#FFD600;
+border-radius:15px;
 
-color:#000;
+background:#FFD600;
 
 font-weight:900;
 
@@ -504,8 +527,6 @@ font-weight:900;
 
 
 
-
-/* TIPOS */
 
 
 .relampago{
@@ -536,190 +557,6 @@ border-top:5px solid #8e2de2;
 
 
 
-/* MERCADO PAGO */
-
-
-.mercadopago{
-
-margin:20px;
-
-padding:25px;
-
-border-radius:25px;
-
-background:#009ee3;
-
-text-align:center;
-
-}
-
-
-
-.mercadopago a{
-
-display:block;
-
-margin-top:15px;
-
-padding:15px;
-
-background:white;
-
-color:#009ee3;
-
-border-radius:15px;
-
-text-decoration:none;
-
-font-weight:900;
-
-}
-
-
-
-
-
-
-
-/* ESTADISTICAS */
-
-
-.comunidad{
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:10px;
-
-padding:20px;
-
-}
-
-
-
-.comunidad div{
-
-background:#111;
-
-border-radius:20px;
-
-padding:15px;
-
-text-align:center;
-
-border:1px solid #333;
-
-}
-
-
-
-.comunidad b{
-
-font-size:22px;
-
-color:#FFD600;
-
-}
-
-
-
-
-
-
-
-
-/* MENU LATERAL */
-
-
-.menuPanel{
-
-position:fixed;
-
-top:0;
-
-left:-320px;
-
-width:290px;
-
-height:100vh;
-
-background:
-
-linear-gradient(180deg,#111,#050505);
-
-z-index:300;
-
-padding:25px;
-
-transition:.35s;
-
-border-right:1px solid rgba(255,215,0,.25);
-
-}
-
-
-
-.menuPanel.active{
-
-left:0;
-
-}
-
-
-
-.menuPanel a{
-
-display:block;
-
-padding:15px;
-
-margin-bottom:10px;
-
-background:#161616;
-
-border-radius:15px;
-
-color:white;
-
-text-decoration:none;
-
-font-weight:800;
-
-}
-
-
-
-
-
-.overlay{
-
-position:fixed;
-
-inset:0;
-
-background:rgba(0,0,0,.65);
-
-display:none;
-
-z-index:250;
-
-}
-
-
-
-.overlay.active{
-
-display:block;
-
-}
-
-
-
-
-
-
-
 
 /* TOAST */
 
@@ -728,7 +565,7 @@ display:block;
 
 position:fixed;
 
-top:45%;
+top:50%;
 
 left:50%;
 
@@ -746,9 +583,9 @@ font-weight:900;
 
 opacity:0;
 
-transition:.3s;
-
 z-index:500;
+
+transition:.3s;
 
 }
 
@@ -802,6 +639,70 @@ box-shadow:0 10px 25px rgba(0,0,0,.5);
 
 
 
+
+/* MENU LATERAL */
+
+
+.menuPanel{
+
+position:fixed;
+
+top:0;
+
+left:-320px;
+
+width:290px;
+
+height:100vh;
+
+background:#080808;
+
+z-index:300;
+
+padding:25px;
+
+transition:.35s;
+
+}
+
+
+
+.menuPanel.active{
+
+left:0;
+
+}
+
+
+
+.overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.7);
+
+display:none;
+
+z-index:250;
+
+}
+
+
+
+.overlay.active{
+
+display:block;
+
+}
+
+
+
+
+
+
+
 .loader{
 
 padding:40px;
@@ -820,7 +721,8 @@ font-weight:900;
 
 
 
-@keyframes aparecer{
+
+@keyframes entrada{
 
 from{
 
@@ -829,6 +731,7 @@ opacity:0;
 transform:translateY(30px);
 
 }
+
 
 to{
 
@@ -844,11 +747,13 @@ transform:translateY(0);
 
 @keyframes brillo{
 
+
 50%{
 
 filter:brightness(1.4);
 
 }
+
 
 }
 
@@ -868,18 +773,13 @@ font-size:27px;
 }
 
 
+
 .oferta{
 
 min-width:88vw;
 
 }
 
-
-.cupones{
-
-grid-template-columns:repeat(2,1fr);
-
-}
 
 
 }
