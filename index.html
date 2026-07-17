@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="es">
 
 <head>
@@ -14,9 +13,7 @@
 </title>
 
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
 
 
 <link rel="stylesheet" href="style.css">
@@ -25,46 +22,30 @@
 </head>
 
 
+
 <body>
 
 
 
-<!-- HEADER -->
+<header class="header">
 
 
-<header class="hero">
+<div class="logo">
+
+⚡
+
+</div>
 
 
-<img 
-src="logo.png.PNG"
-class="hero-logo"
->
+<div>
 
-
-<div class="hero-info">
-
-
-<h2>
-El Patrón de las Ofertas
-</h2>
-
+<h1>
+EL PATRÓN
+</h1>
 
 <p>
-🔥 Cupones • Ofertas • Descuentos diarios
+DE LAS OFERTAS
 </p>
-
-
-
-<a 
-class="hero-btn"
-href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
-target="_blank"
->
-
-💬 Canal WhatsApp +200K
-
-</a>
-
 
 </div>
 
@@ -77,30 +58,54 @@ target="_blank"
 
 
 
-
-<!-- MENU -->
-
-
-<div class="section">
-
-🔥 OFERTAS RELÁMPAGO
-
-</div>
+<section class="hero">
 
 
+<h2>
+🔥 Ofertas que nadie encuentra
+</h2>
+
+
+<p>
+
+Cupones • Descuentos • Mercado Libre
+
+</p>
 
 
 
-<!-- CARRUSEL -->
+<a href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
+target="_blank"
+class="whatsapp">
+
+💬 Canal WhatsApp +200 mil seguidores
+
+</a>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section class="titulo">
+
+⚡🔥 OFERTAS RELÁMPAGO 🔥⚡
+
+</section>
+
+
 
 
 <div class="flash-carousel">
 
 
-<div 
-class="flash-track"
-id="ofertasPublicas"
->
+<div id="ofertasPublicas"
+class="flash-track">
 
 
 <div class="loader">
@@ -114,6 +119,12 @@ Cargando ofertas...
 
 
 
+<div id="flashDots"
+class="flash-dots">
+
+</div>
+
+
 </div>
 
 
@@ -124,25 +135,39 @@ Cargando ofertas...
 
 
 
-<!-- AHORRO -->
+<section class="ahorro">
 
 
-<div class="ahorro-bar">
+💰 La comunidad ha ahorrado
 
 
-💰 Nuestra comunidad ha ahorrado
-
-
-<br>
-
-
-<b id="ahorro">
+<b id="ahorroTotal">
 
 $0 MXN
 
 </b>
 
 
+</section>
+
+
+
+
+
+
+
+
+<section class="titulo">
+
+🏦 CUPONES BANCARIOS
+
+</section>
+
+
+<div id="cuponesBancarios"
+class="cupon-grid">
+
+
 </div>
 
 
@@ -153,99 +178,68 @@ $0 MXN
 
 
 
-<!-- MELI+ -->
-
-
-<div class="section">
+<section class="titulo">
 
 💎 CUPONES EXCLUSIVOS MELI+
 
+</section>
+
+
+<div id="cuponesMeli"
+class="cupon-grid">
+
+
 </div>
 
 
 
 
-<div 
-id="cuponesFirebase"
->
-
-
-Cargando cupones...
-
-</div>
 
 
 
 
 
-
-
-
-
-<!-- MERCADO PAGO -->
-
-
-<div class="section">
+<section class="titulo">
 
 💙 BENEFICIOS MERCADO PAGO
 
-</div>
+</section>
 
 
 
 
-
-<div class="mp-card">
-
-
-<div class="title">
-
-🎁 $100 de regalo para nuevos usuarios
-
-</div>
+<div class="beneficio">
 
 
+<h3>
 
-<p>
+🎁 $100 de regalo
 
-Obtén <b>$100 de descuento</b> usando Mercado Pago por primera vez.
-
-</p>
-
+</h3>
 
 
 <p>
 
-Compra mínima:
-<b>$200</b>
+Descuento para nuevos usuarios.
 
 </p>
-
 
 
 <p>
 
-⏰ Disponible durante tus primeros 7 días.
+Compra mínima $200
 
 </p>
 
 
-
-
-<a 
-class="mp-btn"
-
-href="https://mpago.li/1VNjCFE"
-
-target="_blank"
->
+<a href="https://mpago.li/1VNjCFE"
+target="_blank">
 
 OBTENER BENEFICIO
 
 </a>
 
 
-
 </div>
 
 
@@ -256,73 +250,11 @@ OBTENER BENEFICIO
 
 
 
-<!-- CATEGORIAS -->
-
-
-<div class="section">
-
-📂 CATEGORÍAS
-
-</div>
-
-
-
-
-<div class="categorias">
-
-
-<a href="https://meli.la/1wmWhqC">
-📱 Celulares
-</a>
-
-
-<a href="https://meli.la/2QLzQzB">
-🎮 Gaming
-</a>
-
-
-<a href="https://meli.la/22qVGcg">
-💻 Cómputo
-</a>
-
-
-<a href="https://meli.la/1MLzcHN">
-🏠 Electrodomésticos
-</a>
-
-
-<a href="https://meli.la/21wQwRZ">
-👗 Moda
-</a>
-
-
-<a href="https://meli.la/21wQwRZ">
-💄 Belleza
-</a>
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- WHATSAPP FLOTANTE -->
-
-
-<a
-
-class="whatsapp-float"
+<a class="flotante"
 
 href="https://whatsapp.com/channel/0029Vb7W8ijKrWQpUEGkJe1x"
 
-target="_blank"
-
->
-
+target="_blank">
 
 💬
 
@@ -334,11 +266,12 @@ target="_blank"
 
 
 
-<script 
-type="module"
-src="app.js">
-</script>
 
+
+<script type="module" src="app.js"></script>
+
+
+<script type="module" src="cupones.js"></script>
 
 
 </body>
