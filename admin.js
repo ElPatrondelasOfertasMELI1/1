@@ -14,6 +14,7 @@ getFirestore,
 collection,
 addDoc,
 getDocs,
+getDoc,
 deleteDoc,
 doc,
 updateDoc,
@@ -1095,7 +1096,22 @@ totalCopias.innerHTML=
 
 copias;
 
+// VISITAS
 
+const visitasDoc = await getDoc(
+doc(db,"estadisticas","visitas")
+);
+
+
+if(
+visitasDoc.exists() &&
+document.getElementById("totalVisitas")
+){
+
+totalVisitas.innerHTML =
+visitasDoc.data().total || 0;
+
+}
 
 }
 
