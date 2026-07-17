@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 
+
 <head>
 
+
 <meta charset="UTF-8">
+
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <title>
-⚡ Login Admin | El Patrón
+⚡ Admin PRO | El Patrón
 </title>
+
 
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
@@ -27,77 +31,33 @@
 
 
 
-<main class="login">
 
 
-
-<div class="loginBox">
-
+<header class="adminHeader">
 
 
-<h1>
-⚡ ADMIN PRO
-</h1>
+<div class="logo">
 
+⚡ ADMIN
 
-
-<p>
-El Patrón de las Ofertas
-</p>
-
-
-
-
-
-<input
-
-id="email"
-
-type="email"
-
-placeholder="Correo administrador"
-
->
-
-
-
-
-
-<input
-
-id="password"
-
-type="password"
-
-placeholder="Contraseña"
-
->
-
-
-
-
-
-
-<button id="entrar">
-
-🔐 INGRESAR
-
-</button>
-
-
-
-
-
-<p id="mensaje"></p>
-
-
+<span>
+EL PATRÓN
+</span>
 
 
 </div>
 
 
 
-</main>
+<button id="salir">
+
+Salir
+
+</button>
+
+
+
+</header>
 
 
 
@@ -105,7 +65,359 @@ placeholder="Contraseña"
 
 
 
-<script type="module" src="login.js"></script>
+
+
+<main class="dashboard">
+
+
+
+
+
+<h1>
+
+🚀 Panel PRO
+
+</h1>
+
+
+
+
+
+
+
+<section class="stats">
+
+
+
+<div class="cardStat">
+
+<h3>
+🔥 Ofertas
+</h3>
+
+<strong id="totalOfertas">
+0
+</strong>
+
+</div>
+
+
+
+
+<div class="cardStat">
+
+<h3>
+🎟️ Cupones
+</h3>
+
+<strong id="totalCupones">
+0
+</strong>
+
+</div>
+
+
+
+
+
+<div class="cardStat">
+
+<h3>
+🟢 Estado
+</h3>
+
+<strong>
+Activo
+</strong>
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- PUBLICAR OFERTA -->
+
+<section class="panel">
+
+
+<h2>
+⭐ Nueva Oferta
+</h2>
+
+
+
+
+<input 
+id="titulo"
+placeholder="Título del producto">
+
+
+
+
+
+<input 
+id="precioAntes"
+placeholder="Precio antes">
+
+
+
+
+
+<input 
+id="precioFinal"
+placeholder="Precio final">
+
+
+
+
+
+<input 
+id="link"
+placeholder="Link Mercado Libre">
+
+
+
+
+
+<input 
+id="imagenArchivo"
+type="file"
+accept="image/*">
+
+
+
+
+
+<img 
+id="previewImagen"
+class="preview">
+
+
+
+
+
+
+<label>
+
+<input 
+id="destacada"
+type="checkbox">
+
+⭐ Oferta destacada
+
+</label>
+
+
+
+
+
+<button id="publicar">
+
+🔥 PUBLICAR OFERTA
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- CUPONES -->
+
+<section class="panel">
+
+
+
+<h2>
+
+🎟️ Nuevo Cupón
+
+</h2>
+
+
+
+
+<input
+
+id="codigoCupon"
+
+placeholder="Código cupón (ejemplo CANASTA)"
+
+>
+
+
+
+
+<input
+
+id="descuentoCupon"
+
+placeholder="Descuento"
+
+>
+
+
+
+
+<input
+
+id="minimoCupon"
+
+placeholder="Compra mínima"
+
+>
+
+
+
+
+<select id="tipoCupon">
+
+
+<option value="relampago">
+
+⚡ Relámpago
+
+</option>
+
+
+
+<option value="bancario">
+
+💳 Bancario
+
+</option>
+
+
+
+<option value="exclusivo">
+
+⭐ Exclusivo
+
+</option>
+
+
+
+</select>
+
+
+
+
+
+
+<select id="estadoCupon">
+
+
+<option value="activo">
+
+🟢 Activo
+
+</option>
+
+
+
+<option value="agotando">
+
+🟠 Agotando
+
+</option>
+
+
+
+<option value="agotado">
+
+🔴 Agotado
+
+</option>
+
+
+
+</select>
+
+
+
+
+
+
+<button id="crearCupon">
+
+🎟️ CREAR CUPÓN
+
+</button>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<h2>
+
+📦 Ofertas publicadas
+
+</h2>
+
+
+
+
+<div id="listaOfertas">
+
+Cargando...
+
+</div>
+
+
+
+
+
+
+
+<h2>
+
+🎟️ Cupones actuales
+
+</h2>
+
+
+
+
+<div id="listaCupones">
+
+Cargando...
+
+</div>
+
+
+
+
+
+
+
+
+
+<script type="module" src="admin.js"></script>
 
 
 
