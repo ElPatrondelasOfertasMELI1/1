@@ -1,7 +1,8 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // ESTADISTICAS.JS
-// VISITAS + CLICS + COPIAS + REINICIO DIARIO
+// SISTEMA DE VISITAS + CLICS + COPIAS
+// USA COLECCIONES EXISTENTES
 // =====================================================
 
 
@@ -17,8 +18,7 @@ setDoc,
 getDoc,
 increment,
 collection,
-getDocs,
-onSnapshot
+getDocs
 
 }
 
@@ -28,6 +28,10 @@ from
 
 
 
+
+// ==============================
+// FIREBASE
+// ==============================
 
 
 const firebaseConfig={
@@ -52,25 +56,29 @@ const app =
 initializeApp(firebaseConfig);
 
 
-
 const db =
 getFirestore(app);
 
 
 
 
-// =====================================================
+
+// ==============================
 // FECHA CDMX
-// =====================================================
+// ==============================
 
 
 function fechaCDMX(){
 
 
 return new Intl.DateTimeFormat(
+
 "en-CA",
+
 {
+
 timeZone:"America/Mexico_City"
+
 }
 
 ).format(new Date());
@@ -80,92 +88,15 @@ timeZone:"America/Mexico_City"
 
 
 
-
-
-// =====================================================
-// REGISTRAR VISITA
-// =====================================================
-
-
-export async function registrarVisita(){
-
-
-const hoy =
-fechaCDMX();
-
-
-
-await setDoc(
-
-doc(
-db,
-"estadisticas",
-"visitas"
-),
-
-{
-
-
-total:
-increment(1),
-
-
-
-[hoy]:
-increment(1)
-
-
-},
-
-
-{
-
-merge:true
-
-}
-
-);
-
-
-}
-
-
-
-
-// EJECUTAR VISITA
-
-registrarVisita();
-// =====================================================
-// REGISTRO DIARIO + MENSUAL
-// =====================================================
 
 
 function mesCDMX(){
 
 
-const fecha = new Intl.DateTimeFormat(
-
-"en-CA",
-
-{
-
-timeZone:"America/Mexico_City",
-
-year:"numeric",
-
-month:"2-digit"
-
-}
-
-).format(new Date());
-
-
-
-return fecha.substring(0,7);
+return fechaCDMX().substring(0,7);
 
 
 }
-
 
 
 
@@ -198,36 +129,100 @@ hour12:false
 
 
 
-
-
 // ==============================
-// REGISTRAR ACTIVIDAD
+// REGISTRAR VISITA
 // ==============================
 
 
-export async function registrarActividad(tipo){
+async function registrarVisita(){
+
+
+const dia =
+fechaCDMX();
+
+
+const mes =
+mesCDMX();
+
+
+const hora =
+horaCDMX();
 
 
 
-const hoy = fechaCDMX();
+
+// TOTAL GENERAL
 
 
-const mes = mesCDMX();
+await setDoc(
 
-
-const hora = horaCDMX();
-
-
-
-
-
-const ref = doc(
+doc(
 
 db,
 
-"estadisticas",
+"visitas",
 
-"general"
+"contador"
+
+),
+
+{
+
+total:
+
+increment(1)
+
+},
+
+{
+
+merge:true
+
+}
+
+);
+
+
+
+
+// ESTADISTICA DIARIA
+
+
+await setDoc(
+
+doc(
+
+db,
+
+"estadisticas_diarias",
+
+dia
+
+),
+
+{
+
+
+fecha:dia,
+
+
+visitas:
+
+increment(1),
+
+
+[`hora_${hora}`]:
+
+increment(1)
+
+
+},
+
+{
+
+merge:true
+
+}
 
 );
 
@@ -235,32 +230,42 @@ db,
 
 
 
-
-let datos={};
-
+// ESTADISTICA MENSUAL
 
 
+await setDoc(
+
+doc(
+
+db,
+
+"estadisticas_mensuales",
+
+mes
+
+),
+
+{
 
 
-if(tipo==="visita"){
+mes:mes,
 
 
-datos={
+visitas:
+
+increment(1)
 
 
-visitasTotal:increment(1),
+},
 
+{
 
-[hoy]:increment(1),
+merge:true
 
+}
 
-[`mes_${mes}`]:increment(1),
+);
 
-
-[`hora_${hora}`]:increment(1)
-
-
-};
 
 
 }
@@ -268,56 +273,56 @@ visitasTotal:increment(1),
 
 
 
+// EJECUTAR AL ENTRAR
+
+
+registrarVisita();
+// =====================================================
+// REGISTRAR CLICS DE OFERTAS
+// =====================================================
+
+
+async function registrarClic(){
+
+
+const dia =
+fechaCDMX();
+
+
+const mes =
+mesCDMX();
 
 
 
-if(tipo==="clic"){
+
+await setDoc(
+
+doc(
+
+db,
+
+"estadisticas_diarias",
+
+dia
+
+),
+
+{
 
 
-datos={
+clics:
 
+increment(1)
 
-clicsTotal:increment(1),
+},
 
+{
 
-[`clic_${hoy}`]:increment(1),
-
-
-[`clicMes_${mes}`]:increment(1)
-
-
-};
-
+merge:true
 
 }
 
-
-
-
-
-
-
-if(tipo==="copia"){
-
-
-datos={
-
-
-copiasTotal:increment(1),
-
-
-[`copia_${hoy}`]:increment(1),
-
-
-[`copiaMes_${mes}`]:increment(1)
-
-
-};
-
-
-}
-
-
+);
 
 
 
@@ -325,9 +330,24 @@ copiasTotal:increment(1),
 
 await setDoc(
 
-ref,
+doc(
 
-datos,
+db,
+
+"estadisticas_mensuales",
+
+mes
+
+),
+
+{
+
+
+clics:
+
+increment(1)
+
+},
 
 {
 
@@ -349,22 +369,50 @@ merge:true
 
 
 
-// ==============================
-// CARGAR DATOS DASHBOARD
-// ==============================
+// =====================================================
+// REGISTRAR COPIAS DE CUPONES
+// =====================================================
 
 
-export async function cargarDashboard(){
+async function registrarCopia(){
+
+
+const dia =
+fechaCDMX();
+
+
+const mes =
+mesCDMX();
 
 
 
-const ref = doc(
+
+await setDoc(
+
+doc(
 
 db,
 
-"estadisticas",
+"estadisticas_diarias",
 
-"general"
+dia
+
+),
+
+{
+
+
+copias:
+
+increment(1)
+
+},
+
+{
+
+merge:true
+
+}
 
 );
 
@@ -372,7 +420,388 @@ db,
 
 
 
-const snap = await getDoc(ref);
+
+await setDoc(
+
+doc(
+
+db,
+
+"estadisticas_mensuales",
+
+mes
+
+),
+
+{
+
+
+copias:
+
+increment(1)
+
+},
+
+{
+
+merge:true
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================================
+// DIA MAS FUERTE
+// =====================================================
+
+
+async function analizarDias(){
+
+
+
+const datos =
+await getDocs(
+
+collection(
+
+db,
+
+"estadisticas_diarias"
+
+)
+
+);
+
+
+
+
+let mayor=0;
+
+let dia="";
+
+
+
+
+
+datos.forEach(item=>{
+
+
+const d=item.data();
+
+
+
+
+if(
+
+(d.visitas || 0)>mayor
+
+){
+
+
+mayor=d.visitas;
+
+
+dia=item.id;
+
+
+}
+
+
+});
+
+
+
+
+
+await setDoc(
+
+doc(
+
+db,
+
+"estadisticas",
+
+"resumen"
+
+),
+
+{
+
+
+diaMayor:dia,
+
+
+visitasMayor:mayor
+
+
+},
+
+{
+
+merge:true
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================================
+// HORA PICO
+// =====================================================
+
+
+async function analizarHoras(){
+
+
+
+const datos =
+await getDocs(
+
+collection(
+
+db,
+
+"estadisticas_diarias"
+
+)
+
+);
+
+
+
+let horaGanadora="";
+
+let mayor=0;
+
+
+
+
+datos.forEach(item=>{
+
+
+const d=item.data();
+
+
+
+Object.keys(d)
+
+.forEach(x=>{
+
+
+
+if(
+
+x.includes("hora_")
+
+){
+
+
+
+if(d[x]>mayor){
+
+
+
+mayor=d[x];
+
+
+horaGanadora=x;
+
+
+}
+
+
+
+}
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+
+await setDoc(
+
+doc(
+
+db,
+
+"estadisticas",
+
+"resumen"
+
+),
+
+{
+
+
+horaPico:horaGanadora,
+
+
+visitasHora:mayor
+
+
+},
+
+{
+
+merge:true
+
+}
+
+);
+
+
+
+}
+// =====================================================
+// REINICIO DIARIO CDMX
+// =====================================================
+
+
+async function verificarDiaNuevo(){
+
+
+const ahora =
+fechaCDMX();
+
+
+
+const ref =
+doc(
+
+db,
+
+"configuracion",
+
+"estadisticas"
+
+);
+
+
+
+const snap =
+await getDoc(ref);
+
+
+
+if(!snap.exists()){
+
+
+await setDoc(
+
+ref,
+
+{
+
+ultimoDia:ahora
+
+}
+
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+
+const ultimo =
+snap.data().ultimoDia;
+
+
+
+
+
+if(ultimo!==ahora){
+
+
+
+await setDoc(
+
+ref,
+
+{
+
+ultimoDia:ahora
+
+}
+
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================================
+// RESUMEN PARA ADMIN
+// =====================================================
+
+
+async function cargarResumen(){
+
+
+
+const snap =
+await getDoc(
+
+doc(
+
+db,
+
+"estadisticas",
+
+"resumen"
+
+)
+
+);
 
 
 
@@ -392,328 +821,39 @@ const datos=snap.data();
 
 
 
-if(document.getElementById("totalVisitas")){
-
-
-totalVisitas.innerHTML =
-
-datos.visitasTotal || 0;
-
-
-}
-
-
-
-
-
-
-if(document.getElementById("totalClics")){
-
-
-totalClics.innerHTML =
-
-datos.clicsTotal || 0;
-
-
-}
-
-
-
-
-
-
-
-if(document.getElementById("totalCopias")){
-
-
-totalCopias.innerHTML =
-
-datos.copiasTotal || 0;
-
-
-}
-
-
-
-
-
-}
-// =====================================================
-// ANALISIS DE DATOS
-// DIA MAS FUERTE + HORA PICO
-// =====================================================
-
-
-export async function analizarEstadisticas(){
-
-
-
-const ref = doc(
-
-db,
-
-"estadisticas",
-
-"general"
-
+const dia =
+document.getElementById(
+"diaMayor"
 );
-
-
-
-const snap = await getDoc(ref);
-
-
-
-if(!snap.exists())
-
-return;
-
-
-
-const datos = snap.data();
-
-
-
-
-
-let diaFuerte="";
-
-let visitasDia=0;
-
-
-
-Object.keys(datos)
-
-.forEach(key=>{
-
-
-if(
-
-key.match(/^\d{4}-\d{2}-\d{2}$/)
-
-){
-
-
-
-if(datos[key]>visitasDia){
-
-
-
-visitasDia=
-
-datos[key];
-
-
-
-diaFuerte=
-
-key;
-
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-
-let horaPico="";
-
-let visitasHora=0;
-
-
-
-Object.keys(datos)
-
-.forEach(key=>{
-
-
-if(
-
-key.includes("hora_")
-
-){
-
-
-
-if(datos[key]>visitasHora){
-
-
-
-visitasHora=
-
-datos[key];
-
-
-
-horaPico=
-
-key.replace(
-
-"hora_",
-
-""
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-});
-
-
-
-
-
-
-
-if(document.getElementById("diaFuerte")){
-
-
-diaFuerte.innerHTML=
-
-diaFuerte || "Sin datos";
-
-
-}
-
-
-
-
-
-if(document.getElementById("horaPico")){
-
-
-horaPico.innerHTML=
-
-horaPico+" hrs";
-
-
-}
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================================================
-// REINICIO DIARIO 12 AM CDMX
-// =====================================================
-
-
-async function verificarReinicio(){
-
-
-
-const ahora = new Date();
 
 
 
 const hora =
-
-Number(
-
-new Intl.DateTimeFormat(
-
-"es-MX",
-
-{
-
-timeZone:"America/Mexico_City",
-
-hour:"numeric",
-
-hour12:false
-
-}
-
-).format(ahora)
-
+document.getElementById(
+"horaPico"
 );
 
 
 
 
 
-if(hora===0){
+if(dia)
+
+dia.innerHTML=
+
+datos.diaMayor || "-";
 
 
 
-const hoy=
-
-fechaCDMX();
 
 
+if(hora)
+
+hora.innerHTML=
+
+datos.horaPico || "-";
 
 
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas",
-
-"diario"
-
-),
-
-{
-
-
-fecha:hoy,
-
-
-visitas:0,
-
-
-clics:0,
-
-
-copias:0
-
-
-},
-
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-}
 
 
 
@@ -728,38 +868,59 @@ merge:true
 
 
 // =====================================================
-// INICIO ESTADISTICAS
+// INICIO
 // =====================================================
 
 
-
-registrarActividad("visita");
-
+verificarDiaNuevo();
 
 
-cargarDashboard();
+analizarDias();
 
 
+analizarHoras();
 
-analizarEstadisticas();
 
-
+cargarResumen();
 
 
 
-// Revisar cada hora
+
+
+// Actualizar cada hora
 
 setInterval(()=>{
 
 
-verificarReinicio();
+verificarDiaNuevo();
 
 
-cargarDashboard();
+analizarDias();
 
 
-analizarEstadisticas();
+analizarHoras();
+
+
+cargarResumen();
 
 
 
 },3600000);
+
+
+
+
+
+// =====================================================
+// EXPORTAR FUNCIONES
+// PARA USAR DESDE APP.JS
+// =====================================================
+
+
+window.registrarClic =
+registrarClic;
+
+
+
+window.registrarCopia =
+registrarCopia;
