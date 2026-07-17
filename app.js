@@ -15,7 +15,8 @@ collection,
 getDocs,
 doc,
 updateDoc,
-increment
+increment,
+onSnapshot
 
 }
 
@@ -130,10 +131,54 @@ async function cargarOfertas(){
 if(!carrusel)return;
 
 
-const datos =
-await getDocs(
-collection(db,"ofertas")
-);
+onSnapshot(
+collection(db,"ofertas"),
+(datos)=>{
+
+carrusel.innerHTML="";
+
+datos.forEach(item=>{
+
+const o=item.data();
+
+const card=document.createElement("div");
+
+card.className="oferta";
+
+card.innerHTML=`
+
+<img src="${o.imagen}">
+
+<h3>
+${o.titulo}
+</h3>
+
+<div class="precioAntes">
+❌ Antes:
+<s>
+$${o.precioAntes || ""}
+</s>
+</div>
+
+<div class="descuento">
+🔥 ${o.descuento || ""}% OFF
+</div>
+
+<div class="precio">
+💥 $${o.precioFinal || ""}
+</div>
+
+<a href="${o.link}" target="_blank" class="btnOferta">
+🛒 VER OFERTA
+</a>
+
+`;
+
+carrusel.appendChild(card);
+
+});
+
+});
 
 
 
