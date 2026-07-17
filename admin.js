@@ -1,11 +1,12 @@
-// =======================================
+// =====================================
 // EL PATRÓN DE LAS OFERTAS
-// ADMIN.JS PRO LIMPIO
-// FIREBASE + OFERTAS
-// =======================================
+// ADMIN JS PRO
+// FIREBASE FIRESTORE
+// =====================================
 
 
-import { initializeApp } from 
+import {initializeApp}
+from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -14,29 +15,17 @@ import {
 getFirestore,
 collection,
 addDoc,
+onSnapshot,
 deleteDoc,
 doc,
-onSnapshot,
-serverTimestamp
+setDoc,
+updateDoc,
+increment
 
 }
 
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-import {
-
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
-
-}
-
-from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 
 
@@ -54,47 +43,40 @@ from
 
 
 
-// CONFIG FIREBASE
+
+// FIREBASE
 
 
-const firebaseConfig = {
+const firebaseConfig={
 
 
-apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-authDomain: "patronofertasweb.firebaseapp.com",
+authDomain:"patronofertasweb.firebaseapp.com",
 
-projectId: "patronofertasweb",
+projectId:"patronofertasweb",
 
-storageBucket: "patronofertasweb.firebasestorage.app",
+storageBucket:"patronofertasweb.firebasestorage.app",
 
-messagingSenderId: "292338334268",
+messagingSenderId:"292338334268",
 
-appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
-
+appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 };
 
 
 
+const app=initializeApp(firebaseConfig);
 
+const db=getFirestore(app);
 
-const app = initializeApp(firebaseConfig);
-
-
-const db = getFirestore(app);
-
-
-const storage = getStorage(app);
-
-
-const auth = getAuth(app);
+const auth=getAuth(app);
 
 
 
 
 
-// PROTEGER PANEL
+// SEGURIDAD LOGIN
 
 
 onAuthStateChanged(auth,(user)=>{
@@ -115,266 +97,70 @@ window.location.href="login.html";
 
 
 
+
 // REFERENCIAS
-
-
-const lista =
-document.getElementById("listaOfertas");
-
-
-const totalOfertas =
-document.getElementById("totalOfertas");
-
-
-const totalClicks =
-document.getElementById("totalClicks");
-
-
-const topOferta =
-document.getElementById("topOferta");
-
-
-
-const botonPublicar =
-document.getElementById("publicar");
-
-
-
-const archivoImagen =
-document.getElementById("archivoImagen");
-
-
-
-const vistaImagen =
-document.getElementById("vistaImagen");
-
-
-
-const barraCarga =
-document.getElementById("barraCarga");
-
-
-
-const progresoCarga =
-document.getElementById("progresoCarga");
-
-
-
-const estadoSubida =
-document.getElementById("estadoSubida");
-
-const titulo =
-document.getElementById("titulo");
-
-const categoria =
-document.getElementById("categoria");
-
-const precioAntes =
-document.getElementById("precioAntes");
-
-const precioFinal =
-document.getElementById("precioFinal");
-
-const descuento =
-document.getElementById("descuento");
-
-const link =
-document.getElementById("link");
-
-const estado =
-document.getElementById("estado");
-
-const destacada =
-document.getElementById("destacada");
-
 
 
 const ofertasRef =
 collection(db,"ofertas");
 
 
-
-
-
-let ofertas=[];
-
-
-let textoBusqueda="";
-
-
-let categoriaSeleccionada="todas";
-
-
-let ordenSeleccionado="reciente";
+const cuponesRef =
+collection(db,"cupones");
 
 
 
 
 
 
-
-// PREVIEW IMAGEN
-
-
-if(archivoImagen){
-
-archivoImagen.addEventListener("change",(e)=>{
-
-const archivo=e.target.files[0];
-
-if(!archivo)return;
-
-const lector=new FileReader();
-
-lector.onload=()=>{
-
-vistaImagen.src=lector.result;
-
-};
-
-lector.readAsDataURL(archivo);
-
-});
-
-}
-
-
-
-// SUBIR IMAGEN
-
-
-async function subirImagen(){
-
-
-const archivo =
-archivoImagen.files[0];
-
-
-if(!archivo)return "";
-
-
-
-const nombre =
-Date.now()+"_"+archivo.name;
-
-
-
-const imagenRef =
-ref(
-storage,
-"ofertas/"+nombre
-);
-
-
-
-await uploadBytes(
-imagenRef,
-archivo
-);
-
-
-
-return await getDownloadURL(imagenRef);
-
-
-}
+const $=id=>document.getElementById(id);
 
 
 
 
 
 
-
-
-
+// ==============================
 // PUBLICAR OFERTA
-
-botonPublicar.onclick=async()=>{
-
-alert("BOTÓN FUNCIONA");
-
-try{
+// ==============================
 
 
-botonPublicar.disabled=true;
+$("publicar").onclick=async()=>{
 
 
-botonPublicar.innerHTML="⏳ Publicando...";
+let datos={
 
 
+titulo:$("titulo").value,
 
-barraCarga.style.display="block";
+categoria:$("categoria").value,
 
+precioAntes:$("precioAntes").value,
 
-progresoCarga.style.width="30%";
+precioFinal:$("precioFinal").value,
 
+descuento:$("descuento").value,
 
-estadoSubida.innerHTML="Subiendo imagen...";
+imagen:$("imagen").value,
 
+link:$("link").value,
 
+activo:$("estado").value==="true",
 
+destacada:$("destacada").value==="true",
 
-
-const imagen =
-await subirImagen();
-
-
-
-
-
-const datos={
-
-
-titulo:
-document.getElementById("titulo").value,
-
-
-categoria:
-document.getElementById("categoria").value,
-
-
-precioAntes:
-document.getElementById("precioAntes").value,
-
-
-precioFinal:
-document.getElementById("precioFinal").value,
-
-
-descuento:
-document.getElementById("descuento").value,
-
-
-link:
-document.getElementById("link").value,
-
-
-imagen,
-
-
-activo:
-document.getElementById("estado").value==="true",
-
-
-destacada:
-document.getElementById("destacada").value==="true",
-
-
-clics:0,
-
-
-fecha:serverTimestamp()
+clics:0
 
 
 };
-
 
 
 
 if(!datos.titulo || !datos.precioFinal || !datos.link){
 
 
-alert("Completa título, precio y link");
+$("mensaje").innerHTML=
+"❌ Completa título, precio y link";
 
 
 return;
@@ -384,61 +170,39 @@ return;
 
 
 
-
-progresoCarga.style.width="70%";
-
-
-estadoSubida.innerHTML="Guardando oferta...";
-
-
+try{
 
 
 await addDoc(
+
 ofertasRef,
+
 datos
+
 );
 
 
 
-
-progresoCarga.style.width="100%";
-
-
-estadoSubida.innerHTML="✅ Publicada";
+$("mensaje").innerHTML=
+"✅ Oferta publicada";
 
 
-
-alert("Oferta publicada");
-
-
-
-limpiar();
+limpiarOferta();
 
 
 
 }
 
-catch(error){
-
-console.error("ERROR FIREBASE:",error);
-
-alert(error.message);
-
-}
+catch(e){
 
 
+console.error(e);
 
-finally{
-
-
-botonPublicar.disabled=false;
-
-
-botonPublicar.innerHTML="🚀 Publicar oferta";
+$("mensaje").innerHTML=
+"❌ Error publicando";
 
 
 }
-
 
 
 };
@@ -449,25 +213,23 @@ botonPublicar.innerHTML="🚀 Publicar oferta";
 
 
 
-function limpiar(){
+
+function limpiarOferta(){
 
 
-document.querySelectorAll("input").forEach(i=>{
+[
+"titulo",
+"precioAntes",
+"precioFinal",
+"descuento",
+"imagen",
+"link"
 
+].forEach(x=>{
 
-if(i.type!="file")
-i.value="";
-
+$(x).value="";
 
 });
-
-
-
-archivoImagen.value="";
-
-
-vistaImagen.src="";
-
 
 
 }
@@ -480,145 +242,50 @@ vistaImagen.src="";
 
 
 
-// FIRESTORE EN VIVO
+// ==============================
+// MOSTRAR OFERTAS
+// ==============================
 
 
 onSnapshot(
+
 ofertasRef,
+
 (snapshot)=>{
 
 
-ofertas=[];
+$("listaOfertas").innerHTML="";
 
+
+let total=0;
 
 let clicks=0;
 
-let mayor=0;
 
-let ganadora="-";
+snapshot.forEach(item=>{
 
 
+let o=item.data();
 
-snapshot.forEach((item)=>{
 
+total++;
 
-const oferta={
 
-id:item.id,
+clicks+=o.clics||0;
 
-...item.data()
 
-};
 
 
-ofertas.push(oferta);
-
-
-
-clicks += oferta.clics || 0;
-
-
-
-if((oferta.clics||0)>mayor){
-
-
-mayor=oferta.clics;
-
-
-ganadora=oferta.titulo;
-
-
-}
-
-
-});
-
-
-
-totalOfertas.innerHTML=snapshot.size;
-
-
-totalClicks.innerHTML=clicks;
-
-
-topOferta.innerHTML=ganadora;
-
-
-
-mostrarOfertas();
-
-
-
-}
-
-);
-
-
-
-
-
-
-
-
-
-// MOSTRAR
-
-
-function mostrarOfertas(){
-
-
-lista.innerHTML="";
-
-
-
-let resultado=[...ofertas];
-
-
-
-
-resultado=resultado.filter(o=>{
-
-
-return o.titulo
-.toLowerCase()
-.includes(textoBusqueda);
-
-
-});
-
-
-
-
-
-if(categoriaSeleccionada!="todas"){
-
-
-resultado=resultado.filter(o=>{
-
-
-return o.categoria==categoriaSeleccionada;
-
-
-});
-
-
-}
-
-
-
-
-
-resultado.forEach(o=>{
-
-
-
-lista.innerHTML+=`
+$("listaOfertas").innerHTML+=`
 
 
 <div class="ofertaAdmin">
 
 
 <img src="${o.imagen || 'logo.png'}">
+
+
+<div>
 
 
 <h3>${o.titulo}</h3>
@@ -630,22 +297,231 @@ lista.innerHTML+=`
 
 
 <p>
-${o.descuento || ""}
-</p>
-
-
-<p>
 ${o.activo?"🟢 Activa":"🔴 Agotada"}
 </p>
 
 
-
-<button onclick="eliminarOferta('${o.id}')">
+<button onclick="borrarOferta('${item.id}')">
 
 🗑️ Eliminar
 
 </button>
 
+
+</div>
+
+
+</div>
+
+
+
+`;
+
+
+
+});
+
+
+
+$("totalOfertas").innerHTML=total;
+
+$("totalClicks").innerHTML=clicks;
+
+
+}
+
+);
+
+
+
+
+
+
+
+
+window.borrarOferta=async(id)=>{
+
+
+if(confirm("¿Eliminar oferta?")){
+
+
+await deleteDoc(
+
+doc(db,"ofertas",id)
+
+);
+
+
+}
+
+
+};
+
+
+
+
+
+
+
+
+
+
+// ==============================
+// CUPONES
+// ==============================
+
+
+$("guardarCupon").onclick=async()=>{
+
+
+let codigo=$("codigoCupon").value.trim();
+
+
+
+if(!codigo){
+
+alert("Escribe código");
+
+return;
+
+}
+
+
+
+let datos={
+
+
+descuento:$("descuentoCupon").value,
+
+minimo:$("minimoCupon").value,
+
+tipo:$("tipoCupon").value,
+
+estado:$("estadoCupon").value,
+
+copias:0
+
+
+};
+
+
+
+
+await setDoc(
+
+doc(db,"cupones",codigo),
+
+datos
+
+);
+
+
+
+alert("✅ Cupón guardado");
+
+
+
+limpiarCupon();
+
+
+};
+
+
+
+
+
+
+
+
+
+function limpiarCupon(){
+
+
+[
+
+"codigoCupon",
+
+"descuentoCupon",
+
+"minimoCupon"
+
+
+].forEach(x=>{
+
+$(x).value="";
+
+});
+
+
+}
+
+
+
+
+
+
+
+
+
+// MOSTRAR CUPONES
+
+
+onSnapshot(
+
+cuponesRef,
+
+(snapshot)=>{
+
+
+$("listaCupones").innerHTML="";
+
+
+
+let copias=0;
+
+
+
+snapshot.forEach(item=>{
+
+
+let c=item.data();
+
+
+copias+=c.copias||0;
+
+
+
+$("listaCupones").innerHTML+=`
+
+
+<div class="cuponAdmin">
+
+
+<strong>
+
+${item.id}
+
+</strong>
+
+
+<p>
+💰 ${c.descuento} OFF
+</p>
+
+
+<p>
+🛒 ${c.minimo}
+</p>
+
+
+<p>
+${c.estado}
+</p>
+
+
+<p>
+📋 Copias: ${c.copias||0}
+</p>
 
 
 </div>
@@ -659,101 +535,47 @@ ${o.activo?"🟢 Activa":"🔴 Agotada"}
 
 
 
+$("copiasTotal").innerHTML=copias;
+
+
 }
-
-
-
-
-
-
-
-
-
-// BUSCADOR
-
-
-document
-.getElementById("buscarOferta")
-.oninput=(e)=>{
-
-
-textoBusqueda=
-e.target.value.toLowerCase();
-
-
-mostrarOfertas();
-
-
-};
-
-
-
-
-
-
-document
-.getElementById("filtroCategoria")
-.onchange=(e)=>{
-
-
-categoriaSeleccionada=e.target.value;
-
-
-mostrarOfertas();
-
-
-};
-
-
-
-
-
-
-document
-.getElementById("ordenarOferta")
-.onchange=(e)=>{
-
-
-ordenSeleccionado=e.target.value;
-
-
-mostrarOfertas();
-
-
-};
-
-
-
-
-
-
-
-
-
-// ELIMINAR
-
-
-window.eliminarOferta=async(id)=>{
-
-
-if(confirm("¿Eliminar oferta?")){
-
-
-await deleteDoc(
-
-doc(
-db,
-"ofertas",
-id
-)
 
 );
 
 
+
+
+
+
+
+
+
+
+// ==============================
+// AHORRO COMUNIDAD
+// ==============================
+
+
+onSnapshot(
+
+doc(db,"estadisticas","ahorro"),
+
+(snap)=>{
+
+
+let total=
+snap.data()?.total || 0;
+
+
+$("ahorroTotal").innerHTML=
+
+"$"+total.toLocaleString("es-MX");
+
+
 }
 
+);
 
-};
 
 
 
@@ -765,14 +587,7 @@ id
 // SALIR
 
 
-const salir =
-document.getElementById("salir");
-
-
-if(salir){
-
-
-salir.onclick=()=>{
+$("salir").onclick=()=>{
 
 
 signOut(auth);
@@ -782,6 +597,3 @@ window.location.href="login.html";
 
 
 };
-
-
-}
