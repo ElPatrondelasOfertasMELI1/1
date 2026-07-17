@@ -15,7 +15,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 <link rel="stylesheet" href="admin.css">
 
@@ -179,10 +181,6 @@ SALIR
 
 
 
-
-<!-- NUEVA OFERTA -->
-
-
 <section class="panel">
 
 
@@ -195,101 +193,27 @@ SALIR
 
 
 
+<input id="titulo" placeholder="Título del producto">
 
-<input
 
-id="titulo"
+<input id="imagen" type="file" accept="image/*">
 
-placeholder="Título del producto"
 
->
+<img id="preview" class="preview">
 
 
 
+<input id="precioAntes" placeholder="Precio antes">
 
 
+<input id="precioFinal" placeholder="Precio final">
 
-<input
 
-id="imagen"
+<input id="descuento" placeholder="Descuento ejemplo 20%">
 
-type="file"
 
-accept="image/*"
 
->
-
-
-
-
-
-<img
-
-id="preview"
-
-class="preview"
-
->
-
-
-
-
-
-
-
-<input
-
-id="precioAntes"
-
-placeholder="Precio antes"
-
->
-
-
-
-
-
-
-
-<input
-
-id="precioFinal"
-
-placeholder="Precio final"
-
->
-
-
-
-
-
-
-
-<input
-
-id="descuento"
-
-placeholder="Descuento ejemplo 20%"
-
->
-
-
-
-
-
-
-
-<input
-
-id="link"
-
-placeholder="Link Mercado Libre"
-
->
-
-
-
-
+<input id="link" placeholder="Link Mercado Libre">
 
 
 
@@ -297,28 +221,21 @@ placeholder="Link Mercado Libre"
 
 
 <option value="normal">
-
 🔥 Oferta normal
-
 </option>
 
 
 <option value="relampago">
-
 ⚡ Relámpago
-
 </option>
 
 
 <option value="destacada">
-
 ⭐ Destacada
-
 </option>
 
 
 </select>
-
 
 
 
@@ -331,7 +248,6 @@ placeholder="Link Mercado Libre"
 </button>
 
 
-
 </section>
 
 
@@ -341,27 +257,17 @@ placeholder="Link Mercado Libre"
 
 
 
-
-<!-- LISTA OFERTAS -->
-
-
 <section class="panel">
 
 
 <h2>
-
 📦 Ofertas publicadas
-
 </h2>
-
 
 
 <div id="listaOfertas">
-
 Cargando...
-
 </div>
-
 
 
 </section>
@@ -373,73 +279,24 @@ Cargando...
 
 
 
-
-<!-- NUEVO CUPÓN -->
-
-
 <section class="panel">
 
 
 <h2>
-
 🎟️ Crear Cupón
-
 </h2>
 
 
+<input id="codigoCupon" placeholder="Código del cupón">
 
 
+<input id="nombreCupon" placeholder="Nombre del cupón">
 
 
-<input
-
-id="codigoCupon"
-
-placeholder="Código del cupón"
-
->
+<input id="descuentoCupon" placeholder="Descuento">
 
 
-
-
-
-<input
-
-id="nombreCupon"
-
-placeholder="Nombre del cupón"
-
->
-
-
-
-
-
-
-<input
-
-id="descuentoCupon"
-
-placeholder="Descuento"
-
->
-
-
-
-
-
-
-<input
-
-id="minimoCupon"
-
-placeholder="Compra mínima"
-
->
-
-
-
-
+<input id="minimoCupon" placeholder="Compra mínima">
 
 
 
@@ -448,34 +305,21 @@ placeholder="Compra mínima"
 
 
 <option value="relampago">
-
 ⚡ Relámpago
-
 </option>
-
 
 
 <option value="bancario">
-
 💳 Bancario
-
 </option>
 
 
-
 <option value="exclusivo">
-
 ⭐ Exclusivo
-
 </option>
 
 
 </select>
-
-
-
-
-
 
 
 
@@ -483,31 +327,21 @@ placeholder="Compra mínima"
 
 
 <option value="activo">
-
 🟢 Disponible
-
 </option>
 
 
 <option value="agotando">
-
 ⚡ Últimas piezas
-
 </option>
 
 
 <option value="agotado">
-
 🔴 Agotado
-
 </option>
 
 
 </select>
-
-
-
-
 
 
 
@@ -519,20 +353,7 @@ placeholder="Compra mínima"
 </button>
 
 
-
 </section>
-
-
-
-
-
-
-
-
-
-<!-- LISTA CUPONES -->
-
-
 <section class="panel">
 
 
@@ -556,6 +377,9 @@ Cargando...
 
 
 
+
+
+
 <!-- =====================================================
      ESTADISTICAS AVANZADAS
 ===================================================== -->
@@ -565,13 +389,16 @@ Cargando...
 
 
 <h2>
+
 📊 Estadísticas Avanzadas
+
 </h2>
 
 
 
 
 <div class="stats">
+
 
 
 <div class="cardStat">
@@ -619,7 +446,6 @@ Cargando...
 
 
 
-
 <div class="cardStat">
 
 <h3>
@@ -641,12 +467,12 @@ Cargando...
 
 
 
+
 <h3 class="tituloGrafica">
 
-📈 Visitas últimos días
+👀 Visitas últimos días
 
 </h3>
-
 
 
 <canvas id="graficaVisitas">
@@ -655,7 +481,40 @@ Cargando...
 
 
 
+
+
+<h3 class="tituloGrafica">
+
+🎟️ Copias de cupones
+
+</h3>
+
+
+<canvas id="graficaCopias">
+
+</canvas>
+
+
+
+
+
+<h3 class="tituloGrafica">
+
+🖱️ Clics en ofertas
+
+</h3>
+
+
+<canvas id="graficaClics">
+
+</canvas>
+
+
+
+
 </section>
+
+
 
 
 
@@ -681,6 +540,11 @@ Cargando...
 
 
 <script type="module" src="estadisticas.js"></script>
+
+
+<script type="module" src="graficas.js"></script>
+
+
 
 </body>
 
