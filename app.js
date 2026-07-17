@@ -1,11 +1,10 @@
 // =======================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS PRO
-// FIREBASE PUBLIC
+// APP.JS PRO COMPLETO
 // =======================================
 
 
-import { initializeApp }
+import { initializeApp } 
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -13,12 +12,12 @@ import {
 
 getFirestore,
 collection,
-doc,
-getDoc,
 onSnapshot,
+doc,
 updateDoc,
 setDoc,
-increment
+increment,
+getDoc
 
 }
 
@@ -27,9 +26,10 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 
 
+// FIREBASE
 
-const firebaseConfig={
 
+const firebaseConfig = {
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
@@ -46,80 +46,49 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 };
 
 
-const app=initializeApp(firebaseConfig);
 
-const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
 
 
 
 
+
+const LINK_MELI = 
+"https://meli.la/1mj3itE";
+
+
+
+
+
+
+
+// =======================================
+// CARGAR OFERTAS
+// =======================================
 
 
 const carrusel =
 document.getElementById("carrusel");
 
 
-const cupones =
-document.getElementById("cupones");
-
-
-
-
-
-
-
-// =======================================
-// OFERTAS
-// =======================================
-
 
 onSnapshot(
 
 collection(db,"ofertas"),
 
-async(snapshot)=>{
+(snapshot)=>{
 
 
 carrusel.innerHTML="";
 
 
 
-for(const item of snapshot.docs){
+snapshot.forEach((item)=>{
 
 
-const oferta=item.data();
-
-
-let imagen="";
-
-
-
-if(oferta.imagenID){
-
-
-const img=
-
-await getDoc(
-
-doc(
-db,
-"imagenes",
-oferta.imagenID
-
-)
-
-);
-
-
-
-if(img.exists()){
-
-imagen=img.data().imagen;
-
-}
-
-
-}
+const o=item.data();
 
 
 
@@ -129,13 +98,13 @@ carrusel.innerHTML += `
 <div class="oferta">
 
 
-<img src="${imagen}">
+<img src="${o.imagen || 'logo.png'}">
 
 
 
 <h3>
 
-${oferta.titulo}
+${o.titulo || ""}
 
 </h3>
 
@@ -143,7 +112,7 @@ ${oferta.titulo}
 
 <p class="precioAntes">
 
-$${oferta.precioAntes || ""}
+$${o.precioAntes || ""}
 
 </p>
 
@@ -151,23 +120,20 @@ $${oferta.precioAntes || ""}
 
 <div class="precioFinal">
 
-$${oferta.precioFinal}
+$${o.precioFinal || ""}
 
 </div>
 
 
 
-<a
 
-class="btnComprar"
+<a class="btnComprar"
 
-href="${oferta.link}"
+href="${o.link}"
 
 target="_blank"
 
-onclick="clicOferta('${item.id}')"
-
->
+onclick="clicOferta('${item.id}')">
 
 🛒 COMPRAR
 
@@ -182,10 +148,13 @@ onclick="clicOferta('${item.id}')"
 
 
 
+});
+
+
 }
 
+);
 
-});
 
 
 
@@ -199,37 +168,22 @@ onclick="clicOferta('${item.id}')"
 // =======================================
 
 
-window.clicOferta=async(id)=>{
+window.clicOferta = async(id)=>{
 
 
-const ref=
-
-doc(
-
-db,
-
-"ofertas",
-
-id
-
-);
+const ref =
+doc(db,"ofertas",id);
 
 
-
-await updateDoc(
-
-ref,
-
-{
+await updateDoc(ref,{
 
 clics:increment(1)
 
-}
-
-).catch(()=>{});
+}).catch(()=>{});
 
 
 };
+
 
 
 
@@ -243,6 +197,12 @@ clics:increment(1)
 // =======================================
 
 
+const zonaCupones =
+document.getElementById("cupones");
+
+
+
+
 onSnapshot(
 
 collection(db,"cupones"),
@@ -250,11 +210,11 @@ collection(db,"cupones"),
 (snapshot)=>{
 
 
-cupones.innerHTML="";
+zonaCupones.innerHTML="";
 
 
 
-snapshot.forEach(item=>{
+snapshot.forEach((item)=>{
 
 
 const c=item.data();
@@ -264,11 +224,9 @@ const c=item.data();
 let estado="🟢 ACTIVO";
 
 
-
 if(c.estado==="agotando")
 
 estado="🟠 POR AGOTARSE";
-
 
 
 if(c.estado==="agotado")
@@ -279,8 +237,7 @@ estado="🔴 AGOTADO";
 
 
 
-
-cupones.innerHTML += `
+zonaCupones.innerHTML += `
 
 
 
@@ -289,16 +246,23 @@ cupones.innerHTML += `
 
 <h3>
 
-$${c.descuento || ""} OFF
+${c.descuento}
 
 </h3>
 
 
+
 <p>
 
-${c.minimo || ""}
+Compra mínima:
+<b>
+
+${c.minimo}
+
+</b>
 
 </p>
+
 
 
 <p>
@@ -309,11 +273,7 @@ ${estado}
 
 
 
-<button
-
-onclick="copiarCupon('${item.id}')"
-
->
+<button onclick="copiarCupon('${item.id}')">
 
 📋 COPIAR CUPÓN
 
@@ -333,7 +293,6 @@ onclick="copiarCupon('${item.id}')"
 
 }
 
-
 );
 
 
@@ -349,30 +308,47 @@ onclick="copiarCupon('${item.id}')"
 // =======================================
 
 
-window.copiarCupon=async(codigo)=>{
+window.copiarCupon = async(codigo)=>{
+
+
+try{
 
 
 await navigator.clipboard.writeText(codigo);
 
 
+alert(
+"✅ CUPÓN COPIADO: "+codigo
+);
 
-await contarCupon(codigo);
+
+
+}catch{
+
+
+prompt(
+"Copia tu cupón:",
+codigo
+);
+
+
+}
 
 
 
-alert("✅ CUPÓN COPIADO");
+
+
+guardarCopia(codigo);
 
 
 
 setTimeout(()=>{
 
 
-window.location.href=
-
-"https://meli.la/1mj3itE";
+window.location.href=LINK_MELI;
 
 
-},600);
+},500);
 
 
 
@@ -391,27 +367,18 @@ window.location.href=
 // =======================================
 
 
-async function contarCupon(codigo){
+async function guardarCopia(codigo){
 
 
 
-const global=
-
-doc(
-
-db,
-
-"contadores",
-
-"global"
-
-);
+const contador =
+doc(db,"contadores","global");
 
 
 
 await updateDoc(
 
-global,
+contador,
 
 {
 
@@ -424,7 +391,7 @@ total:increment(1)
 
 await setDoc(
 
-global,
+contador,
 
 {
 
@@ -441,36 +408,26 @@ total:1
 
 
 
+const usuario =
+
+localStorage.getItem("usuario")
+
+||
+
+crypto.randomUUID();
 
 
-let usuario=
-
-localStorage.getItem("usuario");
-
-
-
-if(!usuario){
-
-
-usuario=crypto.randomUUID();
 
 
 localStorage.setItem(
-
 "usuario",
-
 usuario
-
 );
 
 
-}
 
 
-
-
-
-const dia=
+const fecha =
 
 new Date()
 
@@ -482,8 +439,7 @@ new Date()
 
 
 
-
-const copia=
+const copia =
 
 doc(
 
@@ -491,7 +447,7 @@ db,
 
 "copias_diarias",
 
-usuario+"_"+dia
+usuario+"_"+fecha
 
 );
 
@@ -499,7 +455,7 @@ usuario+"_"+dia
 
 
 
-const existe=
+const existe =
 
 await getDoc(copia);
 
@@ -508,26 +464,19 @@ await getDoc(copia);
 if(!existe.exists()){
 
 
-await setDoc(
-
-copia,
-
-{
+await setDoc(copia,{
 
 usuario,
 
-dia,
+fecha,
 
 codigo
 
-}
-
-);
+});
 
 
 
-
-const ahorro=
+const ahorro =
 
 doc(
 
@@ -552,6 +501,7 @@ total:increment(100)
 }
 
 ).catch(()=>{});
+
 
 
 }
