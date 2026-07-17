@@ -1,17 +1,14 @@
 /* =====================================
    EL PATRÓN DE LAS OFERTAS
-   STYLE PRO
+   STYLE PRO PREMIUM
 ===================================== */
 
 
 *{
-
 box-sizing:border-box;
 margin:0;
 padding:0;
-
 font-family:'Inter',sans-serif;
-
 }
 
 
@@ -20,15 +17,16 @@ body{
 
 background:
 
-radial-gradient(circle at top,#fff7c2,#e9e9e9 45%,#ffffff);
+radial-gradient(circle at top,#3b3000,#080808 55%);
 
-color:#111;
+color:white;
 
 min-height:100vh;
 
-font-weight:700;
+padding-bottom:100px;
 
 }
+
 
 
 
@@ -46,12 +44,15 @@ align-items:center;
 
 padding:18px;
 
-background:white;
+background:#0b0b0b;
 
-border-radius:0 0 25px 25px;
+border-bottom:1px solid #333;
 
-box-shadow:
-0 8px 25px rgba(0,0,0,.08);
+position:sticky;
+
+top:0;
+
+z-index:100;
 
 }
 
@@ -59,11 +60,11 @@ box-shadow:
 
 .logo{
 
-font-size:25px;
+font-size:24px;
 
 font-weight:900;
 
-color:#111;
+color:#FFD600;
 
 }
 
@@ -73,29 +74,29 @@ color:#111;
 
 display:block;
 
-font-size:14px;
+font-size:13px;
 
-color:#666;
+color:white;
+
+letter-spacing:2px;
 
 }
 
 
 
-
-
 .menu{
-
-border:0;
-
-background:#FFD600;
-
-font-size:28px;
 
 width:50px;
 
 height:50px;
 
+border:none;
+
 border-radius:15px;
+
+background:#FFD600;
+
+font-size:28px;
 
 font-weight:900;
 
@@ -112,20 +113,21 @@ font-weight:900;
 
 .hero{
 
-margin:18px;
+margin:20px 15px;
 
-padding:25px;
+padding:28px 20px;
 
-background:#111;
+background:
 
-color:white;
+linear-gradient(135deg,#111,#222);
 
 border-radius:25px;
 
 text-align:center;
 
 box-shadow:
-0 15px 35px rgba(0,0,0,.25);
+
+0 15px 40px rgba(0,0,0,.5);
 
 }
 
@@ -133,11 +135,11 @@ box-shadow:
 
 .hero h1{
 
-color:#FFD600;
-
 font-size:28px;
 
 font-weight:900;
+
+color:#FFD600;
 
 }
 
@@ -145,50 +147,11 @@ font-weight:900;
 
 .hero p{
 
-margin-top:10px;
+margin-top:12px;
 
 color:#ddd;
 
-}
-
-
-
-
-
-/* CATEGORIAS */
-
-
-.categorias{
-
-display:flex;
-
-gap:10px;
-
-overflow-x:auto;
-
-padding:10px 15px;
-
-}
-
-
-
-.categorias button{
-
-border:0;
-
-background:white;
-
-padding:12px 18px;
-
-border-radius:30px;
-
-font-weight:900;
-
-white-space:nowrap;
-
-box-shadow:
-
-0 5px 15px rgba(0,0,0,.08);
+font-size:15px;
 
 }
 
@@ -201,13 +164,70 @@ box-shadow:
 
 h2{
 
-margin:25px 15px 15px;
-
-font-size:24px;
+font-size:22px;
 
 font-weight:900;
 
+margin:25px 15px 15px;
+
+color:#FFD600;
+
 }
+
+
+
+
+
+
+/* CATEGORIAS */
+
+
+.categorias{
+
+display:flex;
+
+overflow-x:auto;
+
+gap:12px;
+
+padding:0 15px;
+
+}
+
+
+
+.categorias::-webkit-scrollbar{
+
+display:none;
+
+}
+
+
+
+.categorias a{
+
+background:white;
+
+color:#111;
+
+padding:14px 18px;
+
+border-radius:30px;
+
+text-decoration:none;
+
+font-weight:900;
+
+white-space:nowrap;
+
+box-shadow:
+
+0 8px 20px rgba(0,0,0,.25);
+
+}
+
+
+
 
 
 
@@ -242,11 +262,14 @@ display:none;
 
 
 
+
 .oferta{
 
 min-width:90%;
 
-background:white;
+background:#fff;
+
+color:#111;
 
 border-radius:25px;
 
@@ -256,7 +279,7 @@ scroll-snap-align:center;
 
 box-shadow:
 
-0 10px 25px rgba(0,0,0,.12);
+0 15px 35px rgba(0,0,0,.35);
 
 }
 
@@ -267,7 +290,7 @@ box-shadow:
 
 width:100%;
 
-height:260px;
+height:280px;
 
 object-fit:contain;
 
@@ -279,15 +302,13 @@ border-radius:20px;
 
 
 
-
-
 .oferta h3{
 
 font-size:20px;
 
-margin:15px 0;
-
 font-weight:900;
+
+margin:15px 0;
 
 }
 
@@ -295,9 +316,9 @@ font-weight:900;
 
 .precioAntes{
 
-text-decoration:line-through;
-
 color:#777;
+
+text-decoration:line-through;
 
 }
 
@@ -305,11 +326,11 @@ color:#777;
 
 .precioFinal{
 
-font-size:32px;
-
-color:#00a650;
+font-size:35px;
 
 font-weight:900;
+
+color:#00a650;
 
 margin:10px 0;
 
@@ -329,16 +350,15 @@ color:#000;
 
 padding:15px;
 
-text-align:center;
-
 border-radius:18px;
 
-text-decoration:none;
+text-align:center;
 
 font-weight:900;
 
-}
+text-decoration:none;
 
+}
 
 
 
@@ -367,27 +387,25 @@ padding:15px;
 
 .cupon{
 
-background:white;
+background:#111;
+
+border:2px solid #FFD600;
 
 border-radius:20px;
 
-padding:15px;
+padding:18px 10px;
 
 text-align:center;
-
-box-shadow:
-
-0 8px 20px rgba(0,0,0,.1);
 
 }
 
 
 
-
-
 .cupon h3{
 
-font-size:22px;
+font-size:25px;
+
+color:#FFD600;
 
 font-weight:900;
 
@@ -397,13 +415,13 @@ font-weight:900;
 
 .cupon button{
 
-width:100%;
+margin-top:15px;
 
-margin-top:10px;
+width:100%;
 
 padding:12px;
 
-border:0;
+border:none;
 
 border-radius:15px;
 
@@ -422,6 +440,53 @@ font-weight:900;
 
 
 
+/* MELI+ */
+
+
+.vip{
+
+margin:15px;
+
+padding:25px;
+
+background:
+
+linear-gradient(135deg,#111,#333);
+
+border-radius:25px;
+
+text-align:center;
+
+border:2px solid #FFD600;
+
+}
+
+
+
+.vip button{
+
+margin-top:15px;
+
+padding:15px;
+
+width:100%;
+
+border:none;
+
+border-radius:15px;
+
+background:#FFD600;
+
+font-weight:900;
+
+}
+
+
+
+
+
+
+
 /* MERCADO PAGO */
 
 
@@ -429,11 +494,9 @@ font-weight:900;
 
 margin:15px;
 
+padding:25px;
+
 background:#009ee3;
-
-color:white;
-
-padding:20px;
 
 border-radius:25px;
 
@@ -453,15 +516,16 @@ color:#009ee3;
 
 padding:15px;
 
-margin-top:15px;
-
 border-radius:15px;
+
+margin-top:15px;
 
 text-decoration:none;
 
 font-weight:900;
 
 }
+
 
 
 
@@ -486,15 +550,15 @@ color:white;
 
 padding:16px 22px;
 
-border-radius:50px;
-
-text-decoration:none;
+border-radius:40px;
 
 font-weight:900;
 
+text-decoration:none;
+
 box-shadow:
 
-0 10px 25px rgba(0,0,0,.3);
+0 10px 30px rgba(0,0,0,.5);
 
 z-index:999;
 
@@ -504,16 +568,15 @@ z-index:999;
 
 
 
-/* LOADER */
-
-
 .loader{
 
-padding:40px;
+padding:50px;
 
 text-align:center;
 
 font-weight:900;
+
+color:#FFD600;
 
 }
 
@@ -521,7 +584,7 @@ font-weight:900;
 
 
 
-/* MOVIL */
+
 
 
 @media(max-width:600px){
@@ -534,7 +597,6 @@ font-size:20px;
 }
 
 
-
 .hero h1{
 
 font-size:24px;
@@ -542,12 +604,12 @@ font-size:24px;
 }
 
 
-
 #cupones{
 
 grid-template-columns:1fr 1fr;
 
 }
+
 
 
 }
