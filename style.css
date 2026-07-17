@@ -1,14 +1,19 @@
 /* =====================================================
 EL PATRÓN DE LAS OFERTAS
-STYLE.CSS MEJORADO V2
+STYLE.CSS MEJORADO
 ===================================================== */
 
 
 *{
+
 box-sizing:border-box;
+
 margin:0;
+
 padding:0;
+
 font-family:'Inter',sans-serif;
+
 }
 
 
@@ -16,6 +21,7 @@ font-family:'Inter',sans-serif;
 body{
 
 background:
+
 radial-gradient(circle at top,#262626,#050505);
 
 color:white;
@@ -23,6 +29,8 @@ color:white;
 padding-bottom:100px;
 
 }
+
+
 
 
 
@@ -81,8 +89,6 @@ letter-spacing:3px;
 
 
 
-
-
 .menu{
 
 background:#ffd600;
@@ -96,6 +102,7 @@ padding:8px 14px;
 font-size:25px;
 
 }
+
 
 
 
@@ -140,9 +147,11 @@ margin-top:10px;
 
 
 
+
+
 h2{
 
-margin:25px 18px 15px;
+margin:25px 18px 10px;
 
 color:#ffd600;
 
@@ -151,6 +160,67 @@ font-size:22px;
 font-weight:900;
 
 }
+
+
+
+
+
+
+
+
+/* AVISO DESLIZAR */
+
+
+.avisoDesliza{
+
+margin:0 18px 10px;
+
+color:#111;
+
+background:#ffd600;
+
+display:inline-flex;
+
+padding:6px 14px;
+
+border-radius:20px;
+
+font-size:12px;
+
+font-weight:900;
+
+animation:desliza 1.8s infinite;
+
+}
+
+
+
+@keyframes desliza{
+
+0%{
+
+transform:translateX(0);
+
+}
+
+
+
+50%{
+
+transform:translateX(8px);
+
+}
+
+
+
+100%{
+
+transform:translateX(0);
+
+}
+
+}
+
 
 
 
@@ -192,7 +262,6 @@ linear-gradient(
 #ffd600,
 #ff9800
 );
-
 
 color:#111;
 
@@ -256,44 +325,27 @@ display:none;
 
 
 
-
-
-
 .oferta{
-
 
 flex:0 0 280px;
 
-
 background:#111;
-
 
 border:1px solid #333;
 
-
 border-radius:22px;
-
 
 padding:15px;
 
-
 display:flex;
-
 
 flex-direction:column;
 
-
 scroll-snap-align:center;
 
-
-min-height:470px;
-
+min-height:500px;
 
 }
-
-
-
-
 
 .oferta img{
 
@@ -308,8 +360,6 @@ background:white;
 border-radius:18px;
 
 }
-
-
 
 
 
@@ -334,89 +384,63 @@ overflow:hidden;
 
 
 
-/* BLOQUE PRECIOS ALINEADO */
+/* BLOQUE DE PRECIOS ALINEADOS */
+
+
+.precioAntes,
+.descuento,
+.precio{
+
+height:42px;
+
+display:flex;
+
+align-items:center;
+
+}
+
+
 
 
 .precioAntes{
-
-
-height:25px;
 
 color:#aaa;
 
 font-size:14px;
 
-display:flex;
-
-align-items:center;
-
 }
-
-
 
 
 
 .descuento{
 
-
-height:34px;
-
-
 background:#ffd600;
 
 color:#111;
 
-
 padding:6px 12px;
-
 
 border-radius:20px;
 
-
 font-weight:900;
-
-
-display:flex;
-
-
-align-items:center;
-
 
 width:max-content;
 
-
-margin:8px 0;
-
+font-size:14px;
 
 }
 
 
 
-
-
 .precio{
-
-
-height:45px;
-
 
 color:#ffd600;
 
-
 font-size:27px;
-
 
 font-weight:900;
 
-
-display:flex;
-
-
-align-items:center;
-
-
-margin:10px 0;
-
+margin-bottom:10px;
 
 }
 
@@ -428,44 +452,44 @@ margin:10px 0;
 
 .btnOferta{
 
-
 margin-top:auto;
-
 
 background:#ffd600;
 
-
 color:#111;
-
 
 padding:13px;
 
-
 border-radius:15px;
-
 
 text-align:center;
 
-
 font-weight:900;
-
 
 text-decoration:none;
 
-
 }
-/* =====================================================
-CUPONES
-===================================================== */
+
+
+
+
+
+
+
+
+
+/* CUPONES */
 
 
 .cupones{
 
 display:flex;
 
-gap:12px;
+flex-direction:row;
 
 flex-wrap:nowrap;
+
+gap:12px;
 
 overflow-x:auto;
 
@@ -475,7 +499,7 @@ padding:10px 18px 25px;
 
 scroll-snap-type:x mandatory;
 
-position:relative;
+-webkit-overflow-scrolling:touch;
 
 }
 
@@ -491,15 +515,10 @@ display:none;
 
 
 
-
-
 .cuponCard{
 
 
 flex:0 0 210px;
-
-
-min-height:260px;
 
 
 background:#111;
@@ -523,37 +542,30 @@ flex-direction:column;
 scroll-snap-align:start;
 
 
+min-height:260px;
+
+
 }
 
 
 
 .estado{
 
-
 background:#00c853;
-
 
 color:white;
 
-
 padding:5px 10px;
-
 
 border-radius:20px;
 
-
 font-size:11px;
-
 
 font-weight:900;
 
-
 width:max-content;
 
-
 }
-
-
 
 
 
@@ -561,30 +573,15 @@ width:max-content;
 
 .cuponCard h3{
 
-
-font-size:17px;
-
+font-size:16px;
 
 margin:12px 0;
 
-
 height:45px;
-
 
 display:flex;
 
-
 align-items:center;
-
-
-font-weight:900;
-
-
-text-transform:uppercase;
-
-
-overflow:hidden;
-
 
 }
 
@@ -592,20 +589,14 @@ overflow:hidden;
 
 .cuponCard p{
 
-
 font-size:14px;
-
 
 margin:6px 0;
 
-
 color:#ddd;
 
-
-height:22px;
-
-
 }
+
 
 
 
@@ -614,122 +605,23 @@ height:22px;
 
 .copiarCupon{
 
-
 margin-top:auto;
-
 
 width:100%;
 
-
 padding:12px;
-
 
 border:0;
 
-
 border-radius:15px;
 
-
 background:#ffd600;
-
 
 color:#111;
 
-
 font-weight:900;
 
-
 }
-
-
-
-
-
-
-
-
-/* AVISO DESLIZAR */
-
-
-.avisoDesliza{
-
-
-margin:-10px 18px 15px;
-
-
-background:#ffd600;
-
-
-color:#111;
-
-
-display:inline-block;
-
-
-padding:8px 16px;
-
-
-border-radius:30px;
-
-
-font-weight:900;
-
-
-font-size:13px;
-
-
-animation:aparecerAviso .5s ease;
-
-
-transition:.5s;
-
-
-}
-
-
-
-
-.avisoDesliza.ocultar{
-
-
-opacity:0;
-
-
-transform:translateY(-15px);
-
-
-pointer-events:none;
-
-
-}
-
-
-
-
-
-@keyframes aparecerAviso{
-
-
-from{
-
-opacity:0;
-
-transform:translateY(15px);
-
-}
-
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-
-}
-
 
 
 
@@ -743,96 +635,64 @@ transform:translateY(0);
 
 #toast{
 
-
 position:fixed;
-
 
 bottom:30px;
 
-
 left:50%;
-
 
 transform:translate(-50%,120px);
 
-
 background:#ffd600;
-
 
 color:#111;
 
-
 padding:14px 25px;
-
 
 border-radius:30px;
 
-
 font-weight:900;
-
 
 transition:.3s;
 
-
 z-index:100;
 
-
 }
-
 
 
 
 #toast.show{
 
-
 transform:translate(-50%,0);
 
-
 }
-
-
-
-
-
-
-
-
 
 /* WHATSAPP */
 
 
 .whatsapp{
 
-
 position:fixed;
-
 
 right:18px;
 
-
 bottom:90px;
-
 
 background:#25D366;
 
-
 color:white;
-
 
 padding:14px 20px;
 
-
 border-radius:50px;
-
 
 font-weight:900;
 
-
 text-decoration:none;
-
 
 z-index:80;
 
+box-shadow:0 8px 20px #000;
 
 }
 
@@ -843,51 +703,38 @@ z-index:80;
 
 
 
-
-/* BOTON ARRIBA */
+/* BOTÓN SUBIR */
 
 
 #btnArriba{
 
-
 display:none;
-
 
 position:fixed;
 
-
 right:18px;
-
 
 bottom:25px;
 
-
 width:55px;
-
 
 height:55px;
 
-
 border:0;
-
 
 border-radius:50%;
 
-
 background:#ffd600;
-
 
 font-size:25px;
 
-
 font-weight:900;
-
 
 z-index:90;
 
+box-shadow:0 8px 20px #000;
 
 }
-
 
 
 
@@ -901,21 +748,15 @@ z-index:90;
 
 .loader{
 
-
 width:100%;
-
 
 text-align:center;
 
-
 padding:30px;
-
 
 color:#ffd600;
 
-
 font-weight:900;
-
 
 }
 
@@ -926,7 +767,20 @@ font-weight:900;
 
 
 
-/* MOBILE */
+/* MEJOR DESLIZAMIENTO EN MÓVIL */
+
+
+.carrusel,
+.cupones{
+
+touch-action:pan-x;
+
+}
+
+
+
+
+/* RESPONSIVE */
 
 
 @media(max-width:600px){
@@ -941,9 +795,23 @@ font-size:28px;
 
 
 
+.hero{
+
+padding:25px 15px;
+
+}
+
+
+
+h2{
+
+font-size:20px;
+
+}
+
+
 
 .oferta{
-
 
 flex-basis:280px;
 
@@ -953,16 +821,21 @@ flex-basis:280px;
 
 .cuponCard{
 
-
-flex-basis:210px;
+flex-basis:220px;
 
 }
 
 
 
-h2{
+.whatsapp{
 
-font-size:21px;
+right:12px;
+
+bottom:85px;
+
+font-size:14px;
+
+padding:12px 16px;
 
 }
 
