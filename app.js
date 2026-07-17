@@ -1,7 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS NUEVO
-// PARTE 1/3
+// APP.JS FINAL CORREGIDO
 // =====================================================
 
 
@@ -32,7 +31,7 @@ from
 // ================================
 
 
-const firebaseConfig={
+const firebaseConfig = {
 
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
@@ -47,7 +46,6 @@ messagingSenderId:"292338334268",
 
 appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
-
 };
 
 
@@ -56,10 +54,8 @@ const app =
 initializeApp(firebaseConfig);
 
 
-
 const db =
 getFirestore(app);
-
 
 
 
@@ -72,31 +68,22 @@ getFirestore(app);
 
 
 const carrusel =
-
 document.getElementById("carrusel");
 
 
-
 const relampago =
-
 document.getElementById("cuponesRelampago");
 
 
-
 const bancarios =
-
 document.getElementById("cuponesBancarios");
 
 
-
 const exclusivos =
-
 document.getElementById("cuponesExclusivos");
 
 
-
 const toast =
-
 document.getElementById("toast");
 
 
@@ -117,8 +104,7 @@ function mostrarToast(texto){
 if(!toast)return;
 
 
-
-toast.innerHTML=texto;
+toast.innerHTML = texto;
 
 
 toast.classList.add("show");
@@ -143,6 +129,7 @@ toast.classList.remove("show");
 
 
 
+
 // ================================
 // OFERTAS
 // ================================
@@ -152,9 +139,7 @@ async function cargarOfertas(){
 
 
 
-const datos =
-
-await getDocs(
+const datos = await getDocs(
 
 collection(db,"ofertas")
 
@@ -162,35 +147,21 @@ collection(db,"ofertas")
 
 
 
-
-
 carrusel.innerHTML="";
-
-
 
 
 
 datos.forEach((item)=>{
 
 
-
-const oferta =
-
-item.data();
+const oferta=item.data();
 
 
 
-
-
-const card =
-
-document.createElement("div");
-
+const card=document.createElement("div");
 
 
 card.className="oferta";
-
-
 
 
 
@@ -201,9 +172,7 @@ ${oferta.destacada ?
 
 "<div class='badge destacada'>⭐ DESTACADA</div>"
 
-:
-
-""}
+:""}
 
 
 
@@ -211,9 +180,7 @@ ${oferta.tipo==="relampago" ?
 
 "<div class='badge relampago'>⚡ RELÁMPAGO</div>"
 
-:
-
-""}
+:""}
 
 
 
@@ -251,11 +218,11 @@ $${oferta.precioFinal}
 
 <a
 
+class="comprar"
+
 href="${oferta.link}"
 
-target="_blank"
-
-class="comprar">
+target="_blank">
 
 🛒 VER OFERTA
 
@@ -271,8 +238,8 @@ class="comprar">
 
 
 
-
 card.querySelector(".comprar")
+
 .onclick=()=>{
 
 
@@ -287,14 +254,14 @@ item.id
 
 {
 
-
 clics:
-increment(1)
 
+increment(1)
 
 }
 
 );
+
 
 
 };
@@ -311,25 +278,105 @@ carrusel.appendChild(card);
 
 
 
-
-
 iniciarCarrusel();
 
 
 
 }
-// =====================================================
-// APP.JS NUEVO
-// PARTE 2/3
-// CUPONES
-// =====================================================
+
+
+
+
 
 
 
 
 
 // ================================
-// CARGAR CUPONES
+// CARRUSEL AUTOMÁTICO
+// ================================
+
+
+function iniciarCarrusel(){
+
+
+let posicion=0;
+
+
+
+setInterval(()=>{
+
+
+
+if(!carrusel)return;
+
+
+
+
+if(
+
+carrusel.scrollWidth <= carrusel.clientWidth
+
+)
+
+return;
+
+
+
+
+
+
+posicion += carrusel.clientWidth;
+
+
+
+
+
+
+if(
+
+posicion >= carrusel.scrollWidth
+
+){
+
+
+posicion=0;
+
+
+}
+
+
+
+
+
+carrusel.scrollTo({
+
+left:posicion,
+
+behavior:"smooth"
+
+});
+
+
+
+
+
+},2200);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ================================
+// CUPONES
 // ================================
 
 
@@ -337,16 +384,11 @@ async function cargarCupones(){
 
 
 
-const datos =
-
-await getDocs(
+const datos = await getDocs(
 
 collection(db,"cupones")
 
 );
-
-
-
 
 
 
@@ -360,22 +402,16 @@ exclusivos.innerHTML="";
 
 
 
-
 datos.forEach((item)=>{
 
 
-
-const cupon =
-
-item.data();
+const cupon=item.data();
 
 
 
+const tarjeta=
 
-
-const tarjeta =
-
-crearTarjetaCupon(
+crearCupon(
 
 item.id,
 
@@ -387,40 +423,21 @@ cupon
 
 
 
-
-if(cupon.tipo==="relampago"){
-
-
+if(cupon.tipo==="relampago")
 
 relampago.appendChild(tarjeta);
 
 
 
-}
-
-
-else if(cupon.tipo==="bancario"){
-
-
+else if(cupon.tipo==="bancario")
 
 bancarios.appendChild(tarjeta);
 
 
 
-}
-
-
-else{
-
-
+else
 
 exclusivos.appendChild(tarjeta);
-
-
-
-}
-
-
 
 
 
@@ -428,8 +445,6 @@ exclusivos.appendChild(tarjeta);
 
 
 
-
-
 }
 
 
@@ -439,19 +454,12 @@ exclusivos.appendChild(tarjeta);
 
 
 
-// ================================
-// CREAR CUPÓN
-// ================================
 
-
-function crearTarjetaCupon(id,cupon){
+function crearCupon(id,cupon){
 
 
 
-const div =
-
-document.createElement("div");
-
+const div=document.createElement("div");
 
 
 div.className="cuponCard";
@@ -460,26 +468,23 @@ div.className="cuponCard";
 
 
 
-
-let estadoTexto="🟢 DISPONIBLE";
-
-let estadoClase="disponible";
+let estado="🟢 DISPONIBLE";
 
 
+let clase="disponible";
 
 
 
 if(cupon.estado==="agotando"){
 
 
-estadoTexto="⚡ ÚLTIMAS PIEZAS";
+estado="⚡ ÚLTIMAS PIEZAS";
 
 
-estadoClase="ultimas";
+clase="ultimas";
 
 
 }
-
 
 
 
@@ -487,10 +492,10 @@ estadoClase="ultimas";
 if(cupon.estado==="agotado"){
 
 
-estadoTexto="🔴 AGOTADO";
+estado="🔴 AGOTADO";
 
 
-estadoClase="agotado";
+clase="agotado";
 
 
 }
@@ -499,19 +504,13 @@ estadoClase="agotado";
 
 
 
-
-
 div.innerHTML=`
 
+<span class="estado ${clase}">
 
-
-<span class="estado ${estadoClase}">
-
-${estadoTexto}
+${estado}
 
 </span>
-
-
 
 
 
@@ -523,16 +522,11 @@ ${estadoTexto}
 
 
 
-
-
 <strong>
 
 ${cupon.codigo}
 
 </strong>
-
-
-
 
 
 
@@ -546,9 +540,6 @@ $${cupon.descuento}
 
 
 
-
-
-
 <p>
 
 🛒 Compra mínima:
@@ -559,16 +550,11 @@ $${cupon.minimo}
 
 
 
-
-
-
 <button>
 
 📋 COPIAR CUPÓN
 
 </button>
-
-
 
 
 `;
@@ -577,12 +563,9 @@ $${cupon.minimo}
 
 
 
-
-
 div.querySelector("button")
 
 .onclick=()=>{
-
 
 
 copiarCupon(
@@ -594,9 +577,7 @@ cupon.codigo
 );
 
 
-
 };
-
 
 
 
@@ -617,7 +598,7 @@ return div;
 
 
 // ================================
-// COPIAR CUPÓN
+// COPIAR Y REDIRECCIÓN
 // ================================
 
 
@@ -645,11 +626,9 @@ id
 
 {
 
-
 copias:
 
 increment(1)
-
 
 }
 
@@ -668,92 +647,22 @@ mostrarToast(
 
 
 
-}
-// =====================================================
-// APP.JS NUEVO
-// PARTE 3/3
-// CARRUSEL + BOTÓN ARRIBA + INICIO
-// =====================================================
+
+
+setTimeout(()=>{
+
+
+window.open(
+
+"https://meli.la/1mj3itE",
+
+"_blank"
+
+);
 
 
 
-
-
-// ================================
-// CARRUSEL AUTOMÁTICO
-// ================================
-
-
-function iniciarCarrusel(){
-
-
-
-let posicion = 0;
-
-
-
-setInterval(()=>{
-
-
-
-if(!carrusel)return;
-
-
-
-
-if(
-carrusel.scrollWidth <=
-carrusel.clientWidth
-){
-
-return;
-
-}
-
-
-
-
-
-posicion +=
-
-carrusel.clientWidth;
-
-
-
-
-
-
-if(
-posicion >=
-carrusel.scrollWidth
-){
-
-
-posicion=0;
-
-
-}
-
-
-
-
-
-carrusel.scrollTo({
-
-
-left:posicion,
-
-
-behavior:"smooth"
-
-
-});
-
-
-
-
-
-},3000);
+},700);
 
 
 
@@ -768,17 +677,17 @@ behavior:"smooth"
 
 
 // ================================
-// BOTÓN SUBIR
+// BOTÓN ARRIBA
 // ================================
 
 
-const btnArriba =
+const btnArriba=
 
 document.getElementById("btnArriba");
 
 
 
-
+if(btnArriba){
 
 
 window.addEventListener(
@@ -788,69 +697,42 @@ window.addEventListener(
 ()=>{
 
 
+btnArriba.style.display=
 
-if(!btnArriba)return;
+window.scrollY>500
 
+?
 
+"block"
 
+:
 
+"none";
 
-if(window.scrollY>500){
-
-
-
-btnArriba.style.display="block";
-
-
-
-}else{
-
-
-
-btnArriba.style.display="none";
-
-
-}
-
-
-
-}
-
-);
-
-
-
-
-
-
-
-if(btnArriba){
-
-
-
-btnArriba.onclick=()=>{
-
-
-
-window.scrollTo({
-
-
-top:0,
-
-
-behavior:"smooth"
 
 
 });
 
 
 
+
+
+btnArriba.onclick=()=>{
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+
 };
 
 
-
 }
-
 
 
 
