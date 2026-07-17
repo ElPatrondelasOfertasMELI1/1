@@ -1,21 +1,37 @@
-// =====================================
+// =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // APP.JS
-// FIREBASE OFERTAS + CUPONES
-// =====================================
+// PARTE 1 DE 4
+// FIREBASE + CARGA PRINCIPAL
+// =====================================================
 
 
+// ================================
+// FIREBASE
+// ================================
 
-import { initializeApp } from
+
+import { initializeApp } from 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
 
 
 import {
 
 getFirestore,
+
 collection,
-getDocs
+
+getDocs,
+
+doc,
+
+updateDoc,
+
+increment,
+
+query,
+
+orderBy
 
 }
 
@@ -27,27 +43,25 @@ from
 
 
 
-
-
-// ============================
-// FIREBASE
-// ============================
+// ================================
+// CONFIGURACIÓN FIREBASE REAL
+// ================================
 
 
 const firebaseConfig = {
 
 
-apiKey:"TU_API_KEY",
+apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
-authDomain:"TU_PROYECTO.firebaseapp.com",
+authDomain: "patronofertasweb.firebaseapp.com",
 
-projectId:"TU_PROJECT_ID",
+projectId: "patronofertasweb",
 
-storageBucket:"TU_STORAGE_BUCKET",
+storageBucket: "patronofertasweb.firebasestorage.app",
 
-messagingSenderId:"TU_SENDER_ID",
+messagingSenderId: "292338334268",
 
-appId:"TU_APP_ID"
+appId: "1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 };
@@ -56,9 +70,10 @@ appId:"TU_APP_ID"
 
 
 
+// INICIAR FIREBASE
+
 
 const app = initializeApp(firebaseConfig);
-
 
 
 const db = getFirestore(app);
@@ -69,105 +84,107 @@ const db = getFirestore(app);
 
 
 
+// ================================
+// ELEMENTOS HTML
+// ================================
 
 
-// ============================
-// OFERTAS
-// ============================
-
-
-const carrusel =
-
+const carrusel = 
 document.getElementById("carrusel");
 
 
 
+const cuponesRelampago =
+document.getElementById("cuponesRelampago");
 
+
+
+const cuponesBancarios =
+document.getElementById("cuponesBancarios");
+
+
+
+const cuponesExclusivos =
+document.getElementById("cuponesExclusivos");
+
+
+
+const toast =
+document.getElementById("toast");
+
+
+
+
+
+
+// ================================
+// MOSTRAR TOAST
+// ================================
+
+
+function mostrarToast(texto){
+
+
+if(!toast) return;
+
+
+
+toast.innerHTML = texto;
+
+
+toast.classList.add("show");
+
+
+
+setTimeout(()=>{
+
+
+toast.classList.remove("show");
+
+
+},2000);
+
+
+
+}
+
+
+
+
+
+
+// ================================
+// CARGAR OFERTAS
+// ================================
 
 
 async function cargarOfertas(){
 
 
-
 try{
 
 
+const referencia =
+collection(db,"ofertas");
 
-const snap =
 
-await getDocs(
 
-collection(db,"ofertas")
+const consulta =
+query(
+
+referencia,
+
+orderBy(
+"creado",
+"desc"
+)
 
 );
 
 
 
-
-
-let ofertas=[];
-
-
-
-
-
-
-snap.forEach(doc=>{
-
-
-ofertas.push({
-
-id:doc.id,
-
-...doc.data()
-
-});
-
-
-});
-
-
-
-
-
-
-
-
-// PRIORIDAD
-// ⭐ Destacada
-// ⚡ Relámpago
-// Normal
-
-
-ofertas.sort((a,b)=>{
-
-
-let A =
-
-a.destacada ? 1 :
-
-a.tipo==="relampago" ? 2 : 3;
-
-
-
-let B =
-
-b.destacada ? 1 :
-
-b.tipo==="relampago" ? 2 : 3;
-
-
-
-return A-B;
-
-
-});
-
-
-
-
-
-
+const resultado =
+await getDocs(consulta);
 
 
 
@@ -175,22 +192,15 @@ carrusel.innerHTML="";
 
 
 
+if(resultado.empty){
 
 
-
-if(ofertas.length===0){
-
-
-carrusel.innerHTML=
+carrusel.innerHTML =
 
 `
-
 <div class="loader">
-
-No hay ofertas
-
+No hay ofertas disponibles
 </div>
-
 `;
 
 return;
@@ -201,10 +211,55 @@ return;
 
 
 
+let ofertas=[];
 
 
 
-ofertas.forEach(oferta=>{
+resultado.forEach((documento)=>{
+
+
+ofertas.push({
+
+id:documento.id,
+
+...documento.data()
+
+});
+
+
+});
+
+
+
+// ORDEN PRIORIDAD
+// 1 DESTACADAS
+// 2 RELÁMPAGO
+// 3 NORMALES
+
+
+ofertas.sort((a,b)=>{
+
+
+let prioridadA =
+a.destacada ? 1 :
+a.tipo==="relampago" ? 2 : 3;
+
+
+
+let prioridadB =
+b.destacada ? 1 :
+b.tipo==="relampago" ? 2 : 3;
+
+
+
+return prioridadA-prioridadB;
+
+
+});
+
+
+
+ofertas.forEach((oferta)=>{
 
 
 crearOferta(oferta);
@@ -214,15 +269,13 @@ crearOferta(oferta);
 
 
 
-
-
 }
 
 catch(error){
 
 
-
 console.error(
+"Error cargando ofertas",
 error
 );
 
@@ -231,83 +284,72 @@ error
 carrusel.innerHTML=
 
 `
-
 <div class="loader">
-
 Error cargando ofertas
-
 </div>
-
 `;
 
+}
 
 
 }
 
+// =====================================================
+// APP.JS
+// PARTE 2 DE 4
+// TARJETAS DE OFERTAS
+// =====================================================
 
 
-}
 
 
-
-
-
-
-
+// ================================
+// CREAR TARJETA OFERTA
+// ================================
 
 
 function crearOferta(oferta){
 
 
 
-const card =
-
+const tarjeta =
 document.createElement("div");
 
 
 
-card.className="oferta";
+tarjeta.className =
+"oferta";
 
 
 
 
 
-
-let badge="";
+let etiqueta="";
 
 
 
 if(oferta.destacada){
 
 
-badge=
+etiqueta =
 
 `
-
-<div class="badge destacada">
-
+<span class="badge destacada">
 ⭐ DESTACADA
-
-</div>
-
+</span>
 `;
-
 
 }
 
 else if(oferta.tipo==="relampago"){
 
 
-badge=
+etiqueta =
 
 `
-
-<div class="badge relampago">
-
+<span class="badge relampago">
 ⚡ RELÁMPAGO
-
-</div>
-
+</span>
 `;
 
 }
@@ -316,17 +358,16 @@ badge=
 
 
 
-card.innerHTML=
+tarjeta.innerHTML =
 
 
 
 `
 
-${badge}
+${etiqueta}
 
 
-
-<img src="${oferta.imagen}">
+<img src="${oferta.imagen || 'logo.png'}">
 
 
 
@@ -334,35 +375,47 @@ ${badge}
 
 
 
-<span class="descuento">
-
-${oferta.descuento || "OFERTA"}
-
-</span>
-
-
-
 <h3>
 
-${oferta.titulo}
+${oferta.titulo || "Oferta"}
 
 </h3>
 
 
 
+
+
+${
+oferta.precioAntes ?
+
+`
+
 <p class="precioAntes">
 
-${oferta.precioAntes ? "$"+oferta.precioAntes : ""}
+$${oferta.precioAntes}
 
 </p>
+
+`
+
+:
+
+""
+
+}
+
+
 
 
 
 <div class="precioFinal">
 
-$${oferta.precioFinal}
+$${oferta.precioFinal || ""}
 
 </div>
+
+
+
 
 
 
@@ -374,8 +427,6 @@ href="${oferta.link}"
 
 target="_blank"
 
-onclick="registrarClick('${oferta.id}')"
-
 >
 
 🛒 COMPRAR
@@ -386,12 +437,38 @@ onclick="registrarClick('${oferta.id}')"
 
 </div>
 
+
 `;
 
 
 
 
-carrusel.appendChild(card);
+
+
+const boton =
+tarjeta.querySelector(".btnComprar");
+
+
+
+
+
+boton.addEventListener(
+"click",
+()=>{
+
+
+registrarClicOferta(oferta.id);
+
+
+}
+
+);
+
+
+
+
+
+carrusel.appendChild(tarjeta);
 
 
 
@@ -403,44 +480,168 @@ carrusel.appendChild(card);
 
 
 
+// ================================
+// REGISTRAR CLIC OFERTA
+// ================================
 
 
-// ============================
-// CUPONES
-// ============================
-
-
-
-async function cargarCupones(){
-
+async function registrarClicOferta(id){
 
 
 try{
 
 
+const referencia =
 
-const snap =
+doc(
 
-await getDocs(
+db,
 
-collection(db,"cupones")
+"ofertas",
+
+id
 
 );
 
 
 
+await updateDoc(
+
+referencia,
+
+{
 
 
-let cupones=[];
+clics:
+increment(1)
+
+
+}
+
+);
+
+
+
+}
+
+catch(error){
+
+
+console.error(
+
+"Error sumando clic",
+
+error
+
+);
+
+
+}
+
+
+
+}
+
+// =====================================================
+// APP.JS
+// PARTE 3 DE 4
+// CUPONES
+// =====================================================
+
+
+
+
+// ================================
+// CARGAR CUPONES
+// ================================
+
+
+async function cargarCupones(){
+
+
+try{
+
+
+const referencia =
+
+collection(
+
+db,
+
+"cupones"
+
+);
+
+
+
+const resultado =
+
+await getDocs(referencia);
+
+
+
+
+cuponesRelampago.innerHTML="";
+
+cuponesBancarios.innerHTML="";
+
+cuponesExclusivos.innerHTML="";
+
+
+
+
+let relampago=[];
+
+let bancarios=[];
+
+let exclusivos=[];
 
 
 
 
 
-snap.forEach(doc=>{
+resultado.forEach((documento)=>{
 
 
-cupones.push(doc.data());
+const cupon={
+
+
+id:documento.id,
+
+
+...documento.data()
+
+
+};
+
+
+
+
+if(cupon.tipo==="relampago"){
+
+
+relampago.push(cupon);
+
+
+}
+
+
+else if(cupon.tipo==="bancario"){
+
+
+bancarios.push(cupon);
+
+
+}
+
+
+else if(cupon.tipo==="exclusivo"){
+
+
+exclusivos.push(cupon);
+
+
+}
 
 
 });
@@ -450,36 +651,56 @@ cupones.push(doc.data());
 
 
 
+// ORDENAR POR MINIMO
+
+
+const ordenar = (a,b)=>{
+
+
+let minimoA =
+parseInt(
+String(a.minimo)
+.replace(/\D/g,"")
+)
+||0;
 
 
 
-mostrarCupones(
-
-"cuponesRelampago",
-
-cupones.filter(c=>c.tipo==="relampago")
-
-);
-
-
-
-mostrarCupones(
-
-"cuponesBancarios",
-
-cupones.filter(c=>c.tipo==="bancario")
-
-);
+let minimoB =
+parseInt(
+String(b.minimo)
+.replace(/\D/g,"")
+)
+||0;
 
 
 
-mostrarCupones(
+return minimoA-minimoB;
 
-"cuponesExclusivos",
 
-cupones.filter(c=>c.tipo==="exclusivo")
+};
 
-);
+
+
+
+relampago.sort(ordenar);
+
+bancarios.sort(ordenar);
+
+exclusivos.sort(ordenar);
+
+
+
+
+
+
+relampago.forEach(crearCuponRelampago);
+
+
+bancarios.forEach(crearCuponBancario);
+
+
+exclusivos.forEach(crearCuponExclusivo);
 
 
 
@@ -490,7 +711,14 @@ cupones.filter(c=>c.tipo==="exclusivo")
 catch(error){
 
 
-console.error(error);
+console.error(
+
+"Error cargando cupones",
+
+error
+
+);
+
 
 
 }
@@ -505,110 +733,95 @@ console.error(error);
 
 
 
+// ================================
+// CREAR CUPÓN
+// ================================
 
 
-function mostrarCupones(id,lista){
-
-
-
-const contenedor=
-
-document.getElementById(id);
+function tarjetaCupon(cupon,tipoTexto){
 
 
 
-if(!contenedor)return;
+const div =
+
+document.createElement("div");
 
 
 
-
-
-
-lista.sort((a,b)=>{
-
-
-return Number(a.minimo || 0)
-
--
-
-Number(b.minimo || 0);
-
-
-});
+div.className="cupon";
 
 
 
 
 
-
-contenedor.innerHTML="";
-
-
-
-
-
-
-lista.forEach(c=>{
-
-
-
-
-
-contenedor.innerHTML+=
+div.innerHTML =
 
 
 
 `
 
-<div class="cupon">
-
-
 <h3>
 
-🎟️ ${c.nombre || "Cupón"}
+🎟️ CUPÓN DISPONIBLE
 
 </h3>
 
 
 
-<div class="codigo">
-
-••••••
-
-</div>
-
-
-
 <p>
 
-${c.descuento || ""}
+💰 Descuento:
 
-</p>
+<strong>
 
+$${cupon.descuento || ""}
 
-
-<p>
-
-Compra mínima:
-$${c.minimo || 0}
+</strong>
 
 </p>
 
 
 
 
-<button
+<p>
 
-onclick="copiarCupon('${c.codigo}')"
+🛒 Compra mínima:
 
->
+<strong>
+
+${cupon.minimo || ""}
+
+</strong>
+
+</p>
+
+
+
+
+<p>
+
+${tipoTexto}
+
+</p>
+
+
+
+
+<span class="estado ${cupon.estado || ''}">
+
+${cupon.estado || "activo"}
+
+</span>
+
+
+
+
+<button class="btnCupon">
 
 📋 COPIAR CUPÓN
 
 </button>
 
-
-</div>
 
 
 `;
@@ -617,7 +830,374 @@ onclick="copiarCupon('${c.codigo}')"
 
 
 
-});
+const boton =
+
+div.querySelector(".btnCupon");
+
+
+
+
+
+boton.onclick=()=>{
+
+
+copiarCupon(cupon.id);
+
+
+
+
+};
+
+
+
+return div;
+
+
+
+}
+
+
+
+
+
+
+
+function crearCuponRelampago(cupon){
+
+
+cuponesRelampago.appendChild(
+
+tarjetaCupon(
+
+cupon,
+
+"⚡ Relámpago"
+
+)
+
+);
+
+
+}
+
+
+
+
+
+function crearCuponBancario(cupon){
+
+
+cuponesBancarios.appendChild(
+
+tarjetaCupon(
+
+cupon,
+
+"💳 Bancario"
+
+)
+
+);
+
+
+}
+
+
+
+
+
+function crearCuponExclusivo(cupon){
+
+
+cuponesExclusivos.appendChild(
+
+tarjetaCupon(
+
+cupon,
+
+"⭐ Exclusivo"
+
+)
+
+);
+
+
+}
+
+
+
+
+
+
+
+// ================================
+// COPIAR CUPÓN
+// ================================
+
+
+async function copiarCupon(codigo){
+
+
+
+try{
+
+
+
+await navigator.clipboard.writeText(
+
+codigo
+
+);
+
+
+
+
+
+mostrarToast(
+
+"✅ CUPÓN COPIADO"
+
+);
+
+
+
+
+
+const referencia =
+
+doc(
+
+db,
+
+"cupones",
+
+codigo
+
+);
+
+
+
+
+
+await updateDoc(
+
+referencia,
+
+{
+
+
+copias:
+
+increment(1)
+
+
+}
+
+);
+
+
+
+
+
+setTimeout(()=>{
+
+
+window.location.href =
+
+"https://meli.la/1mj3itE";
+
+
+
+},800);
+
+
+
+
+
+
+}
+
+catch(error){
+
+
+console.error(
+
+"Error copiando cupón",
+
+error
+
+);
+
+
+
+}
+
+
+
+}
+
+// =====================================================
+// APP.JS
+// PARTE 4 DE 4
+// FUNCIONES FINALES
+// =====================================================
+
+
+
+
+
+// ================================
+// MENÚ LATERAL
+// ================================
+
+
+const botonMenu =
+
+document.getElementById(
+"abrirMenu"
+);
+
+
+
+const menuPanel =
+
+document.getElementById(
+"menuPanel"
+);
+
+
+
+const overlay =
+
+document.getElementById(
+"overlay"
+);
+
+
+
+
+
+function abrirCerrarMenu(){
+
+
+if(!menuPanel || !overlay)
+return;
+
+
+
+menuPanel.classList.toggle(
+"active"
+);
+
+
+
+overlay.classList.toggle(
+"active"
+);
+
+
+
+}
+
+
+
+
+
+
+
+if(botonMenu){
+
+
+botonMenu.addEventListener(
+
+"click",
+
+abrirCerrarMenu
+
+);
+
+
+}
+
+
+
+if(overlay){
+
+
+overlay.addEventListener(
+
+"click",
+
+abrirCerrarMenu
+
+);
+
+
+}
+
+
+
+
+
+
+
+// ================================
+// AHORRO COMUNIDAD
+// UNA VEZ AL DÍA
+// ================================
+
+
+function ahorroComunidad(){
+
+
+
+const hoy =
+
+new Date()
+
+.toISOString()
+
+.split("T")[0];
+
+
+
+
+
+const guardado =
+
+localStorage.getItem(
+"ahorroDia"
+);
+
+
+
+
+
+if(guardado !== hoy){
+
+
+
+localStorage.setItem(
+
+"ahorroDia",
+
+hoy
+
+);
+
+
+
+
+
+console.log(
+
+"Ahorro comunidad registrado"
+
+);
+
+
+
+}
 
 
 
@@ -630,118 +1210,16 @@ onclick="copiarCupon('${c.codigo}')"
 
 
 
+// ================================
+// INICIAR PÁGINA
+// ================================
 
-// ============================
-// COPIAR CUPON
-// ============================
-
-
-window.copiarCupon=function(codigo){
-
-
-
-navigator.clipboard.writeText(codigo);
-
-
-
-
-
-const toast=
-
-document.getElementById("toast");
-
-
-
-toast.classList.add("show");
-
-
-
-
-
-setTimeout(()=>{
-
-
-toast.classList.remove("show");
-
-
-},1200);
-
-
-
-
-
-
-
-setTimeout(()=>{
-
-
-window.location.href=
-
-"https://meli.la/1mj3itE";
-
-
-
-},1400);
-
-
-
-};
-
-
-
-
-
-
-
-
-
-// ============================
-// CLICS
-// ============================
-
-
-window.registrarClick=function(id){
-
-
-
-let clicks=
-
-Number(
-
-localStorage.getItem("clicks") || 0
-
-);
-
-
-
-clicks++;
-
-
-
-localStorage.setItem(
-
-"clicks",
-
-clicks
-
-);
-
-
-
-};
-
-
-
-
-
-
-
-
-
-// INICIO
 
 
 cargarOfertas();
 
 
 cargarCupones();
+
+
+ahorroComunidad();
