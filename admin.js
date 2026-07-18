@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// ADMIN.JS FINAL + ESTADISTICAS PRO
+// ADMIN.JS PRO CORREGIDO
 // PARTE 1/4
 // =====================================================
 
@@ -15,13 +15,13 @@ getFirestore,
 collection,
 addDoc,
 getDocs,
-getDoc,
-deleteDoc,
 doc,
 updateDoc,
+deleteDoc,
 serverTimestamp,
-onSnapshot,
-increment
+increment,
+setDoc,
+getDoc
 
 }
 
@@ -32,11 +32,15 @@ from
 
 
 
+// ==============================
+// FIREBASE
+// ==============================
+
 
 const firebaseConfig={
 
 
-apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"AIzaSyBo_wk-k8TrcSl0MQzQ0hoUCvAKre94hW0",
 
 authDomain:"patronofertasweb.firebaseapp.com",
 
@@ -52,8 +56,6 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
-
-
 const app =
 initializeApp(firebaseConfig);
 
@@ -66,6 +68,11 @@ getFirestore(app);
 
 
 
+// ==============================
+// VARIABLES
+// ==============================
+
+
 let imagenBase64="";
 
 let ofertaEditando=null;
@@ -74,34 +81,25 @@ let ofertaEditando=null;
 
 
 
-
-
-
-
-// ============================
+// ==============================
 // TOAST
-// ============================
+// ==============================
 
 
 function mensaje(texto){
 
 
 const toast =
-
 document.getElementById("toastAdmin");
-
 
 
 if(!toast)return;
 
 
-
 toast.innerHTML=texto;
 
 
-
 toast.classList.add("show");
-
 
 
 setTimeout(()=>{
@@ -113,7 +111,6 @@ toast.classList.remove("show");
 },2000);
 
 
-
 }
 
 
@@ -123,21 +120,18 @@ toast.classList.remove("show");
 
 
 
-
-// ============================
+// ==============================
 // IMAGEN
-// ============================
+// ==============================
 
 
 const imagen =
-
 document.getElementById("imagen");
 
 
-
 const preview =
-
 document.getElementById("preview");
+
 
 
 
@@ -150,9 +144,7 @@ imagen?.addEventListener(
 
 
 const archivo =
-
 imagen.files[0];
-
 
 
 if(!archivo)return;
@@ -160,9 +152,7 @@ if(!archivo)return;
 
 
 const reader =
-
 new FileReader();
-
 
 
 
@@ -172,13 +162,10 @@ reader.onload=e=>{
 imagenBase64=e.target.result;
 
 
-
 preview.src=e.target.result;
 
 
-
 preview.style.display="block";
-
 
 
 };
@@ -201,9 +188,9 @@ reader.readAsDataURL(archivo);
 
 
 
-// ============================
-// LIMPIAR OFERTA
-// ============================
+// ==============================
+// LIMPIAR FORMULARIO
+// ==============================
 
 
 function limpiarOferta(){
@@ -211,21 +198,16 @@ function limpiarOferta(){
 
 titulo.value="";
 
-
 precioAntes.value="";
-
 
 precioFinal.value="";
 
-
 descuento.value="";
-
 
 link.value="";
 
 
 tipoOferta.value="normal";
-
 
 
 imagen.value="";
@@ -240,7 +222,6 @@ preview.src="";
 preview.style.display="none";
 
 
-
 ofertaEditando=null;
 
 
@@ -248,7 +229,6 @@ ofertaEditando=null;
 document.getElementById("publicar").innerHTML=
 
 "🔥 PUBLICAR OFERTA";
-
 
 
 }
@@ -261,9 +241,9 @@ document.getElementById("publicar").innerHTML=
 
 
 
-// ============================
-// PUBLICAR / ACTUALIZAR
-// ============================
+// ==============================
+// PUBLICAR OFERTA
+// ==============================
 
 
 document
@@ -276,6 +256,24 @@ document
 
 async()=>{
 
+
+
+if(!titulo.value || !precioFinal.value){
+
+
+mensaje("⚠️ Completa los datos");
+
+
+return;
+
+
+}
+
+
+
+
+
+// EDITAR
 
 
 if(ofertaEditando){
@@ -297,25 +295,39 @@ ofertaEditando
 {
 
 
-titulo:titulo.value,
+titulo:
+
+titulo.value,
 
 
-imagen:imagenBase64,
+imagen:
+
+imagenBase64,
 
 
-precioAntes:precioAntes.value,
+precioAntes:
+
+precioAntes.value,
 
 
-precioFinal:precioFinal.value,
+precioFinal:
+
+precioFinal.value,
 
 
-descuento:descuento.value,
+descuento:
+
+descuento.value,
 
 
-link:link.value,
+link:
+
+link.value,
 
 
-tipo:tipoOferta.value
+tipo:
+
+tipoOferta.value
 
 
 
@@ -337,16 +349,14 @@ mensaje(
 limpiarOferta();
 
 
-
 cargarOfertas();
-
 
 
 cargarEstadisticas();
 
 
-
 return;
+
 
 
 }
@@ -356,6 +366,12 @@ return;
 
 
 
+
+
+
+// NUEVA OFERTA
+
+
 await addDoc(
 
 collection(db,"ofertas"),
@@ -363,31 +379,47 @@ collection(db,"ofertas"),
 {
 
 
-titulo:titulo.value,
+titulo:
+
+titulo.value,
 
 
-imagen:imagenBase64,
+imagen:
+
+imagenBase64,
 
 
-precioAntes:precioAntes.value,
+precioAntes:
+
+precioAntes.value,
 
 
-precioFinal:precioFinal.value,
+precioFinal:
+
+precioFinal.value,
 
 
-descuento:descuento.value,
+descuento:
+
+descuento.value,
 
 
-link:link.value,
+link:
+
+link.value,
 
 
-tipo:tipoOferta.value,
+tipo:
+
+tipoOferta.value,
 
 
 clics:0,
 
 
-creado:serverTimestamp()
+creado:
+
+serverTimestamp()
 
 
 
@@ -408,12 +440,11 @@ mensaje(
 
 
 
+
 limpiarOferta();
 
 
-
 cargarOfertas();
-
 
 
 cargarEstadisticas();
@@ -423,30 +454,28 @@ cargarEstadisticas();
 }
 
 );
-// ============================
+// =====================================================
 // OFERTAS ADMIN
-// ============================
+// PARTE 2/4
+// =====================================================
 
 
 async function cargarOfertas(){
 
 
 const lista =
-
 document.getElementById("listaOfertas");
-
 
 
 if(!lista)return;
 
 
 
-lista.innerHTML="";
+lista.innerHTML="Cargando...";
 
 
 
 const datos =
-
 await getDocs(
 
 collection(db,"ofertas")
@@ -457,15 +486,22 @@ collection(db,"ofertas")
 
 
 
+lista.innerHTML="";
+
+
+
+
+
 datos.forEach(item=>{
+
 
 
 const o=item.data();
 
 
 
-const div=
 
+const div =
 document.createElement("div");
 
 
@@ -474,15 +510,16 @@ div.className="ofertaAdmin";
 
 
 
+
 div.innerHTML=`
 
-<img src="${o.imagen}">
+<img src="${o.imagen || ""}">
 
 
 
 <h3>
 
-${o.titulo}
+${o.titulo || "Sin título"}
 
 </h3>
 
@@ -492,7 +529,7 @@ ${o.titulo}
 
 ❌ Antes:
 
-$${o.precioAntes || ""}
+$${o.precioAntes || 0}
 
 </p>
 
@@ -500,7 +537,9 @@ $${o.precioAntes || ""}
 
 <p>
 
-🔥 ${o.descuento || ""}% OFF
+🔥 Descuento:
+
+${o.descuento || 0}%
 
 </p>
 
@@ -508,7 +547,9 @@ $${o.precioAntes || ""}
 
 <p>
 
-💥 $${o.precioFinal || ""}
+💥 Precio:
+
+$${o.precioFinal || 0}
 
 </p>
 
@@ -524,11 +565,14 @@ ${o.clics || 0}
 
 
 
+
+
 <button class="editBtn">
 
 ✏️ EDITAR
 
 </button>
+
 
 
 
@@ -538,6 +582,7 @@ ${o.clics || 0}
 
 </button>
 
+
 `;
 
 
@@ -545,57 +590,63 @@ ${o.clics || 0}
 
 
 
+
+
+
+// ==============================
 // EDITAR
+// ==============================
 
 
-div.querySelector(".editBtn")
+div
+
+.querySelector(".editBtn")
 
 .onclick=()=>{
+
 
 
 ofertaEditando=item.id;
 
 
 
-titulo.value=o.titulo;
+titulo.value=o.titulo || "";
+
+
+precioAntes.value=o.precioAntes || "";
+
+
+precioFinal.value=o.precioFinal || "";
+
+
+descuento.value=o.descuento || "";
+
+
+link.value=o.link || "";
+
+
+tipoOferta.value=o.tipo || "normal";
 
 
 
-precioAntes.value=o.precioAntes;
+
+imagenBase64=o.imagen || "";
 
 
 
-precioFinal.value=o.precioFinal;
-
-
-
-descuento.value=o.descuento;
-
-
-
-link.value=o.link;
-
-
-
-tipoOferta.value=o.tipo;
-
-
-
-imagenBase64=o.imagen;
-
-
-
-preview.src=o.imagen;
-
+preview.src=o.imagen || "";
 
 
 preview.style.display="block";
 
 
 
+
 document.getElementById("publicar").innerHTML=
 
 "✏️ ACTUALIZAR OFERTA";
+
+
 
 
 
@@ -608,6 +659,7 @@ behavior:"smooth"
 });
 
 
+
 };
 
 
@@ -618,12 +670,25 @@ behavior:"smooth"
 
 
 
+
+// ==============================
 // ELIMINAR
+// ==============================
 
 
-div.querySelector(".deleteBtn")
+div
+
+.querySelector(".deleteBtn")
 
 .onclick=async()=>{
+
+
+
+if(!confirm("¿Eliminar oferta?"))
+
+return;
+
+
 
 
 await deleteDoc(
@@ -642,6 +707,8 @@ item.id
 
 
 
+
+
 mensaje(
 
 "🗑️ Oferta eliminada"
@@ -650,8 +717,8 @@ mensaje(
 
 
 
-cargarOfertas();
 
+cargarOfertas();
 
 
 cargarEstadisticas();
@@ -663,6 +730,7 @@ cargarEstadisticas();
 
 
 
+
 lista.appendChild(div);
 
 
@@ -670,19 +738,17 @@ lista.appendChild(div);
 });
 
 
+
 }
+// =====================================================
+// CUPONES ADMIN
+// PARTE 3/4
+// =====================================================
 
 
-
-
-
-
-
-
-
-// ============================
+// ==============================
 // CREAR CUPON
-// ============================
+// ==============================
 
 
 document
@@ -697,22 +763,13 @@ async()=>{
 
 
 
-let nombreFinal;
+if(!codigoCupon.value){
 
 
-
-if(tipoCupon.value==="relampago"){
-
-
-nombreFinal="CUPON";
+mensaje("⚠️ Escribe un código");
 
 
-}else{
-
-
-nombreFinal=
-
-nombreCupon.value;
+return;
 
 
 }
@@ -735,7 +792,8 @@ codigoCupon.value,
 
 nombre:
 
-nombreFinal,
+nombreCupon.value || "CUPON",
+
 
 
 descuento:
@@ -775,6 +833,7 @@ serverTimestamp()
 
 
 
+
 mensaje(
 
 "🎟️ Cupón guardado"
@@ -785,14 +844,13 @@ mensaje(
 
 
 
-codigoCupon.value="";
 
+
+codigoCupon.value="";
 
 nombreCupon.value="";
 
-
 descuentoCupon.value="";
-
 
 minimoCupon.value="";
 
@@ -805,8 +863,9 @@ estadoCupon.value="activo";
 
 
 
-cargarCupones();
 
+
+cargarCupones();
 
 
 cargarEstadisticas();
@@ -825,12 +884,13 @@ cargarEstadisticas();
 
 
 
-// ============================
-// CUPONES ADMIN
-// ============================
+// ==============================
+// CARGAR CUPONES
+// ==============================
 
 
 async function cargarCupones(){
+
 
 
 const lista =
@@ -843,11 +903,13 @@ if(!lista)return;
 
 
 
-lista.innerHTML="";
+lista.innerHTML="Cargando...";
 
 
 
-const datos=
+
+
+const datos =
 
 await getDocs(
 
@@ -859,10 +921,21 @@ collection(db,"cupones")
 
 
 
+lista.innerHTML="";
+
+
+
+
+
+
+
 datos.forEach(item=>{
 
 
+
 const c=item.data();
+
+
 
 
 
@@ -876,11 +949,14 @@ div.className="ofertaAdmin";
 
 
 
+
+
+
 div.innerHTML=`
 
 <h3>
 
-🎟️ ${c.nombre}
+🎟️ ${c.nombre || "CUPON"}
 
 </h3>
 
@@ -888,7 +964,7 @@ div.innerHTML=`
 
 <strong>
 
-${c.codigo}
+${c.codigo || ""}
 
 </strong>
 
@@ -898,9 +974,10 @@ ${c.codigo}
 
 💰 Descuento:
 
-$${c.descuento}
+$${c.descuento || 0}
 
 </p>
+
 
 
 
@@ -908,9 +985,10 @@ $${c.descuento}
 
 🛒 Compra mínima:
 
-$${c.minimo}
+$${c.minimo || 0}
 
 </p>
+
 
 
 
@@ -918,9 +996,10 @@ $${c.minimo}
 
 Estado:
 
-${c.estado}
+${c.estado || "activo"}
 
 </p>
+
 
 
 
@@ -934,11 +1013,14 @@ ${c.copias || 0}
 
 
 
+
+
 <button class="estadoBtn">
 
 🔄 CAMBIAR ESTADO
 
 </button>
+
 
 
 
@@ -948,32 +1030,58 @@ ${c.copias || 0}
 
 </button>
 
+
 `;
 
 
 
 
 
-div.querySelector(".estadoBtn")
+
+
+
+
+// ==============================
+// CAMBIAR ESTADO
+// ==============================
+
+
+div
+
+.querySelector(".estadoBtn")
 
 .onclick=async()=>{
 
 
-let nuevo;
+
+let nuevoEstado;
 
 
 
-if(c.estado==="activo")
+if(c.estado==="activo"){
 
-nuevo="agotando";
 
-else if(c.estado==="agotando")
+nuevoEstado="agotando";
 
-nuevo="agotado";
 
-else
+}
 
-nuevo="activo";
+else if(c.estado==="agotando"){
+
+
+nuevoEstado="agotado";
+
+
+}
+
+else{
+
+
+nuevoEstado="activo";
+
+
+}
+
 
 
 
@@ -993,11 +1101,17 @@ item.id
 
 {
 
-estado:nuevo
+
+estado:
+
+nuevoEstado
+
 
 }
 
 );
+
+
 
 
 
@@ -1009,7 +1123,10 @@ mensaje(
 
 
 
+
+
 cargarCupones();
+
 
 
 };
@@ -1018,9 +1135,29 @@ cargarCupones();
 
 
 
-div.querySelector(".deleteBtn")
+
+
+
+
+// ==============================
+// ELIMINAR CUPON
+// ==============================
+
+
+div
+
+.querySelector(".deleteBtn")
 
 .onclick=async()=>{
+
+
+
+if(!confirm("¿Eliminar cupón?"))
+
+return;
+
+
+
 
 
 await deleteDoc(
@@ -1039,6 +1176,8 @@ item.id
 
 
 
+
+
 mensaje(
 
 "🗑️ Cupón eliminado"
@@ -1047,11 +1186,18 @@ mensaje(
 
 
 
+
+
 cargarCupones();
+
+
+cargarEstadisticas();
 
 
 
 };
+
+
 
 
 
@@ -1063,167 +1209,20 @@ lista.appendChild(div);
 });
 
 
-}
-// ============================
-// ESTADISTICAS PRO
-// ============================
-
-
-function fechaCDMX(){
-
-
-return new Date()
-
-.toLocaleString(
-
-"en-US",
-
-{
-
-timeZone:"America/Mexico_City"
 
 }
-
-);
-
-}
-
-
-
-
-
-
-function obtenerDia(){
-
-
-const fecha=
-
-new Date(fechaCDMX());
-
-
-
-return fecha
-
-.toISOString()
-
-.split("T")[0];
-
-
-}
-
-
-
-
-
-
-function obtenerHora(){
-
-
-const fecha=
-
-new Date(fechaCDMX());
-
-
-
-return fecha.getHours()+":00";
-
-
-}
-
-
-
-
-
-
-
-
-
-async function registrarEstadistica(){
-
-
-
-const dia=
-
-obtenerDia();
-
-
-
-const hora=
-
-obtenerHora();
-
-
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas",
-
-"general"
-
-),
-
-{
-
-
-visitasTotal:
-
-increment(0),
-
-
-
-[dia]:
-
-increment(0),
-
-
-
-[`hora_${hora}`]:
-
-increment(0)
-
-
-
-},
-
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ============================
-// DASHBOARD
-// ============================
+// =====================================================
+// ESTADISTICAS DASHBOARD
+// PARTE 4/4
+// =====================================================
+
+
+// ==============================
+// CARGAR ESTADISTICAS
+// ==============================
 
 
 async function cargarEstadisticas(){
-
-
-
-await registrarEstadistica();
-
-
 
 
 
@@ -1251,35 +1250,27 @@ collection(db,"cupones")
 
 
 
-let clics=0;
+let totalClics=0;
 
-
-let copias=0;
-
-
-
-
-
-ofertas.forEach(o=>{
-
-
-clics +=
-
-o.data().clics || 0;
-
-
-});
+let totalCopias=0;
 
 
 
 
 
-cupones.forEach(c=>{
 
 
-copias +=
+ofertas.forEach(item=>{
 
-c.data().copias || 0;
+
+const o=item.data();
+
+
+
+totalClics +=
+
+Number(o.clics || 0);
+
 
 
 });
@@ -1290,10 +1281,38 @@ c.data().copias || 0;
 
 
 
+cupones.forEach(item=>{
 
 
-if(document.getElementById("totalOfertas"))
+const c=item.data();
 
+
+
+totalCopias +=
+
+Number(c.copias || 0);
+
+
+
+});
+
+
+
+
+
+
+
+
+// OFERTAS
+
+
+const totalOfertas =
+
+document.getElementById("totalOfertas");
+
+
+
+if(totalOfertas)
 
 totalOfertas.innerHTML=
 
@@ -1303,8 +1322,19 @@ ofertas.size;
 
 
 
-if(document.getElementById("totalCupones"))
 
+
+
+// CUPONES
+
+
+const totalCupones =
+
+document.getElementById("totalCupones");
+
+
+
+if(totalCupones)
 
 totalCupones.innerHTML=
 
@@ -1314,23 +1344,45 @@ cupones.size;
 
 
 
-if(document.getElementById("totalClics"))
-
-
-totalClics.innerHTML=
-
-clics;
 
 
 
+// CLICS
 
 
-if(document.getElementById("totalCopias"))
+const totalClicsDOM =
+
+document.getElementById("totalClics");
 
 
-totalCopias.innerHTML=
 
-copias;
+if(totalClicsDOM)
+
+totalClicsDOM.innerHTML=
+
+totalClics;
+
+
+
+
+
+
+
+
+// COPIAS
+
+
+const totalCopiasDOM =
+
+document.getElementById("totalCopias");
+
+
+
+if(totalCopiasDOM)
+
+totalCopiasDOM.innerHTML=
+
+totalCopias;
 
 
 
@@ -1342,7 +1394,7 @@ copias;
 // VISITAS
 
 
-const visitas=
+const visitas =
 
 await getDoc(
 
@@ -1362,20 +1414,34 @@ db,
 
 
 
+const totalVisitasDOM =
+
+document.getElementById("totalVisitas");
+
+
+
+
+
 if(
+
+totalVisitasDOM
+
+){
+
+
+
+totalVisitasDOM.innerHTML =
+
 
 visitas.exists()
 
-&&
+?
 
-document.getElementById("totalVisitas")
+visitas.data().total || 0
 
-){
+:
 
-
-totalVisitas.innerHTML=
-
-visitas.data().total || 0;
+0;
 
 
 }
@@ -1384,188 +1450,52 @@ visitas.data().total || 0;
 
 
 
+// USUARIOS
 
+const usuarios =
 
+await getDocs(
 
-
-// ESTADISTICAS DEL MES
-
-
-const general=
-
-await getDoc(
-
-doc(
-
-db,
-
-"estadisticas",
-
-"general"
-
-)
+collection(db,"usuarios")
 
 );
 
 
 
+const totalUsuarios =
 
-
-if(general.exists()){
-
-
-
-const datos=
-
-general.data();
-
-
-
-let mayorDia="";
-
-let mayorValor=0;
+document.getElementById("totalUsuarios");
 
 
 
 
+if(totalUsuarios)
 
-Object.keys(datos)
+totalUsuarios.innerHTML=
 
-.forEach(x=>{
-
-
-
-if(
-
-x.match(/^\d{4}-\d{2}-\d{2}$/)
-
-){
-
-
-if(datos[x]>mayorValor){
-
-
-mayorValor=
-
-datos[x];
-
-
-
-mayorDia=x;
+usuarios.size;
 
 
 
 }
 
 
-}
 
 
 
-});
 
 
 
 
-
-
-
-if(document.getElementById("mejorDia"))
-
-
-mejorDia.innerHTML=
-
-mayorDia || "Sin datos";
-
-
-
-
-
-let mejorHora="";
-
-let mayorHora=0;
-
-
-
-
-
-Object.keys(datos)
-
-.forEach(x=>{
-
-
-
-if(
-
-x.includes("hora_")
-
-){
-
-
-if(datos[x]>mayorHora){
-
-
-mayorHora=
-
-datos[x];
-
-
-
-mejorHora=
-
-x.replace(
-
-"hora_",
-
-""
-
-);
-
-
-
-}
-
-
-}
-
-
-
-});
-
-
-
-
-
-if(document.getElementById("horaActiva"))
-
-
-horaActiva.innerHTML=
-
-mejorHora || "Sin datos";
-
-
-
-
-
-}
-
-
-
-
-}
- 
-// ============================
-// INICIO DEL PANEL
-// ============================
-
+// ==============================
+// INICIAR PANEL
+// ==============================
 
 
 cargarOfertas();
 
 
-
 cargarCupones();
-
 
 
 cargarEstadisticas();
@@ -1573,7 +1503,13 @@ cargarEstadisticas();
 
 
 
-// ACTUALIZAR DASHBOARD CADA 30 SEGUNDOS
+
+
+
+// ==============================
+// ACTUALIZAR AUTOMATICO
+// ==============================
+
 
 setInterval(()=>{
 
@@ -1586,83 +1522,33 @@ cargarEstadisticas();
 
 
 
-// ============================
-// ACTUALIZAR ESTADO DE VISITAS
-// ============================
 
 
-async function actualizarVisitas(){
+// ==============================
+// BOTON SALIR
+// ==============================
 
 
+document
 
-const visitasDoc = await getDoc(
+.getElementById("salir")
 
-doc(
+?.addEventListener(
 
-db,
+"click",
 
-"estadisticas",
+()=>{
 
-"visitas"
 
-)
+window.location.href="index.html";
+
+
+}
 
 );
 
 
 
-
-if(
-
-visitasDoc.exists()
-
-){
-
-
-
-const data=
-
-visitasDoc.data();
-
-
-
-if(document.getElementById("totalVisitas")){
-
-
-totalVisitas.innerHTML=
-
-data.total || 0;
-
-
-}
-
-
-
-}
-
-
-
-}
-
-
-
-
-actualizarVisitas();
-
-
-
-setInterval(()=>{
-
-
-actualizarVisitas();
-
-
-
-},30000);
-
-
-
-
-// ============================
+// =====================================================
 // FIN ADMIN.JS
-// ============================
+// =====================================================
