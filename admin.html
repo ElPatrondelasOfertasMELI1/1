@@ -28,6 +28,7 @@
 <body>
 
 
+
 <header class="adminHeader">
 
 
@@ -56,6 +57,8 @@ SALIR
 
 
 
+
+
 <main class="dashboard">
 
 
@@ -69,64 +72,109 @@ SALIR
 
 
 
+
+
+
 <section class="stats">
 
 
+
 <div class="cardStat">
 
-<h3>🔥 Ofertas</h3>
+<h3>
+🔥 Ofertas
+</h3>
 
-<strong id="totalOfertas">0</strong>
+<strong id="totalOfertas">
+0
+</strong>
 
 </div>
 
 
-<div class="cardStat">
-
-<h3>🎟️ Cupones</h3>
-
-<strong id="totalCupones">0</strong>
-
-</div>
 
 
 <div class="cardStat">
 
-<h3>🖱️ Clics</h3>
+<h3>
+🎟️ Cupones
+</h3>
 
-<strong id="totalClics">0</strong>
+<strong id="totalCupones">
+0
+</strong>
 
 </div>
+
+
+
 
 
 <div class="cardStat">
 
-<h3>📋 Copias</h3>
+<h3>
+🖱️ Clics
+</h3>
 
-<strong id="totalCopias">0</strong>
+<strong id="totalClics">
+0
+</strong>
 
 </div>
+
+
+
 
 
 <div class="cardStat">
 
-<h3>👀 Visitas</h3>
+<h3>
+📋 Copias
+</h3>
 
-<strong id="totalVisitas">0</strong>
+<strong id="totalCopias">
+0
+</strong>
 
 </div>
+
+
+
 
 
 <div class="cardStat">
 
-<h3>🟢 Usuarios</h3>
+<h3>
+👀 Visitas
+</h3>
 
-<strong id="totalUsuarios">0</strong>
+<strong id="totalVisitas">
+0
+</strong>
 
 </div>
+
+
+
+
+
+<div class="cardStat">
+
+<h3>
+🟢 Usuarios
+</h3>
+
+<strong id="totalUsuarios">
+0
+</strong>
+
+</div>
+
 
 
 </section>
+
+
 
 
 
@@ -137,8 +185,12 @@ SALIR
 
 
 <h2>
+
 🔥 Publicar Oferta
+
 </h2>
+
+
 
 
 <input id="titulo" placeholder="Título del producto">
@@ -187,6 +239,8 @@ SALIR
 
 
 
+
+
 <button id="publicar">
 
 🔥 PUBLICAR OFERTA
@@ -195,13 +249,6 @@ SALIR
 
 
 </section>
-
-
-
-
-
-
-
 <section class="panel">
 
 
@@ -233,27 +280,41 @@ Cargando...
 
 
 
-<input id="codigoCupon" placeholder="Código del cupón">
+
+
+<input 
+id="codigoCupon" 
+placeholder="Código del cupón"
+>
 
 
 
-<input id="nombreCupon" placeholder="Nombre del cupón">
+<input 
+id="nombreCupon" 
+placeholder="Nombre del cupón"
+>
 
 
 
 
 
-<!-- NUEVO -->
+<!-- NUEVO SISTEMA CUPONES -->
+
 <select id="tipoDescuentoCupon">
 
 
 <option value="pesos">
+
 💰 Descuento en pesos
+
 </option>
 
 
+
 <option value="porcentaje">
+
 📊 Descuento porcentaje %
+
 </option>
 
 
@@ -263,21 +324,30 @@ Cargando...
 
 
 
-<input id="descuentoCupon" placeholder="Ejemplo: 500 o 20%">
+<input 
+id="descuentoCupon" 
+placeholder="Ejemplo: 500 o 25"
+>
 
 
 
 
 
-<!-- NUEVO SOLO BANCARIOS -->
-
-<input id="topeCupon" placeholder="Tope descuento ejemplo: 2000">
-
-
-
+<input 
+id="topeCupon" 
+placeholder="Tope máximo (Ejemplo: 2000)"
+>
 
 
-<input id="minimoCupon" placeholder="Compra mínima">
+
+
+
+<input 
+id="minimoCupon" 
+placeholder="Compra mínima"
+>
+
+
 
 
 
@@ -293,11 +363,13 @@ Cargando...
 </option>
 
 
+
 <option value="bancario">
 
 💳 Bancario
 
 </option>
+
 
 
 <option value="exclusivo">
@@ -313,6 +385,9 @@ Cargando...
 
 
 
+
+
+
 <select id="estadoCupon">
 
 
@@ -323,11 +398,13 @@ Cargando...
 </option>
 
 
+
 <option value="agotando">
 
 ⚡ Últimas piezas
 
 </option>
+
 
 
 <option value="agotado">
@@ -338,6 +415,8 @@ Cargando...
 
 
 </select>
+
+
 
 
 
@@ -368,6 +447,7 @@ Cargando...
 </h2>
 
 
+
 <div id="listaCupones">
 
 Cargando...
@@ -375,12 +455,11 @@ Cargando...
 </div>
 
 
+
 </section>
-
-
-
-
-
+<!-- =====================================================
+     ESTADISTICAS AVANZADAS
+===================================================== -->
 
 
 <section class="panel estadisticasPanel">
@@ -393,75 +472,129 @@ Cargando...
 </h2>
 
 
+
+
+
 <div class="stats">
 
 
+
 <div class="cardStat">
 
-<h3>👥 Hoy</h3>
+<h3>
+👥 Hoy
+</h3>
 
-<strong id="visitasHoy">0</strong>
+<strong id="visitasHoy">
+0
+</strong>
 
 </div>
 
 
-<div class="cardStat">
-
-<h3>📅 Mes</h3>
-
-<strong id="visitasMes">0</strong>
-
-</div>
-
-
-<div class="cardStat">
-
-<h3>🏆 Mejor día</h3>
-
-<strong id="diaMayor">-</strong>
-
-</div>
 
 
 <div class="cardStat">
 
-<h3>⏰ Hora pico</h3>
+<h3>
+📅 Mes
+</h3>
 
-<strong id="horaPico">-</strong>
+<strong id="visitasMes">
+0
+</strong>
 
 </div>
 
 
+
+
+<div class="cardStat">
+
+<h3>
+🏆 Mejor día
+</h3>
+
+<strong id="diaMayor">
+-
+</strong>
+
 </div>
+
+
+
+
+<div class="cardStat">
+
+<h3>
+⏰ Hora pico
+</h3>
+
+<strong id="horaPico">
+-
+</strong>
+
+</div>
+
+
+
+
+</div>
+
+
+
+
 
 
 
 <h3 class="tituloGrafica">
+
 👀 Visitas últimos días
+
 </h3>
 
 
-<canvas id="graficaVisitas"></canvas>
+
+<canvas id="graficaVisitas">
+
+</canvas>
+
+
+
 
 
 
 
 <h3 class="tituloGrafica">
+
 🎟️ Copias de cupones
+
 </h3>
 
 
-<canvas id="graficaCopias"></canvas>
+
+<canvas id="graficaCopias">
+
+</canvas>
+
+
+
 
 
 
 
 <h3 class="tituloGrafica">
+
 🖱️ Clics en ofertas
+
 </h3>
 
 
-<canvas id="graficaClics"></canvas>
+
+<canvas id="graficaClics">
+
+</canvas>
+
 
 
 
@@ -472,6 +605,10 @@ Cargando...
 
 
 
+
+<!-- =====================================================
+     REGIONES
+===================================================== -->
 
 
 <section class="panel">
@@ -484,6 +621,7 @@ Cargando...
 </h2>
 
 
+
 <div id="listaRegiones">
 
 Cargando regiones...
@@ -491,7 +629,10 @@ Cargando regiones...
 </div>
 
 
+
 </section>
+
+
 
 
 
@@ -503,7 +644,13 @@ Cargando regiones...
 
 
 
-<div id="toastAdmin"></div>
+
+
+<div id="toastAdmin">
+
+</div>
+
+
 
 
 
@@ -511,14 +658,18 @@ Cargando regiones...
 
 <script type="module" src="admin.js"></script>
 
+
 <script type="module" src="estadisticas.js"></script>
 
+
 <script type="module" src="graficas.js"></script>
+
 
 <script type="module" src="estadisticas_avanzadas.js"></script>
 
 
 
 </body>
+
 
 </html>
