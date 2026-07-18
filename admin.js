@@ -1618,6 +1618,7 @@ cargarCupones();
 cargarEstadisticas();
 
 
+cargarRegiones();
 
 
 
