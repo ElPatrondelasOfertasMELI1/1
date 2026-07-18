@@ -1040,24 +1040,19 @@ collection(db,"cupones"),
 
 
 
-const cuponesOrdenados=[...datos.docs]
+const cuponesOrdenados = [...datos.docs].sort((a, b) => {
 
-.sort((a,b)=>{
-
-
-return Number(
-b.data().descuento || 0
-)
-
--
-
-Number(
-a.data().descuento || 0
+const descuentoA = parseFloat(
+String(a.data().descuento || "0").replace(/[^0-9.]/g, "")
 );
 
+const descuentoB = parseFloat(
+String(b.data().descuento || "0").replace(/[^0-9.]/g, "")
+);
+
+return descuentoA - descuentoB;
 
 });
-
 
 
 
