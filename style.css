@@ -1143,3 +1143,145 @@ width:100%;
 
 
 }
+
+/* =====================================================
+   CUPONES BANCARIOS PRO
+   PORCENTAJE + TOPE
+===================================================== */
+
+
+.cuponCard.bancario{
+
+border:2px solid #00c853;
+
+background:
+
+linear-gradient(
+145deg,
+#101010,
+#050505
+);
+
+}
+
+
+
+.cuponCard.bancario .estado{
+
+background:#00c853;
+
+}
+
+
+
+.cuponCard .porcentaje{
+
+background:#00c853;
+
+color:white;
+
+padding:8px 15px;
+
+border-radius:30px;
+
+font-size:22px;
+
+font-weight:900;
+
+margin:10px auto;
+
+display:inline-block;
+
+}
+
+
+
+.cuponCard .tope{
+
+background:#222;
+
+border:1px solid #00c853;
+
+color:#00c853;
+
+padding:8px 12px;
+
+border-radius:15px;
+
+font-weight:900;
+
+margin:8px 0;
+
+}
+
+
+
+.cuponCard .minimo{
+
+color:#ddd;
+
+font-weight:700;
+
+}
+
+
+
+
+
+/* Mejor presentación de datos */
+
+.cuponCard p{
+
+line-height:1.4;
+
+}
+
+
+
+/* Etiqueta bancaria */
+
+.badgeBancario{
+
+
+background:#00c853;
+
+color:white;
+
+font-weight:900;
+
+padding:6px 12px;
+
+border-radius:20px;
+
+font-size:12px;
+
+margin-bottom:10px;
+
+
+}
+
+
+
+
+/* Móvil */
+
+@media(max-width:600px){
+
+
+.cuponCard.bancario{
+
+flex-basis:230px;
+
+}
+
+
+
+.cuponCard .porcentaje{
+
+font-size:20px;
+
+}
+
+
+
+}
