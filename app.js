@@ -1,18 +1,20 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS FINAL PRO
-// ESTADISTICAS + TIEMPO REAL + USUARIOS
-// PARTE 1/3
+// APP.JS PRO CORREGIDO
+// CUPONES BANCARIOS % + TOPE
 // =====================================================
 
 
 import { 
+
 initializeApp 
+
 }
 
 from
 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 
 
 import {
@@ -24,7 +26,6 @@ updateDoc,
 increment,
 onSnapshot,
 setDoc,
-addDoc,
 serverTimestamp
 
 }
@@ -70,9 +71,12 @@ const db =
 getFirestore(app);
 
 
+
+
+
+
 // =====================================================
 // REGIONES
-// REGISTRO DE VISITAS POR ESTADO
 // =====================================================
 
 
@@ -83,17 +87,24 @@ try{
 
 
 const respuesta =
+
 await fetch(
+
 "https://ipapi.co/json/"
+
 );
 
 
+
 const datos =
+
 await respuesta.json();
 
 
 
+
 const region =
+
 datos.region || "Desconocido";
 
 
@@ -127,6 +138,7 @@ new Date()
 
 },
 
+
 {
 
 merge:true
@@ -143,8 +155,11 @@ catch(error){
 
 
 console.log(
+
 "Error región:",
+
 error
+
 );
 
 
@@ -153,6 +168,8 @@ error
 
 
 }
+
+
 
 
 
@@ -217,7 +234,7 @@ hour12:false
 
 
 // ==============================
-// IDENTIFICAR USUARIO
+// USUARIO
 // ==============================
 
 
@@ -225,8 +242,11 @@ function obtenerUsuario(){
 
 
 let id =
+
 localStorage.getItem(
+
 "usuarioID"
+
 );
 
 
@@ -235,15 +255,23 @@ if(!id){
 
 
 id =
+
 "usr_"+
+
 Date.now()+
+
 Math.floor(Math.random()*999);
 
 
+
 localStorage.setItem(
+
 "usuarioID",
+
 id
+
 );
+
 
 
 }
@@ -259,23 +287,12 @@ return id;
 
 
 
-
-
-// ==============================
-// REGISTRAR USUARIO
-// ==============================
-
-
 async function registrarUsuario(){
 
 
 const usuario =
+
 obtenerUsuario();
-
-
-
-const fecha =
-fechaCDMX();
 
 
 
@@ -294,18 +311,18 @@ usuario
 {
 
 
-fecha:fecha,
-
-
 ultimaConexion:
+
 serverTimestamp(),
 
 
 dispositivo:
+
 navigator.userAgent,
 
 
 pais:
+
 "Mexico"
 
 
@@ -320,6 +337,7 @@ merge:true
 );
 
 
+
 }
 
 
@@ -327,11 +345,8 @@ merge:true
 
 
 
-
-
-
 // ==============================
-// REGISTRO DE ESTADISTICAS
+// ESTADISTICAS
 // ==============================
 
 
@@ -339,17 +354,17 @@ async function registrarEstadistica(tipo){
 
 
 const fecha =
+
 fechaCDMX();
 
 
 
 const hora =
+
 horaCDMX();
 
 
 
-
-// DIARIO
 
 
 await setDoc(
@@ -382,49 +397,6 @@ fecha:fecha
 
 },
 
-{
-
-merge:true
-
-}
-
-);
-
-
-
-
-
-
-
-// MENSUAL
-
-
-const mes =
-fecha.substring(0,7);
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas_mensuales",
-
-mes
-
-),
-
-{
-
-
-[tipo]:
-
-increment(1)
-
-
-},
 
 {
 
@@ -436,27 +408,14 @@ merge:true
 
 
 
+
+
 }
 
 
-
-
-
-
-
-
-// ==============================
-// REGISTRAR VISITA
-// ==============================
 
 
 async function registrarVisita(){
-
-
-
-const fecha =
-fechaCDMX();
-
 
 
 
@@ -477,15 +436,11 @@ db,
 
 total:
 
-increment(1),
-
-
-[fecha]:
-
 increment(1)
 
 
 },
+
 
 {
 
@@ -497,10 +452,10 @@ merge:true
 
 
 
-
-
 registrarEstadistica(
+
 "visitas"
+
 );
 
 
@@ -514,27 +469,22 @@ registrarUsuario();
 
 
 
-
-
-
 registrarVisita();
+
 
 registrarRegion();
 
-
-
-
-
-
-// ==============================
+// =====================================================
 // ELEMENTOS DOM
-// ==============================
+// =====================================================
 
 
 const carrusel =
 
 document.getElementById(
+
 "carrusel"
+
 );
 
 
@@ -542,7 +492,9 @@ document.getElementById(
 const relampago =
 
 document.getElementById(
+
 "cuponesRelampago"
+
 );
 
 
@@ -550,7 +502,9 @@ document.getElementById(
 const bancarios =
 
 document.getElementById(
+
 "cuponesBancarios"
+
 );
 
 
@@ -558,7 +512,9 @@ document.getElementById(
 const exclusivos =
 
 document.getElementById(
+
 "cuponesExclusivos"
+
 );
 
 
@@ -566,20 +522,31 @@ document.getElementById(
 const toast =
 
 document.getElementById(
+
 "toast"
+
 );
 
 
 
 
 
-let carruselActivo=true;
 
 
 let intervaloCarrusel=null;
 
+let carruselActivo=true;
 
 
+
+
+
+
+
+
+// ==============================
+// TOAST
+// ==============================
 
 
 function mostrarToast(texto){
@@ -593,7 +560,9 @@ toast.innerHTML=texto;
 
 
 toast.classList.add(
+
 "show"
+
 );
 
 
@@ -602,7 +571,9 @@ setTimeout(()=>{
 
 
 toast.classList.remove(
+
 "show"
+
 );
 
 
@@ -612,16 +583,26 @@ toast.classList.remove(
 
 
 }
+
+
+
+
+
+
+
+
+
 // =====================================================
 // OFERTAS TIEMPO REAL
-// PARTE 2/3
 // =====================================================
 
 
 function cargarOfertas(){
 
 
+
 if(!carrusel)return;
+
 
 
 
@@ -647,10 +628,15 @@ const o=item.data();
 
 
 
+
+
 const card=document.createElement("div");
 
 
+
 card.className="oferta";
+
+
 
 
 
@@ -701,7 +687,6 @@ $${o.precioAntes || 0}
 
 
 
-
 <a
 
 href="${o.link || "#"}"
@@ -722,14 +707,16 @@ class="btnOferta">
 
 
 
-// ==============================
-// CLIC REAL EN OFERTA
-// ==============================
 
 
 const boton =
 
-card.querySelector(".btnOferta");
+card.querySelector(
+
+".btnOferta"
+
+);
+
 
 
 
@@ -743,19 +730,14 @@ async()=>{
 
 
 
-// estadística general
-
-
 registrarEstadistica(
+
 "clics"
+
 );
 
 
 
-
-
-
-// contador individual oferta
 
 
 await updateDoc(
@@ -780,16 +762,7 @@ increment(1)
 
 }
 
-).catch(error=>{
-
-
-console.log(
-"Error clic:",
-error
-);
-
-
-});
+).catch(()=>{});
 
 
 
@@ -836,19 +809,8 @@ if(!carrusel)return;
 
 
 
-if(intervaloCarrusel)
 
-clearInterval(intervaloCarrusel);
-
-
-
-
-let posicion=0;
-
-
-
-
-intervaloCarrusel=
+intervaloCarrusel =
 
 setInterval(()=>{
 
@@ -876,42 +838,13 @@ return;
 
 
 
-posicion += 280;
+carrusel.scrollBy({
 
-
-
-
-
-if(
-
-posicion >=
-
-carrusel.scrollWidth -
-
-carrusel.clientWidth
-
-)
-
-{
-
-
-posicion=0;
-
-
-}
-
-
-
-
-
-carrusel.scrollTo({
-
-left:posicion,
+left:280,
 
 behavior:"smooth"
 
 });
-
 
 
 
@@ -927,15 +860,7 @@ behavior:"smooth"
 
 
 
-
-
-// =====================================================
-// PAUSAR AL DESLIZAR
-// =====================================================
-
-
 if(carrusel){
-
 
 
 carrusel.addEventListener(
@@ -944,15 +869,11 @@ carrusel.addEventListener(
 
 ()=>{
 
-
 carruselActivo=false;
-
 
 }
 
 );
-
-
 
 
 
@@ -972,48 +893,6 @@ carruselActivo=true;
 },1500);
 
 
-}
-
-);
-
-
-
-
-
-
-carrusel.addEventListener(
-
-"mousedown",
-
-()=>{
-
-
-carruselActivo=false;
-
-
-}
-
-);
-
-
-
-
-
-carrusel.addEventListener(
-
-"mouseup",
-
-()=>{
-
-
-setTimeout(()=>{
-
-
-carruselActivo=true;
-
-
-},1500);
-
 
 }
 
@@ -1022,9 +901,9 @@ carruselActivo=true;
 
 
 }
+
 // =====================================================
 // CUPONES TIEMPO REAL
-// PARTE 3/3
 // =====================================================
 
 
@@ -1040,19 +919,69 @@ collection(db,"cupones"),
 
 
 
-const cuponesOrdenados = [...datos.docs].sort((a, b) => {
+const cupones =
 
-const descuentoA = parseFloat(
-String(a.data().descuento || "0").replace(/[^0-9.]/g, "")
+[...datos.docs];
+
+
+
+
+
+
+// ORDENAR CUPONES
+
+
+cupones.sort((a,b)=>{
+
+
+
+const ca=a.data();
+
+const cb=b.data();
+
+
+
+
+
+// Bancarios primero por porcentaje mayor
+
+
+if(ca.tipo==="bancario" && cb.tipo==="bancario"){
+
+
+
+return Number(
+
+cb.descuento || 0
+
+)
+
+-
+
+Number(
+
+ca.descuento || 0
+
 );
 
-const descuentoB = parseFloat(
-String(b.data().descuento || "0").replace(/[^0-9.]/g, "")
-);
 
-return descuentoA - descuentoB;
+
+}
+
+
+
+
+
+return 0;
+
+
 
 });
+
+
+
+
+
 
 
 
@@ -1083,7 +1012,9 @@ seccion.innerHTML="";
 
 
 
-cuponesOrdenados.forEach(item=>{
+
+
+cupones.forEach(item=>{
 
 
 
@@ -1092,11 +1023,62 @@ const c=item.data();
 
 
 
-const tarjeta=document.createElement("div");
+
+
+const tarjeta=
+
+document.createElement("div");
 
 
 
-tarjeta.className="cuponCard";
+tarjeta.className=
+
+"cuponCard";
+
+
+
+
+
+
+let descuentoTexto="";
+
+
+
+
+
+
+if(c.tipoDescuento==="porcentaje"){
+
+
+
+descuentoTexto=
+
+`
+
+💳 ${c.descuento || 0}% OFF
+
+`;
+
+
+
+}
+
+else{
+
+
+descuentoTexto=
+
+`
+
+💰 $${c.descuento || 0} OFF
+
+`;
+
+
+
+}
+
+
 
 
 
@@ -1134,6 +1116,7 @@ c.estado==="agotando"
 
 
 
+
 <h3>
 
 🎟️ ${c.nombre || "CUPÓN"}
@@ -1144,13 +1127,17 @@ c.estado==="agotando"
 
 
 
+
+
 <p>
 
-💰 Descuento:
-
-$${c.descuento || 0}
+${descuentoTexto}
 
 </p>
+
+
+
+
 
 
 
@@ -1162,6 +1149,37 @@ $${c.descuento || 0}
 $${c.minimo || 0}
 
 </p>
+
+
+
+
+
+
+
+${
+c.tipo==="bancario"
+
+?
+
+`
+
+<p>
+
+🔝 Tope máximo:
+
+$${c.tope || 0}
+
+</p>
+
+`
+
+:
+
+""
+
+}
+
+
 
 
 
@@ -1181,9 +1199,14 @@ $${c.minimo || 0}
 
 
 
+
 tarjeta
 
-.querySelector(".copiarCupon")
+.querySelector(
+
+".copiarCupon"
+
+)
 
 .onclick=()=>{
 
@@ -1208,10 +1231,17 @@ c.codigo
 
 
 
+
 if(c.tipo==="relampago"){
 
 
-relampago?.appendChild(tarjeta);
+
+relampago?.appendChild(
+
+tarjeta
+
+);
+
 
 
 }
@@ -1219,7 +1249,13 @@ relampago?.appendChild(tarjeta);
 else if(c.tipo==="bancario"){
 
 
-bancarios?.appendChild(tarjeta);
+
+bancarios?.appendChild(
+
+tarjeta
+
+);
+
 
 
 }
@@ -1227,7 +1263,12 @@ bancarios?.appendChild(tarjeta);
 else{
 
 
-exclusivos?.appendChild(tarjeta);
+exclusivos?.appendChild(
+
+tarjeta
+
+);
+
 
 
 }
@@ -1266,7 +1307,9 @@ try{
 
 
 await navigator.clipboard.writeText(
+
 codigo
+
 );
 
 
@@ -1283,19 +1326,16 @@ mostrarToast(
 
 
 
-// estadística general
-
-
 registrarEstadistica(
+
 "copias"
+
 );
 
 
 
 
 
-
-// contador individual
 
 
 await updateDoc(
@@ -1327,10 +1367,9 @@ increment(1)
 
 
 
-// redireccion Mercado Libre
-
 
 setTimeout(()=>{
+
 
 
 window.location.href=
@@ -1367,18 +1406,18 @@ console.log(error);
 
 
 
-
 // =====================================================
-// BOTON SUBIR
+// BOTÓN SUBIR
 // =====================================================
 
 
 const btnArriba=
 
 document.getElementById(
-"btnArriba"
-);
 
+"btnArriba"
+
+);
 
 
 
@@ -1394,9 +1433,7 @@ window.addEventListener(
 ()=>{
 
 
-
 btnArriba.style.display=
-
 
 window.scrollY>400
 
@@ -1418,9 +1455,7 @@ window.scrollY>400
 
 
 
-
 btnArriba.onclick=()=>{
-
 
 
 window.scrollTo({
@@ -1430,6 +1465,7 @@ top:0,
 behavior:"smooth"
 
 });
+
 
 
 };
@@ -1447,7 +1483,7 @@ behavior:"smooth"
 
 
 // =====================================================
-// INICIO APP
+// INICIO
 // =====================================================
 
 
@@ -1462,5 +1498,5 @@ iniciarCarrusel();
 
 
 // =====================================================
-// FIN APP.JS PRO
+// FIN APP.JS
 // =====================================================
