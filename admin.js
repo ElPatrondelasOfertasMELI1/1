@@ -1483,7 +1483,124 @@ usuarios.size;
 
 
 
+// =====================================================
+// REGIONES
+// =====================================================
 
+
+async function cargarRegiones(){
+
+
+const lista =
+document.getElementById("listaRegiones");
+
+
+if(!lista)return;
+
+
+
+lista.innerHTML="Cargando...";
+
+
+
+const datos =
+await getDocs(
+
+collection(
+db,
+"regiones"
+)
+
+);
+
+
+
+let regiones=[];
+
+
+
+datos.forEach(item=>{
+
+
+const r=item.data();
+
+
+regiones.push({
+
+nombre:item.id,
+
+visitas:r.visitas || 0
+
+});
+
+
+});
+
+
+
+
+
+regiones.sort((a,b)=>{
+
+return b.visitas-a.visitas;
+
+});
+
+
+
+
+
+lista.innerHTML="";
+
+
+
+
+
+regiones.forEach(r=>{
+
+
+const div =
+document.createElement("div");
+
+
+div.className="ofertaAdmin";
+
+
+div.innerHTML=`
+
+<h3>
+
+🌎 ${r.nombre}
+
+</h3>
+
+
+<p>
+
+👥 Visitas:
+
+<strong>
+
+${r.visitas}
+
+</strong>
+
+</p>
+
+
+`;
+
+
+
+lista.appendChild(div);
+
+
+
+});
+
+
+
+}
 
 
 
