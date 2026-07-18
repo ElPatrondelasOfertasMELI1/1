@@ -1,11 +1,17 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// APP.JS PRO ESTADISTICAS + TIEMPO REAL
+// APP.JS FINAL PRO
+// ESTADISTICAS + TIEMPO REAL + USUARIOS
 // PARTE 1/3
 // =====================================================
 
 
-import { initializeApp } from
+import { 
+initializeApp 
+}
+
+from
+
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 
@@ -17,7 +23,9 @@ doc,
 updateDoc,
 increment,
 onSnapshot,
-setDoc
+setDoc,
+addDoc,
+serverTimestamp
 
 }
 
@@ -29,9 +37,15 @@ from
 
 
 
+// ==============================
+// FIREBASE
+// ==============================
+
+
 const firebaseConfig={
 
-apiKey:"AIzaSyBo_wk-k88TrcSl0CMQz0hoUCvAKre94hW0",
+
+apiKey:"AIzaSyBo_wk-k8TrcSl0MQzQ0hoUCvAKre94hW0",
 
 authDomain:"patronofertasweb.firebaseapp.com",
 
@@ -47,8 +61,6 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
-
-
 const app =
 initializeApp(firebaseConfig);
 
@@ -58,12 +70,97 @@ const db =
 getFirestore(app);
 
 
-
-
-
 // =====================================================
-// FECHA Y HORA CDMX
+// REGIONES
+// REGISTRO DE VISITAS POR ESTADO
 // =====================================================
+
+
+async function registrarRegion(){
+
+
+try{
+
+
+const respuesta =
+await fetch(
+"https://ipapi.co/json/"
+);
+
+
+const datos =
+await respuesta.json();
+
+
+
+const region =
+datos.region || "Desconocido";
+
+
+
+
+
+await setDoc(
+
+doc(
+
+db,
+
+"regiones",
+
+region
+
+),
+
+{
+
+
+visitas:
+
+increment(1),
+
+
+ultimaVisita:
+
+new Date()
+
+
+},
+
+{
+
+merge:true
+
+}
+
+);
+
+
+
+}
+
+catch(error){
+
+
+console.log(
+"Error región:",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+// ==============================
+// FECHA CDMX
+// ==============================
 
 
 function fechaCDMX(){
@@ -83,6 +180,8 @@ timeZone:"America/Mexico_City"
 
 
 }
+
+
 
 
 
@@ -117,9 +216,123 @@ hour12:false
 
 
 
-// =====================================================
-// ESTADISTICAS
-// =====================================================
+// ==============================
+// IDENTIFICAR USUARIO
+// ==============================
+
+
+function obtenerUsuario(){
+
+
+let id =
+localStorage.getItem(
+"usuarioID"
+);
+
+
+
+if(!id){
+
+
+id =
+"usr_"+
+Date.now()+
+Math.floor(Math.random()*999);
+
+
+localStorage.setItem(
+"usuarioID",
+id
+);
+
+
+}
+
+
+return id;
+
+
+}
+
+
+
+
+
+
+
+
+// ==============================
+// REGISTRAR USUARIO
+// ==============================
+
+
+async function registrarUsuario(){
+
+
+const usuario =
+obtenerUsuario();
+
+
+
+const fecha =
+fechaCDMX();
+
+
+
+await setDoc(
+
+doc(
+
+db,
+
+"usuarios",
+
+usuario
+
+),
+
+{
+
+
+fecha:fecha,
+
+
+ultimaConexion:
+serverTimestamp(),
+
+
+dispositivo:
+navigator.userAgent,
+
+
+pais:
+"Mexico"
+
+
+},
+
+{
+
+merge:true
+
+}
+
+);
+
+
+}
+
+
+
+
+
+
+
+
+
+// ==============================
+// REGISTRO DE ESTADISTICAS
+// ==============================
 
 
 async function registrarEstadistica(tipo){
@@ -129,13 +342,14 @@ const fecha =
 fechaCDMX();
 
 
+
 const hora =
 horaCDMX();
 
 
 
 
-// Estadística diaria
+// DIARIO
 
 
 await setDoc(
@@ -160,7 +374,10 @@ increment(1),
 
 [`hora_${hora}`]:
 
-increment(1)
+increment(1),
+
+
+fecha:fecha
 
 
 },
@@ -178,7 +395,8 @@ merge:true
 
 
 
-// Estadística mensual
+
+// MENSUAL
 
 
 const mes =
@@ -226,16 +444,17 @@ merge:true
 
 
 
-// =====================================================
-// VISITAS
-// =====================================================
+
+// ==============================
+// REGISTRAR VISITA
+// ==============================
 
 
 async function registrarVisita(){
 
 
 
-const hoy =
+const fecha =
 fechaCDMX();
 
 
@@ -261,7 +480,7 @@ total:
 increment(1),
 
 
-[hoy]:
+[fecha]:
 
 increment(1)
 
@@ -278,9 +497,15 @@ merge:true
 
 
 
-// nuevo sistema
 
-registrarEstadistica("visitas");
+
+registrarEstadistica(
+"visitas"
+);
+
+
+
+registrarUsuario();
 
 
 
@@ -289,42 +514,60 @@ registrarEstadistica("visitas");
 
 
 
+
+
+
 registrarVisita();
 
+registrarRegion();
 
 
 
 
 
 
-
-// =====================================================
-// ELEMENTOS
-// =====================================================
+// ==============================
+// ELEMENTOS DOM
+// ==============================
 
 
 const carrusel =
-document.getElementById("carrusel");
+
+document.getElementById(
+"carrusel"
+);
 
 
 
 const relampago =
-document.getElementById("cuponesRelampago");
+
+document.getElementById(
+"cuponesRelampago"
+);
 
 
 
 const bancarios =
-document.getElementById("cuponesBancarios");
+
+document.getElementById(
+"cuponesBancarios"
+);
 
 
 
 const exclusivos =
-document.getElementById("cuponesExclusivos");
+
+document.getElementById(
+"cuponesExclusivos"
+);
 
 
 
 const toast =
-document.getElementById("toast");
+
+document.getElementById(
+"toast"
+);
 
 
 
@@ -349,15 +592,19 @@ if(!toast)return;
 toast.innerHTML=texto;
 
 
-
-toast.classList.add("show");
+toast.classList.add(
+"show"
+);
 
 
 
 setTimeout(()=>{
 
 
-toast.classList.remove("show");
+toast.classList.remove(
+"show"
+);
+
 
 
 },2000);
@@ -367,6 +614,7 @@ toast.classList.remove("show");
 }
 // =====================================================
 // OFERTAS TIEMPO REAL
+// PARTE 2/3
 // =====================================================
 
 
@@ -389,6 +637,8 @@ carrusel.innerHTML="";
 
 
 
+
+
 datos.forEach(item=>{
 
 
@@ -400,19 +650,21 @@ const o=item.data();
 const card=document.createElement("div");
 
 
-
 card.className="oferta";
 
 
 
 card.innerHTML=`
 
-<img src="${o.imagen}">
+<img src="${o.imagen || ""}">
 
 
 <h3>
-${o.titulo}
+
+${o.titulo || "Oferta"}
+
 </h3>
+
 
 
 
@@ -422,7 +674,7 @@ ${o.titulo}
 
 <s>
 
-$${o.precioAntes || ""}
+$${o.precioAntes || 0}
 
 </s>
 
@@ -430,25 +682,29 @@ $${o.precioAntes || ""}
 
 
 
+
 <div class="descuento">
 
-🔥 ${o.descuento || ""}% OFF
+🔥 ${o.descuento || 0}% OFF
 
 </div>
+
 
 
 
 <div class="precio">
 
-💥 $${o.precioFinal || ""}
+💥 $${o.precioFinal || 0}
 
 </div>
 
 
 
+
+
 <a
 
-href="${o.link}"
+href="${o.link || "#"}"
 
 target="_blank"
 
@@ -464,23 +720,83 @@ class="btnOferta">
 
 
 
-// CLIC EN OFERTA
 
-card
-.querySelector(".btnOferta")
-.addEventListener(
+
+// ==============================
+// CLIC REAL EN OFERTA
+// ==============================
+
+
+const boton =
+
+card.querySelector(".btnOferta");
+
+
+
+
+
+boton.addEventListener(
 
 "click",
 
-()=>{
+async()=>{
 
 
-registrarEstadistica("clics");
+
+// estadística general
+
+
+registrarEstadistica(
+"clics"
+);
+
+
+
+
+
+
+// contador individual oferta
+
+
+await updateDoc(
+
+doc(
+
+db,
+
+"ofertas",
+
+item.id
+
+),
+
+{
+
+
+clics:
+
+increment(1)
+
+
+}
+
+).catch(error=>{
+
+
+console.log(
+"Error clic:",
+error
+);
+
+
+});
+
 
 
 }
 
 );
+
 
 
 
@@ -509,12 +825,11 @@ carrusel.appendChild(card);
 
 
 // =====================================================
-// AUTO CARRUSEL ESTABLE
+// AUTO CARRUSEL
 // =====================================================
 
 
 function iniciarCarrusel(){
-
 
 
 if(!carrusel)return;
@@ -533,17 +848,25 @@ let posicion=0;
 
 
 
-intervaloCarrusel=setInterval(()=>{
+intervaloCarrusel=
+
+setInterval(()=>{
 
 
 
-if(!carruselActivo)return;
+if(!carruselActivo)
+
+return;
+
+
 
 
 
 if(
 
-carrusel.scrollWidth <= carrusel.clientWidth
+carrusel.scrollWidth <=
+
+carrusel.clientWidth
 
 )
 
@@ -553,7 +876,7 @@ return;
 
 
 
-posicion+=280;
+posicion += 280;
 
 
 
@@ -563,15 +886,20 @@ if(
 
 posicion >=
 
-carrusel.scrollWidth-carrusel.clientWidth
+carrusel.scrollWidth -
+
+carrusel.clientWidth
 
 )
 
 {
 
+
 posicion=0;
 
+
 }
+
 
 
 
@@ -583,6 +911,7 @@ left:posicion,
 behavior:"smooth"
 
 });
+
 
 
 
@@ -599,7 +928,10 @@ behavior:"smooth"
 
 
 
-// PAUSAR AL TOCAR
+
+// =====================================================
+// PAUSAR AL DESLIZAR
+// =====================================================
 
 
 if(carrusel){
@@ -623,6 +955,7 @@ carruselActivo=false;
 
 
 
+
 carrusel.addEventListener(
 
 "touchend",
@@ -636,13 +969,14 @@ setTimeout(()=>{
 carruselActivo=true;
 
 
-
 },1500);
 
 
 }
 
 );
+
+
 
 
 
@@ -664,6 +998,7 @@ carruselActivo=false;
 
 
 
+
 carrusel.addEventListener(
 
 "mouseup",
@@ -677,7 +1012,6 @@ setTimeout(()=>{
 carruselActivo=true;
 
 
-
 },1500);
 
 
@@ -688,17 +1022,9 @@ carruselActivo=true;
 
 
 }
-
-
-
-
-
-
-
-
-
 // =====================================================
 // CUPONES TIEMPO REAL
+// PARTE 3/3
 // =====================================================
 
 
@@ -720,17 +1046,13 @@ const cuponesOrdenados=[...datos.docs]
 
 
 return Number(
-
-a.data().descuento || 0
-
+b.data().descuento || 0
 )
 
 -
 
 Number(
-
-b.data().descuento || 0
-
+a.data().descuento || 0
 );
 
 
@@ -740,15 +1062,22 @@ b.data().descuento || 0
 
 
 
+[
 
-[relampago,bancarios,exclusivos]
+relampago,
 
-.forEach(x=>{
+bancarios,
+
+exclusivos
+
+]
+
+.forEach(seccion=>{
 
 
-if(x)
+if(seccion)
 
-x.innerHTML="";
+seccion.innerHTML="";
 
 
 });
@@ -773,6 +1102,7 @@ const tarjeta=document.createElement("div");
 
 
 tarjeta.className="cuponCard";
+
 
 
 
@@ -807,11 +1137,15 @@ c.estado==="agotando"
 
 
 
+
+
 <h3>
 
-🎟️ ${c.tipo==="relampago" ? "CUPON" : c.nombre}
+🎟️ ${c.nombre || "CUPÓN"}
 
 </h3>
+
+
 
 
 
@@ -819,9 +1153,10 @@ c.estado==="agotando"
 
 💰 Descuento:
 
-$${c.descuento}
+$${c.descuento || 0}
 
 </p>
+
 
 
 
@@ -829,9 +1164,11 @@ $${c.descuento}
 
 🛒 Compra mínima:
 
-$${c.minimo}
+$${c.minimo || 0}
 
 </p>
+
+
 
 
 
@@ -842,6 +1179,8 @@ $${c.minimo}
 </button>
 
 `;
+
+
 
 
 
@@ -872,22 +1211,31 @@ c.codigo
 
 
 
-if(c.tipo==="relampago")
+
+
+if(c.tipo==="relampago"){
+
 
 relampago?.appendChild(tarjeta);
 
 
+}
 
-else if(c.tipo==="bancario")
+else if(c.tipo==="bancario"){
+
 
 bancarios?.appendChild(tarjeta);
 
 
+}
 
-else
+else{
+
 
 exclusivos?.appendChild(tarjeta);
 
+
+}
 
 
 
@@ -900,38 +1248,62 @@ exclusivos?.appendChild(tarjeta);
 
 
 }
+
+
+
+
+
+
+
+
+
 // =====================================================
-// COPIAR CUPÓN + ESTADISTICAS
+// COPIAR CUPÓN
 // =====================================================
 
 
 async function copiarCupon(id,codigo){
 
 
+
 try{
 
 
-await navigator.clipboard.writeText(codigo);
 
-
-
-mostrarToast(
-"✅ CUPÓN COPIADO"
+await navigator.clipboard.writeText(
+codigo
 );
 
 
 
 
-// CONTADOR COPIAS
 
-registrarEstadistica("copias");
+mostrarToast(
+
+"✅ CUPÓN COPIADO"
+
+);
 
 
 
 
-// ACTUALIZAR FIRESTORE
 
-updateDoc(
+// estadística general
+
+
+registrarEstadistica(
+"copias"
+);
+
+
+
+
+
+
+// contador individual
+
+
+await updateDoc(
 
 doc(
 
@@ -945,23 +1317,22 @@ id
 
 {
 
+
 copias:
 
 increment(1)
 
+
 }
 
-).catch(error=>{
-
-console.log(error);
-
-});
+);
 
 
 
 
 
-// REDIRECCION RAPIDA MERCADO LIBRE
+
+// redireccion Mercado Libre
 
 
 setTimeout(()=>{
@@ -973,7 +1344,8 @@ window.location.href=
 
 
 
-},100);
+},300);
+
 
 
 
@@ -989,7 +1361,9 @@ console.log(error);
 }
 
 
+
 }
+
 
 
 
@@ -1004,9 +1378,12 @@ console.log(error);
 // =====================================================
 
 
-const btnArriba =
+const btnArriba=
 
-document.getElementById("btnArriba");
+document.getElementById(
+"btnArriba"
+);
+
 
 
 
@@ -1020,6 +1397,7 @@ window.addEventListener(
 "scroll",
 
 ()=>{
+
 
 
 btnArriba.style.display=
@@ -1045,7 +1423,9 @@ window.scrollY>400
 
 
 
+
 btnArriba.onclick=()=>{
+
 
 
 window.scrollTo({
@@ -1070,8 +1450,9 @@ behavior:"smooth"
 
 
 
+
 // =====================================================
-// INICIO
+// INICIO APP
 // =====================================================
 
 
