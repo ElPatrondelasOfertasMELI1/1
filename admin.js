@@ -1,7 +1,7 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // ADMIN.JS PRO CORREGIDO
-// PARTE 1/4
+// CUPONES BANCARIOS % + TOPE
 // =====================================================
 
 
@@ -19,8 +19,6 @@ doc,
 updateDoc,
 deleteDoc,
 serverTimestamp,
-increment,
-setDoc,
 getDoc
 
 }
@@ -68,6 +66,7 @@ getFirestore(app);
 
 
 
+
 // ==============================
 // VARIABLES
 // ==============================
@@ -76,6 +75,7 @@ getFirestore(app);
 let imagenBase64="";
 
 let ofertaEditando=null;
+
 
 
 
@@ -96,10 +96,12 @@ document.getElementById("toastAdmin");
 if(!toast)return;
 
 
+
 toast.innerHTML=texto;
 
 
 toast.classList.add("show");
+
 
 
 setTimeout(()=>{
@@ -112,8 +114,6 @@ toast.classList.remove("show");
 
 
 }
-
-
 
 
 
@@ -180,16 +180,8 @@ reader.readAsDataURL(archivo);
 
 );
 
-
-
-
-
-
-
-
-
 // ==============================
-// LIMPIAR FORMULARIO
+// LIMPIAR OFERTA
 // ==============================
 
 
@@ -240,7 +232,6 @@ document.getElementById("publicar").innerHTML=
 
 
 
-
 // ==============================
 // PUBLICAR OFERTA
 // ==============================
@@ -273,7 +264,9 @@ return;
 
 
 
-// EDITAR
+
+
+// EDITAR OFERTA
 
 
 if(ofertaEditando){
@@ -356,7 +349,6 @@ cargarEstadisticas();
 
 
 return;
-
 
 
 }
@@ -454,9 +446,16 @@ cargarEstadisticas();
 }
 
 );
+
+
+
+
+
+
+
+
 // =====================================================
 // OFERTAS ADMIN
-// PARTE 2/4
 // =====================================================
 
 
@@ -481,8 +480,6 @@ await getDocs(
 collection(db,"ofertas")
 
 );
-
-
 
 
 
@@ -514,7 +511,6 @@ div.className="ofertaAdmin";
 div.innerHTML=`
 
 <img src="${o.imagen || ""}">
-
 
 
 <h3>
@@ -565,14 +561,11 @@ ${o.clics || 0}
 
 
 
-
-
 <button class="editBtn">
 
 ✏️ EDITAR
 
 </button>
-
 
 
 
@@ -585,16 +578,8 @@ ${o.clics || 0}
 
 `;
 
-
-
-
-
-
-
-
-
 // ==============================
-// EDITAR
+// EDITAR OFERTA
 // ==============================
 
 
@@ -629,7 +614,6 @@ tipoOferta.value=o.tipo || "normal";
 
 
 
-
 imagenBase64=o.imagen || "";
 
 
@@ -659,7 +643,6 @@ behavior:"smooth"
 });
 
 
-
 };
 
 
@@ -672,7 +655,7 @@ behavior:"smooth"
 
 
 // ==============================
-// ELIMINAR
+// ELIMINAR OFERTA
 // ==============================
 
 
@@ -738,16 +721,28 @@ lista.appendChild(div);
 });
 
 
-
 }
+
+
+
+
+
+
+
+
+
 // =====================================================
 // CUPONES ADMIN
-// PARTE 3/4
 // =====================================================
+
+
+
+
+
 
 
 // ==============================
-// CREAR CUPON
+// CREAR CUPÓN
 // ==============================
 
 
@@ -796,9 +791,33 @@ nombreCupon.value || "CUPON",
 
 
 
+
+
+
+// NUEVO
+
+tipoDescuento:
+
+tipoDescuentoCupon.value || "pesos",
+
+
+
+
+
 descuento:
 
 descuentoCupon.value,
+
+
+
+
+
+tope:
+
+topeCupon.value || 0,
+
+
+
 
 
 minimo:
@@ -806,9 +825,15 @@ minimo:
 minimoCupon.value,
 
 
+
+
+
 tipo:
 
 tipoCupon.value,
+
+
+
 
 
 estado:
@@ -816,7 +841,13 @@ estado:
 estadoCupon.value,
 
 
+
+
+
 copias:0,
+
+
+
 
 
 creado:
@@ -834,12 +865,12 @@ serverTimestamp()
 
 
 
+
 mensaje(
 
 "🎟️ Cupón guardado"
 
 );
-
 
 
 
@@ -852,8 +883,13 @@ nombreCupon.value="";
 
 descuentoCupon.value="";
 
+topeCupon.value="";
+
 minimoCupon.value="";
 
+
+
+tipoDescuentoCupon.value="pesos";
 
 
 tipoCupon.value="relampago";
@@ -875,14 +911,6 @@ cargarEstadisticas();
 }
 
 );
-
-
-
-
-
-
-
-
 
 // ==============================
 // CARGAR CUPONES
@@ -956,7 +984,7 @@ div.innerHTML=`
 
 <h3>
 
-🎟️ ${c.nombre || "CUPON"}
+🎟️ ${c.nombre || "CUPÓN"}
 
 </h3>
 
@@ -970,11 +998,42 @@ ${c.codigo || ""}
 
 
 
+
+<p>
+
+📊 Tipo:
+
+${c.tipoDescuento==="porcentaje"
+
+?
+
+"Porcentaje %"
+
+:
+
+"Pesos"
+
+}
+
+</p>
+
+
+
 <p>
 
 💰 Descuento:
 
-$${c.descuento || 0}
+${c.tipoDescuento==="porcentaje"
+
+?
+
+c.descuento+"%"
+
+:
+
+"$"+c.descuento
+
+}
 
 </p>
 
@@ -991,6 +1050,30 @@ $${c.minimo || 0}
 
 
 
+${c.tipo==="bancario"
+
+?
+
+`
+
+<p>
+
+🔝 Tope máximo:
+
+$${c.tope || 0}
+
+</p>
+
+`
+
+:
+
+""
+
+}
+
+
+
 
 <p>
 
@@ -999,7 +1082,6 @@ Estado:
 ${c.estado || "activo"}
 
 </p>
-
 
 
 
@@ -1023,7 +1105,6 @@ ${c.copias || 0}
 
 
 
-
 <button class="deleteBtn">
 
 🗑️ ELIMINAR
@@ -1041,9 +1122,7 @@ ${c.copias || 0}
 
 
 
-// ==============================
 // CAMBIAR ESTADO
-// ==============================
 
 
 div
@@ -1139,9 +1218,7 @@ cargarCupones();
 
 
 
-// ==============================
-// ELIMINAR CUPON
-// ==============================
+// ELIMINAR CUPÓN
 
 
 div
@@ -1211,14 +1288,16 @@ lista.appendChild(div);
 
 
 }
-// =====================================================
-// ESTADISTICAS DASHBOARD
-// PARTE 4/4
-// =====================================================
+
+
+
+
+
+
 
 
 // ==============================
-// CARGAR ESTADISTICAS
+// ESTADÍSTICAS
 // ==============================
 
 
@@ -1258,13 +1337,10 @@ let totalCopias=0;
 
 
 
-
-
 ofertas.forEach(item=>{
 
 
 const o=item.data();
-
 
 
 totalClics +=
@@ -1279,13 +1355,10 @@ Number(o.clics || 0);
 
 
 
-
-
 cupones.forEach(item=>{
 
 
 const c=item.data();
-
 
 
 totalCopias +=
@@ -1302,96 +1375,28 @@ Number(c.copias || 0);
 
 
 
-
-// OFERTAS
-
-
-const totalOfertas =
-
-document.getElementById("totalOfertas");
-
-
-
-if(totalOfertas)
-
-totalOfertas.innerHTML=
+document.getElementById("totalOfertas").innerHTML=
 
 ofertas.size;
 
 
 
-
-
-
-
-
-// CUPONES
-
-
-const totalCupones =
-
-document.getElementById("totalCupones");
-
-
-
-if(totalCupones)
-
-totalCupones.innerHTML=
+document.getElementById("totalCupones").innerHTML=
 
 cupones.size;
 
 
 
-
-
-
-
-
-// CLICS
-
-
-const totalClicsDOM =
-
-document.getElementById("totalClics");
-
-
-
-if(totalClicsDOM)
-
-totalClicsDOM.innerHTML=
+document.getElementById("totalClics").innerHTML=
 
 totalClics;
 
 
 
-
-
-
-
-
-// COPIAS
-
-
-const totalCopiasDOM =
-
-document.getElementById("totalCopias");
-
-
-
-if(totalCopiasDOM)
-
-totalCopiasDOM.innerHTML=
+document.getElementById("totalCopias").innerHTML=
 
 totalCopias;
 
-
-
-
-
-
-
-
-// VISITAS
 
 
 const visitas =
@@ -1412,26 +1417,9 @@ db,
 
 
 
+if(document.getElementById("totalVisitas"))
 
-
-const totalVisitasDOM =
-
-document.getElementById("totalVisitas");
-
-
-
-
-
-if(
-
-totalVisitasDOM
-
-){
-
-
-
-totalVisitasDOM.innerHTML =
-
+document.getElementById("totalVisitas").innerHTML=
 
 visitas.exists()
 
@@ -1444,13 +1432,6 @@ visitas.data().total || 0
 0;
 
 
-}
-
-
-
-
-
-// USUARIOS
 
 const usuarios =
 
@@ -1462,16 +1443,9 @@ collection(db,"usuarios")
 
 
 
-const totalUsuarios =
+if(document.getElementById("totalUsuarios"))
 
-document.getElementById("totalUsuarios");
-
-
-
-
-if(totalUsuarios)
-
-totalUsuarios.innerHTML=
+document.getElementById("totalUsuarios").innerHTML=
 
 usuarios.size;
 
@@ -1483,9 +1457,13 @@ usuarios.size;
 
 
 
-// =====================================================
+
+
+
+
+// ==============================
 // REGIONES
-// =====================================================
+// ==============================
 
 
 async function cargarRegiones(){
@@ -1504,18 +1482,16 @@ lista.innerHTML="Cargando...";
 
 
 const datos =
+
 await getDocs(
 
-collection(
-db,
-"regiones"
-)
+collection(db,"regiones")
 
 );
 
 
 
-let regiones=[];
+lista.innerHTML="";
 
 
 
@@ -1525,52 +1501,13 @@ datos.forEach(item=>{
 const r=item.data();
 
 
-regiones.push({
+lista.innerHTML +=`
 
-nombre:item.id,
-
-visitas:r.visitas || 0
-
-});
-
-
-});
-
-
-
-
-
-regiones.sort((a,b)=>{
-
-return b.visitas-a.visitas;
-
-});
-
-
-
-
-
-lista.innerHTML="";
-
-
-
-
-
-regiones.forEach(r=>{
-
-
-const div =
-document.createElement("div");
-
-
-div.className="ofertaAdmin";
-
-
-div.innerHTML=`
+<div class="ofertaAdmin">
 
 <h3>
 
-🌎 ${r.nombre}
+🌎 ${item.id}
 
 </h3>
 
@@ -1579,20 +1516,14 @@ div.innerHTML=`
 
 👥 Visitas:
 
-<strong>
-
-${r.visitas}
-
-</strong>
+${r.visitas || 0}
 
 </p>
 
 
+</div>
+
 `;
-
-
-
-lista.appendChild(div);
 
 
 
@@ -1604,8 +1535,14 @@ lista.appendChild(div);
 
 
 
+
+
+
+
+
+
 // ==============================
-// INICIAR PANEL
+// INICIO
 // ==============================
 
 
@@ -1624,9 +1561,6 @@ cargarRegiones();
 
 
 
-// ==============================
-// ACTUALIZAR AUTOMATICO
-// ==============================
 
 
 setInterval(()=>{
@@ -1642,8 +1576,11 @@ cargarEstadisticas();
 
 
 
+
+
+
 // ==============================
-// BOTON SALIR
+// SALIR
 // ==============================
 
 
@@ -1664,7 +1601,6 @@ window.location.href="index.html";
 }
 
 );
-
 
 
 // =====================================================
