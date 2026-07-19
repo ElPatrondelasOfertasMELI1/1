@@ -1,53 +1,40 @@
 /* =====================================================
 EL PATRÓN DE LAS OFERTAS
-ADMIN.CSS FINAL
+ADMIN.CSS LIMPIO PRO
 ===================================================== */
 
-
 *{
-
 box-sizing:border-box;
-
 margin:0;
-
 padding:0;
-
 font-family:'Inter',sans-serif;
-
 }
-
 
 
 body{
 
 background:
-
 radial-gradient(
 circle at top,
 #222,
 #050505 65%
 );
 
-
 color:white;
-
 min-height:100vh;
 
 }
 
 
 
-
-
-
-/* HEADER */
+/* =====================================================
+HEADER
+===================================================== */
 
 .adminHeader{
 
 display:flex;
-
 justify-content:space-between;
-
 align-items:center;
 
 padding:18px 20px;
@@ -57,21 +44,16 @@ background:#080808;
 border-bottom:2px solid #ffd600;
 
 position:sticky;
-
 top:0;
-
 z-index:50;
 
 }
 
 
-
 .logo{
 
 font-size:26px;
-
 font-weight:900;
-
 color:#ffd600;
 
 }
@@ -109,11 +91,10 @@ font-weight:900;
 
 
 
+/* =====================================================
+DASHBOARD
+===================================================== */
 
-
-
-
-/* DASHBOARD */
 
 .dashboard{
 
@@ -141,11 +122,9 @@ margin-bottom:25px;
 
 
 
-
-
-
-
-/* ESTADISTICAS */
+/* =====================================================
+ESTADISTICAS
+===================================================== */
 
 
 .stats{
@@ -172,7 +151,6 @@ linear-gradient(
 #080808
 );
 
-
 border:1px solid #ffd600;
 
 border-radius:22px;
@@ -181,9 +159,7 @@ padding:20px;
 
 text-align:center;
 
-box-shadow:
-
-0 10px 25px #000;
+box-shadow:0 10px 25px #000;
 
 }
 
@@ -213,15 +189,12 @@ color:#ffd600;
 
 
 
-
-
-
-
-/* PANELES */
+/* =====================================================
+PANELES
+===================================================== */
 
 
 .panel{
-
 
 background:
 
@@ -231,19 +204,13 @@ linear-gradient(
 #090909
 );
 
-
-
 border:1px solid #333;
-
 
 border-radius:25px;
 
-
 padding:20px;
 
-
 margin:25px 0;
-
 
 }
 
@@ -263,118 +230,86 @@ margin-bottom:20px;
 
 
 
-
-
-
-
-/* CAMPOS */
+/* =====================================================
+CAMPOS
+===================================================== */
 
 
 input,
 select{
 
-
 width:100%;
-
 
 padding:15px;
 
-
 margin-bottom:12px;
-
 
 background:#0d0d0d;
 
-
 border:1px solid #444;
-
 
 border-radius:15px;
 
-
 color:white;
-
 
 font-weight:700;
 
-
 }
-
 
 
 
 input:focus,
 select:focus{
 
-
 outline:none;
 
 border-color:#ffd600;
 
-
 }
 
 
 
-
-
-
-
-/* IMAGEN */
+/* =====================================================
+IMAGEN
+===================================================== */
 
 
 .preview{
 
-
 width:100%;
-
 
 height:230px;
 
-
 object-fit:contain;
-
 
 background:#050505;
 
-
 border-radius:20px;
-
 
 display:none;
 
-
 margin-bottom:15px;
-
 
 }
 
 
 
-
-
-
-
-/* BOTONES */
+/* =====================================================
+BOTONES
+===================================================== */
 
 
 .panel button{
 
-
 width:100%;
-
 
 padding:15px;
 
-
 border:0;
-
 
 border-radius:18px;
 
-
 margin-top:10px;
-
 
 background:
 
@@ -384,22 +319,17 @@ linear-gradient(
 #ffb300
 );
 
-
 color:#111;
-
 
 font-weight:900;
 
-
 font-size:15px;
-
 
 }
 
 
 
 .estadoBtn{
-
 
 background:#ff9800 !important;
 
@@ -411,7 +341,6 @@ color:white !important;
 
 .deleteBtn{
 
-
 background:#e53935 !important;
 
 color:white !important;
@@ -420,30 +349,34 @@ color:white !important;
 
 
 
+/* =====================================================
+TARJETAS OFERTAS / CUPONES
+===================================================== */
 
-
-
-
-
-/* TARJETAS */
 
 .ofertaAdmin{
 
-
 background:#101010;
-
 
 border:1px solid #ffd600;
 
-
 border-radius:22px;
-
 
 padding:16px;
 
-
 margin:15px 0;
 
+transition:.3s;
+
+}
+
+
+
+.ofertaAdmin:hover{
+
+transform:translateY(-3px);
+
+border-color:#ffd600;
 
 }
 
@@ -451,92 +384,65 @@ margin:15px 0;
 
 .ofertaAdmin img{
 
-
 width:100%;
-
 
 height:170px;
 
-
 object-fit:contain;
-
 
 background:#050505;
 
-
 border-radius:18px;
 
-
 }
-
 
 
 
 .ofertaAdmin strong{
 
-
 display:block;
-
 
 text-align:center;
 
-
 font-size:22px;
 
+color:#ffd600;
 
 background:#050505;
 
-
 border:1px dashed #ffd600;
-
 
 padding:12px;
 
-
 border-radius:15px;
-
 
 margin:12px 0;
 
-
 }
-
-
-
 
 
 
 .ofertaAdmin p{
 
-
 margin:8px 0;
-
 
 font-weight:700;
 
-
 color:#ddd;
 
+line-height:1.5;
 
 }
-
-
-
-
-
-
-
-/* TOAST */
+/* =====================================================
+TOAST
+===================================================== */
 
 
 #toastAdmin{
 
-
 position:fixed;
 
-
 bottom:30px;
-
 
 left:50%;
 
@@ -547,7 +453,6 @@ translate(-50%,100px);
 
 
 background:#ffd600;
-
 
 color:#111;
 
@@ -568,7 +473,6 @@ transition:.3s;
 
 
 z-index:100;
-
 
 }
 
@@ -593,71 +497,25 @@ translate(-50%,0);
 
 
 
-/* MOBILE */
-
-
-@media(max-width:600px){
-
-
-
-.dashboard{
-
-padding:15px;
-
-}
-
-
-
-
-.stats{
-
-grid-template-columns:1fr;
-
-}
-
-
-
-.dashboard h1{
-
-font-size:25px;
-
-}
-
-
-
-.panel{
-
-padding:15px;
-
-}
-
-
-
-.ofertaAdmin strong{
-
-font-size:18px;
-
-}
-
-
-
-}
-
 /* =====================================================
-   ESTADISTICAS PRO - DASHBOARD GRAFICAS
-   EL PATRÓN DE LAS OFERTAS
+ESTADISTICAS PRO
 ===================================================== */
 
 
 .estadisticasPro{
 
+
 margin-top:25px;
+
 
 display:grid;
 
+
 grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 
+
 gap:18px;
+
 
 }
 
@@ -665,6 +523,7 @@ gap:18px;
 
 
 .graficaCard{
+
 
 background:
 
@@ -674,15 +533,20 @@ linear-gradient(
 #080808
 );
 
+
 border:1px solid #333;
+
 
 border-radius:22px;
 
+
 padding:20px;
+
 
 box-shadow:
 
 0 10px 30px rgba(0,0,0,.5);
+
 
 }
 
@@ -690,13 +554,18 @@ box-shadow:
 
 .graficaCard h2{
 
+
 margin:0 0 15px;
+
 
 font-size:20px;
 
+
 color:#ffd600;
 
+
 font-weight:900;
+
 
 }
 
@@ -705,15 +574,21 @@ font-weight:900;
 
 .graficaCard canvas{
 
+
 width:100%!important;
+
 
 height:250px!important;
 
+
 background:#0b0b0b;
+
 
 border-radius:15px;
 
+
 padding:10px;
+
 
 }
 
@@ -721,36 +596,51 @@ padding:10px;
 
 
 
-/* RESUMEN DEL DIA */
+
+/* =====================================================
+RESUMEN DIA
+===================================================== */
 
 
 .resumenDia{
 
+
 display:grid;
+
 
 grid-template-columns:
 
 repeat(auto-fit,minmax(150px,1fr));
 
+
 gap:15px;
 
+
 margin-top:20px;
+
 
 }
 
 
 
+
 .resumenItem{
+
 
 background:#111;
 
+
 border:1px solid #ffd600;
+
 
 border-radius:18px;
 
+
 padding:18px;
 
+
 text-align:center;
+
 
 }
 
@@ -758,13 +648,18 @@ text-align:center;
 
 .resumenItem strong{
 
+
 display:block;
+
 
 font-size:32px;
 
+
 color:#ffd600;
 
+
 font-weight:900;
+
 
 }
 
@@ -772,11 +667,15 @@ font-weight:900;
 
 .resumenItem span{
 
+
 color:#ddd;
+
 
 font-size:14px;
 
+
 font-weight:700;
+
 
 }
 
@@ -784,32 +683,47 @@ font-weight:700;
 
 
 
-/* TABLA ESTADISTICAS */
+
+
+/* =====================================================
+TABLA ESTADISTICAS
+===================================================== */
 
 
 .tablaStats{
 
+
 width:100%;
+
 
 overflow-x:auto;
 
+
 margin-top:20px;
 
+
 }
+
 
 
 
 .tablaStats table{
 
+
 width:100%;
+
 
 border-collapse:collapse;
 
+
 background:#111;
+
 
 border-radius:15px;
 
+
 overflow:hidden;
+
 
 }
 
@@ -817,13 +731,18 @@ overflow:hidden;
 
 .tablaStats th{
 
+
 background:#ffd600;
+
 
 color:#111;
 
+
 padding:12px;
 
+
 font-weight:900;
+
 
 }
 
@@ -831,51 +750,75 @@ font-weight:900;
 
 .tablaStats td{
 
+
 padding:12px;
+
 
 border-bottom:1px solid #333;
 
+
 color:white;
 
+
 text-align:center;
+
 
 }
 
 
 
 
-/* BOTONES FILTROS */
+
+
+
+/* =====================================================
+FILTROS
+===================================================== */
 
 
 .filtrosStats{
 
+
 display:flex;
+
 
 gap:10px;
 
+
 flex-wrap:wrap;
+
 
 margin-bottom:20px;
 
+
 }
+
 
 
 
 .filtrosStats button{
 
+
 background:#ffd600;
+
 
 color:#111;
 
+
 border:0;
+
 
 padding:10px 18px;
 
+
 border-radius:50px;
+
 
 font-weight:900;
 
+
 cursor:pointer;
+
 
 }
 
@@ -883,125 +826,58 @@ cursor:pointer;
 
 .filtrosStats button:hover{
 
+
 transform:scale(1.05);
 
-}
-
-
-
-
-
-/* MOVIL */
-
-
-@media(max-width:600px){
-
-
-.graficaCard{
-
-padding:15px;
 
 }
 
 
-.graficaCard canvas{
-
-height:220px!important;
-
-}
 
 
-.resumenItem strong{
-
-font-size:26px;
-
-}
 
 
-}
 
 /* =====================================================
-   CUPONES BANCARIOS ADMIN PRO
-   PORCENTAJE + TOPE
+CUPONES BANCARIOS
+PORCENTAJE + TOPE
 ===================================================== */
 
 
 #tipoDescuentoCupon,
 #topeCupon{
 
+
 background:#111;
+
 
 color:white;
 
+
 border:1px solid #ffd600;
+
 
 border-radius:15px;
 
+
 padding:14px;
+
 
 font-size:15px;
 
+
 font-weight:700;
+
 
 width:100%;
 
+
 margin-bottom:12px;
 
-}
-
-
-
-
-/* Tarjetas de cupones */
-
-.ofertaAdmin{
-
-transition:.3s;
 
 }
 
 
-
-.ofertaAdmin:hover{
-
-transform:translateY(-3px);
-
-border-color:#ffd600;
-
-}
-
-
-
-
-
-/* Datos bancarios */
-
-.ofertaAdmin p{
-
-line-height:1.5;
-
-}
-
-
-
-
-
-.ofertaAdmin strong{
-
-display:block;
-
-font-size:22px;
-
-color:#ffd600;
-
-margin:10px 0;
-
-}
-
-
-
-
-/* Badge porcentaje */
 
 
 .badgePorcentaje{
@@ -1009,22 +885,25 @@ margin:10px 0;
 
 background:#00c853;
 
+
 color:white;
+
 
 padding:6px 12px;
 
+
 border-radius:20px;
+
 
 font-weight:900;
 
+
 display:inline-block;
+
 
 }
 
 
-
-
-/* Badge tope */
 
 
 .badgeTope{
@@ -1032,31 +911,120 @@ display:inline-block;
 
 background:#222;
 
+
 border:1px solid #ffd600;
+
 
 color:#ffd600;
 
+
 padding:6px 12px;
+
 
 border-radius:20px;
 
+
 font-weight:900;
 
+
 display:inline-block;
+
 
 }
 
 
+
+
+
+
+
+/* =====================================================
+MOBILE
+===================================================== */
 
 
 @media(max-width:600px){
 
 
-.ofertaAdmin{
+
+.dashboard{
+
 
 padding:15px;
 
+
 }
+
+
+
+.stats{
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+
+.dashboard h1{
+
+
+font-size:25px;
+
+
+}
+
+
+
+.panel{
+
+
+padding:15px;
+
+
+}
+
+
+
+.ofertaAdmin strong{
+
+
+font-size:18px;
+
+
+}
+
+
+
+.graficaCard{
+
+
+padding:15px;
+
+
+}
+
+
+
+.graficaCard canvas{
+
+
+height:220px!important;
+
+
+}
+
+
+
+.resumenItem strong{
+
+
+font-size:26px;
+
+
+}
+
 
 
 }
