@@ -1,7 +1,7 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// ESTADISTICAS.JS
-// SISTEMA AVANZADO
+// ESTADISTICAS.JS LIMPIO PRO
+// SOLO LECTURA + DASHBOARD + GRAFICAS
 // =====================================================
 
 
@@ -13,13 +13,9 @@ import {
 
 getFirestore,
 doc,
-setDoc,
 getDoc,
 collection,
-getDocs,
-increment,
-addDoc,
-serverTimestamp
+getDocs
 
 }
 
@@ -29,10 +25,17 @@ from
 
 
 
+
+
+// ==============================
+// FIREBASE
+// ==============================
+
+
 const firebaseConfig={
 
 
-apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"AIzaSyBo_wk-k8TrcSl0MQzQ0hoUCvAKre94hW0",
 
 authDomain:"patronofertasweb.firebaseapp.com",
 
@@ -48,12 +51,18 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 
 
+
+
 const app =
 initializeApp(firebaseConfig);
 
 
+
 const db =
 getFirestore(app);
+
+
+
 
 
 
@@ -84,179 +93,13 @@ timeZone:"America/Mexico_City"
 
 
 
-function horaCDMX(){
-
-
-return new Date()
-
-.toLocaleString(
-"es-MX",
-{
-timeZone:"America/Mexico_City",
-hour:"2-digit",
-minute:"2-digit"
-}
-
-);
-
-
-}
 
 
 
 
 // ==============================
-// REGISTRAR VISITA
+// CARGAR ESTADISTICAS
 // ==============================
-
-
-async function registrarVisita(){
-
-
-const fecha =
-fechaCDMX();
-
-
-
-const hora =
-horaCDMX();
-
-
-
-
-
-// TOTAL GENERAL
-
-
-await setDoc(
-
-doc(
-db,
-"estadisticas",
-"visitas"
-),
-
-{
-
-total:
-increment(1)
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-
-
-// DIARIO
-
-
-await setDoc(
-
-doc(
-db,
-"estadisticas_diarias",
-fecha
-),
-
-{
-
-visitas:
-increment(1),
-
-fecha:fecha
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-
-
-// MENSUAL
-
-
-const mes =
-fecha.substring(0,7);
-
-
-
-await setDoc(
-
-doc(
-db,
-"estadisticas_mensuales",
-mes
-),
-
-{
-
-visitas:
-increment(1),
-
-mes:mes
-
-},
-
-{
-
-merge:true
-
-}
-
-);
-
-
-
-
-
-// HISTORIAL
-
-
-await addDoc(
-
-collection(
-db,
-"visitas_historial"
-),
-
-{
-
-fecha:fecha,
-
-hora:hora,
-
-creado:
-serverTimestamp()
-
-}
-
-);
-
-
-
-}
-
-
-
-registrarVisita();
-// =====================================================
-// CARGAR ESTADISTICAS EN ADMIN
-// =====================================================
 
 
 async function cargarEstadisticas(){
@@ -264,6 +107,7 @@ async function cargarEstadisticas(){
 
 const hoy =
 fechaCDMX();
+
 
 
 const mes =
@@ -278,22 +122,30 @@ hoy.substring(0,7);
 
 
 const hoyDoc =
+
 await getDoc(
 
 doc(
 db,
 "estadisticas_diarias",
 hoy
-
 )
 
 );
 
 
 
-if(
-document.getElementById("visitasHoy")
-){
+
+const visitasHoy =
+
+document.getElementById(
+"visitasHoy"
+);
+
+
+
+if(visitasHoy){
+
 
 visitasHoy.innerHTML =
 
@@ -307,7 +159,9 @@ hoyDoc.data().visitas || 0
 
 0;
 
+
 }
+
 
 
 
@@ -320,22 +174,30 @@ hoyDoc.data().visitas || 0
 
 
 const mesDoc =
+
 await getDoc(
 
 doc(
 db,
 "estadisticas_mensuales",
 mes
-
 )
 
 );
 
 
 
-if(
-document.getElementById("visitasMes")
-){
+
+const visitasMes =
+
+document.getElementById(
+"visitasMes"
+);
+
+
+
+if(visitasMes){
+
 
 visitasMes.innerHTML =
 
@@ -349,13 +211,8 @@ mesDoc.data().visitas || 0
 
 0;
 
+
 }
-
-
-
-
-
-
 
 // ==============================
 // MEJOR DIA
@@ -363,41 +220,47 @@ mesDoc.data().visitas || 0
 
 
 const dias =
+
 await getDocs(
 
 collection(
 db,
 "estadisticas_diarias"
-
 )
 
 );
 
 
 
-let mayor=0;
+let mayor = 0;
 
-let dia="-";
+let dia = "-";
+
+
 
 
 
 dias.forEach(d=>{
 
 
-const datos=d.data();
+const datos = d.data();
 
 
 
-if(
-datos.visitas > mayor
-){
+const visitas =
 
-mayor =
-datos.visitas;
+datos.visitas || 0;
 
 
-dia =
-d.id;
+
+
+if(visitas > mayor){
+
+
+mayor = visitas;
+
+
+dia = d.id;
 
 
 }
@@ -409,16 +272,26 @@ d.id;
 
 
 
-if(
-document.getElementById("diaMayor")
-){
+
+
+const diaMayor =
+
+document.getElementById(
+"diaMayor"
+);
+
+
+
+if(diaMayor){
+
 
 diaMayor.innerHTML =
 
-dia+" ("+mayor+")";
+dia + " (" + mayor + ")";
 
 
 }
+
 
 
 
@@ -432,36 +305,45 @@ dia+" ("+mayor+")";
 
 
 const historial =
+
 await getDocs(
 
 collection(
 db,
 "visitas_historial"
-
 )
 
 );
 
 
 
-let horas={};
+
+
+let horas = {};
+
+
 
 
 
 historial.forEach(v=>{
 
 
-const h =
+const hora =
+
 v.data().hora;
 
 
 
-if(h){
+if(hora){
 
-horas[h] =
-(horas[h] || 0)+1;
+
+horas[hora] =
+
+(horas[hora] || 0) + 1;
+
 
 }
+
 
 
 });
@@ -469,9 +351,14 @@ horas[h] =
 
 
 
-let horaMax="-";
 
-let cantidad=0;
+
+
+let horaMax = "-";
+
+let cantidad = 0;
+
+
 
 
 
@@ -480,15 +367,17 @@ Object.keys(horas)
 .forEach(h=>{
 
 
-if(
-horas[h]>cantidad
-){
 
-cantidad=
-horas[h];
+if(horas[h] > cantidad){
 
 
-horaMax=h;
+
+cantidad = horas[h];
+
+
+horaMax = h;
+
+
 
 }
 
@@ -499,13 +388,22 @@ horaMax=h;
 
 
 
-if(
-document.getElementById("horaPico")
-){
 
-horaPico.innerHTML=
 
-horaMax+" ("+cantidad+")";
+const horaPico =
+
+document.getElementById(
+"horaPico"
+);
+
+
+
+if(horaPico){
+
+
+horaPico.innerHTML =
+
+horaMax + " (" + cantidad + ")";
 
 
 }
@@ -515,6 +413,14 @@ horaMax+" ("+cantidad+")";
 }
 
 
+
+
+
+
+
+// ==============================
+// INICIAR DASHBOARD
+// ==============================
 
 
 cargarEstadisticas();
@@ -524,15 +430,23 @@ cargarEstadisticas();
 // =====================================================
 
 
-let graficaVisitas;
+let graficaVisitas = null;
+
+
 
 
 
 async function crearGraficaVisitas(){
 
 
+
 const canvas =
-document.getElementById("graficaVisitas");
+
+document.getElementById(
+"graficaVisitas"
+);
+
+
 
 
 
@@ -542,13 +456,15 @@ if(!canvas)return;
 
 
 
+
+
 const datos =
+
 await getDocs(
 
 collection(
 db,
 "estadisticas_diarias"
-
 )
 
 );
@@ -557,9 +473,10 @@ db,
 
 
 
-let fechas=[];
 
-let visitas=[];
+
+let registros = [];
+
 
 
 
@@ -567,11 +484,38 @@ let visitas=[];
 datos.forEach(d=>{
 
 
-fechas.push(d.id);
+
+registros.push({
 
 
-visitas.push(
-d.data().visitas || 0
+fecha:d.id,
+
+
+visitas:d.data().visitas || 0
+
+
+
+});
+
+
+
+});
+
+
+
+
+
+
+
+
+// ORDENAR POR FECHA
+
+
+registros.sort((a,b)=>{
+
+
+return a.fecha.localeCompare(
+b.fecha
 );
 
 
@@ -581,40 +525,19 @@ d.data().visitas || 0
 
 
 
-// ordenar fechas
-
-
-let ordenado =
-fechas
-.map((f,i)=>({
-
-fecha:f,
-
-visitas:visitas[i]
-
-}))
-
-
-.sort((a,b)=>
-
-
-a.fecha.localeCompare(
-b.fecha
-)
-
-);
 
 
 
+const fechas =
+
+registros.map(x=>x.fecha);
 
 
-fechas =
-ordenado.map(x=>x.fecha);
 
+const visitas =
 
+registros.map(x=>x.visitas);
 
-visitas =
-ordenado.map(x=>x.visitas);
 
 
 
@@ -624,9 +547,13 @@ ordenado.map(x=>x.visitas);
 
 if(graficaVisitas){
 
+
 graficaVisitas.destroy();
 
+
 }
+
+
 
 
 
@@ -642,6 +569,7 @@ canvas,
 type:"line",
 
 
+
 data:{
 
 
@@ -652,6 +580,7 @@ datasets:[{
 
 
 label:"Visitas",
+
 
 data:visitas,
 
@@ -669,10 +598,12 @@ tension:.4
 
 
 
+
 options:{
 
 
 responsive:true,
+
 
 
 plugins:{
@@ -683,10 +614,12 @@ legend:{
 
 display:true
 
+
 }
 
 
 },
+
 
 
 
@@ -697,6 +630,7 @@ y:{
 
 
 beginAtZero:true
+
 
 }
 
@@ -716,9 +650,17 @@ beginAtZero:true
 
 
 
+
 }
 
 
 
 
+
 crearGraficaVisitas();
+
+
+
+// =====================================================
+// FIN ESTADISTICAS.JS LIMPIO PRO
+// =====================================================
