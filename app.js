@@ -919,56 +919,29 @@ collection(db,"cupones"),
 
 
 
-const cupones =
+const relampagos = datos.docs
+.filter(doc => doc.data().tipo === "relampago")
+.sort((a,b)=>
+    Number(a.data().descuento || 0) -
+    Number(b.data().descuento || 0)
+);
 
-[...datos.docs];
+const bancariosLista = datos.docs
+.filter(doc => doc.data().tipo === "bancario")
+.sort((a,b)=>
+    Number(b.data().descuento || 0) -
+    Number(a.data().descuento || 0)
+);
 
+const exclusivosLista = datos.docs
+.filter(doc => doc.data().tipo !== "relampago" &&
+               doc.data().tipo !== "bancario");
 
-
-
-
-
-// ORDENAR CUPONES
-
-cupones.sort((a,b)=>{
-
-const ca=a.data();
-const cb=b.data();
-
-
-// ⚡ RELÁMPAGO: descuento menor a mayor
-
-if(
-ca.tipo==="relampago" &&
-cb.tipo==="relampago"
-){
-
-return Number(ca.descuento || 0)
--
-Number(cb.descuento || 0);
-
-}
-
-
-// 💳 BANCARIOS: descuento mayor a menor
-
-if(
-ca.tipo==="bancario" &&
-cb.tipo==="bancario"
-){
-
-return Number(cb.descuento || 0)
--
-Number(ca.descuento || 0);
-
-}
-
-
-return 0;
-
-});
-
-
+const cupones = [
+    ...relampagos,
+    ...bancariosLista,
+    ...exclusivosLista
+];
 
 
 
