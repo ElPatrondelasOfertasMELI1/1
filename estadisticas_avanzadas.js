@@ -1,6 +1,7 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// ESTADISTICAS AVANZADAS.JS
+// ESTADISTICAS AVANZADAS.JS LIMPIO PRO
+// SOLO PANEL ADMIN
 // =====================================================
 
 
@@ -11,12 +12,8 @@ import { initializeApp } from
 import {
 
 getFirestore,
-doc,
-getDoc,
-setDoc,
 collection,
-getDocs,
-increment
+getDocs
 
 }
 
@@ -35,7 +32,7 @@ from
 const firebaseConfig={
 
 
-apiKey:"AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
+apiKey:"AIzaSyBo_wk-k8TrcSl0MQzQ0hoUCvAKre94hW0",
 
 authDomain:"patronofertasweb.firebaseapp.com",
 
@@ -50,8 +47,10 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 };
 
 
+
 const app =
 initializeApp(firebaseConfig);
+
 
 
 const db =
@@ -60,193 +59,11 @@ getFirestore(app);
 
 
 
-// ==============================
-// FECHA CDMX
-// ==============================
 
 
-function fechaCDMX(){
-
-
-return new Date()
-
-.toLocaleString(
-
-"en-US",
-
-{
-
-timeZone:"America/Mexico_City"
-
-}
-
-);
-
-}
-
-
-
-
-
-function diaActual(){
-
-
-const fecha =
-new Date(fechaCDMX());
-
-
-return fecha
-
-.toISOString()
-
-.split("T")[0];
-
-}
-
-
-
-
-
-function horaActual(){
-
-
-const fecha =
-new Date(fechaCDMX());
-
-
-return fecha.getHours();
-
-}
-
-
-
-
-
-
-
-
-// ==============================
-// REGISTRAR VISITA AVANZADA
-// ==============================
-
-
-async function registrarEstadistica(){
-
-
-const dia =
-diaActual();
-
-
-const hora =
-horaActual();
-
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas_diarias",
-
-dia
-
-),
-
-{
-
-
-visitas:
-increment(1),
-
-
-[`hora_${hora}`]:
-increment(1),
-
-
-fecha:dia
-
-
-},
-
-
-{
-
-
-merge:true
-
-
-}
-
-);
-
-
-
-
-
-
-// MENSUAL
-
-
-const mes =
-dia.substring(0,7);
-
-
-
-await setDoc(
-
-doc(
-
-db,
-
-"estadisticas_mensuales",
-
-mes
-
-),
-
-{
-
-
-visitas:
-increment(1)
-
-
-},
-
-
-{
-
-
-merge:true
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-registrarEstadistica();
-
-
-
-
-
-
-
-
-// ==============================
-// MOSTRAR DATOS EN ADMIN
-// ==============================
+// =====================================================
+// CARGAR RESUMEN AVANZADO
+// =====================================================
 
 
 async function cargarResumen(){
@@ -254,6 +71,7 @@ async function cargarResumen(){
 
 
 const dias =
+
 await getDocs(
 
 collection(
@@ -265,6 +83,7 @@ db,
 )
 
 );
+
 
 
 
@@ -286,20 +105,32 @@ let horas={};
 dias.forEach(item=>{
 
 
-const d=item.data();
+const datos=item.data();
 
 
 
-totalMes += d.visitas || 0;
+
+const visitas =
+
+datos.visitas || 0;
 
 
 
-if((d.visitas || 0)>mayor){
+
+totalMes += visitas;
 
 
-mayor=d.visitas;
 
-mejorDia=item.id;
+
+
+
+if(visitas > mayor){
+
+
+mayor = visitas;
+
+
+mejorDia = item.id;
 
 
 }
@@ -307,15 +138,24 @@ mejorDia=item.id;
 
 
 
-Object.keys(d)
 
-.filter(x=>x.includes("hora_"))
+
+Object.keys(datos)
+
+.filter(
+
+x=>x.startsWith("hora_")
+
+)
 
 .forEach(h=>{
 
 
-horas[h]=
-(horas[h] || 0)+d[h];
+horas[h] =
+
+(horas[h] || 0) +
+
+datos[h];
 
 
 });
@@ -323,6 +163,9 @@ horas[h]=
 
 
 });
+
+
+
 
 
 
@@ -334,10 +177,10 @@ Object.keys(horas)
 .forEach(h=>{
 
 
-if(horas[h]>horaMayor){
+if(horas[h] > horaMayor){
 
 
-horaMayor=horas[h];
+horaMayor = horas[h];
 
 
 }
@@ -350,16 +193,38 @@ horaMayor=horas[h];
 
 
 
+
+
+
+// ==============================
+// MOSTRAR EN ADMIN
+// ==============================
+
+
+
 const visitasMes =
-document.getElementById("visitasMes");
+
+document.getElementById(
+"visitasMes"
+);
+
 
 
 const diaMayor =
-document.getElementById("diaMayor");
+
+document.getElementById(
+"diaMayor"
+);
+
 
 
 const horaPico =
-document.getElementById("horaPico");
+
+document.getElementById(
+"horaPico"
+);
+
+
 
 
 
@@ -367,25 +232,38 @@ document.getElementById("horaPico");
 if(visitasMes)
 
 visitasMes.innerHTML =
+
 totalMes;
+
+
 
 
 
 if(diaMayor)
 
 diaMayor.innerHTML =
-mejorDia;
+
+mejorDia+" ("+mayor+")";
+
+
+
 
 
 
 if(horaPico)
 
 horaPico.innerHTML =
+
 horaMayor+" visitas";
 
 
 
+
 }
+
+
+
+
 
 
 
@@ -397,3 +275,9 @@ horaMayor+" visitas";
 
 
 cargarResumen();
+
+
+
+// =====================================================
+// FIN ESTADISTICAS AVANZADAS.JS
+// =====================================================
