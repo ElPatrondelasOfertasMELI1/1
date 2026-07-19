@@ -930,51 +930,41 @@ const cupones =
 
 // ORDENAR CUPONES
 
-
 cupones.sort((a,b)=>{
 
-
-
 const ca=a.data();
-
 const cb=b.data();
 
 
+// ⚡ RELÁMPAGO: descuento menor a mayor
 
+if(
+ca.tipo==="relampago" &&
+cb.tipo==="relampago"
+){
 
-
-// Bancarios primero por porcentaje mayor
-
-
-if(ca.tipo==="bancario" && cb.tipo==="bancario"){
-
-
-
-return Number(
-
-cb.descuento || 0
-
-)
-
+return Number(ca.descuento || 0)
 -
-
-Number(
-
-ca.descuento || 0
-
-);
-
-
+Number(cb.descuento || 0);
 
 }
 
 
+// 💳 BANCARIOS: descuento mayor a menor
 
+if(
+ca.tipo==="bancario" &&
+cb.tipo==="bancario"
+){
+
+return Number(cb.descuento || 0)
+-
+Number(ca.descuento || 0);
+
+}
 
 
 return 0;
-
-
 
 });
 
