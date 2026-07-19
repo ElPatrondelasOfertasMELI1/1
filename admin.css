@@ -919,3 +919,144 @@ font-size:26px;
 
 
 }
+
+/* =====================================================
+   CUPONES BANCARIOS ADMIN PRO
+   PORCENTAJE + TOPE
+===================================================== */
+
+
+#tipoDescuentoCupon,
+#topeCupon{
+
+background:#111;
+
+color:white;
+
+border:1px solid #ffd600;
+
+border-radius:15px;
+
+padding:14px;
+
+font-size:15px;
+
+font-weight:700;
+
+width:100%;
+
+margin-bottom:12px;
+
+}
+
+
+
+
+/* Tarjetas de cupones */
+
+.ofertaAdmin{
+
+transition:.3s;
+
+}
+
+
+
+.ofertaAdmin:hover{
+
+transform:translateY(-3px);
+
+border-color:#ffd600;
+
+}
+
+
+
+
+
+/* Datos bancarios */
+
+.ofertaAdmin p{
+
+line-height:1.5;
+
+}
+
+
+
+
+
+.ofertaAdmin strong{
+
+display:block;
+
+font-size:22px;
+
+color:#ffd600;
+
+margin:10px 0;
+
+}
+
+
+
+
+/* Badge porcentaje */
+
+
+.badgePorcentaje{
+
+
+background:#00c853;
+
+color:white;
+
+padding:6px 12px;
+
+border-radius:20px;
+
+font-weight:900;
+
+display:inline-block;
+
+}
+
+
+
+
+/* Badge tope */
+
+
+.badgeTope{
+
+
+background:#222;
+
+border:1px solid #ffd600;
+
+color:#ffd600;
+
+padding:6px 12px;
+
+border-radius:20px;
+
+font-weight:900;
+
+display:inline-block;
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+.ofertaAdmin{
+
+padding:15px;
+
+}
+
+
+}
