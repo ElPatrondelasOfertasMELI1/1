@@ -538,7 +538,7 @@ let intervaloCarrusel=null;
 let carruselActivo=true;
 
 
-
+let ofertasClonadas = false;
 
 
 
@@ -599,201 +599,73 @@ toast.classList.remove(
 
 function cargarOfertas(){
 
+    if(!carrusel) return;
 
+    onSnapshot(collection(db,"ofertas"),(datos)=>{
 
-if(!carrusel)return;
+        carrusel.innerHTML="";
+        ofertasClonadas = false;
 
+        datos.forEach(item=>{
 
+            const o=item.data();
 
+            const card=document.createElement("div");
 
-onSnapshot(
+            card.className="oferta";
 
-collection(db,"ofertas"),
+            card.innerHTML=`
+                <img src="${o.imagen || ""}">
+                <h3>${o.titulo || "Oferta"}</h3>
 
-(datos)=>{
+                <div class="precioAntes">
+                    ❌ Antes: <s>$${o.precioAntes || 0}</s>
+                </div>
 
+                <div class="descuento">
+                    🔥 ${o.descuento || 0}% OFF
+                </div>
 
+                <div class="precio">
+                    💥 $${o.precioFinal || 0}
+                </div>
 
-carrusel.innerHTML="";
+                <a href="${o.link || "#"}" target="_blank" class="btnOferta">
+                    🛒 VER OFERTA
+                </a>
+            `;
 
+            card.querySelector(".btnOferta").addEventListener("click",async()=>{
 
+                registrarEstadistica("clics");
 
+                await updateDoc(
+                    doc(db,"ofertas",item.id),
+                    { clics: increment(1) }
+                ).catch(()=>{});
 
+            });
 
-datos.forEach(item=>{
+            carrusel.appendChild(card);
 
+        });
 
+        // Clonar tarjetas para efecto infinito
+        if(!ofertasClonadas){
 
-const o=item.data();
+            [...carrusel.children].forEach(card=>{
 
+                carrusel.appendChild(card.cloneNode(true));
 
+            });
 
+            ofertasClonadas = true;
 
+        }
 
-const card=document.createElement("div");
-
-
-
-card.className="oferta";
-
-
-
-
-
-card.innerHTML=`
-
-<img src="${o.imagen || ""}">
-
-
-<h3>
-
-${o.titulo || "Oferta"}
-
-</h3>
-
-
-
-
-<div class="precioAntes">
-
-❌ Antes:
-
-<s>
-
-$${o.precioAntes || 0}
-
-</s>
-
-</div>
-
-
-
-
-<div class="descuento">
-
-🔥 ${o.descuento || 0}% OFF
-
-</div>
-
-
-
-
-<div class="precio">
-
-💥 $${o.precioFinal || 0}
-
-</div>
-
-
-
-
-<a
-
-href="${o.link || "#"}"
-
-target="_blank"
-
-class="btnOferta">
-
-🛒 VER OFERTA
-
-</a>
-
-`;
-
-
-
-
-
-
-
-
-
-const boton =
-
-card.querySelector(
-
-".btnOferta"
-
-);
-
-
-
-
-
-
-boton.addEventListener(
-
-"click",
-
-async()=>{
-
-
-
-registrarEstadistica(
-
-"clics"
-
-);
-
-
-
-
-
-await updateDoc(
-
-doc(
-
-db,
-
-"ofertas",
-
-item.id
-
-),
-
-{
-
-
-clics:
-
-increment(1)
-
+    });
 
 }
-
-).catch(()=>{});
-
-
-
-}
-
-);
-
-
-
-
-
-
-carrusel.appendChild(card);
-
-
-
-});
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
 
 
 
@@ -804,54 +676,26 @@ carrusel.appendChild(card);
 
 function iniciarCarrusel(){
 
+    if(!carrusel) return;
 
-if(!carrusel)return;
+    clearInterval(intervaloCarrusel);
 
+    intervaloCarrusel = setInterval(()=>{
 
+        if(!carruselActivo) return;
 
+        carrusel.scrollBy({
+            left:295,
+            behavior:"smooth"
+        });
 
-intervaloCarrusel =
+        if(carrusel.scrollLeft >= carrusel.scrollWidth/2){
 
-setInterval(()=>{
+            carrusel.scrollLeft = 0;
 
+        }
 
-
-if(!carruselActivo)
-
-return;
-
-
-
-
-
-if(
-
-carrusel.scrollWidth <=
-
-carrusel.clientWidth
-
-)
-
-return;
-
-
-
-
-
-carrusel.scrollBy({
-
-left:280,
-
-behavior:"smooth"
-
-});
-
-
-
-
-},3500);
-
-
+    },3500);
 
 }
 
