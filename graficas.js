@@ -1,6 +1,6 @@
 // =====================================================
 // EL PATRÓN DE LAS OFERTAS
-// GRAFICAS.JS
+// GRAFICAS.JS LIMPIO PRO
 // ESTADISTICAS VISUALES ADMIN
 // =====================================================
 
@@ -46,13 +46,13 @@ messagingSenderId:"292338334268",
 
 appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
-
 };
 
 
 
 const app =
 initializeApp(firebaseConfig);
+
 
 
 const db =
@@ -62,38 +62,27 @@ getFirestore(app);
 
 
 
-let graficaVisitas;
-let graficaCopias;
-let graficaClics;
+
+
+let graficaVisitas=null;
+
+let graficaCopias=null;
+
+let graficaClics=null;
 
 
 
 
 
 
-// ==============================
-// CARGAR ESTADISTICAS
-// ==============================
+
+
+// =====================================================
+// CARGAR DATOS
+// =====================================================
 
 
 async function cargarGraficas(){
-
-
-const visitas =
-await getDoc(
-doc(db,"estadisticas","visitas")
-);
-
-
-
-const datosVisitas =
-visitas.exists()
-?
-visitas.data()
-:
-{};
-
-
 
 
 
@@ -102,26 +91,63 @@ visitas.data()
 // ==============================
 
 
+const visitasDoc =
+
+await getDoc(
+
+doc(
+db,
+"estadisticas",
+"visitas"
+
+)
+
+);
+
+
+
+
+const visitasData =
+
+visitasDoc.exists()
+
+?
+
+visitasDoc.data()
+
+:
+
+{};
+
+
+
+
+
+
 let fechas=[];
 
-let valores=[];
+let visitas=[];
 
 
 
-Object.keys(datosVisitas)
 
-.filter(x=>x!=="total")
+
+Object.keys(visitasData)
+
+.filter(d=>d!=="total")
 
 .sort()
 
-.forEach(dia=>{
+.forEach(d=>{
 
 
-fechas.push(dia);
+fechas.push(d);
 
 
-valores.push(
-datosVisitas[dia] || 0
+visitas.push(
+
+visitasData[d] || 0
+
 );
 
 
@@ -133,9 +159,16 @@ datosVisitas[dia] || 0
 
 
 crearGraficaVisitas(
+
 fechas,
-valores
+
+visitas
+
 );
+
+
+
+
 
 
 
@@ -147,15 +180,24 @@ valores
 
 
 const cupones =
+
 await getDocs(
-collection(db,"cupones")
+
+collection(
+db,
+"cupones"
+
+)
+
 );
 
 
 
-let nombresCupon=[];
+let nombres=[];
 
 let copias=[];
+
+
 
 
 
@@ -165,14 +207,21 @@ cupones.forEach(item=>{
 const c=item.data();
 
 
-nombresCupon.push(
+
+nombres.push(
+
 c.nombre || "Cupón"
+
 );
+
 
 
 copias.push(
+
 Number(c.copias || 0)
+
 );
+
 
 
 });
@@ -181,10 +230,15 @@ Number(c.copias || 0)
 
 
 
+
 crearGraficaCopias(
-nombresCupon,
+
+nombres,
+
 copias
+
 );
+
 
 
 
@@ -199,15 +253,24 @@ copias
 
 
 const ofertas =
+
 await getDocs(
-collection(db,"ofertas")
+
+collection(
+db,
+"ofertas"
+
+)
+
 );
 
 
 
 let productos=[];
 
-let clicks=[];
+let clics=[];
+
+
 
 
 
@@ -217,14 +280,21 @@ ofertas.forEach(item=>{
 const o=item.data();
 
 
+
 productos.push(
-o.titulo.substring(0,15)
+
+(o.titulo || "Oferta")
+
+.substring(0,15)
+
 );
 
 
 
-clicks.push(
+clics.push(
+
 Number(o.clics || 0)
+
 );
 
 
@@ -235,15 +305,26 @@ Number(o.clics || 0)
 
 
 
+
 crearGraficaClics(
+
 productos,
-clicks
+
+clics
+
 );
 
 
 
 
+
 }
+
+
+
+
+
+
 
 
 
@@ -256,21 +337,36 @@ clicks
 function crearGraficaVisitas(labels,data){
 
 
+
 const canvas =
-document.getElementById("graficaVisitas");
+
+document.getElementById(
+"graficaVisitas"
+);
+
 
 
 if(!canvas)return;
 
 
 
-if(graficaVisitas)
+
+if(graficaVisitas){
+
 graficaVisitas.destroy();
+
+}
+
 
 
 
 graficaVisitas =
-new Chart(canvas,{
+
+new Chart(
+
+canvas,
+
+{
 
 
 type:"line",
@@ -279,7 +375,7 @@ type:"line",
 data:{
 
 
-labels,
+labels:labels,
 
 
 datasets:[{
@@ -287,28 +383,74 @@ datasets:[{
 
 label:"Visitas",
 
-data,
+
+data:data,
+
+
+borderWidth:3,
+
 
 tension:.3
 
+
 }]
 
+
 },
+
+
 
 
 options:{
 
 
-responsive:true
+responsive:true,
+
+
+plugins:{
+
+
+legend:{
+
+
+display:true
 
 
 }
 
 
-});
+},
+
+
+
+scales:{
+
+
+y:{
+
+
+beginAtZero:true
 
 
 }
+
+
+}
+
+
+}
+
+
+
+}
+
+);
+
+
+
+}
+
+
 
 
 
@@ -324,21 +466,37 @@ responsive:true
 function crearGraficaCopias(labels,data){
 
 
+
 const canvas =
-document.getElementById("graficaCopias");
+
+document.getElementById(
+"graficaCopias"
+);
+
 
 
 if(!canvas)return;
 
 
 
-if(graficaCopias)
+
+if(graficaCopias){
+
 graficaCopias.destroy();
+
+}
+
+
 
 
 
 graficaCopias =
-new Chart(canvas,{
+
+new Chart(
+
+canvas,
+
+{
 
 
 type:"bar",
@@ -347,15 +505,20 @@ type:"bar",
 data:{
 
 
-labels,
+labels:labels,
 
 
 datasets:[{
 
 
-label:"Copias",
+label:"Copias de cupones",
 
-data
+
+data:data,
+
+
+borderWidth:2
+
 
 }]
 
@@ -363,20 +526,40 @@ data
 },
 
 
+
 options:{
 
 
-responsive:true
+responsive:true,
+
+
+scales:{
+
+
+y:{
+
+
+beginAtZero:true
 
 
 }
 
 
-});
+}
 
 
 
 }
+
+
+}
+
+);
+
+
+
+}
+
 
 
 
@@ -393,21 +576,37 @@ responsive:true
 function crearGraficaClics(labels,data){
 
 
+
 const canvas =
-document.getElementById("graficaClics");
+
+document.getElementById(
+"graficaClics"
+);
+
 
 
 if(!canvas)return;
 
 
 
-if(graficaClics)
+
+if(graficaClics){
+
 graficaClics.destroy();
+
+}
+
+
 
 
 
 graficaClics =
-new Chart(canvas,{
+
+new Chart(
+
+canvas,
+
+{
 
 
 type:"bar",
@@ -416,15 +615,20 @@ type:"bar",
 data:{
 
 
-labels,
+labels:labels,
 
 
 datasets:[{
 
 
-label:"Clics",
+label:"Clics ofertas",
 
-data
+
+data:data,
+
+
+borderWidth:2
+
 
 }]
 
@@ -432,16 +636,35 @@ data
 },
 
 
+
 options:{
 
 
-responsive:true
+responsive:true,
+
+
+scales:{
+
+
+y:{
+
+
+beginAtZero:true
 
 
 }
 
 
-});
+}
+
+
+
+}
+
+
+}
+
+);
 
 
 
@@ -453,9 +676,16 @@ responsive:true
 
 
 
-// ==============================
+
+
+// =====================================================
 // INICIO
-// ==============================
+// =====================================================
 
 
 cargarGraficas();
+
+
+// =====================================================
+// FIN GRAFICAS.JS PRO
+// =====================================================
