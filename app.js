@@ -922,15 +922,15 @@ collection(db,"cupones"),
 const relampagos = datos.docs
 .filter(doc => doc.data().tipo === "relampago")
 .sort((a,b)=>
-    Number(a.data().descuento || 0) -
-    Number(b.data().descuento || 0)
+    parseInt(String(a.data().descuento || "0").replace(/,/g,"")) -
+    parseInt(String(b.data().descuento || "0").replace(/,/g,""))
 );
 
 const bancariosLista = datos.docs
 .filter(doc => doc.data().tipo === "bancario")
 .sort((a,b)=>
-    Number(b.data().descuento || 0) -
-    Number(a.data().descuento || 0)
+    parseInt(String(b.data().descuento || "0").replace(/,/g,"")) -
+    parseInt(String(a.data().descuento || "0").replace(/,/g,""))
 );
 
 const exclusivosLista = datos.docs
