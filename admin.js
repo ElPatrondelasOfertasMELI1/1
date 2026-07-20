@@ -267,48 +267,41 @@ document.getElementById("publicar").innerHTML=
 
 function limpiarCupon(){
 
+    codigoCupon.value="";
+    nombreCupon.value="";
 
-codigoCupon.value="";
+    if(tipoDescuentoCupon)
+    tipoDescuentoCupon.value="pesos";
 
+    descuentoCupon.value="";
 
-nombreCupon.value="";
+    if(topeCupon)
+    topeCupon.value="";
 
+    minimoCupon.value="";
 
-if(tipoDescuentoCupon)
+    tipoCupon.value="relampago";
 
-tipoDescuentoCupon.value="pesos";
+    estadoCupon.value="activo";
 
+    cuponEditando=null;
 
-descuentoCupon.value="";
-
-
-if(topeCupon)
-
-topeCupon.value="";
-
-
-minimoCupon.value="";
-
-
-tipoCupon.value="relampago";
-
-
-estadoCupon.value="activo";
-
-
-cuponEditando=null;
-
-
-document.getElementById("crearCupon").innerHTML=
-
-"🎟️ GUARDAR CUPÓN";
-
+    document.getElementById("crearCupon").innerHTML=
+    "🎟️ GUARDAR CUPÓN";
 
 }
+
+// CONVERTIR CÓDIGO A MAYÚSCULAS MIENTRAS SE ESCRIBE
+codigoCupon?.addEventListener("input",()=>{
+
+    codigoCupon.value =
+    codigoCupon.value.toUpperCase();
+
+});
+
 // =====================================================
 // PUBLICAR / ACTUALIZAR OFERTA
 // =====================================================
-
 
 document
 
@@ -570,15 +563,15 @@ return;
 
 const datosCupon={
 
+    codigo:
 
-codigo:
+    codigoCupon.value
+        .trim()
+        .toUpperCase(),
 
-codigoCupon.value,
+    nombre:
 
-
-nombre:
-
-nombreCupon.value || "CUPON",
+    nombreCupon.value || "CUPON",
 
 
 
