@@ -832,13 +832,23 @@ increment(1)
 
 );
 
-setTimeout(()=>{
+setTimeout(() => {
 
-window.location.href=
+    const enlace = document.createElement("a");
 
-"https://meli.la/1mj3itE";
+    enlace.href = "https://meli.la/1mj3itE";
 
-},300);
+    enlace.target = "_blank";
+
+    enlace.style.display = "none";
+
+    document.body.appendChild(enlace);
+
+    enlace.click();
+
+    enlace.remove();
+
+},100);
 
 }
 
