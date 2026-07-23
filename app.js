@@ -1195,7 +1195,15 @@ increment(1)
 
 
 setTimeout(() => {
-    abrirMercadoLibre(""https://mercadolibre.com/sec/1vwHKr6"");
+
+    const enlace = document.createElement("a");
+    enlace.href = "https://meli.la/1mj3itE";
+    enlace.target = "_self";
+
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+
 }, 300);
 
 
