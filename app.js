@@ -4,7 +4,6 @@
 // CUPONES BANCARIOS % + TOPE
 // =====================================================
 
-
 import { 
 
 initializeApp 
@@ -14,8 +13,6 @@ initializeApp
 from
 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
 
 import {
 
@@ -34,17 +31,11 @@ from
 
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-
-
-
 // ==============================
 // FIREBASE
 // ==============================
 
-
 const firebaseConfig={
-
 
 apiKey:"AIzaSyBo_wk-k8TrcSl0MQzQ0hoUCvAKre94hW0",
 
@@ -60,31 +51,19 @@ appId:"1:292338334268:web:9dbbafe00dd23ebb72e139"
 
 };
 
-
-
 const app =
 initializeApp(firebaseConfig);
 
-
-
 const db =
 getFirestore(app);
-
-
-
-
-
 
 // =====================================================
 // REGIONES
 // =====================================================
 
-
 async function registrarRegion(){
 
-
 try{
-
 
 const respuesta =
 
@@ -94,22 +73,13 @@ await fetch(
 
 );
 
-
-
 const datos =
 
 await respuesta.json();
 
-
-
-
 const region =
 
 datos.region || "Desconocido";
-
-
-
-
 
 await setDoc(
 
@@ -125,19 +95,15 @@ region
 
 {
 
-
 visitas:
 
 increment(1),
-
 
 ultimaVisita:
 
 new Date()
 
-
 },
-
 
 {
 
@@ -147,12 +113,9 @@ merge:true
 
 );
 
-
-
 }
 
 catch(error){
-
 
 console.log(
 
@@ -162,26 +125,15 @@ error
 
 );
 
-
 }
 
-
-
 }
-
-
-
-
-
-
 
 // ==============================
 // FECHA CDMX
 // ==============================
 
-
 function fechaCDMX(){
-
 
 return new Intl.DateTimeFormat(
 
@@ -195,17 +147,9 @@ timeZone:"America/Mexico_City"
 
 ).format(new Date());
 
-
 }
 
-
-
-
-
-
-
 function horaCDMX(){
-
 
 return new Intl.DateTimeFormat(
 
@@ -223,23 +167,13 @@ hour12:false
 
 ).format(new Date());
 
-
 }
-
-
-
-
-
-
-
 
 // ==============================
 // USUARIO
 // ==============================
 
-
 function obtenerUsuario(){
-
 
 let id =
 
@@ -249,10 +183,7 @@ localStorage.getItem(
 
 );
 
-
-
 if(!id){
-
 
 id =
 
@@ -262,8 +193,6 @@ Date.now()+
 
 Math.floor(Math.random()*999);
 
-
-
 localStorage.setItem(
 
 "usuarioID",
@@ -272,29 +201,17 @@ id
 
 );
 
-
-
 }
-
 
 return id;
 
-
 }
 
-
-
-
-
-
 async function registrarUsuario(){
-
 
 const usuario =
 
 obtenerUsuario();
-
-
 
 await setDoc(
 
@@ -310,21 +227,17 @@ usuario
 
 {
 
-
 ultimaConexion:
 
 serverTimestamp(),
-
 
 dispositivo:
 
 navigator.userAgent,
 
-
 pais:
 
 "Mexico"
-
 
 },
 
@@ -336,36 +249,21 @@ merge:true
 
 );
 
-
-
 }
-
-
-
-
-
 
 // ==============================
 // ESTADISTICAS
 // ==============================
 
-
 async function registrarEstadistica(tipo){
-
 
 const fecha =
 
 fechaCDMX();
 
-
-
 const hora =
 
 horaCDMX();
-
-
-
-
 
 await setDoc(
 
@@ -381,22 +279,17 @@ fecha
 
 {
 
-
 [tipo]:
 
 increment(1),
-
 
 [`hora_${hora}`]:
 
 increment(1),
 
-
 fecha:fecha
 
-
 },
-
 
 {
 
@@ -406,18 +299,9 @@ merge:true
 
 );
 
-
-
-
-
 }
 
-
-
-
 async function registrarVisita(){
-
-
 
 await setDoc(
 
@@ -433,14 +317,11 @@ db,
 
 {
 
-
 total:
 
 increment(1)
 
-
 },
-
 
 {
 
@@ -450,34 +331,23 @@ merge:true
 
 );
 
-
-
 registrarEstadistica(
 
 "visitas"
 
 );
 
-
-
 registrarUsuario();
-
-
 
 }
 
-
-
-
 registrarVisita();
-
 
 registrarRegion();
 
 // =====================================================
 // ELEMENTOS DOM
 // =====================================================
-
 
 const carrusel =
 
@@ -487,8 +357,6 @@ document.getElementById(
 
 );
 
-
-
 const relampago =
 
 document.getElementById(
@@ -496,8 +364,6 @@ document.getElementById(
 "cuponesRelampago"
 
 );
-
-
 
 const bancarios =
 
@@ -507,8 +373,6 @@ document.getElementById(
 
 );
 
-
-
 const exclusivos =
 
 document.getElementById(
@@ -516,8 +380,6 @@ document.getElementById(
 "cuponesExclusivos"
 
 );
-
-
 
 const toast =
 
@@ -527,37 +389,21 @@ document.getElementById(
 
 );
 
-
-
-
-
-
-
 let intervaloCarrusel=null;
 
 let carruselActivo=true;
 
-
 let ofertasClonadas = false;
-
-
-
-
 
 // ==============================
 // TOAST
 // ==============================
 
-
 function mostrarToast(texto){
-
 
 if(!toast)return;
 
-
-
 toast.innerHTML=texto;
-
 
 toast.classList.add(
 
@@ -565,10 +411,7 @@ toast.classList.add(
 
 );
 
-
-
 setTimeout(()=>{
-
 
 toast.classList.remove(
 
@@ -576,26 +419,13 @@ toast.classList.remove(
 
 );
 
-
-
 },2000);
 
-
-
 }
-
-
-
-
-
-
-
-
 
 // =====================================================
 // OFERTAS TIEMPO REAL
 // =====================================================
-
 
 function cargarOfertas(){
 
@@ -667,12 +497,9 @@ function cargarOfertas(){
 
 }
 
-
-
 // =====================================================
 // AUTO CARRUSEL
 // =====================================================
-
 
 function iniciarCarrusel(){
 
@@ -699,13 +526,7 @@ function iniciarCarrusel(){
 
 }
 
-
-
-
-
-
 if(carrusel){
-
 
 carrusel.addEventListener(
 
@@ -719,30 +540,21 @@ carruselActivo=false;
 
 );
 
-
-
 carrusel.addEventListener(
 
 "touchend",
 
 ()=>{
 
-
 setTimeout(()=>{
-
 
 carruselActivo=true;
 
-
 },1500);
-
-
 
 }
 
 );
-
-
 
 }
 
@@ -750,18 +562,13 @@ carruselActivo=true;
 // CUPONES TIEMPO REAL
 // =====================================================
 
-
 function cargarCupones(){
-
-
 
 onSnapshot(
 
 collection(db,"cupones"),
 
 (datos)=>{
-
-
 
 const relampagos = datos.docs
 .filter(doc => doc.data().tipo === "relampago")
@@ -787,12 +594,6 @@ const cupones = [
     ...exclusivosLista
 ];
 
-
-
-
-
-
-
 [
 
 relampago,
@@ -805,58 +606,27 @@ exclusivos
 
 .forEach(seccion=>{
 
-
 if(seccion)
 
 seccion.innerHTML="";
 
-
 });
-
-
-
-
-
-
-
-
 
 cupones.forEach(item=>{
 
-
-
 const c=item.data();
-
-
-
-
-
 
 const tarjeta=
 
 document.createElement("div");
 
-
-
 tarjeta.className=
 
 "cuponCard";
 
-
-
-
-
-
 let descuentoTexto="";
 
-
-
-
-
-
 if(c.tipoDescuento==="porcentaje"){
-
-
 
 descuentoTexto=
 
@@ -866,12 +636,9 @@ descuentoTexto=
 
 `;
 
-
-
 }
 
 else{
-
 
 descuentoTexto=
 
@@ -881,19 +648,11 @@ descuentoTexto=
 
 `;
 
-
-
 }
-
-
-
-
-
 
 tarjeta.innerHTML=`
 
 <div class="estado">
-
 
 ${
 c.estado==="agotado"
@@ -916,13 +675,7 @@ c.estado==="agotando"
 
 }
 
-
 </div>
-
-
-
-
-
 
 <h3>
 
@@ -930,24 +683,11 @@ c.estado==="agotando"
 
 </h3>
 
-
-
-
-
-
-
 <p>
 
 ${descuentoTexto}
 
 </p>
-
-
-
-
-
-
-
 
 <p>
 
@@ -956,12 +696,6 @@ ${descuentoTexto}
 $${c.minimo || 0}
 
 </p>
-
-
-
-
-
-
 
 ${
 c.tipo==="bancario"
@@ -986,12 +720,6 @@ $${c.tope || 0}
 
 }
 
-
-
-
-
-
-
 <button class="copiarCupon">
 
 📋 COPIAR CUPÓN
@@ -999,13 +727,6 @@ $${c.tope || 0}
 </button>
 
 `;
-
-
-
-
-
-
-
 
 tarjeta
 
@@ -1017,8 +738,6 @@ tarjeta
 
 .onclick=()=>{
 
-
-
 copiarCupon(
 
 item.id,
@@ -1027,21 +746,9 @@ c.codigo
 
 );
 
-
-
 };
 
-
-
-
-
-
-
-
-
 if(c.tipo==="relampago"){
-
-
 
 relampago?.appendChild(
 
@@ -1049,13 +756,9 @@ tarjeta
 
 );
 
-
-
 }
 
 else if(c.tipo==="bancario"){
-
-
 
 bancarios?.appendChild(
 
@@ -1063,12 +766,9 @@ tarjeta
 
 );
 
-
-
 }
 
 else{
-
 
 exclusivos?.appendChild(
 
@@ -1076,61 +776,21 @@ tarjeta
 
 );
 
-
-
 }
-
-
 
 });
 
-
-
 });
 
-
-
 }
-
-
-
-
-function abrirMercadoLibre(link) {
-
-    const ua = navigator.userAgent.toLowerCase();
-
-    if (ua.includes("android")) {
-
-        const intent = link.replace("https://", "intent://") +
-            "#Intent;scheme=https;package=com.mercadolibre;end";
-
-        window.location.href = intent;
-
-        setTimeout(() => {
-            window.location.href = link;
-        }, 1200);
-
-        return;
-    }
-
-    window.location.href = link;
-}
-
-
-
 
 // =====================================================
 // COPIAR CUPÓN
 // =====================================================
 
-
 async function copiarCupon(id,codigo){
 
-
-
 try{
-
-
 
 await navigator.clipboard.writeText(
 
@@ -1138,31 +798,17 @@ codigo
 
 );
 
-
-
-
-
 mostrarToast(
 
 "✅ CUPÓN COPIADO"
 
 );
 
-
-
-
-
 registrarEstadistica(
 
 "copias"
 
 );
-
-
-
-
-
-
 
 await updateDoc(
 
@@ -1178,64 +824,35 @@ id
 
 {
 
-
 copias:
 
 increment(1)
-
 
 }
 
 );
 
+setTimeout(()=>{
 
+window.location.href=
 
+"https://meli.la/1mj3itE";
 
-
-
-
-setTimeout(() => {
-
-    const enlace = document.createElement("a");
-    enlace.href = "https://meli.la/1mj3itE";
-    enlace.target = "_self";
-
-    document.body.appendChild(enlace);
-    enlace.click();
-    enlace.remove();
-
-}, 300);
-
-
-
-
+},300);
 
 }
 
 catch(error){
 
-
 console.log(error);
 
-
 }
 
-
-
 }
-
-
-
-
-
-
-
-
 
 // =====================================================
 // BOTÓN SUBIR
 // =====================================================
-
 
 const btnArriba=
 
@@ -1245,19 +862,13 @@ document.getElementById(
 
 );
 
-
-
-
 if(btnArriba){
-
-
 
 window.addEventListener(
 
 "scroll",
 
 ()=>{
-
 
 btnArriba.style.display=
 
@@ -1271,18 +882,11 @@ window.scrollY>400
 
 "none";
 
-
-
 }
 
 );
 
-
-
-
-
 btnArriba.onclick=()=>{
-
 
 window.scrollTo({
 
@@ -1292,36 +896,19 @@ behavior:"smooth"
 
 });
 
-
-
 };
 
-
-
 }
-
-
-
-
-
-
-
-
 
 // =====================================================
 // INICIO
 // =====================================================
 
-
 cargarOfertas();
-
 
 cargarCupones();
 
-
 iniciarCarrusel();
-
-
 
 // =====================================================
 // FIN APP.JS
