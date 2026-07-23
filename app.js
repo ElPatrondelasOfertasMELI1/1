@@ -1095,7 +1095,26 @@ tarjeta
 
 
 
+function abrirMercadoLibre(link) {
 
+    const ua = navigator.userAgent.toLowerCase();
+
+    if (ua.includes("android")) {
+
+        const intent = link.replace("https://", "intent://") +
+            "#Intent;scheme=https;package=com.mercadolibre;end";
+
+        window.location.href = intent;
+
+        setTimeout(() => {
+            window.location.href = link;
+        }, 1200);
+
+        return;
+    }
+
+    window.location.href = link;
+}
 
 
 
@@ -1175,17 +1194,9 @@ increment(1)
 
 
 
-setTimeout(()=>{
-
-
-
-window.location.href=
-
-"https://meli.la/1mj3itE";
-
-
-
-},300);
+setTimeout(() => {
+    abrirMercadoLibre("https://meli.la/1mj3itE");
+}, 300);
 
 
 
