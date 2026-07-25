@@ -836,7 +836,7 @@ setTimeout(()=>{
 
 window.location.href=
 
-"https://meli.la/1mj3itE";
+"https://meli.la/1RGytvP";
 
 },300);
 
