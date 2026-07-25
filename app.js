@@ -836,7 +836,7 @@ setTimeout(()=>{
 
 window.location.href=
 
-"https://meli.la/1RGytvP";
+"https://www.mercadolibre.com.mx/social/a20250922143658";
 
 },300);
 
