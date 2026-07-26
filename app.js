@@ -798,11 +798,7 @@ codigo
 
 );
 
-mostrarToast(
 
-"✅ CUPÓN COPIADO"
-
-);
 
 registrarEstadistica(
 
@@ -832,13 +828,8 @@ increment(1)
 
 );
 
-setTimeout(()=>{
-
-window.location.href=
-
+window.location.href =
 "https://www.mercadolibre.com.mx/social/a20250922143658";
-
-},300);
 
 }
 
