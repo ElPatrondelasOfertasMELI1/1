@@ -720,11 +720,9 @@ $${c.tope || 0}
 
 }
 
-<button class="copiarCupon">
-
+<a href="https://www.mercadolibre.com.mx/social/a20250922143658" class="copiarCupon">
 📋 COPIAR CUPÓN
-
-</button>
+</a>
 
 `;
 
