@@ -791,46 +791,6 @@ async function copiarCupon(id,codigo){
 try{
 
 await navigator.clipboard.writeText(
-
-codigo
-
-);
-
-
-
-registrarEstadistica(
-
-"copias"
-
-);
-
-await updateDoc(
-
-doc(
-
-db,
-
-"cupones",
-
-id
-
-),
-
-{
-
-copias:
-
-increment(1)
-
-}
-
-);
-
-async function copiarCupon(id,codigo){
-
-try{
-
-await navigator.clipboard.writeText(
 codigo
 );
 
@@ -859,6 +819,7 @@ console.log(error);
 }
 
 }
+
 
 // =====================================================
 // BOTÓN SUBIR
