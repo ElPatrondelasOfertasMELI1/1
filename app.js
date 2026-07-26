@@ -826,8 +826,29 @@ increment(1)
 
 );
 
-window.location.href =
-"https://www.mercadolibre.com.mx/social/a20250922143658";
+async function copiarCupon(id,codigo){
+
+try{
+
+await navigator.clipboard.writeText(
+codigo
+);
+
+registrarEstadistica(
+"copias"
+);
+
+await updateDoc(
+doc(
+db,
+"cupones",
+id
+),
+{
+copias:
+increment(1)
+}
+);
 
 }
 
