@@ -1622,3 +1622,30 @@ transform:scale(1) translateX(0);
 .copiarCupon{
 text-decoration:none;
 }
+
+/* =====================================================
+   INDICADORES DEL CARRUSEL
+===================================================== */
+
+.carousel-dots{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin:-8px 0 20px;
+}
+
+.carousel-dots span{
+width:8px;
+height:8px;
+border-radius:50%;
+background:#666;
+transition:.3s;
+}
+
+.carousel-dots span.active{
+width:24px;
+border-radius:20px;
+background:#ffd600;
+box-shadow:0 0 8px rgba(255,214,0,.7);
+}
