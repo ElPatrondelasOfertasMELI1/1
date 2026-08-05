@@ -720,7 +720,7 @@ $${c.tope || 0}
 
 }
 
-<a href="https://meli.la/1mj3itE" class="copiarCupon">
+<a href="https://meli.la/2eJqd1u" class="copiarCupon">
 📋 COPIAR CUPÓN
 </a>
 
