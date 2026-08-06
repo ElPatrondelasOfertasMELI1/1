@@ -1,4 +1,4 @@
-// =====================================================
+http// =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // APP.JS PRO CORREGIDO
 // CUPONES BANCARIOS % + TOPE
@@ -720,7 +720,7 @@ $${c.tope || 0}
 
 }
 
-<a href="https://mercadolibre.com/sec/2P5U37F" class="copiarCupon">
+<a href="https://meli.la/1JnKg7e" class="copiarCupon">
 📋 COPIAR CUPÓN
 </a>
 
