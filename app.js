@@ -726,6 +726,7 @@ $${c.tope || 0}
 
 `;
 
+
 tarjeta
 
 .querySelector(
