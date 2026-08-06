@@ -4,7 +4,6 @@
 // CUPONES BANCARIOS % + TOPE
 // =====================================================
 
-
 import { 
 
 initializeApp 
@@ -726,7 +725,6 @@ $${c.tope || 0}
 </a>
 
 `;
-
 
 tarjeta
 
