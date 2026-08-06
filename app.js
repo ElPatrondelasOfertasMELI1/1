@@ -1,4 +1,4 @@
-http// =====================================================
+// =====================================================
 // EL PATRÓN DE LAS OFERTAS
 // APP.JS PRO CORREGIDO
 // CUPONES BANCARIOS % + TOPE
