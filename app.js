@@ -720,7 +720,7 @@ $${c.tope || 0}
 
 }
 
-<a href="https://meli.la/2qDqKu3" class="copiarCupon">
+<a href="https://mercadolibre.com/sec/2P5U37F" class="copiarCupon">
 📋 COPIAR CUPÓN
 </a>
 
