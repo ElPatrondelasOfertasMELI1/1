@@ -193,13 +193,25 @@ entrarAdmin?.addEventListener("click", async () => {
 
     catch (error) {
 
-        console.error(
-            "Error login:",
-            error
-        );
+    console.error("ERROR FIREBASE LOGIN:", error);
 
-        if (error.message === "NO_AUTORIZADO") {
+    if (errorLogin) {
 
+        errorLogin.textContent =
+            error.code + " — " + error.message;
+
+    }
+
+    if (entrarAdmin) {
+
+        entrarAdmin.disabled = false;
+
+        entrarAdmin.textContent =
+            "🔐 ENTRAR";
+
+    }
+
+}
             if (errorLogin) {
 
                 errorLogin.textContent =
