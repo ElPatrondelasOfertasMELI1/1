@@ -8,6 +8,26 @@ import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+document.body.insertAdjacentHTML(
+    "afterbegin",
+    `
+    <div style="
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        z-index:999999;
+        background:red;
+        color:white;
+        padding:20px;
+        text-align:center;
+        font-size:20px;
+        font-weight:bold;
+    ">
+        🔥 PRUEBA-AUTH.JS CARGADO
+    </div>
+    `
+);
 
 const firebaseConfig = {
 
