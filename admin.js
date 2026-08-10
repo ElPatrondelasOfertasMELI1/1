@@ -130,187 +130,172 @@ function mensaje(texto) {
 // LOGIN
 // =====================================================
 
-entrarAdmin?.addEventListener("click", async () => {
+if (entrarAdmin) {
 
-    const correo = correoAdmin?.value.trim();
-    const password = passwordAdmin?.value;
+    entrarAdmin.addEventListener("click", async function () {
 
-    // ==============================
-    // VALIDAR CAMPOS
-    // ==============================
+        console.log("🔥 CLICK EN ENTRAR");
 
-    if (!correo || !password) {
+        const correo = correoAdmin.value.trim();
+        const password = passwordAdmin.value;
 
-        if (errorLogin) {
+        if (!correo || !password) {
 
             errorLogin.textContent =
                 "⚠️ Escribe correo y contraseña";
-
-        }
-
-        return;
-
-    }
-
-    // ==============================
-    // BOTÓN CARGANDO
-    // ==============================
-
-    entrarAdmin.disabled = true;
-
-    entrarAdmin.textContent =
-        "⏳ ENTRANDO...";
-
-    if (errorLogin) {
-
-        errorLogin.textContent = "";
-
-    }
-
-    try {
-
-        // ==============================
-        // INICIAR SESIÓN FIREBASE
-        // ==============================
-
-        const resultado =
-            await signInWithEmailAndPassword(
-                auth,
-                correo,
-                password
-            );
-
-        // ==============================
-        // VERIFICAR ADMIN
-        // ==============================
-
-        if (resultado.user.uid !== ADMIN_UID) {
-
-            await signOut(auth);
-
-            if (errorLogin) {
-
-                errorLogin.textContent =
-                    "🚫 Esta cuenta no tiene permisos de administrador";
-
-            }
-
-            entrarAdmin.disabled = false;
-
-            entrarAdmin.textContent =
-                "🔐 ENTRAR";
 
             return;
 
         }
 
-        // ==============================
-        // LOGIN CORRECTO
-        // ==============================
+        entrarAdmin.disabled = true;
+        entrarAdmin.textContent = "⏳ ENTRANDO...";
 
-        console.log(
-            "✅ Login correcto:",
-            resultado.user.uid
-        );
+        errorLogin.textContent = "";
 
-        if (errorLogin) {
+        try {
 
-            errorLogin.textContent = "";
+            console.log("🔐 Intentando iniciar sesión...");
 
-        }
+            const resultado =
+                await signInWithEmailAndPassword(
+                    auth,
+                    correo,
+                    password
+                );
 
-        // onAuthStateChanged se encargará
-        // de mostrar el panel
+            console.log(
+                "✅ Firebase autenticó:",
+                resultado.user.email
+            );
 
-    }
+            console.log(
+                "🆔 UID:",
+                resultado.user.uid
+            );
 
-    catch (error) {
+            // ==============================
+            // COMPROBAR ADMIN
+            // ==============================
 
-        console.error(
-            "❌ ERROR FIREBASE LOGIN:",
-            error
-        );
+            if (resultado.user.uid !== ADMIN_UID) {
 
-        let mensajeError =
-            "❌ Correo o contraseña incorrectos";
+                console.log(
+                    "🚫 UID NO AUTORIZADO"
+                );
 
-        // ==============================
-        // ERRORES DE FIREBASE
-        // ==============================
+                await signOut(auth);
 
-        if (
-            error.code ===
-            "auth/invalid-credential"
-        ) {
+                errorLogin.textContent =
+                    "🚫 Esta cuenta no es administradora";
 
-            mensajeError =
-                "❌ Correo o contraseña incorrectos";
+                entrarAdmin.disabled = false;
+                entrarAdmin.textContent =
+                    "🔐 ENTRAR";
 
-        }
+                return;
 
-        else if (
-            error.code ===
-            "auth/invalid-email"
-        ) {
+            }
 
-            mensajeError =
-                "⚠️ El correo no es válido";
+            // ==============================
+            // ADMIN CORRECTO
+            // ==============================
 
-        }
-
-        else if (
-            error.code ===
-            "auth/user-not-found"
-        ) {
-
-            mensajeError =
-                "❌ No existe este usuario";
-
-        }
-
-        else if (
-            error.code ===
-            "auth/wrong-password"
-        ) {
-
-            mensajeError =
-                "❌ Contraseña incorrecta";
-
-        }
-
-        else if (
-            error.code ===
-            "auth/too-many-requests"
-        ) {
-
-            mensajeError =
-                "⏳ Demasiados intentos. Espera unos minutos";
-
-        }
-
-        else {
-
-            mensajeError =
-                "❌ Error: " +
-                (error.code || "desconocido");
-
-        }
-
-        if (errorLogin) {
+            console.log(
+                "👑 ADMINISTRADOR AUTORIZADO"
+            );
 
             errorLogin.textContent =
-                mensajeError;
+                "✅ Acceso correcto";
+
+            // onAuthStateChanged mostrará el panel
 
         }
 
-        entrarAdmin.disabled = false;
+        catch (error) {
 
-        entrarAdmin.textContent =
-            "🔐 ENTRAR";
+            console.error(
+                "❌ ERROR FIREBASE:",
+                error
+            );
 
-    }
+            console.error(
+                "Código:",
+                error.code
+            );
 
-});
+            console.error(
+                "Mensaje:",
+                error.message
+            );
+
+            if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
+
+                errorLogin.textContent =
+                    "❌ Correo o contraseña incorrectos";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
+
+                errorLogin.textContent =
+                    "❌ Contraseña incorrecta";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                errorLogin.textContent =
+                    "❌ Usuario no encontrado";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/invalid-email"
+            ) {
+
+                errorLogin.textContent =
+                    "⚠️ Correo inválido";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/too-many-requests"
+            ) {
+
+                errorLogin.textContent =
+                    "⏳ Demasiados intentos. Espera unos minutos";
+
+            }
+
+            else {
+
+                errorLogin.textContent =
+                    "❌ " +
+                    error.code;
+
+            }
+
+            entrarAdmin.disabled = false;
+            entrarAdmin.textContent =
+                "🔐 ENTRAR";
+
+        }
+
+    });
+
+}
 
 // =====================================================
 // CONTROL DE SESIÓN
