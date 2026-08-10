@@ -35,7 +35,7 @@ import {
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyBo_wk-k8TrcSl0MQzQ0hoUCvAKre94hW0",
+    apiKey: "AIzaSyBo_wk-k8TrcSl0CMQz0hoUCvAKre94hW0",
 
     authDomain: "patronofertasweb.firebaseapp.com",
 
