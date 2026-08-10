@@ -679,7 +679,29 @@ Cargando regiones...
 
 
 
+<script>
+console.log("HTML ADMIN CARGADO");
 
+document.addEventListener("DOMContentLoaded", () => {
+
+    const boton = document.getElementById("entrarAdmin");
+
+    console.log("BOTÓN ENCONTRADO:", boton);
+
+    if (boton) {
+
+        boton.addEventListener("click", () => {
+
+            console.log("🔥 EL BOTÓN SÍ RESPONDE");
+
+            alert("EL BOTÓN FUNCIONA");
+
+        });
+
+    }
+
+});
+</script>
 
 
 
