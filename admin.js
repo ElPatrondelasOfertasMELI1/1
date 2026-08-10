@@ -52,6 +52,7 @@ const firebaseConfig = {
 
 const app =
     initializeApp(firebaseConfig);
+alert("🔥 ADMIN.JS SÍ ESTÁ CARGANDO");
 
 const db =
     getFirestore(app);
