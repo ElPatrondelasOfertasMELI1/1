@@ -27,7 +27,34 @@
 
 <body>
 
-
+<!-- =====================================================
+     LOGIN ADMIN
+===================================================== -->
+<div id="loginAdmin" class="loginAdmin">
+    <div class="loginBox">
+        <div class="logo">
+            ⚡ ADMIN
+            <span>EL PATRÓN</span>
+        </div>
+        <h2>🔐 Acceso Administrador</h2>
+        <input
+            id="correoAdmin"
+            type="email"
+            placeholder="Correo electrónico"
+            autocomplete="username"
+        >
+        <input
+            id="passwordAdmin"
+            type="password"
+            placeholder="Contraseña"
+            autocomplete="current-password"
+        >
+        <button id="entrarAdmin">
+            🔐 ENTRAR
+        </button>
+        <p id="errorLogin"></p>
+    </div>
+</div>
 
 <header class="adminHeader">
 
@@ -59,7 +86,7 @@ SALIR
 
 
 
-<main class="dashboard">
+<main class="dashboard" id="dashboardAdmin" style="display:none;">
 
 
 <h1>
